@@ -9,7 +9,7 @@ public class StealthState : PlayerState
     {
         if (inputManager.interactDown)
         {
-            //Sabotage
+            //Sabotage ou attrapage d'item
         }
         if (inputManager.roarDown)
         {
@@ -21,5 +21,18 @@ public class StealthState : PlayerState
     public override void FixedBehave()
     {
         Move();
+    }
+    public void LookForInteractables()
+    {
+        Debug.Log(transform.forward);
+        Debug.DrawRay(transform.position, transform.forward * 2, Color.red);
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, transform.forward, out hit, 2f))
+        {
+            /*if (hit.collider.gameObject.GetComponent<Interactable>())
+            {
+                hit.collider.gameObject.GetComponent<Interactable>().
+            }*/
+        }
     }
 }

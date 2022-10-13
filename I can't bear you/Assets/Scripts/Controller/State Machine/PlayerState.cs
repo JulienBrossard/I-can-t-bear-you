@@ -17,6 +17,7 @@ public abstract class PlayerState : MonoBehaviour
         if (inputManager.direction != Vector2.zero)
         {
             accelerationIndex += playerStats.accelerationStep;
+            transform.LookAt(transform.position + new Vector3(inputManager.direction.x, 0, inputManager.direction.y));
         }
         else
         {
