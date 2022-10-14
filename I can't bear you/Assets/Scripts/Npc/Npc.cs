@@ -1,7 +1,9 @@
 using System;
+using System.Numerics;
 using UnityEngine;
 using UnityEngine.AI;
 using Random = UnityEngine.Random;
+using Vector3 = UnityEngine.Vector3;
 
 public class Npc : MonoBehaviour
 {
@@ -40,44 +42,6 @@ public class Npc : MonoBehaviour
 
     private void Update()
     {
-        switch (state)
-        {
-            case STATE.RUNAWAY :
-                agent.SetDestination(currentDestination);
-                if (Mathf.Abs(transform.position.x - agent.destination.x) <= 0.1f &&
-                    Mathf.Abs(transform.position.z - agent.destination.z) <= 0.1f)
-                {
-                    state = STATE.NOTHING;
-                    NpcManager.instance.UnSpawnNpc(gameObject);
-                }
-                break;
-            case STATE.HUNGER :
-                agent.SetDestination(currentDestination);
-                if (Mathf.Abs(transform.position.x - agent.destination.x) <= 0.1f &&
-                    Mathf.Abs(transform.position.z - agent.destination.z) <= 0.1f)
-                {
-                    state = STATE.NOTHING;
-                    stats.currentHunger = stats.maxHunger;
-                }
-                break;
-            case STATE.THIRST :
-                agent.SetDestination(currentDestination);
-                if(Mathf.Abs(transform.position.x - agent.destination.x) <= 1f && Mathf.Abs(transform.position.z - agent.destination.z) <= 1f)
-                {
-                    state = STATE.NOTHING;
-                    stats.currentThirst = stats.maxThirst;
-                }
-                break;
-            case STATE.BLADDER :
-                agent.SetDestination(currentDestination);
-                if(Mathf.Abs(transform.position.x - agent.destination.x) <= 0.1f && Mathf.Abs(transform.position.z - agent.destination.z) <= 0.1f)
-                {
-                    state = STATE.NOTHING;
-                    stats.currentBladder = stats.maxBladder;
-                }
-                break;
-        }
-        
         stats.currentHunger -= Time.deltaTime;
         stats.currentThirst -= Time.deltaTime;
         stats.currentBladder -= Time.deltaTime;
@@ -98,6 +62,58 @@ public class Npc : MonoBehaviour
             {
                 state = STATE.BLADDER;
                 currentDestination = ChooseClosestTarget(bladderPoints);
+            }
+            else
+            {
+                if (Vector3.Distance(transform.position, LevelManager.instance.GetCurrentLevel().partyData.partyPosition.position) > LevelManager.instance.GetCurrentLevel().partyData.radius)
+                {
+                    agent.SetDestination(LevelManager.instance.GetCurrentLevel().partyData.partyPosition.position);
+                }
+                else if(!agent.isStopped)
+                {
+                    agent.isStopped = true;
+                }
+            }
+        }
+        else
+        {
+            agent.isStopped = false;
+            switch (state)
+            {
+                case STATE.RUNAWAY :
+                    agent.SetDestination(currentDestination);
+                    if (Mathf.Abs(transform.position.x - agent.destination.x) <= 0.1f &&
+                        Mathf.Abs(transform.position.z - agent.destination.z) <= 0.1f)
+                    {
+                        state = STATE.NOTHING;
+                        NpcManager.instance.UnSpawnNpc(gameObject);
+                    }
+                    break;
+                case STATE.HUNGER :
+                    agent.SetDestination(currentDestination);
+                    if (Mathf.Abs(transform.position.x - agent.destination.x) <= 0.1f &&
+                        Mathf.Abs(transform.position.z - agent.destination.z) <= 0.1f)
+                    {
+                        state = STATE.NOTHING;
+                        stats.currentHunger = stats.maxHunger;
+                    }
+                    break;
+                case STATE.THIRST :
+                    agent.SetDestination(currentDestination);
+                    if(Mathf.Abs(transform.position.x - agent.destination.x) <= 1f && Mathf.Abs(transform.position.z - agent.destination.z) <= 1f)
+                    {
+                        state = STATE.NOTHING;
+                        stats.currentThirst = stats.maxThirst;
+                    }
+                    break;
+                case STATE.BLADDER :
+                    agent.SetDestination(currentDestination);
+                    if(Mathf.Abs(transform.position.x - agent.destination.x) <= 0.1f && Mathf.Abs(transform.position.z - agent.destination.z) <= 0.1f)
+                    {
+                        state = STATE.NOTHING;
+                        stats.currentBladder = stats.maxBladder;
+                    }
+                    break;
             }
         }
     }

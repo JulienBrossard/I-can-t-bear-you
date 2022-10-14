@@ -49,4 +49,13 @@ public class LevelData
     public Transform[] hungerPoints;
     public Transform[] thirstPoints;
     public Transform[] bladderPoints;
+
+    public PartyData partyData;
+}
+
+[Serializable]
+public class PartyData
+{
+    public Transform partyPosition;
+    public float radius;
 }
