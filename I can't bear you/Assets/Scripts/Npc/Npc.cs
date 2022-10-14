@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.Serialization;
+using Random = UnityEngine.Random;
 
 public class Npc : MonoBehaviour
 {
@@ -17,6 +17,8 @@ public class Npc : MonoBehaviour
     [SerializeField] Transform[] hungerPoints;
     [SerializeField] Transform[] thirstPoints;
     [SerializeField] Transform[] bladderPoints;
+    
+    
 
     enum STATE {
         RUNAWAY,
@@ -32,6 +34,8 @@ public class Npc : MonoBehaviour
     private void Start()
     {
         agent.speed = stats.speed;
+        RandomStats();
+        LoadWayPoints();
     }
 
     private void Update()
@@ -44,6 +48,7 @@ public class Npc : MonoBehaviour
                     Mathf.Abs(transform.position.z - agent.destination.z) <= 0.1f)
                 {
                     state = STATE.NOTHING;
+                    NpcManager.instance.UnSpawnNpc(gameObject);
                 }
                 break;
             case STATE.HUNGER :
@@ -52,7 +57,7 @@ public class Npc : MonoBehaviour
                     Mathf.Abs(transform.position.z - agent.destination.z) <= 0.1f)
                 {
                     state = STATE.NOTHING;
-                    stats.hunger = 10;
+                    stats.currentHunger = stats.maxHunger;
                 }
                 break;
             case STATE.THIRST :
@@ -60,7 +65,7 @@ public class Npc : MonoBehaviour
                 if(Mathf.Abs(transform.position.x - agent.destination.x) <= 1f && Mathf.Abs(transform.position.z - agent.destination.z) <= 1f)
                 {
                     state = STATE.NOTHING;
-                    stats.thirst = 10;
+                    stats.currentThirst = stats.maxThirst;
                 }
                 break;
             case STATE.BLADDER :
@@ -68,68 +73,98 @@ public class Npc : MonoBehaviour
                 if(Mathf.Abs(transform.position.x - agent.destination.x) <= 0.1f && Mathf.Abs(transform.position.z - agent.destination.z) <= 0.1f)
                 {
                     state = STATE.NOTHING;
-                    stats.bladder = 10;
+                    stats.currentBladder = stats.maxBladder;
                 }
                 break;
         }
         
-        stats.hunger -= Time.deltaTime;
-        stats.thirst -= Time.deltaTime;
-        stats.bladder -= Time.deltaTime;
+        stats.currentHunger -= Time.deltaTime;
+        stats.currentThirst -= Time.deltaTime;
+        stats.currentBladder -= Time.deltaTime;
 
         if (state == STATE.NOTHING)
         {
-            if (stats.hunger <= 0)
+            if (stats.currentHunger <= 0)
             {
                 state = STATE.HUNGER;
-                currentDestination = FindCloseDestination(hungerPoints);
+                currentDestination = ChooseClosestTarget(hungerPoints);
             }
-            else if (stats.thirst <= 0)
+            else if (stats.currentThirst <= 0)
             {
                 state = STATE.THIRST;
-                currentDestination = FindCloseDestination(thirstPoints);
+                currentDestination = ChooseClosestTarget(thirstPoints);
             }
-            else if (stats.bladder <= 0)
+            else if (stats.currentBladder <= 0)
             {
                 state = STATE.BLADDER;
-                currentDestination = FindCloseDestination(bladderPoints);
+                currentDestination = ChooseClosestTarget(bladderPoints);
             }
         }
     }
-    
-    public Vector3 FindCloseDestination(Transform[] wayPoints)
-    {
-        agent.SetDestination(wayPoints[0].position);
-        float minDistance = agent.remainingDistance;
-        Vector3 closestPoint = wayPoints[0].position;
-        float pathLenght;
 
-        for (int i = 1; i < wayPoints.Length; i++)
+    public Vector3 ChooseClosestTarget(Transform[] wayPoints)
+    {
+        Transform closestTarget = null;
+        float closestTargetDistance = float.MaxValue;
+        NavMeshPath path = new NavMeshPath();
+
+        for (int i = 0; i < wayPoints.Length; i++)
         {
-            agent.CalculatePath(wayPoints[i].position, agent.path);
-            pathLenght = GetPathLength();
-            if (pathLenght < minDistance)
+            if (wayPoints[i] == default)
             {
-                minDistance = pathLenght;
+                continue;
+            }
+
+            if (NavMesh.CalculatePath(transform.position, wayPoints[i].position, agent.areaMask, path))
+            {
+                float distance = Vector3.Distance(transform.position, path.corners[0]);
+
+                for (int j = 1; j < path.corners.Length; j++)
+                {
+                    distance += Vector3.Distance(path.corners[j-1], path.corners[j]);
+                }
+
+                if (distance < closestTargetDistance)
+                {
+                    closestTargetDistance = distance;
+                    closestTarget = wayPoints[i];
+                }
             }
         }
+        
 
-        return closestPoint;
+        return closestTarget.position;
     }
-    
-    float GetPathLength()
+
+    public void RandomStats()
     {
-        float lng = 0.0f;
-       
-        if (( agent.pathStatus != NavMeshPathStatus.PathInvalid ))
+        stats.currentBladder = Random.Range(0, stats.maxBladder);
+        stats.currentHunger = Random.Range(0, stats.maxHunger);
+        stats.currentThirst = Random.Range(0, stats.maxThirst);
+    }
+
+    public void LoadWayPoints()
+    {
+        hungerPoints = new Transform[LevelManager.instance.GetCurrentLevel().hungerPoints.Length];
+        thirstPoints = new Transform[LevelManager.instance.GetCurrentLevel().thirstPoints.Length];
+        bladderPoints = new Transform[LevelManager.instance.GetCurrentLevel().bladderPoints.Length];
+        runAwayPoints = new Transform[LevelManager.instance.GetCurrentLevel().runAwayPoints.Length];
+        for (int i = 0; i < LevelManager.instance.GetCurrentLevel().hungerPoints.Length; i++)
         {
-            for ( int i = 1; i < agent.path.corners.Length; ++i )
-            {
-                lng += Vector3.Distance( agent.path.corners[i-1], agent.path.corners[i] );
-            }
+            hungerPoints[i] = LevelManager.instance.GetCurrentLevel().hungerPoints[i];
         }
-       
-        return lng;
+        for (int i = 0; i < LevelManager.instance.GetCurrentLevel().thirstPoints.Length; i++)
+        {
+            thirstPoints[i] = LevelManager.instance.GetCurrentLevel().thirstPoints[i];
+        }
+        for (int i = 0; i < LevelManager.instance.GetCurrentLevel().bladderPoints.Length; i++)
+        {
+            bladderPoints[i] = LevelManager.instance.GetCurrentLevel().bladderPoints[i];
+        }
+        for (int i = 0; i < LevelManager.instance.GetCurrentLevel().runAwayPoints.Length; i++)
+        {
+            runAwayPoints[i] = LevelManager.instance.GetCurrentLevel().runAwayPoints[i];
+        }
     }
     
 }
@@ -137,8 +172,11 @@ public class Npc : MonoBehaviour
 [Serializable]
 public class Stats
 {
-    public float hunger = 100;
-    public float thirst = 100;
-    public float bladder = 100;
+    public float currentHunger = 100;
+    public float currentThirst = 100;
+    public float currentBladder = 100;
+    public float maxHunger;
+    public float maxThirst;
+    public float maxBladder;
     public float speed = 10;
 }
