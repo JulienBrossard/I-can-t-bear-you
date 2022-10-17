@@ -29,7 +29,6 @@ public class StealthState : PlayerState
     {
         for (int i = 0; i < detectionAngle; i++)
         {
-            Debug.Log(GetVectorFromAngle(0.5f));
             SendRayCast(transform.position,
                 (transform.forward + new Vector3(0.1f,0,0.1f)*i).normalized,
                     detectionRange);
