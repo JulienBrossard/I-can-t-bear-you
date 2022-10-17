@@ -138,10 +138,7 @@ MonoBehaviour:
     currentHunger: 100
     currentThirst: 100
     currentBladder: 100
-    maxHunger: 100
-    maxThirst: 100
-    maxBladder: 100
-    speed: 10
+  npcData: {fileID: 11400000, guid: 076b23ef35ff6774cad62ab6788037dc, type: 2}
   agent: {fileID: 2220805582517078624}
   runAwayPoints:
   - {fileID: 0}

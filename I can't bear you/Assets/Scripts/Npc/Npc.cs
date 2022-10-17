@@ -9,7 +9,8 @@ public class Npc : MonoBehaviour
 {
     [Header("Stats")] 
     public Stats stats;
-    
+    [SerializeField] NpcData npcData;
+
     [SerializeField] NavMeshAgent agent;
 
     private Vector3 currentDestination;
@@ -35,7 +36,7 @@ public class Npc : MonoBehaviour
 
     private void Start()
     {
-        agent.speed = stats.speed;
+        agent.speed = npcData.speed;
         RandomStats();
         LoadWayPoints();
     }
@@ -95,7 +96,7 @@ public class Npc : MonoBehaviour
                         Mathf.Abs(transform.position.z - agent.destination.z) <= 0.1f)
                     {
                         state = STATE.NOTHING;
-                        stats.currentHunger = stats.maxHunger;
+                        stats.currentHunger = npcData.maxHunger;
                     }
                     break;
                 case STATE.THIRST :
@@ -103,7 +104,7 @@ public class Npc : MonoBehaviour
                     if(Mathf.Abs(transform.position.x - agent.destination.x) <= 1f && Mathf.Abs(transform.position.z - agent.destination.z) <= 1f)
                     {
                         state = STATE.NOTHING;
-                        stats.currentThirst = stats.maxThirst;
+                        stats.currentThirst = npcData.maxThirst;
                     }
                     break;
                 case STATE.BLADDER :
@@ -111,7 +112,7 @@ public class Npc : MonoBehaviour
                     if(Mathf.Abs(transform.position.x - agent.destination.x) <= 0.1f && Mathf.Abs(transform.position.z - agent.destination.z) <= 0.1f)
                     {
                         state = STATE.NOTHING;
-                        stats.currentBladder = stats.maxBladder;
+                        stats.currentBladder = npcData.maxBladder;
                     }
                     break;
             }
@@ -154,9 +155,9 @@ public class Npc : MonoBehaviour
 
     public void RandomStats()
     {
-        stats.currentBladder = Random.Range(0, stats.maxBladder);
-        stats.currentHunger = Random.Range(0, stats.maxHunger);
-        stats.currentThirst = Random.Range(0, stats.maxThirst);
+        stats.currentBladder = Random.Range(0, npcData.maxBladder);
+        stats.currentHunger = Random.Range(0, npcData.maxHunger);
+        stats.currentThirst = Random.Range(0, npcData.maxThirst);
     }
 
     public void LoadWayPoints()
@@ -191,8 +192,4 @@ public class Stats
     public float currentHunger = 100;
     public float currentThirst = 100;
     public float currentBladder = 100;
-    public float maxHunger;
-    public float maxThirst;
-    public float maxBladder;
-    public float speed = 10;
 }
