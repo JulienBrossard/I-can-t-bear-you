@@ -16,10 +16,10 @@ public class Npc : MonoBehaviour
     private Vector3 currentDestination;
     
     [Header("Waypoint Settings")]
-    [SerializeField] Transform[] runAwayPoints;
-    [SerializeField] Transform[] hungerPoints;
-    [SerializeField] Transform[] thirstPoints;
-    [SerializeField] Transform[] bladderPoints;
+    Transform[] runAwayPoints;
+    Transform[] hungerPoints;
+    Transform[] thirstPoints;
+    Transform[] bladderPoints;
     
     
 
