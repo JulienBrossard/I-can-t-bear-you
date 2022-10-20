@@ -1,9 +1,11 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class NpcManager : MonoBehaviour
 {
     public static NpcManager instance;
-    public int npcCount;
+    public int npcCountRemaining;
+    public int npcCountMax;
     
     private void Awake()
     {
@@ -18,13 +20,13 @@ public class NpcManager : MonoBehaviour
     public void SpawnNpc()
     {
         Pooler.instance.Pop("Npc").transform.position = LevelManager.instance.GetRandomNpcSpawn();
-        npcCount++;
+        npcCountRemaining++;
     }
     
     [ContextMenu("UnSpawn Npc")]
     public void UnSpawnNpc(GameObject npc)
     {
         Pooler.instance.DePop("Npc", npc);
-        npcCount--;
+        npcCountRemaining--;
     }
 }
