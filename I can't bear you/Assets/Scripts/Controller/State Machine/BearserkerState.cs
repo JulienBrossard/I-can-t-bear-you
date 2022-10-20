@@ -1,10 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class BearserkerState : PlayerState
 {
     [SerializeField] private PlayerState stealthState;
+    [SerializeField] private int bearserkerMaxDuration;
+    [SerializeField] private float bearserkerDurationRemaining;
     public override void Behave()
     {
         if (inputManager.interactDown)
@@ -21,5 +21,31 @@ public class BearserkerState : PlayerState
     public override void FixedBehave()
     {
         Move();
+    }
+    
+    public void AddBearserkerDuration(int duration)
+    {
+        bearserkerDurationRemaining += duration;
+        if (bearserkerDurationRemaining > bearserkerMaxDuration)
+        {
+            bearserkerDurationRemaining = bearserkerMaxDuration;
+        }
+        UiManager.instance.UpdateBearserkerGauge(duration/bearserkerMaxDuration);
+    }
+    
+    public void RemoveBearserkerDuration()
+    {
+        bearserkerDurationRemaining -= Time.deltaTime;
+        if (bearserkerDurationRemaining < 0)
+        {
+            bearserkerDurationRemaining = 0;
+            Sleep();
+        }
+        UiManager.instance.UpdateBearserkerGauge(bearserkerDurationRemaining/bearserkerMaxDuration);
+    }
+
+    public void Sleep()
+    {
+        //insert Sleep consequence
     }
 }
