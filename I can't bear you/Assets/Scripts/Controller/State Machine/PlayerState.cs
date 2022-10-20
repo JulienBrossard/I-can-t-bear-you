@@ -8,6 +8,7 @@ public abstract class PlayerState : MonoBehaviour
     [SerializeField] protected InputManager inputManager;
     [SerializeField] protected Rigidbody rb;
     [SerializeField] protected PlayerStats playerStats;
+    [SerializeField] private InteractablesManager interactablesManager;
     private float accelerationIndex;
     public abstract void Behave();
     public abstract void FixedBehave();

@@ -5,7 +5,9 @@ using UnityEngine;
 public class StealthState : PlayerState
 {
     [SerializeField] private PlayerState bearserkerState;
-    [SerializeField] private float detectionAngle, detectionRange;
+    [SerializeField, Range(0.01f,Mathf.PI)] private float detectionAngle;
+    [SerializeField] private float detectionRange;
+    [SerializeField, Range(0.01f,0.5f)] private float detectionStep;
     public override void Behave()
     {
         if (inputManager.interactDown)
@@ -27,14 +29,11 @@ public class StealthState : PlayerState
     
     public void LookForInteractables()
     {
-        for (int i = 0; i < detectionAngle; i++)
+        for (float i = 0; i < detectionAngle; i = i+detectionStep)
         {
-            SendRayCast(transform.position,
-                (transform.forward + new Vector3(0.1f,0,0.1f)*i).normalized,
-                    detectionRange);
-            SendRayCast(transform.position, (transform.forward + new Vector3(0.1f,0,0.1f)*i).normalized, detectionRange);
+            SendRayCast(transform.position, new Vector3(Mathf.Sin(i),0,Mathf.Cos(i)), detectionRange);
+            SendRayCast(transform.position, new Vector3(Mathf.Sin(-i),0,Mathf.Cos(-i)), detectionRange);
         }
-        
     }
 
     private bool SendRayCast(Vector3 origin, Vector3 dir, float length)
