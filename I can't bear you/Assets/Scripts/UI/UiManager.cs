@@ -8,7 +8,9 @@ public class UiManager : MonoBehaviour
 {
     public static UiManager instance;
     [SerializeField] private Image bearserkerGauge;
+    [SerializeField] private Image currentItem;
     [SerializeField] private TextMeshProUGUI remainingNpcText;
+    private int maxNpc;
 
     private void Awake()
     {
@@ -19,14 +21,25 @@ public class UiManager : MonoBehaviour
         instance = this;
     }
 
+    private void Start()
+    {
+        maxNpc = LevelManager.instance.levels[LevelManager.instance.currentLevel-1].npcCount;
+        UpdateRemainingNpcText();
+    }
+
 
     public void UpdateBearserkerGauge(float value)
     {
         bearserkerGauge.DOFillAmount(bearserkerGauge.fillAmount + value, 0.2f);
     }
     
+    public void UpdateCurrentItem(Sprite sprite)
+    {
+        currentItem.sprite = sprite;
+    }
+    
     public void UpdateRemainingNpcText()
     {
-        remainingNpcText.text = NpcManager.instance.npcCountRemaining + "/" + NpcManager.instance.npcCountMax;
+        remainingNpcText.text = NpcManager.instance.npcCountRemaining + "/" + maxNpc;
     }
 }

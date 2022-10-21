@@ -1,17 +1,20 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class InputManager : MonoBehaviour
 {
-    public Vector2 direction;
-    public bool interactDown;
-    public bool roarDown;
+    public static InputManager instance;
+    public PlayerInput input;
 
-    private void Update()
+    private void Awake()
     {
-        direction = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized;
-        interactDown = Input.GetButtonDown("Fire1");
-        roarDown = Input.GetButtonDown("Fire2");
+        if(instance != null) Destroy(gameObject);
+        instance = this;
+        
+        input = new PlayerInput();
+        input.Enable();
     }
 }

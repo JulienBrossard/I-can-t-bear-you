@@ -148,7 +148,7 @@ MonoBehaviour:
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 0
-  m_FillAmount: 0
+  m_FillAmount: 0.1
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
@@ -346,6 +346,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bearserkerGauge: {fileID: 3076524983935799508}
+  currentItem: {fileID: 0}
   remainingNpcText: {fileID: 0}
 --- !u!1 &6351212136253928846
 GameObject:
