@@ -7,13 +7,14 @@ public class BearserkerState : PlayerState
     [SerializeField] private float bearserkerDurationRemaining;
     public override void Behave()
     {
-        if (inputManager.interactDown)
+        if (InputManager.instance.input.Actions.Smash.triggered)
         {
-            //Tapotage très fort sur le front
+            //Tapotage sur le front
         }
-        if (inputManager.roarDown)
+        if (InputManager.instance.input.Actions.Roar.triggered)
         {
-            Debug.Log("Switching to Stealth");
+            //Temporaire pour le debug
+            Debug.Log("Switching to Bearserker");
             playerStateManager.SwitchState(stealthState);
         }
     }

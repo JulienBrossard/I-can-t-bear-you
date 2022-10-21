@@ -1,3 +1,4 @@
+using System;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
@@ -18,7 +19,12 @@ public class UiManager : MonoBehaviour
             Destroy(this);
         }
         instance = this;
-        maxNpc = LevelManager.instance.levels[LevelManager.instance.currentLevel].npcCount;
+    }
+
+    private void Start()
+    {
+        maxNpc = LevelManager.instance.levels[LevelManager.instance.currentLevel-1].npcCount;
+        UpdateRemainingNpcText();
     }
 
 

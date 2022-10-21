@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.3069224, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -311,7 +311,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1420325971}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.07, y: 1.5, z: 0}
+  m_LocalPosition: {x: 6.75, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -577,6 +577,7 @@ GameObject:
   - component: {fileID: 1879967972}
   - component: {fileID: 1879967971}
   - component: {fileID: 1879967970}
+  - component: {fileID: 1879967979}
   - component: {fileID: 1879967976}
   - component: {fileID: 1879967977}
   - component: {fileID: 1879967978}
@@ -599,9 +600,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 970eaa61496a08341b7e24ee464c1781, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: {x: 0, y: 0}
-  interactDown: 0
-  roarDown: 0
 --- !u!54 &1879967971
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -723,15 +721,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerStateManager: {fileID: 1879967976}
-  inputManager: {fileID: 1879967970}
   rb: {fileID: 1879967971}
   playerStats: {fileID: 11400000, guid: c898aea46dc492b49994537bfd0deeb3, type: 2}
-  bearserkerState: {fileID: 1879967978}
-  detectionAngle: 35
+  interactablesManager: {fileID: 1879967979}
+  detectionAngle: 0.75
   detectionRange: 2
-  viewRange: 2
-  horizontalFov: 0.5
-  verticalFov: 0.5
+  detectionStep: 0.05
+  bearserkerState: {fileID: 1879967978}
 --- !u!114 &1879967978
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -745,7 +741,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerStateManager: {fileID: 1879967976}
-  inputManager: {fileID: 1879967970}
   rb: {fileID: 1879967971}
   playerStats: {fileID: 11400000, guid: 2fd0072d78ce2d94c8fe3f700ee0099d, type: 2}
+  interactablesManager: {fileID: 1879967979}
+  detectionAngle: 0.72
+  detectionRange: 2
+  detectionStep: 0.05
   stealthState: {fileID: 1879967977}
+--- !u!114 &1879967979
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1879967969}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37af99de85d600f429dc041c71987226, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interactables: []
+  smashables: []
