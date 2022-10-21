@@ -3,6 +3,7 @@ using System.Numerics;
 using UnityEngine;
 using UnityEngine.AI;
 using Random = UnityEngine.Random;
+using Vector2 = UnityEngine.Vector2;
 using Vector3 = UnityEngine.Vector3;
 
 public class Npc : MonoBehaviour
@@ -12,6 +13,9 @@ public class Npc : MonoBehaviour
     [SerializeField] NpcData npcData;
 
     [SerializeField] NavMeshAgent agent;
+    
+    [Header("Animator")]
+    [SerializeField] Animator animator;
 
     private Vector3 currentDestination;
     
@@ -20,7 +24,9 @@ public class Npc : MonoBehaviour
     Transform[] hungerPoints;
     Transform[] thirstPoints;
     Transform[] bladderPoints;
-    
+
+
+    private Vector2 randomPosParty;
     
 
     enum STATE {
@@ -53,26 +59,30 @@ public class Npc : MonoBehaviour
             {
                 state = STATE.HUNGER;
                 currentDestination = ChooseClosestTarget(hungerPoints);
+                animator.SetBool("isDancing", false);
             }
             else if (stats.currentThirst <= 0)
             {
                 state = STATE.THIRST;
                 currentDestination = ChooseClosestTarget(thirstPoints);
+                animator.SetBool("isDancing", false);
             }
             else if (stats.currentBladder <= 0)
             {
                 state = STATE.BLADDER;
                 currentDestination = ChooseClosestTarget(bladderPoints);
+                animator.SetBool("isDancing", false);
             }
             else
             {
-                if (Vector3.Distance(transform.position, LevelManager.instance.GetCurrentLevel().partyData.partyPosition.position) > LevelManager.instance.GetCurrentLevel().partyData.radius)
+                CalculateRandomPosParty();
+                agent.SetDestination(LevelManager.instance.GetCurrentLevel().partyData.partyPosition.position 
+                                     + new Vector3(randomPosParty.x, 
+                                         runAwayPoints[0].position.y, 
+                                         randomPosParty.y));
+                if (!agent.isStopped)
                 {
-                    agent.SetDestination(LevelManager.instance.GetCurrentLevel().partyData.partyPosition.position);
-                }
-                else if(!agent.isStopped)
-                {
-                    agent.isStopped = true;
+                    animator.SetBool("isDancing", true);
                 }
             }
         }
@@ -181,6 +191,28 @@ public class Npc : MonoBehaviour
         for (int i = 0; i < LevelManager.instance.GetCurrentLevel().runAwayPoints.Length; i++)
         {
             runAwayPoints[i] = LevelManager.instance.GetCurrentLevel().runAwayPoints[i];
+        }
+    }
+
+    void CalculateRandomPosParty()
+    {
+        if (!agent.isStopped && randomPosParty == Vector2.zero)
+        {
+            randomPosParty = new Vector2(
+                Random.Range(-LevelManager.instance.GetCurrentLevel().partyData.radius,
+                    LevelManager.instance.GetCurrentLevel().partyData.radius),
+                Random.Range(-LevelManager.instance.GetCurrentLevel().partyData.radius,
+                    LevelManager.instance.GetCurrentLevel().partyData.radius));
+            NavMeshPath path = new NavMeshPath();
+            NavMesh.CalculatePath(transform.position, new Vector3(randomPosParty.x, runAwayPoints[0].position.y, randomPosParty.y), agent.areaMask, path);
+            if (path.status == NavMeshPathStatus.PathInvalid)
+            {
+                CalculateRandomPosParty();
+            }
+        }
+        else if (agent.isStopped && randomPosParty != Vector2.zero)
+        {
+            randomPosParty = Vector2.zero;
         }
     }
     
