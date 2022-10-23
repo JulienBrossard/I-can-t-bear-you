@@ -17,17 +17,19 @@ public abstract class PlayerState : MonoBehaviour
 
     public void Move()
     {
-        if (InputManager.instance.input.Movement.Move.ReadValue<Vector2>() != Vector2.zero)
+        if (InputManager.instance.input.Movement.Move.ReadValue<Vector2>() == Vector2.zero)
         {
-            accelerationIndex += playerStats.accelerationStep;
-            transform.LookAt(transform.position + new Vector3(InputManager.instance.input.Movement.Move.ReadValue<Vector2>().x, 0, InputManager.instance.input.Movement.Move.ReadValue<Vector2>().y));
+            Deccelerate();
+            return;
         }
-        else
-        {
-            accelerationIndex -= playerStats.accelerationStep * 1.35f;
-        }
-        accelerationIndex = Mathf.Clamp(accelerationIndex, 0, 1);
-        rb.velocity = new Vector3(InputManager.instance.input.Movement.Move.ReadValue<Vector2>().x,0,InputManager.instance.input.Movement.Move.ReadValue<Vector2>().y) * (playerStats.accelerationCurve.Evaluate(accelerationIndex) * playerStats.maxSpeed);
+        accelerationIndex = Mathf.Clamp(accelerationIndex + playerStats.accelerationStep, 0, 1);
+        transform.LookAt(transform.position + new Vector3(InputManager.instance.input.Movement.Move.ReadValue<Vector2>().x, 0, InputManager.instance.input.Movement.Move.ReadValue<Vector2>().y).normalized);
+        rb.velocity = new Vector3(InputManager.instance.input.Movement.Move.ReadValue<Vector2>().x,0,InputManager.instance.input.Movement.Move.ReadValue<Vector2>().y).normalized * (playerStats.accelerationCurve.Evaluate(accelerationIndex) * playerStats.maxSpeed);
+    }
+    public void Deccelerate()
+    {
+        accelerationIndex = Mathf.Clamp(accelerationIndex - playerStats.slowdownStep, 0, 1);
+        rb.velocity = transform.forward * (playerStats.slowdownCurve.Evaluate(Mathf.Lerp(1,0,accelerationIndex)) * playerStats.maxSpeed);
     }
     private float tempAngle;
     public void LookForInteractables()
