@@ -11,7 +11,7 @@ public class StealthState : PlayerState
     {
         if (InputManager.instance.input.Actions.Interact.triggered)
         {
-            //Sabotage ou attrapage d'item
+            Debug.Log("Interacting with " + interestPointsManager.interactables[0].go);
         }
         if (InputManager.instance.input.Actions.Smash.triggered)
         {
@@ -27,6 +27,7 @@ public class StealthState : PlayerState
     public override void FixedBehave()
     {
         Move();
-        LookForInteractables();
+        LookForInterestPoints(playerStats.detectionAngle,playerStats.detectionRange,playerStats.detectionStep, InterestType.INTERACTABLE);
+        //LookForInterestPoints(playerStats.detectionAngle,playerStats.detectionRange,playerStats.detectionStep, InterestType.SMASHABLE);
     }
 }

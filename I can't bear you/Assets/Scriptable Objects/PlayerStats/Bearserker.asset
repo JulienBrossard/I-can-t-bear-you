@@ -72,3 +72,6 @@ MonoBehaviour:
   accelerationStep: 0.02
   slowdownStep: 0.025
   maxSpeed: 7.5
+  detectionAngle: 0.93
+  detectionRange: 1.62
+  detectionStep: 0.09
