@@ -100,7 +100,6 @@ public class Pooler : MonoBehaviour
 
     public GameObject Pop(string key)
     {
-        Debug.Log(key);
         if (pools[key].queue.Count != 0)
         {
             objectInstance = pools[key].queue.Dequeue();

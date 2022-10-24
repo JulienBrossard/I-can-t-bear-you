@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a68ae5c3547d9440ba2de542079858c, type: 3}
   m_Name: Npc data
   m_EditorClassIdentifier: 
-  maxHunger: 300
-  maxThirst: 300
-  maxBladder: 300
-  speed: 10
+  maxHunger: 1000
+  maxThirst: 1000
+  maxBladder: 1000
+  speed: 5
+  acceleration: 10

@@ -34,10 +34,10 @@ public class Npc : MonoBehaviour
         THIRST,
         HUNGER,
         BLADDER,
-        NOTHING
+        DANCING
     }
 
-    private STATE state = STATE.NOTHING;
+    private STATE state = STATE.DANCING;
     
 
     private void Start()
@@ -53,25 +53,27 @@ public class Npc : MonoBehaviour
         stats.currentThirst -= Time.deltaTime;
         stats.currentBladder -= Time.deltaTime;
 
-        if (state == STATE.NOTHING)
+        if (!animator.GetBool("isWalking") && Vector3.Distance(transform.position, agent.destination) > 2f)
+        {
+            animator.SetBool("isWalking", true);
+        }
+
+        if (state == STATE.DANCING)
         {
             if (stats.currentHunger <= 0)
             {
                 state = STATE.HUNGER;
                 currentDestination = ChooseClosestTarget(hungerPoints);
-                animator.SetBool("isDancing", false);
             }
             else if (stats.currentThirst <= 0)
             {
                 state = STATE.THIRST;
                 currentDestination = ChooseClosestTarget(thirstPoints);
-                animator.SetBool("isDancing", false);
             }
             else if (stats.currentBladder <= 0)
             {
                 state = STATE.BLADDER;
                 currentDestination = ChooseClosestTarget(bladderPoints);
-                animator.SetBool("isDancing", false);
             }
             else
             {
@@ -80,7 +82,7 @@ public class Npc : MonoBehaviour
                                      + new Vector3(randomPosParty.x, 
                                          runAwayPoints[0].position.y, 
                                          randomPosParty.y));
-                if (!agent.isStopped)
+                if (Vector3.Distance(transform.position, agent.destination) < 2f )
                 {
                     animator.SetBool("isDancing", true);
                 }
@@ -88,7 +90,6 @@ public class Npc : MonoBehaviour
         }
         else
         {
-            agent.isStopped = false;
             switch (state)
             {
                 case STATE.RUNAWAY :
@@ -96,7 +97,7 @@ public class Npc : MonoBehaviour
                     if (Mathf.Abs(transform.position.x - agent.destination.x) <= 0.1f &&
                         Mathf.Abs(transform.position.z - agent.destination.z) <= 0.1f)
                     {
-                        state = STATE.NOTHING;
+                        state = STATE.DANCING;
                         NpcManager.instance.UnSpawnNpc(gameObject);
                     }
                     break;
@@ -105,7 +106,7 @@ public class Npc : MonoBehaviour
                     if (Mathf.Abs(transform.position.x - agent.destination.x) <= 0.1f &&
                         Mathf.Abs(transform.position.z - agent.destination.z) <= 0.1f)
                     {
-                        state = STATE.NOTHING;
+                        state = STATE.DANCING;
                         stats.currentHunger = npcData.maxHunger;
                     }
                     break;
@@ -113,7 +114,7 @@ public class Npc : MonoBehaviour
                     agent.SetDestination(currentDestination);
                     if(Mathf.Abs(transform.position.x - agent.destination.x) <= 1f && Mathf.Abs(transform.position.z - agent.destination.z) <= 1f)
                     {
-                        state = STATE.NOTHING;
+                        state = STATE.DANCING;
                         stats.currentThirst = npcData.maxThirst;
                     }
                     break;
@@ -121,7 +122,7 @@ public class Npc : MonoBehaviour
                     agent.SetDestination(currentDestination);
                     if(Mathf.Abs(transform.position.x - agent.destination.x) <= 0.1f && Mathf.Abs(transform.position.z - agent.destination.z) <= 0.1f)
                     {
-                        state = STATE.NOTHING;
+                        state = STATE.DANCING;
                         stats.currentBladder = npcData.maxBladder;
                     }
                     break;
@@ -214,6 +215,20 @@ public class Npc : MonoBehaviour
         {
             randomPosParty = Vector2.zero;
         }
+    }
+    
+    public void UpdateWalking()
+    {
+        agent.speed = Mathf.Lerp(agent.speed, npcData.speed, npcData.acceleration * Time.deltaTime);
+        animator.SetBool("isDancing", false);
+        animator.SetFloat("Speed", agent.speed);
+    }
+
+    public void StopWalking()
+    {
+        agent.speed = 0;
+        animator.SetBool("isWalking", false);
+        animator.SetFloat("Speed", agent.speed);
     }
     
 }
