@@ -15,6 +15,11 @@ public class StealthState : PlayerState
     {
         if (InputManager.instance.input.Actions.Interact.triggered)
         {
+            if (heldObject?.GetComponent<IInteractable>() != default)
+            {
+                heldObject.GetComponent<IInteractable>().Interact();
+                return;
+            }
             interestPointsManager.GetInteractable()?.Interact();
         }
         if (InputManager.instance.input.Actions.Smash.triggered)
@@ -25,6 +30,7 @@ public class StealthState : PlayerState
         {
             if (heldObject == default)
             {
+                if(interestPointsManager.GetGrabbable() == null) return;
                 heldObject = interestPointsManager.GetGrabbable().Grab(handTransform).gameObject;
             }
             else
@@ -36,6 +42,7 @@ public class StealthState : PlayerState
         if (InputManager.instance.input.Actions.Roar.triggered)
         {
             Debug.Log("Switching to Bearserker");
+            heldObject?.GetComponent<IGrabbable>().Drop();
             playerStateManager.SwitchState(bearserkerState);
         }
     }

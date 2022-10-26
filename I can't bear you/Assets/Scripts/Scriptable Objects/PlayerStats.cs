@@ -5,7 +5,8 @@ using UnityEngine;
 public class PlayerStats : ScriptableObject
 {
     [Header("Movement")]
-    public AnimationCurve accelerationCurve,slowdownCurve;
+    public AnimationCurve accelerationCurve;
+    public AnimationCurve slowdownCurve;
     public float accelerationStep,slowdownStep;
     public float maxSpeed;
     [Header("Sight")] 
