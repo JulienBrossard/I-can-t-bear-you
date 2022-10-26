@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class BearserkerState : PlayerState
@@ -7,7 +8,7 @@ public class BearserkerState : PlayerState
     [SerializeField] private float bearserkerDurationRemaining;
     protected override void OnStateEnter()
     {
-        
+        StartCoroutine(RemoveBearserkerDuration());
     }
 
     public override void Behave()
@@ -66,19 +67,28 @@ public class BearserkerState : PlayerState
         {
             bearserkerDurationRemaining = bearserkerMaxDuration;
         }
-        UiManager.instance.UpdateBearserkerGauge(duration/bearserkerMaxDuration);
+        UiManager.instance.UpdateBearserkerGauge(duration/bearserkerMaxDuration, 0.2f);
     }
     
-    public void RemoveBearserkerDuration()
+    IEnumerator RemoveBearserkerDuration()
     {
-        bearserkerDurationRemaining -= Time.deltaTime;
+        bearserkerDurationRemaining -= 1;
+        UiManager.instance.UpdateBearserkerGauge(bearserkerDurationRemaining/bearserkerMaxDuration, 1f);
+
+        
         if (bearserkerDurationRemaining < 0)
         {
             bearserkerDurationRemaining = 0;
             Sleep();
         }
-        UiManager.instance.UpdateBearserkerGauge(bearserkerDurationRemaining/bearserkerMaxDuration);
+
+        if (bearserkerDurationRemaining > 0)
+        {
+            yield return new WaitForSeconds(1);
+            StartCoroutine(RemoveBearserkerDuration());
+        }
     }
+    
 
     public void Sleep()
     {
