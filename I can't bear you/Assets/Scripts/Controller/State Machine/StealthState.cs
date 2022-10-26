@@ -11,7 +11,6 @@ public class StealthState : PlayerState
     {
         
     }
-
     public override void Behave()
     {
         if (InputManager.instance.input.Actions.Interact.triggered)
@@ -24,7 +23,15 @@ public class StealthState : PlayerState
         }
         if (InputManager.instance.input.Actions.Grab.triggered)
         {
-            interestPointsManager.GetGrabbable()?.Grab();
+            if (heldObject == default)
+            {
+                heldObject = interestPointsManager.GetGrabbable().Grab(handTransform).gameObject;
+            }
+            else
+            {
+                heldObject.GetComponent<IGrabbable>().Drop();
+                heldObject = null;
+            }
         }
         if (InputManager.instance.input.Actions.Roar.triggered)
         {

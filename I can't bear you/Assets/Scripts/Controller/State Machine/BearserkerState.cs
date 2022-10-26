@@ -12,14 +12,21 @@ public class BearserkerState : PlayerState
 
     public override void Behave()
     {
-        
         if (InputManager.instance.input.Actions.Smash.triggered)
         {
             interestPointsManager.GetSmashable()?.Smash();
         }
         if (InputManager.instance.input.Actions.Grab.triggered)
         {
-            interestPointsManager.GetGrabbable()?.Grab();
+            if (heldObject == default)
+            {
+                heldObject = interestPointsManager.GetGrabbable().Grab(handTransform).gameObject;
+            }
+            else
+            {
+                heldObject.GetComponent<IGrabbable>().Drop();
+                heldObject = null;
+            }
         }
         if (InputManager.instance.input.Actions.Roar.triggered)
         {

@@ -9,6 +9,8 @@ public abstract class PlayerState : MonoBehaviour
     [SerializeField] protected Rigidbody rb;
     [SerializeField] protected PlayerStats playerStats;
     [SerializeField] protected InterestPointsManager interestPointsManager;
+    [SerializeField] protected GameObject heldObject;
+    [SerializeField] protected Transform handTransform;
     private float accelerationIndex;
     protected abstract void OnStateEnter();
     public abstract void Behave();
