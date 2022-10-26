@@ -7,6 +7,7 @@ public class PlayerStateManager : MonoBehaviour
 {
     [SerializeField] private PlayerState baseState;
     private PlayerState currentState;
+    [SerializeField] private InterestPointsManager interestPointsManager;
     
     private void Start()
     {
@@ -24,5 +25,6 @@ public class PlayerStateManager : MonoBehaviour
     public void SwitchState(PlayerState newState)
     {
         currentState = newState;
+        interestPointsManager.Clear();
     }
 }

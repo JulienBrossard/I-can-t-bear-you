@@ -7,15 +7,31 @@ using UnityEngine;
 public class StealthState : PlayerState
 {
     [SerializeField] private PlayerState bearserkerState;
+    protected override void OnStateEnter()
+    {
+        
+    }
     public override void Behave()
     {
         if (InputManager.instance.input.Actions.Interact.triggered)
         {
-            Debug.Log("Interacting with " + interestPointsManager.interactables[0].go);
+            interestPointsManager.GetInteractable()?.Interact();
         }
         if (InputManager.instance.input.Actions.Smash.triggered)
         {
-            //Tapotage sur le front
+            interestPointsManager.GetSmashable()?.Smash();
+        }
+        if (InputManager.instance.input.Actions.Grab.triggered)
+        {
+            if (heldObject == default)
+            {
+                heldObject = interestPointsManager.GetGrabbable().Grab(handTransform).gameObject;
+            }
+            else
+            {
+                heldObject.GetComponent<IGrabbable>().Drop();
+                heldObject = null;
+            }
         }
         if (InputManager.instance.input.Actions.Roar.triggered)
         {
@@ -27,7 +43,24 @@ public class StealthState : PlayerState
     public override void FixedBehave()
     {
         Move();
-        LookForInterestPoints(playerStats.detectionAngle,playerStats.detectionRange,playerStats.detectionStep, InterestType.INTERACTABLE);
-        //LookForInterestPoints(playerStats.detectionAngle,playerStats.detectionRange,playerStats.detectionStep, InterestType.SMASHABLE);
+        LookForInterestPoints(playerStats.detectionAngle,playerStats.detectionRange,playerStats.detectionStep);
+    }
+
+    protected override void SendRayCast(Vector3 origin, Vector3 dir, float length, float centerDistance)
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(origin, dir, out hit, length))
+        {
+            if (hit.collider.GetComponent<IInteractable>() != default || hit.collider.GetComponent<ISmashable>() != default || hit.collider.GetComponent<IGrabbable>() != default)
+            {
+                interestPointsManager.AddInterestPoint(new InterestPoint(hit.collider.gameObject, hit.distance,centerDistance));
+                Debug.DrawRay(origin, dir * hit.distance, Color.blue);
+                return;
+            }
+            Debug.DrawRay(origin, dir * length, Color.green);
+            return;
+        }
+        Debug.DrawRay(origin, dir * length, Color.green);
+        return;
     }
 }
