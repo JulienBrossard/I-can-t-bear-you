@@ -11,11 +11,15 @@ public class StealthState : PlayerState
     {
         if (InputManager.instance.input.Actions.Interact.triggered)
         {
-            Debug.Log("Interacting with " + interestPointsManager.interactables[0].go);
+            interestPointsManager.GetInteractable()?.Interact();
         }
         if (InputManager.instance.input.Actions.Smash.triggered)
         {
-            //Tapotage sur le front
+            interestPointsManager.GetSmashable()?.Smash();
+        }
+        if (InputManager.instance.input.Actions.Grab.triggered)
+        {
+            interestPointsManager.GetGrabbable()?.Grab();
         }
         if (InputManager.instance.input.Actions.Roar.triggered)
         {
@@ -24,10 +28,28 @@ public class StealthState : PlayerState
         }
     }
 
+    private int detectionDelay;
     public override void FixedBehave()
     {
         Move();
-        LookForInterestPoints(playerStats.detectionAngle,playerStats.detectionRange,playerStats.detectionStep, InterestType.INTERACTABLE);
-        //LookForInterestPoints(playerStats.detectionAngle,playerStats.detectionRange,playerStats.detectionStep, InterestType.SMASHABLE);
+        LookForInterestPoints(playerStats.detectionAngle,playerStats.detectionRange,playerStats.detectionStep);
+    }
+
+    protected override void SendRayCast(Vector3 origin, Vector3 dir, float length, float centerDistance)
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(origin, dir, out hit, length))
+        {
+            if (hit.collider.GetComponent<IInteractable>() != default || hit.collider.GetComponent<ISmashable>() != default || hit.collider.GetComponent<IGrabbable>() != default)
+            {
+                interestPointsManager.AddInterestPoint(new InterestPoint(hit.collider.gameObject, hit.distance,centerDistance));
+                Debug.DrawRay(origin, dir * hit.distance, Color.blue);
+                return;
+            }
+            Debug.DrawRay(origin, dir * length, Color.green);
+            return;
+        }
+        Debug.DrawRay(origin, dir * length, Color.green);
+        return;
     }
 }

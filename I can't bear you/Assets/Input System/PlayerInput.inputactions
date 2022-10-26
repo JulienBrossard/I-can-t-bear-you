@@ -103,13 +103,22 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Grab",
+                    "type": "Button",
+                    "id": "9210af63-f6dc-413e-9f77-42c6c303cc29",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
                 {
                     "name": "",
                     "id": "91f2fba5-9856-4a9b-aec0-a5ff7d37c1c6",
-                    "path": "<Keyboard>/e",
+                    "path": "<Keyboard>/y",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -120,7 +129,7 @@
                 {
                     "name": "",
                     "id": "5f5f3e97-0a7f-4e3c-9d0b-d92ded425db8",
-                    "path": "<Keyboard>/r",
+                    "path": "<Keyboard>/e",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -131,11 +140,22 @@
                 {
                     "name": "",
                     "id": "8b9f2458-e6cd-4b56-98b5-a7cd8c6cab83",
-                    "path": "<Keyboard>/t",
+                    "path": "<Keyboard>/r",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "Smash",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "808d069d-8a13-47bc-90d3-d7c5b4cc03ee",
+                    "path": "<Keyboard>/t",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Grab",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
