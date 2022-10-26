@@ -10,9 +10,9 @@ public abstract class PlayerState : MonoBehaviour
     [SerializeField] protected PlayerStats playerStats;
     [SerializeField] protected InterestPointsManager interestPointsManager;
     private float accelerationIndex;
+    protected abstract void OnStateEnter();
     public abstract void Behave();
     public abstract void FixedBehave();
-
     public void Move()
     {
         if (InputManager.instance.input.Movement.Move.ReadValue<Vector2>() == Vector2.zero)

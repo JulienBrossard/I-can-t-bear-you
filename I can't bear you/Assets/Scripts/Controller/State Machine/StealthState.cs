@@ -7,6 +7,11 @@ using UnityEngine;
 public class StealthState : PlayerState
 {
     [SerializeField] private PlayerState bearserkerState;
+    protected override void OnStateEnter()
+    {
+        
+    }
+
     public override void Behave()
     {
         if (InputManager.instance.input.Actions.Interact.triggered)
@@ -28,7 +33,6 @@ public class StealthState : PlayerState
         }
     }
 
-    private int detectionDelay;
     public override void FixedBehave()
     {
         Move();

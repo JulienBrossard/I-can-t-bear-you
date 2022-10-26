@@ -5,11 +5,21 @@ public class BearserkerState : PlayerState
     [SerializeField] private PlayerState stealthState;
     [SerializeField] private int bearserkerMaxDuration;
     [SerializeField] private float bearserkerDurationRemaining;
+    protected override void OnStateEnter()
+    {
+        
+    }
+
     public override void Behave()
     {
+        
         if (InputManager.instance.input.Actions.Smash.triggered)
         {
-            //Tapotage sur le front
+            interestPointsManager.GetSmashable()?.Smash();
+        }
+        if (InputManager.instance.input.Actions.Grab.triggered)
+        {
+            interestPointsManager.GetGrabbable()?.Grab();
         }
         if (InputManager.instance.input.Actions.Roar.triggered)
         {
@@ -19,7 +29,6 @@ public class BearserkerState : PlayerState
         }
     }
     
-    private int detectionDelay;
     public override void FixedBehave()
     {
         Move();
