@@ -730,6 +730,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4425532498778494946}
   - component: {fileID: 7749158428632567192}
+  - component: {fileID: 7200533657538569537}
   m_Layer: 0
   m_Name: BearMesh
   m_TagString: Untagged
@@ -780,6 +781,19 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &7200533657538569537
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3900529528280436056}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6a912b9e9ca9dd44b0881684ac77e52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 7749158428632567192}
 --- !u!1 &4107068845926625871
 GameObject:
   m_ObjectHideFlags: 0

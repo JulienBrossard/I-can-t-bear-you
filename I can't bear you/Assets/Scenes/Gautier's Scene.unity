@@ -723,10 +723,7 @@ MonoBehaviour:
   playerStateManager: {fileID: 1879967976}
   rb: {fileID: 1879967971}
   playerStats: {fileID: 11400000, guid: c898aea46dc492b49994537bfd0deeb3, type: 2}
-  interactablesManager: {fileID: 1879967979}
-  detectionAngle: 0.75
-  detectionRange: 2
-  detectionStep: 0.05
+  interestPointsManager: {fileID: 1879967979}
   bearserkerState: {fileID: 1879967978}
 --- !u!114 &1879967978
 MonoBehaviour:
@@ -743,11 +740,10 @@ MonoBehaviour:
   playerStateManager: {fileID: 1879967976}
   rb: {fileID: 1879967971}
   playerStats: {fileID: 11400000, guid: 2fd0072d78ce2d94c8fe3f700ee0099d, type: 2}
-  interactablesManager: {fileID: 1879967979}
-  detectionAngle: 0.72
-  detectionRange: 2
-  detectionStep: 0.05
+  interestPointsManager: {fileID: 1879967979}
   stealthState: {fileID: 1879967977}
+  bearserkerMaxDuration: 0
+  bearserkerDurationRemaining: 0
 --- !u!114 &1879967979
 MonoBehaviour:
   m_ObjectHideFlags: 0
