@@ -125,13 +125,22 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Grab"",
+                    ""type"": ""Button"",
+                    ""id"": ""9210af63-f6dc-413e-9f77-42c6c303cc29"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
                 {
                     ""name"": """",
                     ""id"": ""91f2fba5-9856-4a9b-aec0-a5ff7d37c1c6"",
-                    ""path"": ""<Keyboard>/e"",
+                    ""path"": ""<Keyboard>/y"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -142,7 +151,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""5f5f3e97-0a7f-4e3c-9d0b-d92ded425db8"",
-                    ""path"": ""<Keyboard>/r"",
+                    ""path"": ""<Keyboard>/e"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -153,11 +162,22 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""8b9f2458-e6cd-4b56-98b5-a7cd8c6cab83"",
-                    ""path"": ""<Keyboard>/t"",
+                    ""path"": ""<Keyboard>/r"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Smash"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""808d069d-8a13-47bc-90d3-d7c5b4cc03ee"",
+                    ""path"": ""<Keyboard>/t"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Grab"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -191,6 +211,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         m_Actions_Roar = m_Actions.FindAction("Roar", throwIfNotFound: true);
         m_Actions_Interact = m_Actions.FindAction("Interact", throwIfNotFound: true);
         m_Actions_Smash = m_Actions.FindAction("Smash", throwIfNotFound: true);
+        m_Actions_Grab = m_Actions.FindAction("Grab", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -286,6 +307,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     private readonly InputAction m_Actions_Roar;
     private readonly InputAction m_Actions_Interact;
     private readonly InputAction m_Actions_Smash;
+    private readonly InputAction m_Actions_Grab;
     public struct ActionsActions
     {
         private @PlayerInput m_Wrapper;
@@ -293,6 +315,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         public InputAction @Roar => m_Wrapper.m_Actions_Roar;
         public InputAction @Interact => m_Wrapper.m_Actions_Interact;
         public InputAction @Smash => m_Wrapper.m_Actions_Smash;
+        public InputAction @Grab => m_Wrapper.m_Actions_Grab;
         public InputActionMap Get() { return m_Wrapper.m_Actions; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -311,6 +334,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @Smash.started -= m_Wrapper.m_ActionsActionsCallbackInterface.OnSmash;
                 @Smash.performed -= m_Wrapper.m_ActionsActionsCallbackInterface.OnSmash;
                 @Smash.canceled -= m_Wrapper.m_ActionsActionsCallbackInterface.OnSmash;
+                @Grab.started -= m_Wrapper.m_ActionsActionsCallbackInterface.OnGrab;
+                @Grab.performed -= m_Wrapper.m_ActionsActionsCallbackInterface.OnGrab;
+                @Grab.canceled -= m_Wrapper.m_ActionsActionsCallbackInterface.OnGrab;
             }
             m_Wrapper.m_ActionsActionsCallbackInterface = instance;
             if (instance != null)
@@ -324,6 +350,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @Smash.started += instance.OnSmash;
                 @Smash.performed += instance.OnSmash;
                 @Smash.canceled += instance.OnSmash;
+                @Grab.started += instance.OnGrab;
+                @Grab.performed += instance.OnGrab;
+                @Grab.canceled += instance.OnGrab;
             }
         }
     }
@@ -346,5 +375,6 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         void OnRoar(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
         void OnSmash(InputAction.CallbackContext context);
+        void OnGrab(InputAction.CallbackContext context);
     }
 }

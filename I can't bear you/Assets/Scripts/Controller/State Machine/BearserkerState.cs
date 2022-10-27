@@ -5,48 +5,65 @@ public class BearserkerState : PlayerState
     [SerializeField] private PlayerState stealthState;
     [SerializeField] private int bearserkerMaxDuration;
     [SerializeField] private float bearserkerDurationRemaining;
+    protected override void OnStateEnter()
+    {
+        
+    }
     public override void Behave()
     {
         if (InputManager.instance.input.Actions.Smash.triggered)
         {
-            //Tapotage sur le front
+            interestPointsManager.GetSmashable()?.Smash();
+        }
+        if (InputManager.instance.input.Actions.Grab.triggered)
+        {
+            if (heldObject == default)
+            {
+                if(interestPointsManager.GetGrabbable() == null) return;
+                heldObject = interestPointsManager.GetGrabbable()?.Grab(handTransform).gameObject;
+            }
+            else
+            {
+                heldObject.GetComponent<IGrabbable>().Drop();
+                heldObject = null;
+            }
         }
         if (InputManager.instance.input.Actions.Roar.triggered)
         {
             //Temporaire pour le debug
-            Debug.Log("Switching to Bearserker");
+            Debug.Log("Switching to Stealth");
+            heldObject?.GetComponent<IGrabbable>().Drop();
             playerStateManager.SwitchState(stealthState);
         }
     }
-
     public override void FixedBehave()
     {
         Move();
+        LookForInterestPoints(playerStats.detectionAngle,playerStats.detectionRange,playerStats.detectionStep);
+        BearserkerGaugeManager.instance.Use();
     }
-    
-    public void AddBearserkerDuration(int duration)
+    protected override void SendRayCast(Vector3 origin, Vector3 dir, float length, float centerDistance)
     {
-        bearserkerDurationRemaining += duration;
-        if (bearserkerDurationRemaining > bearserkerMaxDuration)
+        RaycastHit hit;
+        if (Physics.Raycast(origin, dir, out hit, length))
         {
-            bearserkerDurationRemaining = bearserkerMaxDuration;
+            if (hit.collider.GetComponent<ISmashable>() != default || hit.collider.GetComponent<IGrabbable>() != default)
+            {
+                interestPointsManager.AddInterestPoint(new InterestPoint(hit.collider.gameObject, hit.distance,centerDistance));
+                Debug.DrawRay(origin, dir * hit.distance, Color.blue);
+                return;
+            }
+            Debug.DrawRay(origin, dir * length, Color.green);
+            return;
         }
-        UiManager.instance.UpdateBearserkerGauge(duration/bearserkerMaxDuration);
+        Debug.DrawRay(origin, dir * length, Color.green);
+        return;
     }
-    
-    public void RemoveBearserkerDuration()
-    {
-        bearserkerDurationRemaining -= Time.deltaTime;
-        if (bearserkerDurationRemaining < 0)
-        {
-            bearserkerDurationRemaining = 0;
-            Sleep();
-        }
-        UiManager.instance.UpdateBearserkerGauge(bearserkerDurationRemaining/bearserkerMaxDuration);
-    }
-
     public void Sleep()
     {
+        Debug.Log("Switching to Stealth");
+        heldObject?.GetComponent<IGrabbable>().Drop();
+        playerStateManager.SwitchState(stealthState); //Pour le debug
         //insert Sleep consequence
     }
 }
