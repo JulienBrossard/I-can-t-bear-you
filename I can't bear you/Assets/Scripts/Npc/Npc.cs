@@ -6,7 +6,7 @@ using Random = UnityEngine.Random;
 using Vector2 = UnityEngine.Vector2;
 using Vector3 = UnityEngine.Vector3;
 
-public class Npc : MonoBehaviour
+public class Npc : MonoBehaviour,ISmashable
 {
     [Header("Stats")] 
     public Stats stats;
@@ -230,7 +230,11 @@ public class Npc : MonoBehaviour
         animator.SetBool("isWalking", false);
         animator.SetFloat("Speed", agent.speed);
     }
-    
+
+    public void Smash() //Fonction appelée quand le joueur tape sur le NPC
+    {
+        Destroy(gameObject);
+    }
 }
 
 [Serializable]

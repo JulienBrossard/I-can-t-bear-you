@@ -7,9 +7,9 @@ using UnityEngine;
 public class StealthState : PlayerState
 {
     [SerializeField] private PlayerState bearserkerState;
-    protected override void OnStateEnter()
+    public override void OnStateEnter()
     {
-        
+        PlayerAnimatorManager.instance.SetAnimatorBool("Bearserker", false);
     }
     public override void Behave()
     {
@@ -50,7 +50,9 @@ public class StealthState : PlayerState
     public override void FixedBehave()
     {
         Move();
+        PlayerAnimatorManager.instance.SetAnimatorFloat("Speed", rb.velocity.magnitude);
         LookForInterestPoints(playerStats.detectionAngle,playerStats.detectionRange,playerStats.detectionStep);
+        PlayerAnimatorManager.instance.SetAnimatorFloat("Speed", rb.velocity.magnitude);
     }
 
     protected override void SendRayCast(Vector3 origin, Vector3 dir, float length, float centerDistance)

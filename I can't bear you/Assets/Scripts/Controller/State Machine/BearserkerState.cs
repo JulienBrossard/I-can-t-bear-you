@@ -3,17 +3,20 @@ using UnityEngine;
 public class BearserkerState : PlayerState
 {
     [SerializeField] private PlayerState stealthState;
-    [SerializeField] private int bearserkerMaxDuration;
-    [SerializeField] private float bearserkerDurationRemaining;
-    protected override void OnStateEnter()
+    public override void OnStateEnter()
     {
-        
+        Debug.Log(0);
+        PlayerAnimatorManager.instance.SetAnimatorBool("Bearserker", true);
     }
     public override void Behave()
     {
         if (InputManager.instance.input.Actions.Smash.triggered)
         {
-            interestPointsManager.GetSmashable()?.Smash();
+            if (interestPointsManager.GetSmashable() != default)
+            {
+                interestPointsManager.GetSmashable().Smash();
+                PlayerAnimatorManager.instance.SetAnimatorTrigger("Attack");
+            }
         }
         if (InputManager.instance.input.Actions.Grab.triggered)
         {
@@ -39,6 +42,7 @@ public class BearserkerState : PlayerState
     public override void FixedBehave()
     {
         Move();
+        PlayerAnimatorManager.instance.SetAnimatorFloat("Speed", rb.velocity.magnitude);
         LookForInterestPoints(playerStats.detectionAngle,playerStats.detectionRange,playerStats.detectionStep);
         BearserkerGaugeManager.instance.Use();
     }

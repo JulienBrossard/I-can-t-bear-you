@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 2451688659374893296}
   - component: {fileID: 2451688659374893297}
   - component: {fileID: 2451688659374893304}
+  - component: {fileID: 4147988042225327202}
   - component: {fileID: 2451688659374893307}
   - component: {fileID: 2451688659374893306}
   - component: {fileID: 2451688659374893305}
@@ -102,8 +103,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37af99de85d600f429dc041c71987226, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactables: []
-  smashables: []
+  interestPoints: []
+--- !u!114 &4147988042225327202
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2451688659374893298}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70eed52c9bd365047b9ca3c242c6f512, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bearserkerState: {fileID: 2451688659374893305}
+  amount: 0.1
+  deductionRate: 0.0003
 --- !u!114 &2451688659374893307
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -117,6 +132,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   baseState: {fileID: 2451688659374893306}
+  interestPointsManager: {fileID: 2451688659374893304}
 --- !u!114 &2451688659374893306
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -132,7 +148,8 @@ MonoBehaviour:
   playerStateManager: {fileID: 2451688659374893307}
   rb: {fileID: 2451688659374893296}
   playerStats: {fileID: 11400000, guid: c898aea46dc492b49994537bfd0deeb3, type: 2}
-  interestPointsManager: {fileID: 0}
+  interestPointsManager: {fileID: 2451688659374893304}
+  handTransform: {fileID: 0}
   bearserkerState: {fileID: 2451688659374893305}
 --- !u!114 &2451688659374893305
 MonoBehaviour:
@@ -149,7 +166,8 @@ MonoBehaviour:
   playerStateManager: {fileID: 2451688659374893307}
   rb: {fileID: 2451688659374893296}
   playerStats: {fileID: 11400000, guid: 2fd0072d78ce2d94c8fe3f700ee0099d, type: 2}
-  interestPointsManager: {fileID: 0}
+  interestPointsManager: {fileID: 2451688659374893304}
+  handTransform: {fileID: 0}
   stealthState: {fileID: 2451688659374893306}
   bearserkerMaxDuration: 0
   bearserkerDurationRemaining: 0
