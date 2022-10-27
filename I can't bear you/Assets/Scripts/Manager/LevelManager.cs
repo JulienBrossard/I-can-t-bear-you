@@ -35,6 +35,11 @@ public class LevelManager : MonoBehaviour
     {
         return levels[currentLevel-1];
     }
+
+    public Transform GetPlayer()
+    {
+        return levels[currentLevel-1].player;
+    }
 }
 
 [Serializable]
@@ -49,6 +54,9 @@ public class LevelData
     public Transform[] hungerPoints;
     public Transform[] thirstPoints;
     public Transform[] bladderPoints;
+    
+    [Header("Player")]
+    public Transform player;
 
     public PartyData partyData;
 }

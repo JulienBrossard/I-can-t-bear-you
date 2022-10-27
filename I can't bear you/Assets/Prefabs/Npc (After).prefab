@@ -1482,6 +1482,7 @@ GameObject:
   - component: {fileID: 196610271938975182}
   - component: {fileID: 872662432960104353}
   - component: {fileID: 2523814097983844807}
+  - component: {fileID: -7787597326935306304}
   m_Layer: 0
   m_Name: Npc (After)
   m_TagString: Untagged
@@ -1588,7 +1589,23 @@ MonoBehaviour:
   agent: {fileID: 872662432960104353}
   animator: {fileID: 7426378792727152438}
   isAction: 0
-  state: 4
+  state: 3
+  panicData: {fileID: -7787597326935306304}
+--- !u!114 &-7787597326935306304
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4225555480404199414}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19991cee13099a242981d613ac467c7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentPanic: 0
+  panicData: {fileID: 11400000, guid: a3c6d08dab0c19b4a87684c76dfff81f, type: 2}
+  panicState: 0
 --- !u!1 &4518432834019712719
 GameObject:
   m_ObjectHideFlags: 0

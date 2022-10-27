@@ -9,12 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2a68ae5c3547d9440ba2de542079858c, type: 3}
-  m_Name: Npc data
+  m_Script: {fileID: 11500000, guid: 6c256361d57ff604e8012d90865582ae, type: 3}
+  m_Name: Status Effects Data
   m_EditorClassIdentifier: 
-  maxHunger: 1000
-  maxThirst: 1000
-  maxBladder: 1000
-  speed: 2
-  runSpeed: 6
-  acceleration: 10
