@@ -10,7 +10,7 @@ public class Npc : MonoBehaviour
 {
     [Header("Stats")] 
     public Stats stats;
-    [SerializeField] NpcData npcData;
+    [SerializeField] public NpcData npcData;
 
     [SerializeField] NavMeshAgent agent;
     
@@ -27,9 +27,11 @@ public class Npc : MonoBehaviour
 
 
     private Vector2 randomPosParty;
+
+    public bool isAction;
     
 
-    enum STATE {
+    public enum STATE {
         RUNAWAY,
         THIRST,
         HUNGER,
@@ -37,7 +39,7 @@ public class Npc : MonoBehaviour
         DANCING
     }
 
-    private STATE state = STATE.DANCING;
+    [HideInInspector] public STATE state = STATE.DANCING;
     
 
     private void Start()
@@ -88,7 +90,7 @@ public class Npc : MonoBehaviour
                 }
             }
         }
-        else
+        else if(!isAction)
         {
             switch (state)
             {
@@ -114,16 +116,14 @@ public class Npc : MonoBehaviour
                     agent.SetDestination(currentDestination);
                     if(Mathf.Abs(transform.position.x - agent.destination.x) <= 1f && Mathf.Abs(transform.position.z - agent.destination.z) <= 1f)
                     {
-                        state = STATE.DANCING;
-                        stats.currentThirst = npcData.maxThirst;
+                        animator.SetBool("isDrinking", true);
                     }
                     break;
                 case STATE.BLADDER :
                     agent.SetDestination(currentDestination);
                     if(Mathf.Abs(transform.position.x - agent.destination.x) <= 0.1f && Mathf.Abs(transform.position.z - agent.destination.z) <= 0.1f)
                     {
-                        state = STATE.DANCING;
-                        stats.currentBladder = npcData.maxBladder;
+                        animator.SetBool("isBladder", true);
                     }
                     break;
             }

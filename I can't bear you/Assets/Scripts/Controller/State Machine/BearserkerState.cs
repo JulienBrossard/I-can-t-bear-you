@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 
 public class BearserkerState : PlayerState
@@ -8,9 +7,8 @@ public class BearserkerState : PlayerState
     [SerializeField] private float bearserkerDurationRemaining;
     protected override void OnStateEnter()
     {
-        StartCoroutine(RemoveBearserkerDuration());
+        
     }
-
     public override void Behave()
     {
         if (InputManager.instance.input.Actions.Smash.triggered)
@@ -21,7 +19,8 @@ public class BearserkerState : PlayerState
         {
             if (heldObject == default)
             {
-                heldObject = interestPointsManager.GetGrabbable().Grab(handTransform).gameObject;
+                if(interestPointsManager.GetGrabbable() == null) return;
+                heldObject = interestPointsManager.GetGrabbable()?.Grab(handTransform).gameObject;
             }
             else
             {
@@ -32,15 +31,16 @@ public class BearserkerState : PlayerState
         if (InputManager.instance.input.Actions.Roar.triggered)
         {
             //Temporaire pour le debug
-            Debug.Log("Switching to Bearserker");
+            Debug.Log("Switching to Stealth");
+            heldObject?.GetComponent<IGrabbable>().Drop();
             playerStateManager.SwitchState(stealthState);
         }
     }
-    
     public override void FixedBehave()
     {
         Move();
         LookForInterestPoints(playerStats.detectionAngle,playerStats.detectionRange,playerStats.detectionStep);
+        BearserkerGaugeManager.instance.Use();
     }
     protected override void SendRayCast(Vector3 origin, Vector3 dir, float length, float centerDistance)
     {
@@ -59,39 +59,11 @@ public class BearserkerState : PlayerState
         Debug.DrawRay(origin, dir * length, Color.green);
         return;
     }
-    
-    public void AddBearserkerDuration(int duration)
-    {
-        bearserkerDurationRemaining += duration;
-        if (bearserkerDurationRemaining > bearserkerMaxDuration)
-        {
-            bearserkerDurationRemaining = bearserkerMaxDuration;
-        }
-        UiManager.instance.UpdateBearserkerGauge(duration/bearserkerMaxDuration, 0.2f);
-    }
-    
-    IEnumerator RemoveBearserkerDuration()
-    {
-        bearserkerDurationRemaining -= 1;
-        UiManager.instance.UpdateBearserkerGauge(bearserkerDurationRemaining/bearserkerMaxDuration, 1f);
-
-        
-        if (bearserkerDurationRemaining < 0)
-        {
-            bearserkerDurationRemaining = 0;
-            Sleep();
-        }
-
-        if (bearserkerDurationRemaining > 0)
-        {
-            yield return new WaitForSeconds(1);
-            StartCoroutine(RemoveBearserkerDuration());
-        }
-    }
-    
-
     public void Sleep()
     {
+        Debug.Log("Switching to Stealth");
+        heldObject?.GetComponent<IGrabbable>().Drop();
+        playerStateManager.SwitchState(stealthState); //Pour le debug
         //insert Sleep consequence
     }
 }

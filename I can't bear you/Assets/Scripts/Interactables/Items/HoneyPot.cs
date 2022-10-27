@@ -6,9 +6,11 @@ public class HoneyPot : MonoBehaviour,IInteractable,ISmashable,IGrabbable
 {
     [SerializeField] private Rigidbody rb;
     [SerializeField] private BoxCollider collider;
+    [SerializeField, Range(0f, 1f)] private float bearserkerToAdd;
     public void Interact()
     {
         Debug.Log("Eating Honey Pot");
+        BearserkerGaugeManager.instance.AddBearserker(bearserkerToAdd);
     }
 
     public void Smash()

@@ -9,7 +9,7 @@ public abstract class PlayerState : MonoBehaviour
     [SerializeField] protected Rigidbody rb;
     [SerializeField] protected PlayerStats playerStats;
     [SerializeField] protected InterestPointsManager interestPointsManager;
-    [SerializeField] protected GameObject heldObject;
+    protected GameObject heldObject;
     [SerializeField] protected Transform handTransform;
     private float accelerationIndex;
     protected abstract void OnStateEnter();
@@ -41,6 +41,5 @@ public abstract class PlayerState : MonoBehaviour
             SendRayCast(transform.position,new Vector3(Mathf.Sin(-i+tempAngle),0,Mathf.Cos(-i+tempAngle)), range, i/angle);
         }
     }
-
     protected abstract void SendRayCast(Vector3 origin, Vector3 dir, float length, float centerDistance);
 }
