@@ -28,7 +28,7 @@ public class UiManager : MonoBehaviour
     }
 
 
-    public void UpdateBearserkerGauge(float value)
+    public void UpdateBearserkerGauge(float value, float time)
     {
         bearserkerGauge.fillAmount = value;
         //bearserkerGauge.DOFillAmount(bearserkerGauge.fillAmount + value, 0.2f);
@@ -43,4 +43,7 @@ public class UiManager : MonoBehaviour
     {
         remainingNpcText.text = NpcManager.instance.npcCountRemaining + "/" + maxNpc;
     }
+    
+    
+    
 }
