@@ -42,4 +42,7 @@ public class UiManager : MonoBehaviour
     {
         remainingNpcText.text = NpcManager.instance.npcCountRemaining + "/" + maxNpc;
     }
+    
+    
+    
 }
