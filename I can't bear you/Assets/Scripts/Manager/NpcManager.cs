@@ -21,7 +21,10 @@ public class NpcManager : MonoBehaviour
     {
         Pooler.instance.Pop("Npc").transform.position = LevelManager.instance.GetRandomNpcSpawn();
         npcCountRemaining++;
-        UiManager.instance.UpdateRemainingNpcText();
+        if (npcCountRemaining == LevelManager.instance.levels[LevelManager.instance.currentLevel - 1].npcCount)
+        {
+            UiManager.instance.UpdateRemainingNpcText();
+        }
     }
     
     [ContextMenu("UnSpawn Npc")]
@@ -29,5 +32,6 @@ public class NpcManager : MonoBehaviour
     {
         Pooler.instance.DePop("Npc", npc);
         npcCountRemaining--;
+        UiManager.instance.UpdateRemainingNpcText();
     }
 }

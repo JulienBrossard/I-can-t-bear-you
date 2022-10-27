@@ -10,7 +10,7 @@ public class Npc : MonoBehaviour
 {
     [Header("Stats")] 
     public Stats stats;
-    [SerializeField] NpcData npcData;
+    [SerializeField] public NpcData npcData;
 
     [SerializeField] NavMeshAgent agent;
     
@@ -27,17 +27,19 @@ public class Npc : MonoBehaviour
 
 
     private Vector2 randomPosParty;
+
+    public bool isAction;
     
 
-    enum STATE {
+    public enum STATE {
         RUNAWAY,
         THIRST,
         HUNGER,
         BLADDER,
-        NOTHING
+        DANCING
     }
 
-    private STATE state = STATE.NOTHING;
+    [HideInInspector] public STATE state = STATE.DANCING;
     
 
     private void Start()
@@ -53,25 +55,27 @@ public class Npc : MonoBehaviour
         stats.currentThirst -= Time.deltaTime;
         stats.currentBladder -= Time.deltaTime;
 
-        if (state == STATE.NOTHING)
+        if (!animator.GetBool("isWalking") && Vector3.Distance(transform.position, agent.destination) > 2f)
+        {
+            animator.SetBool("isWalking", true);
+        }
+
+        if (state == STATE.DANCING)
         {
             if (stats.currentHunger <= 0)
             {
                 state = STATE.HUNGER;
                 currentDestination = ChooseClosestTarget(hungerPoints);
-                animator.SetBool("isDancing", false);
             }
             else if (stats.currentThirst <= 0)
             {
                 state = STATE.THIRST;
                 currentDestination = ChooseClosestTarget(thirstPoints);
-                animator.SetBool("isDancing", false);
             }
             else if (stats.currentBladder <= 0)
             {
                 state = STATE.BLADDER;
                 currentDestination = ChooseClosestTarget(bladderPoints);
-                animator.SetBool("isDancing", false);
             }
             else
             {
@@ -80,15 +84,14 @@ public class Npc : MonoBehaviour
                                      + new Vector3(randomPosParty.x, 
                                          runAwayPoints[0].position.y, 
                                          randomPosParty.y));
-                if (!agent.isStopped)
+                if (Vector3.Distance(transform.position, agent.destination) < 2f )
                 {
                     animator.SetBool("isDancing", true);
                 }
             }
         }
-        else
+        else if(!isAction)
         {
-            agent.isStopped = false;
             switch (state)
             {
                 case STATE.RUNAWAY :
@@ -96,7 +99,7 @@ public class Npc : MonoBehaviour
                     if (Mathf.Abs(transform.position.x - agent.destination.x) <= 0.1f &&
                         Mathf.Abs(transform.position.z - agent.destination.z) <= 0.1f)
                     {
-                        state = STATE.NOTHING;
+                        state = STATE.DANCING;
                         NpcManager.instance.UnSpawnNpc(gameObject);
                     }
                     break;
@@ -105,7 +108,7 @@ public class Npc : MonoBehaviour
                     if (Mathf.Abs(transform.position.x - agent.destination.x) <= 0.1f &&
                         Mathf.Abs(transform.position.z - agent.destination.z) <= 0.1f)
                     {
-                        state = STATE.NOTHING;
+                        state = STATE.DANCING;
                         stats.currentHunger = npcData.maxHunger;
                     }
                     break;
@@ -113,16 +116,14 @@ public class Npc : MonoBehaviour
                     agent.SetDestination(currentDestination);
                     if(Mathf.Abs(transform.position.x - agent.destination.x) <= 1f && Mathf.Abs(transform.position.z - agent.destination.z) <= 1f)
                     {
-                        state = STATE.NOTHING;
-                        stats.currentThirst = npcData.maxThirst;
+                        animator.SetBool("isDrinking", true);
                     }
                     break;
                 case STATE.BLADDER :
                     agent.SetDestination(currentDestination);
                     if(Mathf.Abs(transform.position.x - agent.destination.x) <= 0.1f && Mathf.Abs(transform.position.z - agent.destination.z) <= 0.1f)
                     {
-                        state = STATE.NOTHING;
-                        stats.currentBladder = npcData.maxBladder;
+                        animator.SetBool("isBladder", true);
                     }
                     break;
             }
@@ -214,6 +215,20 @@ public class Npc : MonoBehaviour
         {
             randomPosParty = Vector2.zero;
         }
+    }
+    
+    public void UpdateWalking()
+    {
+        agent.speed = Mathf.Lerp(agent.speed, npcData.speed, npcData.acceleration * Time.deltaTime);
+        animator.SetBool("isDancing", false);
+        animator.SetFloat("Speed", agent.speed);
+    }
+
+    public void StopWalking()
+    {
+        agent.speed = 0;
+        animator.SetBool("isWalking", false);
+        animator.SetFloat("Speed", agent.speed);
     }
     
 }
