@@ -19,7 +19,7 @@ GameObject:
   - component: {fileID: 2451688659374893305}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -132,10 +132,7 @@ MonoBehaviour:
   playerStateManager: {fileID: 2451688659374893307}
   rb: {fileID: 2451688659374893296}
   playerStats: {fileID: 11400000, guid: c898aea46dc492b49994537bfd0deeb3, type: 2}
-  interactablesManager: {fileID: 2451688659374893304}
-  detectionAngle: 0.75
-  detectionRange: 2
-  detectionStep: 0.05
+  interestPointsManager: {fileID: 0}
   bearserkerState: {fileID: 2451688659374893305}
 --- !u!114 &2451688659374893305
 MonoBehaviour:
@@ -152,10 +149,7 @@ MonoBehaviour:
   playerStateManager: {fileID: 2451688659374893307}
   rb: {fileID: 2451688659374893296}
   playerStats: {fileID: 11400000, guid: 2fd0072d78ce2d94c8fe3f700ee0099d, type: 2}
-  interactablesManager: {fileID: 2451688659374893304}
-  detectionAngle: 0.72
-  detectionRange: 2
-  detectionStep: 0.05
+  interestPointsManager: {fileID: 0}
   stealthState: {fileID: 2451688659374893306}
   bearserkerMaxDuration: 0
   bearserkerDurationRemaining: 0
