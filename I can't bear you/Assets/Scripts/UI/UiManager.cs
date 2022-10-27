@@ -28,10 +28,9 @@ public class UiManager : MonoBehaviour
     }
 
 
-    public void UpdateBearserkerGauge(float value, float time)
+    public void UpdateBearserkerGauge(float value)
     {
         bearserkerGauge.fillAmount = value;
-        //bearserkerGauge.DOFillAmount(bearserkerGauge.fillAmount + value, 0.2f);
     }
     
     public void UpdateCurrentItem(Sprite sprite)

@@ -5,7 +5,6 @@ public class BearserkerState : PlayerState
     [SerializeField] private PlayerState stealthState;
     public override void OnStateEnter()
     {
-        Debug.Log(0);
         PlayerAnimatorManager.instance.SetAnimatorBool("Bearserker", true);
     }
     public override void Behave()
@@ -53,7 +52,7 @@ public class BearserkerState : PlayerState
         {
             if (hit.collider.GetComponent<ISmashable>() != default || hit.collider.GetComponent<IGrabbable>() != default)
             {
-                interestPointsManager.AddInterestPoint(new InterestPoint(hit.collider.gameObject, hit.distance,centerDistance));
+                interestPointsManager.AddInterestPoint(new InterestPoint(hit.collider.gameObject, Mathf.InverseLerp(0,length,hit.distance),Mathf.Lerp(1,0,centerDistance),playerStats.detectionRangeCurve,playerStats.detectionAngleCurve));
                 Debug.DrawRay(origin, dir * hit.distance, Color.blue);
                 return;
             }

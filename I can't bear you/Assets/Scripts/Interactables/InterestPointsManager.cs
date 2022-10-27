@@ -90,21 +90,25 @@ public class InterestPoint
 {
     public GameObject go;
     public float score, distance, centerDistance;
+    public AnimationCurve rangeCurve, centerCurve;
     public bool validity;
-    public InterestPoint(GameObject newGo, float newDistance, float newCenterDistance)
+    public InterestPoint(GameObject newGo, float newDistance, float newCenterDistance, AnimationCurve newRangeCurve, AnimationCurve newCenterCurve)
     {
         go = newGo;
         distance = newDistance;
         centerDistance = newCenterDistance;
-        score = distance * centerDistance;
-        validity = true;
+        rangeCurve = newRangeCurve;
+        centerCurve = newCenterCurve;
+        score = rangeCurve.Evaluate(distance) * centerCurve.Evaluate(centerDistance);
     }
 
     public float ReCalculateScore(float newDistance, float newCenterDistance)
     {
-        if (newDistance * newCenterDistance > score)
+        if (rangeCurve.Evaluate(newDistance) * centerCurve.Evaluate(newCenterDistance) > score)
         {
-            score = newDistance * newCenterDistance;
+            distance = newDistance;
+            centerDistance = newCenterDistance;
+            score = rangeCurve.Evaluate(newDistance) * centerCurve.Evaluate(newCenterDistance);
         }
         return score;
     }
