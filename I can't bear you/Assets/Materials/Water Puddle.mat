@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Puddle
+  m_Name: Water Puddle
   m_Shader: {fileID: -6465566751694194690, guid: 3f5b6f8b1eeebbf4ea41ade2c35fcdc3,
     type: 3}
   m_ValidKeywords: []
