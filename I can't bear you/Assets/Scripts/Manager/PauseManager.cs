@@ -1,13 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PauseManager : MonoBehaviour
 {
     private bool isPaused = false;
     public GameObject pauseMenu;
     
-    private void Pause()
+    public void Pause()
     {
         if (isPaused)
         {
@@ -26,7 +25,12 @@ public class PauseManager : MonoBehaviour
     public void LoadScene(string sceneName)
     {
         Time.timeScale = 1;
-        Application.LoadLevel(sceneName);
+        SceneManager.LoadScene(sceneName);
+    }
+    public void RestartScene()
+    {
+        Time.timeScale = 1;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
     
     public void QuitGame()
@@ -36,7 +40,7 @@ public class PauseManager : MonoBehaviour
     
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (InputManager.instance.input.Actions.Pause.triggered)
         {
             Pause();
         }
