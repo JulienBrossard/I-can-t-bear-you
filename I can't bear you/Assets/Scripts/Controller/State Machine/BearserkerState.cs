@@ -11,6 +11,12 @@ public class BearserkerState : PlayerState
     {
         if (InputManager.instance.input.Actions.Smash.triggered)
         {
+            if (heldObject != default)
+            {
+                heldObject.GetComponent<IGrabbable>().Throw(transform.forward);
+                heldObject = null;
+                return;
+            }
             if (interestPointsManager.GetSmashable() != default)
             {
                 interestPointsManager.GetSmashable().Smash();

@@ -71,6 +71,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 3778223884131960099}
   collider: {fileID: 3778223884131960110}
+  bearserkerToAdd: 0.1
+  throwForce: 25
 --- !u!54 &3778223884131960099
 Rigidbody:
   m_ObjectHideFlags: 0

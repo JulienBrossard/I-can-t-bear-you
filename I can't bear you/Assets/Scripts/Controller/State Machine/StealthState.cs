@@ -15,6 +15,7 @@ public class StealthState : PlayerState
     {
         if (InputManager.instance.input.Actions.Interact.triggered)
         {
+            
             if (heldObject?.GetComponent<IInteractable>() != default)
             {
                 heldObject.GetComponent<IInteractable>().Interact();
@@ -24,6 +25,12 @@ public class StealthState : PlayerState
         }
         if (InputManager.instance.input.Actions.Smash.triggered)
         {
+            if (heldObject != default)
+            {
+                heldObject.GetComponent<IGrabbable>().Throw(transform.forward);
+                heldObject = null;
+                return;
+            }
             interestPointsManager.GetSmashable()?.Smash();
         }
         if (InputManager.instance.input.Actions.Grab.triggered)

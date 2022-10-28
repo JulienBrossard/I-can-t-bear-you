@@ -149,7 +149,7 @@ MonoBehaviour:
   rb: {fileID: 2451688659374893296}
   playerStats: {fileID: 11400000, guid: c898aea46dc492b49994537bfd0deeb3, type: 2}
   interestPointsManager: {fileID: 2451688659374893304}
-  handTransform: {fileID: 0}
+  handTransform: {fileID: 4511790121175914320}
   bearserkerState: {fileID: 2451688659374893305}
 --- !u!114 &2451688659374893305
 MonoBehaviour:
@@ -167,10 +167,8 @@ MonoBehaviour:
   rb: {fileID: 2451688659374893296}
   playerStats: {fileID: 11400000, guid: 2fd0072d78ce2d94c8fe3f700ee0099d, type: 2}
   interestPointsManager: {fileID: 2451688659374893304}
-  handTransform: {fileID: 0}
+  handTransform: {fileID: 6200872098281598526}
   stealthState: {fileID: 2451688659374893306}
-  bearserkerMaxDuration: 0
-  bearserkerDurationRemaining: 0
 --- !u!1001 &2146153097024215185
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -253,11 +251,28 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7749158428632567192, guid: a803df3caa6eae542ac12423d73a8d89,
+        type: 3}
+      propertyPath: m_WarningMessage
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a803df3caa6eae542ac12423d73a8d89, type: 3}
 --- !u!4 &2351455711249567603 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4425532498778494946, guid: a803df3caa6eae542ac12423d73a8d89,
+    type: 3}
+  m_PrefabInstance: {fileID: 2146153097024215185}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &4511790121175914320 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2546138986321350593, guid: a803df3caa6eae542ac12423d73a8d89,
+    type: 3}
+  m_PrefabInstance: {fileID: 2146153097024215185}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &6200872098281598526 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5459847704023611055, guid: a803df3caa6eae542ac12423d73a8d89,
     type: 3}
   m_PrefabInstance: {fileID: 2146153097024215185}
   m_PrefabAsset: {fileID: 0}
