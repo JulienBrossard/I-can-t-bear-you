@@ -4,11 +4,6 @@ using UnityEngine;
 [Serializable]
 public class Panic : MonoBehaviour
 {
-    [Range(0,1)]
-    [SerializeField] float currentPanic;
-    public PanicData panicData;
-    [SerializeField] private Npc npc;
-    
     public enum PanicState
     {
         Calm,
@@ -16,24 +11,32 @@ public class Panic : MonoBehaviour
         Panic,
     }
     
+    [Header("Data")]
+    [Range(0,1)]
+    [SerializeField] float currentPanic;
     public PanicState panicState = PanicState.Tense;
+    public PanicData panicData;
+    
+    [Header("Npc Script")]
+    [SerializeField] private Npc npc;
+
 
     public void UpdatePanic(float panic)
     {
         currentPanic += panic;
         if (currentPanic < 0.5f)
         {
-            npc.currentSpeed = npc.npcData.speed;
+            npc.UpdateSpeed(npc.npcData.speed);
             panicState = PanicState.Calm;
         }
         else if(currentPanic >= 0.5f && currentPanic <1f)
         {
-            npc.currentSpeed = npc.npcData.speed;
+            npc.UpdateSpeed(npc.npcData.speed);
             panicState = PanicState.Tense;
         }
         else if(currentPanic >= 1f)
         {
-            npc.currentSpeed = npc.npcData.runSpeed;
+            npc.UpdateSpeed(npc.npcData.runSpeed);
             panicState = PanicState.Panic;
             currentPanic = 1f;
         }

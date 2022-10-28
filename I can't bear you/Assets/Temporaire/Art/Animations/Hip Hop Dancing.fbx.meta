@@ -1,11 +1,11 @@
 fileFormatVersion: 2
-guid: 706fd1f895302c24f8f11ca1ab94fae2
+guid: d2c18760782f87f46bedbfeaa28f196b
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable:
   - first:
       74: -203655887218126122
-    second: Dancing
+    second: Hip Hop Dancing
   externalObjects: {}
   materials:
     materialImportMode: 2
@@ -36,11 +36,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Dancing
+      name: Hip Hop Dancing
       takeName: mixamo.com
       internalID: 0
       firstFrame: 0
-      lastFrame: 508
+      lastFrame: 460
       wrapMode: 0
       orientationOffsetY: 0
       level: 0

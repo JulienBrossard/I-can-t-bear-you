@@ -6,10 +6,20 @@ using Vector3 = UnityEngine.Vector3;
 
 public class Npc : MonoBehaviour
 {
-    [Header("Stats")] 
+    public enum STATE {
+        THIRST,
+        HUNGER,
+        BLADDER,
+        DANCING
+    }
+    
+    [Header("Data")] 
     public Stats stats;
     [SerializeField] public NpcData npcData;
+    public STATE state = STATE.DANCING;
 
+    
+    [Header("NavMesh")]
     [SerializeField] NavMeshAgent agent;
     
     [Header("Animator")]
@@ -29,21 +39,12 @@ public class Npc : MonoBehaviour
     private Vector3 randomPosParty;
 
     [HideInInspector] public bool isAction;
-    
 
-    public enum STATE {
-        THIRST,
-        HUNGER,
-        BLADDER,
-        DANCING
-    }
-
-    public STATE state = STATE.DANCING;
-    
     Pathfinding pathfinding;
 
-    [Header("Panic Data")] 
+    [Header("Scripts")] 
     [SerializeField] private Panic panicData;
+    [SerializeField] private StatusEffects statusEffects;
     
     private Transform player;
 
@@ -56,6 +57,7 @@ public class Npc : MonoBehaviour
         RandomStats();
         pathfinding.LoadWayPoints(out hungerPoints, out thirstPoints, out bladderPoints, out runAwayPoints);
         player = LevelManager.instance.GetPlayer();
+        UpdateSpeed(npcData.speed);
     }
 
     private void Update()
@@ -63,6 +65,7 @@ public class Npc : MonoBehaviour
         if (!animator.GetBool("isWalking") && Vector3.Distance(transform.position, agent.destination) > 2f)
         {
             animator.SetBool("isWalking", true);
+            animator.SetBool("isDancing", false);
         }
 
         if (panicData.panicState == Panic.PanicState.Calm)
@@ -181,10 +184,14 @@ public class Npc : MonoBehaviour
         stats.currentThirst = Random.Range(0, npcData.maxThirst);
     }
 
+    public void UpdateSpeed(float newSpeed)
+    {
+        currentSpeed = newSpeed * statusEffects.currentData.currentSpeedRatio;
+    }
+
     public void UpdateWalking()
     {
         agent.speed = Mathf.Lerp(agent.speed, currentSpeed, npcData.acceleration * Time.deltaTime);
-        animator.SetBool("isDancing", false);
         animator.SetFloat("Speed", agent.speed);
     }
 
