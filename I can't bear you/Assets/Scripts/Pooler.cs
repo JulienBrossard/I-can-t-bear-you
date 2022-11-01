@@ -9,9 +9,9 @@ public class Pooler : MonoBehaviour
 {
     
     public static Pooler instance;
-    Dictionary<string, Pool> pools = new Dictionary<string, Pool>();
+    private Dictionary<string, Pool> pools = new Dictionary<string, Pool>();
     private GameObject objectInstance;
-    [SerializeField] private List<PoolKey> poolKeys = new List<PoolKey>();
+    [SerializeField] public List<PoolKey> poolKeys = new List<PoolKey>();
 
     [System.Serializable]
     public class Pool

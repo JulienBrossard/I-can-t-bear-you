@@ -110,7 +110,7 @@ public class Npc : MonoBehaviour
                 if (!agent.isStopped && randomPosParty == Vector3.zero)
                 {
                     randomPosParty = pathfinding.CalculateRandomPosParty(agent,  transform, runAwayPoints[0].position.y,
-                        LevelManager.instance.GetCurrentLevel().partyData.radius, LevelManager.instance.GetCurrentLevel().partyData.partyPosition.position);
+                        LevelManager.instance.level.partyData.radius, LevelManager.instance.level.partyData.partyPosition.position);
                 }
                 else if (agent.isStopped && randomPosParty != Vector3.zero)
                 {
@@ -173,7 +173,7 @@ public class Npc : MonoBehaviour
         if (Mathf.Abs(transform.position.x - agent.destination.x) <= 0.5f &&
             Mathf.Abs(transform.position.z - agent.destination.z) <= 0.5f)
         {
-            NpcManager.instance.UnSpawnNpc(gameObject);
+            NpcManager.instance.UnSpawnNpc(gameObject.name.Replace("(Clone)", String.Empty),gameObject);
         }
     }
 

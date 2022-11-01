@@ -37,25 +37,25 @@ public class Pathfinding
 
     public void LoadWayPoints(out Transform[] hungerPoints, out Transform[] thirstPoints, out Transform[] bladderPoints, out Transform[] runAwayPoints)
     {
-        hungerPoints = new Transform[LevelManager.instance.GetCurrentLevel().hungerPoints.Length];
-        thirstPoints = new Transform[LevelManager.instance.GetCurrentLevel().thirstPoints.Length];
-        bladderPoints = new Transform[LevelManager.instance.GetCurrentLevel().bladderPoints.Length];
-        runAwayPoints = new Transform[LevelManager.instance.GetCurrentLevel().runAwayPoints.Length];
-        for (int i = 0; i < LevelManager.instance.GetCurrentLevel().hungerPoints.Length; i++)
+        hungerPoints = new Transform[LevelManager.instance.level.hungerPoints.Length];
+        thirstPoints = new Transform[LevelManager.instance.level.thirstPoints.Length];
+        bladderPoints = new Transform[LevelManager.instance.level.bladderPoints.Length];
+        runAwayPoints = new Transform[LevelManager.instance.level.runAwayPoints.Length];
+        for (int i = 0; i < LevelManager.instance.level.hungerPoints.Length; i++)
         {
-            hungerPoints[i] = LevelManager.instance.GetCurrentLevel().hungerPoints[i];
+            hungerPoints[i] = LevelManager.instance.level.hungerPoints[i];
         }
-        for (int i = 0; i < LevelManager.instance.GetCurrentLevel().thirstPoints.Length; i++)
+        for (int i = 0; i < LevelManager.instance.level.thirstPoints.Length; i++)
         {
-            thirstPoints[i] = LevelManager.instance.GetCurrentLevel().thirstPoints[i];
+            thirstPoints[i] = LevelManager.instance.level.thirstPoints[i];
         }
-        for (int i = 0; i < LevelManager.instance.GetCurrentLevel().bladderPoints.Length; i++)
+        for (int i = 0; i < LevelManager.instance.level.bladderPoints.Length; i++)
         {
-            bladderPoints[i] = LevelManager.instance.GetCurrentLevel().bladderPoints[i];
+            bladderPoints[i] = LevelManager.instance.level.bladderPoints[i];
         }
-        for (int i = 0; i < LevelManager.instance.GetCurrentLevel().runAwayPoints.Length; i++)
+        for (int i = 0; i < LevelManager.instance.level.runAwayPoints.Length; i++)
         {
-            runAwayPoints[i] = LevelManager.instance.GetCurrentLevel().runAwayPoints[i];
+            runAwayPoints[i] = LevelManager.instance.level.runAwayPoints[i];
         }
     }
 
