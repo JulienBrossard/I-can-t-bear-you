@@ -13,7 +13,7 @@ public class Panic : MonoBehaviour
     
     [Header("Data")]
     [Range(0,1)]
-    [SerializeField] float currentPanic;
+    public float currentPanic;
     public PanicState panicState = PanicState.Tense;
     public PanicData panicData;
     

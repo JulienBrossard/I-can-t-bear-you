@@ -14,8 +14,14 @@ public class Awareness : MonoBehaviour
     [HideInInspector]
     public Transform visibleTarget;
 
+    [Header("Scripts")] 
+    [SerializeField] private Panic panicData;
+    [SerializeField] private StatusEffects statusEffects;
+
     void Start() {
         StartCoroutine ("FindTargetsWithDelay", .2f);
+        viewRadius = viewRadius + (panicData.currentPanic * viewRadius) -
+                     (statusEffects.currentData.currentAwarenessRatio * viewRadius);
     }
 
 
