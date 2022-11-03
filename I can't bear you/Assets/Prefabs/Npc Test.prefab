@@ -1647,7 +1647,9 @@ MonoBehaviour:
   obstacleMask:
     serializedVersion: 2
     m_Bits: 55
-  visibleTargets: []
+  visibleTarget: {fileID: 0}
+  panicData: {fileID: -7787597326935306304}
+  statusEffects: {fileID: -2508231515378271730}
 --- !u!1 &4518432834019712719
 GameObject:
   m_ObjectHideFlags: 0
