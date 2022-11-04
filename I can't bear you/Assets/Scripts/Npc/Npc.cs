@@ -4,7 +4,7 @@ using UnityEngine.AI;
 using Random = UnityEngine.Random;
 using Vector3 = UnityEngine.Vector3;
 
-public class Npc : MonoBehaviour
+public class Npc : MonoBehaviour,ISmashable
 {
     public enum STATE {
         THIRST,
@@ -201,7 +201,11 @@ public class Npc : MonoBehaviour
         animator.SetBool("isWalking", false);
         animator.SetFloat("Speed", agent.speed);
     }
-    
+
+    public void Smash() //Fonction appelée quand le joueur tape sur le NPC
+    {
+        Destroy(gameObject);
+    }
 }
 
 [Serializable]
