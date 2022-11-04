@@ -1,13 +1,14 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 public class LevelManager : MonoBehaviour
 {
     public static LevelManager instance;
-    public int currentLevel;
-
-    public LevelData[] levels;
+    [SerializeField] private Pooler pooler;
+    public LevelData level;
 
     private void Awake()
     {
@@ -20,36 +21,63 @@ public class LevelManager : MonoBehaviour
 
     private void Start()
     {
-        for (int i = 0; i < levels[currentLevel-1].npcCount; i++)
+        for (int i = 0; i < level.npc.Length; i++)
         {
-            NpcManager.instance.SpawnNpc();
+            for (int j = 0; j < level.npc[i].count; j++)
+            {
+                NpcManager.instance.SpawnNpc(level.npc[i].npc.name);
+            }
         }
     }
 
     public Vector3 GetRandomNpcSpawn()
     {
-        return levels[currentLevel-1].npcSpawnPositions[Random.Range(0, levels[currentLevel-1].npcSpawnPositions.Length)].position;
+        return level.npcSpawnPositions[Random.Range(0, level.npcSpawnPositions.Length)].position;
     }
 
-    public LevelData GetCurrentLevel()
+    public Transform GetPlayer()
     {
-        return levels[currentLevel-1];
+        return level.player;
+    }
+
+    public void ApplyModifications()
+    {
+        if (level.npc != null)
+        {
+            pooler.poolKeys = new List<Pooler.PoolKey>();
+            for (int i = 0; i < level.npc.Length; i++)
+            {
+                pooler.poolKeys.Add(new Pooler.PoolKey()
+                {
+                    key = level.npc[i].npc.name,
+                    pool = new Pooler.Pool(){ prefab = level.npc[i].npc,baseCount = level.npc[i].count,baseRefreshSpeed = 5,refreshSpeed = 5}
+                });
+            }
+            Debug.Log("Apply modifications successful");
+        }
+        else
+        {
+            Debug.LogWarning("Npc List is empty");
+        }
     }
 }
 
 [Serializable]
 public class LevelData
 {
-    public string name;
-    public int level;
-    public int npcCount;
-    public Transform[] npcSpawnPositions;
+    public SpawnNpc[] npc;
+    [HideInInspector] public int npcCount;
     [Header("Waypoint Settings")]
+    public Transform[] npcSpawnPositions;
     public Transform[] runAwayPoints;
     public Transform[] hungerPoints;
     public Transform[] thirstPoints;
     public Transform[] bladderPoints;
+    
+    [Header("Player")]
+    public Transform player;
 
+    [Header("Party Data")]
     public PartyData partyData;
 }
 
@@ -58,4 +86,11 @@ public class PartyData
 {
     public Transform partyPosition;
     public float radius;
+}
+
+[Serializable]
+public class SpawnNpc
+{
+    public GameObject npc;
+    public int count;
 }
