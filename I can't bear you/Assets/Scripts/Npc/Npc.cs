@@ -1,17 +1,25 @@
 using System;
-using System.Numerics;
 using UnityEngine;
 using UnityEngine.AI;
 using Random = UnityEngine.Random;
-using Vector2 = UnityEngine.Vector2;
 using Vector3 = UnityEngine.Vector3;
 
-public class Npc : MonoBehaviour
+public class Npc : MonoBehaviour,ISmashable
 {
-    [Header("Stats")] 
+    public enum STATE {
+        THIRST,
+        HUNGER,
+        BLADDER,
+        DANCING
+    }
+    
+    [Header("Data")] 
     public Stats stats;
     [SerializeField] public NpcData npcData;
+    public STATE state = STATE.DANCING;
 
+    
+    [Header("NavMesh")]
     [SerializeField] NavMeshAgent agent;
     
     [Header("Animator")]
@@ -24,66 +32,91 @@ public class Npc : MonoBehaviour
     Transform[] hungerPoints;
     Transform[] thirstPoints;
     Transform[] bladderPoints;
-
-
-    private Vector2 randomPosParty;
-
-    public bool isAction;
+    Vector3 investigatePoint;
     
 
-    public enum STATE {
-        RUNAWAY,
-        THIRST,
-        HUNGER,
-        BLADDER,
-        DANCING
-    }
 
-    [HideInInspector] public STATE state = STATE.DANCING;
+    private Vector3 randomPosParty;
+
+    [HideInInspector] public bool isAction;
+
+    Pathfinding pathfinding;
+
+    [Header("Scripts")] 
+    [SerializeField] private Panic panicData;
+    [SerializeField] private StatusEffects statusEffects;
     
+    private Transform player;
+
+    [HideInInspector] public float currentSpeed;
 
     private void Start()
     {
+        pathfinding = new Pathfinding();
         agent.speed = npcData.speed;
         RandomStats();
-        LoadWayPoints();
+        pathfinding.LoadWayPoints(out hungerPoints, out thirstPoints, out bladderPoints, out runAwayPoints);
+        player = LevelManager.instance.GetPlayer();
+        UpdateSpeed(npcData.speed);
     }
 
     private void Update()
     {
-        stats.currentHunger -= Time.deltaTime;
-        stats.currentThirst -= Time.deltaTime;
-        stats.currentBladder -= Time.deltaTime;
-
         if (!animator.GetBool("isWalking") && Vector3.Distance(transform.position, agent.destination) > 2f)
         {
             animator.SetBool("isWalking", true);
+            animator.SetBool("isDancing", false);
         }
+
+        if (panicData.panicState == Panic.PanicState.Calm)
+        {
+            Calm();
+        }
+        else if(panicData.panicState == Panic.PanicState.Tense)
+        {
+            Investigate();
+        }
+        else
+        {
+            RunAway();
+        }
+    }
+
+    void Calm()
+    {
+        stats.currentHunger -= Time.deltaTime;
+        stats.currentThirst -= Time.deltaTime;
+        stats.currentBladder -= Time.deltaTime;
 
         if (state == STATE.DANCING)
         {
             if (stats.currentHunger <= 0)
             {
                 state = STATE.HUNGER;
-                currentDestination = ChooseClosestTarget(hungerPoints);
+                currentDestination = pathfinding.ChooseClosestTarget(hungerPoints, transform, agent);
             }
             else if (stats.currentThirst <= 0)
             {
                 state = STATE.THIRST;
-                currentDestination = ChooseClosestTarget(thirstPoints);
+                currentDestination = pathfinding.ChooseClosestTarget(thirstPoints, transform, agent);
             }
             else if (stats.currentBladder <= 0)
             {
                 state = STATE.BLADDER;
-                currentDestination = ChooseClosestTarget(bladderPoints);
+                currentDestination = pathfinding.ChooseClosestTarget(bladderPoints, transform, agent);
             }
             else
             {
-                CalculateRandomPosParty();
-                agent.SetDestination(LevelManager.instance.GetCurrentLevel().partyData.partyPosition.position 
-                                     + new Vector3(randomPosParty.x, 
-                                         runAwayPoints[0].position.y, 
-                                         randomPosParty.y));
+                if (!agent.isStopped && randomPosParty == Vector3.zero)
+                {
+                    randomPosParty = pathfinding.CalculateRandomPosParty(agent,  transform, runAwayPoints[0].position.y,
+                        LevelManager.instance.level.partyData.radius, LevelManager.instance.level.partyData.partyPosition.position);
+                }
+                else if (agent.isStopped && randomPosParty != Vector3.zero)
+                {
+                    randomPosParty = Vector3.zero;
+                }
+                agent.SetDestination(randomPosParty);
                 if (Vector3.Distance(transform.position, agent.destination) < 2f )
                 {
                     animator.SetBool("isDancing", true);
@@ -94,15 +127,6 @@ public class Npc : MonoBehaviour
         {
             switch (state)
             {
-                case STATE.RUNAWAY :
-                    agent.SetDestination(currentDestination);
-                    if (Mathf.Abs(transform.position.x - agent.destination.x) <= 0.1f &&
-                        Mathf.Abs(transform.position.z - agent.destination.z) <= 0.1f)
-                    {
-                        state = STATE.DANCING;
-                        NpcManager.instance.UnSpawnNpc(gameObject);
-                    }
-                    break;
                 case STATE.HUNGER :
                     agent.SetDestination(currentDestination);
                     if (Mathf.Abs(transform.position.x - agent.destination.x) <= 0.1f &&
@@ -130,38 +154,27 @@ public class Npc : MonoBehaviour
         }
     }
 
-    public Vector3 ChooseClosestTarget(Transform[] wayPoints)
+    void Investigate()
     {
-        Transform closestTarget = null;
-        float closestTargetDistance = float.MaxValue;
-        NavMeshPath path = new NavMeshPath();
-
-        for (int i = 0; i < wayPoints.Length; i++)
+        if (investigatePoint == Vector3.zero)
         {
-            if (wayPoints[i] == default)
-            {
-                continue;
-            }
-
-            if (NavMesh.CalculatePath(transform.position, wayPoints[i].position, agent.areaMask, path))
-            {
-                float distance = Vector3.Distance(transform.position, path.corners[0]);
-
-                for (int j = 1; j < path.corners.Length; j++)
-                {
-                    distance += Vector3.Distance(path.corners[j-1], path.corners[j]);
-                }
-
-                if (distance < closestTargetDistance)
-                {
-                    closestTargetDistance = distance;
-                    closestTarget = wayPoints[i];
-                }
-            }
+            investigatePoint = pathfinding.CalculateRandomPosParty(agent, transform, runAwayPoints[0].position.y, panicData.panicData.investigateRadius, player.position);
         }
-        
+        else if (pathfinding.Distance(transform, agent) < 2 && investigatePoint != Vector3.zero)
+        {
+            investigatePoint = Vector3.zero;
+        }
+        agent.SetDestination(investigatePoint);
+    }
 
-        return closestTarget.position;
+    void RunAway()
+    {
+        agent.SetDestination(pathfinding.ChooseClosestTarget(runAwayPoints, transform, agent));
+        if (Mathf.Abs(transform.position.x - agent.destination.x) <= 0.5f &&
+            Mathf.Abs(transform.position.z - agent.destination.z) <= 0.5f)
+        {
+            NpcManager.instance.UnSpawnNpc(gameObject.name.Replace("(Clone)", String.Empty),gameObject);
+        }
     }
 
     public void RandomStats()
@@ -171,56 +184,14 @@ public class Npc : MonoBehaviour
         stats.currentThirst = Random.Range(0, npcData.maxThirst);
     }
 
-    public void LoadWayPoints()
+    public void UpdateSpeed(float newSpeed)
     {
-        hungerPoints = new Transform[LevelManager.instance.GetCurrentLevel().hungerPoints.Length];
-        thirstPoints = new Transform[LevelManager.instance.GetCurrentLevel().thirstPoints.Length];
-        bladderPoints = new Transform[LevelManager.instance.GetCurrentLevel().bladderPoints.Length];
-        runAwayPoints = new Transform[LevelManager.instance.GetCurrentLevel().runAwayPoints.Length];
-        for (int i = 0; i < LevelManager.instance.GetCurrentLevel().hungerPoints.Length; i++)
-        {
-            hungerPoints[i] = LevelManager.instance.GetCurrentLevel().hungerPoints[i];
-        }
-        for (int i = 0; i < LevelManager.instance.GetCurrentLevel().thirstPoints.Length; i++)
-        {
-            thirstPoints[i] = LevelManager.instance.GetCurrentLevel().thirstPoints[i];
-        }
-        for (int i = 0; i < LevelManager.instance.GetCurrentLevel().bladderPoints.Length; i++)
-        {
-            bladderPoints[i] = LevelManager.instance.GetCurrentLevel().bladderPoints[i];
-        }
-        for (int i = 0; i < LevelManager.instance.GetCurrentLevel().runAwayPoints.Length; i++)
-        {
-            runAwayPoints[i] = LevelManager.instance.GetCurrentLevel().runAwayPoints[i];
-        }
+        currentSpeed = newSpeed * statusEffects.currentData.currentSpeedRatio;
     }
 
-    void CalculateRandomPosParty()
-    {
-        if (!agent.isStopped && randomPosParty == Vector2.zero)
-        {
-            randomPosParty = new Vector2(
-                Random.Range(-LevelManager.instance.GetCurrentLevel().partyData.radius,
-                    LevelManager.instance.GetCurrentLevel().partyData.radius),
-                Random.Range(-LevelManager.instance.GetCurrentLevel().partyData.radius,
-                    LevelManager.instance.GetCurrentLevel().partyData.radius));
-            NavMeshPath path = new NavMeshPath();
-            NavMesh.CalculatePath(transform.position, new Vector3(randomPosParty.x, runAwayPoints[0].position.y, randomPosParty.y), agent.areaMask, path);
-            if (path.status == NavMeshPathStatus.PathInvalid)
-            {
-                CalculateRandomPosParty();
-            }
-        }
-        else if (agent.isStopped && randomPosParty != Vector2.zero)
-        {
-            randomPosParty = Vector2.zero;
-        }
-    }
-    
     public void UpdateWalking()
     {
-        agent.speed = Mathf.Lerp(agent.speed, npcData.speed, npcData.acceleration * Time.deltaTime);
-        animator.SetBool("isDancing", false);
+        agent.speed = Mathf.Lerp(agent.speed, currentSpeed, npcData.acceleration * Time.deltaTime);
         animator.SetFloat("Speed", agent.speed);
     }
 
@@ -230,7 +201,11 @@ public class Npc : MonoBehaviour
         animator.SetBool("isWalking", false);
         animator.SetFloat("Speed", agent.speed);
     }
-    
+
+    public void Smash() //Fonction appelée quand le joueur tape sur le NPC
+    {
+        Destroy(gameObject);
+    }
 }
 
 [Serializable]

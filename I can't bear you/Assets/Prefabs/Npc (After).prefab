@@ -1482,6 +1482,9 @@ GameObject:
   - component: {fileID: 196610271938975182}
   - component: {fileID: 872662432960104353}
   - component: {fileID: 2523814097983844807}
+  - component: {fileID: -7787597326935306304}
+  - component: {fileID: -2508231515378271730}
+  - component: {fileID: -1155653423748265561}
   m_Layer: 0
   m_Name: Npc (After)
   m_TagString: Untagged
@@ -1585,10 +1588,68 @@ MonoBehaviour:
     currentThirst: 100
     currentBladder: 100
   npcData: {fileID: 11400000, guid: 076b23ef35ff6774cad62ab6788037dc, type: 2}
+  state: 3
   agent: {fileID: 872662432960104353}
   animator: {fileID: 7426378792727152438}
   isAction: 0
-  state: 4
+  panicData: {fileID: -7787597326935306304}
+  statusEffects: {fileID: -2508231515378271730}
+  currentSpeed: 0
+--- !u!114 &-7787597326935306304
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4225555480404199414}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19991cee13099a242981d613ac467c7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentPanic: 0
+  panicState: 0
+  panicData: {fileID: 11400000, guid: a3c6d08dab0c19b4a87684c76dfff81f, type: 2}
+  npc: {fileID: 2523814097983844807}
+--- !u!114 &-2508231515378271730
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4225555480404199414}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09050fecb80059049b1372be8bbded69, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  panicData: {fileID: -7787597326935306304}
+  statusEffectsData: {fileID: 11400000, guid: 35641d8d07adf9e4ca68673db1f2341d, type: 2}
+  currentStatueEffectValue: 0
+  status: 0
+--- !u!114 &-1155653423748265561
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4225555480404199414}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4a013db56de600499e77b0237f0caba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  viewRadius: 3
+  viewAngle: 60
+  targetMask:
+    serializedVersion: 2
+    m_Bits: 8
+  obstacleMask:
+    serializedVersion: 2
+    m_Bits: 55
+  visibleTarget: {fileID: 0}
+  panicData: {fileID: -7787597326935306304}
+  statusEffects: {fileID: -2508231515378271730}
 --- !u!1 &4518432834019712719
 GameObject:
   m_ObjectHideFlags: 0

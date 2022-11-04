@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -17,20 +18,20 @@ public class NpcManager : MonoBehaviour
     }
 
     [ContextMenu("Spawn Npc")]
-    public void SpawnNpc()
+    public void SpawnNpc(String name)
     {
-        Pooler.instance.Pop("Npc").transform.position = LevelManager.instance.GetRandomNpcSpawn();
+        Pooler.instance.Pop(name).transform.position = LevelManager.instance.GetRandomNpcSpawn();
         npcCountRemaining++;
-        if (npcCountRemaining == LevelManager.instance.levels[LevelManager.instance.currentLevel - 1].npcCount)
+        if (npcCountRemaining == LevelManager.instance.level.npcCount)
         {
             UiManager.instance.UpdateRemainingNpcText();
         }
     }
     
     [ContextMenu("UnSpawn Npc")]
-    public void UnSpawnNpc(GameObject npc)
+    public void UnSpawnNpc(String name, GameObject npc)
     {
-        Pooler.instance.DePop("Npc", npc);
+        Pooler.instance.DePop(name, npc);
         npcCountRemaining--;
         UiManager.instance.UpdateRemainingNpcText();
     }

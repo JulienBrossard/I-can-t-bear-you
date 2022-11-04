@@ -2611,6 +2611,7 @@ MonoBehaviour:
     - {fileID: 1586243080}
     bladderPoints:
     - {fileID: 665679915}
+    player: {fileID: 2102163164}
     partyData:
       partyPosition: {fileID: 20144190}
       radius: 20
@@ -3405,6 +3406,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -1155653423748265561, guid: d9d78adb1c1738248a56b9aca3558a44,
+        type: 3}
+      propertyPath: panicData
+      value: 
+      objectReference: {fileID: 510304319}
+    - target: {fileID: -1155653423748265561, guid: d9d78adb1c1738248a56b9aca3558a44,
+        type: 3}
+      propertyPath: statusEffects
+      value: 
+      objectReference: {fileID: 510304318}
     - target: {fileID: 3598342012417531212, guid: d9d78adb1c1738248a56b9aca3558a44,
         type: 3}
       propertyPath: m_RootOrder
@@ -3472,6 +3483,30 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d9d78adb1c1738248a56b9aca3558a44, type: 3}
+--- !u!114 &510304318 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: -2508231515378271730, guid: d9d78adb1c1738248a56b9aca3558a44,
+    type: 3}
+  m_PrefabInstance: {fileID: 510304317}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09050fecb80059049b1372be8bbded69, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &510304319 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: -7787597326935306304, guid: d9d78adb1c1738248a56b9aca3558a44,
+    type: 3}
+  m_PrefabInstance: {fileID: 510304317}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19991cee13099a242981d613ac467c7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &526661014
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6740,7 +6775,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh35518
+  m_Name: pb_Mesh36322
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2

@@ -15,5 +15,6 @@ MonoBehaviour:
   maxHunger: 1000
   maxThirst: 1000
   maxBladder: 1000
-  speed: 5
+  speed: 2
+  runSpeed: 6
   acceleration: 10

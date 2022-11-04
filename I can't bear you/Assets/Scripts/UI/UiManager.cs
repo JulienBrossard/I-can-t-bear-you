@@ -23,14 +23,14 @@ public class UiManager : MonoBehaviour
 
     private void Start()
     {
-        maxNpc = LevelManager.instance.levels[LevelManager.instance.currentLevel-1].npcCount;
+        maxNpc = LevelManager.instance.level.npcCount;
         UpdateRemainingNpcText();
     }
 
 
-    public void UpdateBearserkerGauge(float value, float time)
+    public void UpdateBearserkerGauge(float value)
     {
-        bearserkerGauge.DOFillAmount(bearserkerGauge.fillAmount + value, time);
+        bearserkerGauge.fillAmount = value;
     }
     
     public void UpdateCurrentItem(Sprite sprite)

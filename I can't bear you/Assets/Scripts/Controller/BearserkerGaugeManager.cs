@@ -15,7 +15,7 @@ public class BearserkerGaugeManager : MonoBehaviour
     {
         amount += amountToAdd;
         amount = Mathf.Clamp(amount, 0, 1);
-        //UiManager.instance.UpdateBearserkerGauge(amount); //En commentaire parce que y'a pas d'UIManager sur ma scène actuellement
+        UiManager.instance.UpdateBearserkerGauge(amount);
         if(amount == 0) bearserkerState.Sleep();
     }
 

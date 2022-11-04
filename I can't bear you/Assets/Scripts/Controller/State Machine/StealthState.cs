@@ -7,14 +7,15 @@ using UnityEngine;
 public class StealthState : PlayerState
 {
     [SerializeField] private PlayerState bearserkerState;
-    protected override void OnStateEnter()
+    public override void OnStateEnter()
     {
-        
+        PlayerAnimatorManager.instance.SetAnimatorBool("Bearserker", false);
     }
     public override void Behave()
     {
         if (InputManager.instance.input.Actions.Interact.triggered)
         {
+            
             if (heldObject?.GetComponent<IInteractable>() != default)
             {
                 heldObject.GetComponent<IInteractable>().Interact();
@@ -24,6 +25,12 @@ public class StealthState : PlayerState
         }
         if (InputManager.instance.input.Actions.Smash.triggered)
         {
+            if (heldObject != default)
+            {
+                heldObject.GetComponent<IGrabbable>().Throw(transform.forward);
+                heldObject = null;
+                return;
+            }
             interestPointsManager.GetSmashable()?.Smash();
         }
         if (InputManager.instance.input.Actions.Grab.triggered)
@@ -50,6 +57,7 @@ public class StealthState : PlayerState
     public override void FixedBehave()
     {
         Move();
+        PlayerAnimatorManager.instance.SetAnimatorFloat("Speed", rb.velocity.magnitude);
         LookForInterestPoints(playerStats.detectionAngle,playerStats.detectionRange,playerStats.detectionStep);
     }
 
@@ -60,7 +68,7 @@ public class StealthState : PlayerState
         {
             if (hit.collider.GetComponent<IInteractable>() != default || hit.collider.GetComponent<ISmashable>() != default || hit.collider.GetComponent<IGrabbable>() != default)
             {
-                interestPointsManager.AddInterestPoint(new InterestPoint(hit.collider.gameObject, hit.distance,centerDistance));
+                interestPointsManager.AddInterestPoint(new InterestPoint(hit.collider.gameObject, Mathf.InverseLerp(0,length,hit.distance),Mathf.Lerp(1,0,centerDistance),playerStats.detectionRangeCurve,playerStats.detectionAngleCurve));
                 Debug.DrawRay(origin, dir * hit.distance, Color.blue);
                 return;
             }

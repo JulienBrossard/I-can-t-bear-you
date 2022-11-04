@@ -7,6 +7,7 @@ public class HoneyPot : MonoBehaviour,IInteractable,ISmashable,IGrabbable
     [SerializeField] private Rigidbody rb;
     [SerializeField] private BoxCollider collider;
     [SerializeField, Range(0f, 1f)] private float bearserkerToAdd;
+    [SerializeField] private float throwForce;
     public void Interact()
     {
         Debug.Log("Eating Honey Pot");
@@ -36,9 +37,10 @@ public class HoneyPot : MonoBehaviour,IInteractable,ISmashable,IGrabbable
     {
         SetAsReleased();
     }
-    public void Throw(Vector3 dir, float force)
+    public void Throw(Vector3 dir)
     {
         SetAsReleased();
+        rb.AddForce(dir * throwForce, ForceMode.Impulse);
     }
     public void SetAsReleased()
     {

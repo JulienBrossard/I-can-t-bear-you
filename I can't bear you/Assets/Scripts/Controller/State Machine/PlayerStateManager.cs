@@ -25,6 +25,7 @@ public class PlayerStateManager : MonoBehaviour
     public void SwitchState(PlayerState newState)
     {
         currentState = newState;
+        currentState.OnStateEnter();
         interestPointsManager.Clear();
     }
 }

@@ -9,7 +9,7 @@ public abstract class PlayerState : MonoBehaviour
     protected GameObject heldObject;
     [SerializeField] protected Transform handTransform;
     private float accelerationIndex;
-    protected abstract void OnStateEnter();
+    public abstract void OnStateEnter();
     public abstract void Behave();
     public abstract void FixedBehave();
     public void Move()
@@ -21,12 +21,14 @@ public abstract class PlayerState : MonoBehaviour
         }
         accelerationIndex = Mathf.Clamp(accelerationIndex + playerStats.accelerationStep, 0, 1);
         transform.LookAt(transform.position + new Vector3(InputManager.instance.input.Movement.Move.ReadValue<Vector2>().x, 0, InputManager.instance.input.Movement.Move.ReadValue<Vector2>().y).normalized);
-        rb.velocity = new Vector3(InputManager.instance.input.Movement.Move.ReadValue<Vector2>().x,0,InputManager.instance.input.Movement.Move.ReadValue<Vector2>().y).normalized * (playerStats.accelerationCurve.Evaluate(accelerationIndex) * playerStats.maxSpeed);
+        rb.velocity = new Vector3(InputManager.instance.input.Movement.Move.ReadValue<Vector2>().x * playerStats.accelerationCurve.Evaluate(accelerationIndex) * playerStats.maxSpeed,
+            rb.velocity.y,
+            InputManager.instance.input.Movement.Move.ReadValue<Vector2>().y * (playerStats.accelerationCurve.Evaluate(accelerationIndex) * playerStats.maxSpeed));
     }
     public void Deccelerate()
     {
         accelerationIndex = Mathf.Clamp(accelerationIndex - playerStats.slowdownStep, 0, 1);
-        rb.velocity = transform.forward * (playerStats.slowdownCurve.Evaluate(Mathf.Lerp(1,0,accelerationIndex)) * playerStats.maxSpeed);
+        rb.velocity = new Vector3(transform.forward.x,0,transform.forward.z) * (playerStats.slowdownCurve.Evaluate(Mathf.Lerp(1,0,accelerationIndex)) * playerStats.maxSpeed) + new Vector3(0,rb.velocity.y,0);
     }
     private float tempAngle;
     public void LookForInterestPoints(float angle, float range, float step)
