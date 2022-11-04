@@ -30,7 +30,7 @@ public class UiManager : MonoBehaviour
 
     public void UpdateBearserkerGauge(float value)
     {
-        bearserkerGauge.DOFillAmount(bearserkerGauge.fillAmount + value, 0.2f);
+        bearserkerGauge.fillAmount = value;
     }
     
     public void UpdateCurrentItem(Sprite sprite)
@@ -42,4 +42,7 @@ public class UiManager : MonoBehaviour
     {
         remainingNpcText.text = NpcManager.instance.npcCountRemaining + "/" + maxNpc;
     }
+    
+    
+    
 }
