@@ -12,6 +12,9 @@ GameObject:
   - component: {fileID: 5817163454148858049}
   - component: {fileID: 5817163454148858052}
   - component: {fileID: 5817163454148858053}
+  - component: {fileID: -9189316787099130175}
+  - component: {fileID: -5018598684595615651}
+  - component: {fileID: -904784301165387235}
   m_Layer: 0
   m_Name: Npc (Before)
   m_TagString: Untagged
@@ -88,10 +91,66 @@ MonoBehaviour:
     currentThirst: 100
     currentBladder: 100
   npcData: {fileID: 11400000, guid: 076b23ef35ff6774cad62ab6788037dc, type: 2}
+  state: 4
   agent: {fileID: 5817163454148858052}
   animator: {fileID: 6190214790490875295}
   isAction: 0
-  state: 4
+  panicData: {fileID: -9189316787099130175}
+  statusEffects: {fileID: -5018598684595615651}
+  currentSpeed: 0
+--- !u!114 &-9189316787099130175
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5817163454148858050}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19991cee13099a242981d613ac467c7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentPanic: 0
+  panicState: 0
+  panicData: {fileID: 11400000, guid: a3c6d08dab0c19b4a87684c76dfff81f, type: 2}
+  npc: {fileID: 5817163454148858053}
+--- !u!114 &-5018598684595615651
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5817163454148858050}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09050fecb80059049b1372be8bbded69, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  panicData: {fileID: -9189316787099130175}
+  statusEffectsData: {fileID: 11400000, guid: 35641d8d07adf9e4ca68673db1f2341d, type: 2}
+  currentStatueEffectValue: 0
+  status: 0
+--- !u!114 &-904784301165387235
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5817163454148858050}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4a013db56de600499e77b0237f0caba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  viewRadius: 3
+  viewAngle: 60
+  targetMask:
+    serializedVersion: 2
+    m_Bits: 8
+  obstacleMask:
+    serializedVersion: 2
+    m_Bits: 55
+  visibleTarget: {fileID: 0}
 --- !u!1001 &324991619668596750
 PrefabInstance:
   m_ObjectHideFlags: 0

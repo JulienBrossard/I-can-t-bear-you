@@ -1,11 +1,11 @@
 fileFormatVersion: 2
-guid: 706fd1f895302c24f8f11ca1ab94fae2
+guid: 81e1155de8616ce46ad5dcf1ddfe8a55
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable:
   - first:
       74: -203655887218126122
-    second: Dancing
+    second: Salsa Dancing
   externalObjects: {}
   materials:
     materialImportMode: 2
@@ -36,11 +36,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Dancing
+      name: Salsa Dancing
       takeName: mixamo.com
       internalID: 0
       firstFrame: 0
-      lastFrame: 508
+      lastFrame: 68
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
