@@ -1,22 +1,22 @@
+using System;
 using UnityEngine;
 
 public class Outline : MonoBehaviour
 {
+    [Header("Outline Data")]
     [SerializeField] private Material outlineMaterial;
     [SerializeField] private float outlineScaleFactor;
     [SerializeField] private Color outlineColor;
     private Renderer outlineRenderer;
-    [SerializeField] private bool outlineOn = true;
-
+    [Header("Outline Object")]
+    [SerializeField] private GameObject outlineObject;
     private void Start()
     {
-        outlineRenderer = CreateOutline(outlineMaterial, outlineScaleFactor, outlineColor);
-        outlineRenderer.enabled = true;
+        CreateOutline(outlineMaterial, outlineScaleFactor, outlineColor);
     }
 
-    Renderer CreateOutline(Material outlineMat, float scaleFactor, Color color)
+    void CreateOutline(Material outlineMat, float scaleFactor, Color color)
     {
-        GameObject outlineObject = Instantiate(gameObject, transform.position, transform.rotation, transform);
         Renderer rend = outlineObject.GetComponent<Renderer>();
         
         rend.material = outlineMat;
@@ -24,11 +24,18 @@ public class Outline : MonoBehaviour
         rend.material.SetFloat("Scale", scaleFactor);
         rend.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
 
-        outlineObject.GetComponent<Outline>().enabled = false;
-        outlineObject.GetComponent<Collider>().enabled = false;
-
-        rend.enabled = false;
-
-        return rend;
+        rend.enabled = true;
+    }
+    
+    [ContextMenu("Enabled Outline")]
+    void EnabledOutline()
+    {
+        outlineObject.SetActive(true);
+    }
+    
+    [ContextMenu("Disabled Outline")]
+    void DisabledOutline()
+    {
+        outlineObject.SetActive(false);
     }
 }
