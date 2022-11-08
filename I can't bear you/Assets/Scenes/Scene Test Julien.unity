@@ -2532,6 +2532,8 @@ GameObject:
   - component: {fileID: 377199018}
   - component: {fileID: 377199017}
   - component: {fileID: 377199016}
+  - component: {fileID: 377199021}
+  - component: {fileID: 377199020}
   m_Layer: 0
   m_Name: Game Manager
   m_TagString: Untagged
@@ -2552,11 +2554,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   poolKeys:
-  - key: Npc
+  - key: Npc (After)
     pool:
       prefab: {fileID: 4225555480404199414, guid: d9d78adb1c1738248a56b9aca3558a44,
         type: 3}
-      baseCount: 100
+      baseCount: 10
+      baseRefreshSpeed: 5
+      refreshSpeed: 5
+  - key: Npc Test
+    pool:
+      prefab: {fileID: 4225555480404199414, guid: 2f97968e30b2e684fb8fd27336d3b286,
+        type: 3}
+      baseCount: 20
       baseRefreshSpeed: 5
       refreshSpeed: 5
 --- !u!114 &377199017
@@ -2585,11 +2594,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bca73567e434f2438bae9b72ccf5dcc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentLevel: 1
-  levels:
-  - name: Test
-    level: 1
-    npcCount: 50
+  pooler: {fileID: 377199016}
+  level:
+    npc:
+    - npc: {fileID: 4225555480404199414, guid: d9d78adb1c1738248a56b9aca3558a44, type: 3}
+      count: 10
+    - npc: {fileID: 4225555480404199414, guid: 2f97968e30b2e684fb8fd27336d3b286, type: 3}
+      count: 20
+    npcCount: 30
     npcSpawnPositions:
     - {fileID: 1078110528}
     - {fileID: 1950366201}
@@ -2630,6 +2642,34 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &377199020
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 377199015}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae2beedbdb795984cb7c4e6bffe40e07, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioSources: []
+  UISounds: []
+  audioSourceLenght: 0
+  audioSourcesEditor: []
+--- !u!114 &377199021
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 377199015}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e199c3b1479c8b4290947a8346730e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &388147755
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3406,16 +3446,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: -1155653423748265561, guid: d9d78adb1c1738248a56b9aca3558a44,
-        type: 3}
-      propertyPath: panicData
-      value: 
-      objectReference: {fileID: 510304319}
-    - target: {fileID: -1155653423748265561, guid: d9d78adb1c1738248a56b9aca3558a44,
-        type: 3}
-      propertyPath: statusEffects
-      value: 
-      objectReference: {fileID: 510304318}
     - target: {fileID: 3598342012417531212, guid: d9d78adb1c1738248a56b9aca3558a44,
         type: 3}
       propertyPath: m_RootOrder
@@ -3483,30 +3513,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d9d78adb1c1738248a56b9aca3558a44, type: 3}
---- !u!114 &510304318 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: -2508231515378271730, guid: d9d78adb1c1738248a56b9aca3558a44,
-    type: 3}
-  m_PrefabInstance: {fileID: 510304317}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 09050fecb80059049b1372be8bbded69, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &510304319 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: -7787597326935306304, guid: d9d78adb1c1738248a56b9aca3558a44,
-    type: 3}
-  m_PrefabInstance: {fileID: 510304317}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 19991cee13099a242981d613ac467c7c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &526661014
 PrefabInstance:
   m_ObjectHideFlags: 0
