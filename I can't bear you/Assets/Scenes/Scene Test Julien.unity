@@ -3511,7 +3511,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 1ccda4783d33254489bdbf4b882f6649,
         type: 3}
       propertyPath: m_Name
-      value: plantSmall2 (1)
+      value: Outline
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 1ccda4783d33254489bdbf4b882f6649,
         type: 3}
@@ -5917,7 +5917,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 947acc3757544534588067461132b2b0,
         type: 3}
       propertyPath: m_Name
-      value: televisionModern (1)
+      value: Outline
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 947acc3757544534588067461132b2b0,
         type: 3}

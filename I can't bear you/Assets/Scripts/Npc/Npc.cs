@@ -20,7 +20,7 @@ public class Npc : MonoBehaviour,ISmashable
 
     
     [Header("NavMesh")]
-    [SerializeField] NavMeshAgent agent;
+    public NavMeshAgent agent;
     
     [Header("Animator")]
     [SerializeField] Animator animator;
