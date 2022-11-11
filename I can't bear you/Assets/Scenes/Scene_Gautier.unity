@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.3069224, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2789,35 +2789,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bca73567e434f2438bae9b72ccf5dcc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentLevel: 1
-  levels:
-  - name: Test
-    level: 1
-    npcCount: 15
-    npcSpawnPositions:
-    - {fileID: 1078110528}
-    - {fileID: 1950366201}
-    - {fileID: 696094446}
-    - {fileID: 1561423816}
-    - {fileID: 414548088}
-    - {fileID: 1702298361}
-    runAwayPoints:
-    - {fileID: 1613996417}
-    hungerPoints:
-    - {fileID: 1335668391}
-    - {fileID: 324929742}
-    - {fileID: 1840353099}
-    - {fileID: 1577191723}
-    - {fileID: 600828475}
-    - {fileID: 483154875}
-    thirstPoints:
-    - {fileID: 814327615}
-    - {fileID: 1586243080}
-    bladderPoints:
-    - {fileID: 665679915}
+  pooler: {fileID: 0}
+  level:
+    npc: []
+    npcCount: 0
+    npcSpawnPositions: []
+    runAwayPoints: []
+    hungerPoints: []
+    thirstPoints: []
+    bladderPoints: []
+    player: {fileID: 0}
     partyData:
-      partyPosition: {fileID: 20144190}
-      radius: 20
+      partyPosition: {fileID: 0}
+      radius: 0
 --- !u!4 &377199019
 Transform:
   m_ObjectHideFlags: 0
@@ -7209,7 +7193,7 @@ PrefabInstance:
     - target: {fileID: 6811373642876133851, guid: 5d5712882db785244b30fbc9534a5877,
         type: 3}
       propertyPath: m_VersionIndex
-      value: 3130
+      value: 3145
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5d5712882db785244b30fbc9534a5877, type: 3}
@@ -13477,7 +13461,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-1998
+  m_Name: pb_Mesh-4616
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2

@@ -19,9 +19,10 @@ public class Entity : MonoBehaviour
         
     }
 
+    public bool ignitable;
     public virtual void Ignite()
     {
-        
+        if(ignitable) return;
     }
 
     public virtual void Stomp()
@@ -34,10 +35,15 @@ public class Entity : MonoBehaviour
         
     }
 
-    public float asphyxiationResistance;
+    public float asphyxiation;
+    public float asphyxiationToDie;
     public virtual void Asphyxiate()
     {
-        
+        asphyxiation += 0.001f;
+        if (asphyxiation > asphyxiationToDie)
+        {
+            DieFromAsphyxiation();
+        }
     }
     public virtual void DieFromAsphyxiation()
     {

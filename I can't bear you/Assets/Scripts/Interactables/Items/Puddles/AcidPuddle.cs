@@ -6,6 +6,6 @@ public class AcidPuddle : Puddle
 {
     protected override void ApplyEffects(GameObject go)
     {
-        throw new System.NotImplementedException();
+        
     }
 }
