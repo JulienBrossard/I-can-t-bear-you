@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 4326711515932819688}
   - component: {fileID: 4607803518757468399}
   - component: {fileID: -9000337805608208750}
+  - component: {fileID: -6300631092923711271}
   m_Layer: 0
   m_Name: Water Puddle
   m_TagString: Untagged
@@ -114,3 +115,22 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &-6300631092923711271
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4326711515932819691}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59887527270a6064181469a182c9485c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ignitable: 0
+  ignited: 0
+  conductor: 0
+  charged: 0
+  acid: 0
+  slippy: 0
+  sticky: 0
