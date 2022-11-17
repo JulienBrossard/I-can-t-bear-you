@@ -9,6 +9,8 @@ public abstract class PlayerState : Entity
     protected GameObject heldObject;
     [SerializeField] protected Transform handTransform;
     private float accelerationIndex;
+    //a ajouter dans player stats
+    private float turnTime = 0.1f;
     public abstract void OnStateEnter();
     public abstract void Behave();
     public abstract void FixedBehave();
@@ -20,7 +22,8 @@ public abstract class PlayerState : Entity
             return;
         }
         accelerationIndex = Mathf.Clamp(accelerationIndex + playerStats.accelerationStep, 0, 1);
-        transform.LookAt(transform.position + new Vector3(InputManager.instance.input.Movement.Move.ReadValue<Vector2>().x, 0, InputManager.instance.input.Movement.Move.ReadValue<Vector2>().y).normalized);
+        transform.forward = Vector3.Slerp(new Vector3(transform.forward.x,0,transform.forward.z), new Vector3(rb.velocity.x,0,rb.velocity.z), turnTime); 
+        //transform.LookAt(transform.position + new Vector3(InputManager.instance.input.Movement.Move.ReadValue<Vector2>().x, 0, InputManager.instance.input.Movement.Move.ReadValue<Vector2>().y).normalized);
         rb.velocity = new Vector3(InputManager.instance.input.Movement.Move.ReadValue<Vector2>().x * playerStats.accelerationCurve.Evaluate(accelerationIndex) * playerStats.maxSpeed,
             rb.velocity.y,
             InputManager.instance.input.Movement.Move.ReadValue<Vector2>().y * (playerStats.accelerationCurve.Evaluate(accelerationIndex) * playerStats.maxSpeed));

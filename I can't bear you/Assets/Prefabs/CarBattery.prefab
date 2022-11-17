@@ -78,6 +78,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   puddlePrefab: {fileID: 4613415660787891898, guid: 8e732e25445045c44aa3f8479e834343,
     type: 3}
+  zonePrefab: {fileID: 4272535733154748759, guid: 33d0356bf9742c04e81b8bd0843844db,
+    type: 3}
   charged: 1
   ignitable: 0
   poisonable: 0
