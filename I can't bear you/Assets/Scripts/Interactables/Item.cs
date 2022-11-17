@@ -15,6 +15,12 @@ public class Item : MonoBehaviour, IAffectable
         Instantiate(puddlePrefab, transform.position, Quaternion.identity);
     }
 
+    [SerializeField] private GameObject zonePrefab;
+    public virtual void CreateZone()
+    {
+        Instantiate(zonePrefab, transform.position, Quaternion.identity, transform);
+    }
+
     public bool charged;
     public virtual void Electrocute()
     {
