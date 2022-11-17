@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HoneyPot : MonoBehaviour,IInteractable,ISmashable,IGrabbable
+public class HoneyPot : Item,IInteractable,ISmashable,IGrabbable
 {
     [SerializeField] private Rigidbody rb;
     [SerializeField] private BoxCollider collider;
@@ -17,6 +17,8 @@ public class HoneyPot : MonoBehaviour,IInteractable,ISmashable,IGrabbable
     public void Smash()
     {
         Debug.Log("Breaking Honey Pot");
+        CreatePuddle();
+        DeleteItem();
     }
 
     public Transform Grab(Transform hand)
