@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public abstract class PlayerState : MonoBehaviour
+public abstract class PlayerState : Entity
 {
     [SerializeField] protected PlayerStateManager playerStateManager;
     [SerializeField] protected Rigidbody rb;

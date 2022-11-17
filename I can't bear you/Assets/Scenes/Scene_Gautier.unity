@@ -2305,7 +2305,7 @@ PrefabInstance:
     - target: {fileID: 6811373642876133851, guid: 5d5712882db785244b30fbc9534a5877,
         type: 3}
       propertyPath: m_VersionIndex
-      value: 3127
+      value: 3130
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5d5712882db785244b30fbc9534a5877, type: 3}
@@ -4844,51 +4844,12 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 10, y: 0.5, z: 10}
   m_Center: {x: 5, y: 0.25, z: 5}
---- !u!1 &688979672
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 688979673}
-  - component: {fileID: 688979674}
-  m_Layer: 0
-  m_Name: Electricity Zone
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &688979673
+--- !u!4 &688979673 stripped
 Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 4272535733154748758, guid: 33d0356bf9742c04e81b8bd0843844db,
+    type: 3}
+  m_PrefabInstance: {fileID: 4272535733573183375}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 688979672}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 543450651803493049}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!135 &688979674
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 688979672}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &696094445
 GameObject:
   m_ObjectHideFlags: 0
@@ -7238,7 +7199,7 @@ PrefabInstance:
     - target: {fileID: 6811373642876133851, guid: 5d5712882db785244b30fbc9534a5877,
         type: 3}
       propertyPath: m_VersionIndex
-      value: 3151
+      value: 3154
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5d5712882db785244b30fbc9534a5877, type: 3}
@@ -11647,7 +11608,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-4318
+  m_Name: pb_Mesh-1402
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -15790,7 +15751,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-4942
+  m_Name: pb_Mesh-2026
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -17103,6 +17064,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   puddlePrefab: {fileID: 0}
+  zone: {fileID: 4272535733154748759, guid: 33d0356bf9742c04e81b8bd0843844db, type: 3}
   charged: 0
   ignitable: 0
   poisonable: 0
@@ -17122,6 +17084,75 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 15
   m_Center: {x: 0, y: 2.27375, z: 0}
+--- !u!1001 &4272535733573183375
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 543450651803493049}
+    m_Modifications:
+    - target: {fileID: 4272535733154748758, guid: 33d0356bf9742c04e81b8bd0843844db,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4272535733154748758, guid: 33d0356bf9742c04e81b8bd0843844db,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4272535733154748758, guid: 33d0356bf9742c04e81b8bd0843844db,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4272535733154748758, guid: 33d0356bf9742c04e81b8bd0843844db,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4272535733154748758, guid: 33d0356bf9742c04e81b8bd0843844db,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4272535733154748758, guid: 33d0356bf9742c04e81b8bd0843844db,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4272535733154748758, guid: 33d0356bf9742c04e81b8bd0843844db,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4272535733154748758, guid: 33d0356bf9742c04e81b8bd0843844db,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4272535733154748758, guid: 33d0356bf9742c04e81b8bd0843844db,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4272535733154748758, guid: 33d0356bf9742c04e81b8bd0843844db,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4272535733154748758, guid: 33d0356bf9742c04e81b8bd0843844db,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4272535733154748759, guid: 33d0356bf9742c04e81b8bd0843844db,
+        type: 3}
+      propertyPath: m_Name
+      value: Electricity Zone
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 33d0356bf9742c04e81b8bd0843844db, type: 3}
 --- !u!1001 &7543601161020286263
 PrefabInstance:
   m_ObjectHideFlags: 0
