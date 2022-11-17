@@ -1,12 +1,18 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Entity : MonoBehaviour, IAffectable
 {
+    [SerializeField] public float currentSpeedRatio = 1f;
     public virtual void Slow()
     {
+        currentSpeedRatio = 0f;
         Debug.Log("Slowing " + gameObject.name);
+    }
+    
+    public virtual void StopSlow()
+    {
+        currentSpeedRatio = 1f;
+        Debug.Log("Stopping slow on " + gameObject.name);
     }
 
     public virtual void Slide()
@@ -65,5 +71,35 @@ public class Entity : MonoBehaviour, IAffectable
     public void Grind()
     {
         Debug.Log("Grinded " + gameObject.name);
+    }
+
+    Puddle puddle = null;
+    private void OnCollisionEnter(Collision collision)
+    {
+        puddle = collision.gameObject.GetComponent<Puddle>();
+        if (puddle != null)
+        {
+            if (puddle.sticky)
+            {
+                Slow();
+            }
+
+            if (puddle.acid)
+            {
+                Dissolve();
+            }
+
+            if (puddle.slippy)
+            {
+                Slide();
+            }
+            
+            if(puddle.ignitable)
+            {
+                Ignite();
+            }
+
+            puddle = null;
+        }
     }
 }

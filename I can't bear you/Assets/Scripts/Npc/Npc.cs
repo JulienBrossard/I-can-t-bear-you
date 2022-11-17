@@ -4,7 +4,7 @@ using UnityEngine.AI;
 using Random = UnityEngine.Random;
 using Vector3 = UnityEngine.Vector3;
 
-public class Npc : MonoBehaviour,ISmashable
+public class Npc : Entity,ISmashable
 {
     public enum STATE {
         THIRST,
@@ -186,7 +186,7 @@ public class Npc : MonoBehaviour,ISmashable
 
     public void UpdateSpeed(float newSpeed)
     {
-        currentSpeed = newSpeed * statusEffects.currentData.currentSpeedRatio;
+        currentSpeed = newSpeed * statusEffects.currentData.currentSpeedRatio * currentSpeedRatio;
     }
 
     public void UpdateWalking()
