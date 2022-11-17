@@ -21,7 +21,7 @@ public class Awareness : MonoBehaviour
     void Start() {
         StartCoroutine ("FindTargetsWithDelay", .2f);
         viewRadius = viewRadius + (panicData.currentPanic * viewRadius) -
-                     (statusEffects.currentData.currentAwarenessRatio * viewRadius);
+                     ((1-statusEffects.currentData.currentAwarenessRatio) * viewRadius);
     }
 
 
