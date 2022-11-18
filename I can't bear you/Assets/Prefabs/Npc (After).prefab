@@ -1584,6 +1584,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83b69b0fbea79084bb43439c07b23be0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentSpeedRatio: 1
+  entityData: {fileID: 11400000, guid: 8d82193aa88f17146b352ede3c54ba6e, type: 2}
   ignitable: 0
   asphyxiation: 0
   asphyxiationToDie: 0

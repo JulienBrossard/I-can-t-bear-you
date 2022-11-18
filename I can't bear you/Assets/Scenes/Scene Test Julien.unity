@@ -14209,12 +14209,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ignitable: 0
-  ignited: 0
+  ignited: 1
   conductor: 0
   charged: 0
   acid: 0
   slippy: 0
-  sticky: 1
+  sticky: 0
 --- !u!54 &1780566535
 Rigidbody:
   m_ObjectHideFlags: 0

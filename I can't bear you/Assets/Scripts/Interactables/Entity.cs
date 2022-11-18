@@ -2,10 +2,11 @@ using UnityEngine;
 
 public class Entity : MonoBehaviour, IAffectable
 {
-    [SerializeField] public float currentSpeedRatio = 1f;
+    [HideInInspector] public float currentSpeedRatio = 1f;
+    public EntityData entityData;
     public virtual void Slow()
     {
-        currentSpeedRatio = 0f;
+        currentSpeedRatio = entityData.slowSpeedRatio;
         Debug.Log("Slowing " + gameObject.name);
     }
     
@@ -23,6 +24,7 @@ public class Entity : MonoBehaviour, IAffectable
     public virtual void Electrocute()
     {
         Debug.Log("Electrocuted " + gameObject.name);
+        Die();
     }
 
     public bool ignitable;
@@ -30,6 +32,7 @@ public class Entity : MonoBehaviour, IAffectable
     {
         if(ignitable) return;
         Debug.Log("Ignited " + gameObject.name);
+        Die();
     }
 
     public virtual void Stomp()
@@ -40,6 +43,7 @@ public class Entity : MonoBehaviour, IAffectable
     public virtual void Explode()
     {
         Debug.Log("Exploded " + gameObject.name);
+        Die();
     }
 
     public float asphyxiation;
@@ -56,6 +60,7 @@ public class Entity : MonoBehaviour, IAffectable
     {
         
         Debug.Log("Asphyxiated " + gameObject.name);
+        Die();
     }
 
     public virtual void Poison()
@@ -66,11 +71,17 @@ public class Entity : MonoBehaviour, IAffectable
     public virtual void Dissolve()
     {
         Debug.Log("Dissolved " + gameObject.name);
+        Die();
     }
 
     public void Grind()
     {
         Debug.Log("Grinded " + gameObject.name);
+    }
+
+    public virtual void Die()
+    {
+        
     }
 
     Puddle puddle = null;
@@ -94,7 +105,7 @@ public class Entity : MonoBehaviour, IAffectable
                 Slide();
             }
             
-            if(puddle.ignitable)
+            if(puddle.ignited)
             {
                 Ignite();
             }

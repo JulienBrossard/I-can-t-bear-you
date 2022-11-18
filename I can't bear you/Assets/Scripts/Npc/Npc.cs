@@ -50,6 +50,8 @@ public class Npc : Entity,ISmashable
 
     [HideInInspector] public float currentSpeed;
 
+    private float npcSpeed;
+
     private void Start()
     {
         pathfinding = new Pathfinding();
@@ -187,6 +189,13 @@ public class Npc : Entity,ISmashable
     public void UpdateSpeed(float newSpeed)
     {
         currentSpeed = newSpeed * statusEffects.currentData.currentSpeedRatio * currentSpeedRatio;
+        npcSpeed = newSpeed;
+    }
+
+    public override void Slow()
+    {
+        base.Slow();
+        UpdateSpeed(npcSpeed);
     }
 
     public void UpdateWalking()
@@ -205,6 +214,12 @@ public class Npc : Entity,ISmashable
     public void Smash() //Fonction appelée quand le joueur tape sur le NPC
     {
         Destroy(gameObject);
+    }
+
+    public override void Die()
+    {
+        base.Die();
+        NpcManager.instance.UnSpawnNpc(gameObject.name.Replace("(Clone)", String.Empty), gameObject);
     }
 }
 
