@@ -81,7 +81,7 @@ public class Entity : MonoBehaviour, IAffectable
 
     public virtual void Die()
     {
-        
+        Debug.Log(gameObject.name + " died");
     }
 
     Puddle puddle = null;

@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &4326711515932819691
+--- !u!1 &3353993823778426777
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,49 +8,48 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4326711515932819690}
-  - component: {fileID: 4326711515932819703}
-  - component: {fileID: 4326711515932819688}
-  - component: {fileID: 4607803518757468399}
-  - component: {fileID: -9000337805608208750}
-  - component: {fileID: -6300631092923711271}
+  - component: {fileID: 2720199671327397155}
+  - component: {fileID: 1328505424434272902}
+  - component: {fileID: 3858243394791108172}
+  - component: {fileID: 1328505424434272900}
+  - component: {fileID: 1328505424434272903}
   m_Layer: 0
-  m_Name: Water Puddle
+  m_Name: Television
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_NavMeshLayer: 1
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
---- !u!4 &4326711515932819690
+--- !u!4 &2720199671327397155
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4326711515932819691}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 12.67, y: -0.06, z: -9.46}
+  m_GameObject: {fileID: 3353993823778426777}
+  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
+  m_LocalPosition: {x: 10.360428, y: 4, z: 0.8123245}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 1
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &4326711515932819703
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+--- !u!33 &1328505424434272902
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4326711515932819691}
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
---- !u!23 &4326711515932819688
+  m_GameObject: {fileID: 3353993823778426777}
+  m_Mesh: {fileID: -7398944330818826960, guid: 947acc3757544534588067461132b2b0, type: 3}
+--- !u!23 &3858243394791108172
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4326711515932819691}
+  m_GameObject: {fileID: 3353993823778426777}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -64,7 +63,8 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 1ae72039e78151c4db4ddc19b4be209e, type: 2}
+  - {fileID: -6867524174320841699, guid: 947acc3757544534588067461132b2b0, type: 3}
+  - {fileID: -8896051167825165466, guid: 947acc3757544534588067461132b2b0, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -86,52 +86,37 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &4607803518757468399
+--- !u!135 &1328505424434272900
 SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4326711515932819691}
+  m_GameObject: {fileID: 3353993823778426777}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 3.5
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!54 &-9000337805608208750
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4326711515932819691}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 1
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
---- !u!114 &-6300631092923711271
+  m_Radius: 5
+  m_Center: {x: 0, y: 2.27375, z: 0}
+--- !u!114 &1328505424434272903
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4326711515932819691}
+  m_GameObject: {fileID: 3353993823778426777}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 59887527270a6064181469a182c9485c, type: 3}
+  m_Script: {fileID: 11500000, guid: 2e3103cab7096b74c997cef26106c4f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ignitable: 0
-  ignited: 0
-  conductor: 1
+  puddlePrefab: {fileID: 0}
+  zonePrefab: {fileID: 4272535733154748759, guid: 33d0356bf9742c04e81b8bd0843844db,
+    type: 3}
   charged: 0
-  acid: 0
-  slippy: 0
-  sticky: 0
-  zonePrefab: {fileID: 0}
+  ignitable: 0
+  poisonable: 0
+  poisoned: 0
+  consumable: 0
+  functioning: 0

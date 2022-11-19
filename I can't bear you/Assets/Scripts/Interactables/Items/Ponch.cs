@@ -4,16 +4,16 @@ using UnityEngine;
 
 public class Ponch : Item,IInteractable,ISmashable
 {
-
-
     public void Interact()
     {
-        Debug.Log("Drinking ponch");
+        if(poisoned) return;
+        Debug.Log("Poisoning Ponch");
+        Poison();
     }
 
     public void Smash()
     {
-        Debug.Log("Breaking the battery");
+        Debug.Log("Breaking the ponch");
         CreatePuddle();
         DeleteItem();
     }
