@@ -1,12 +1,19 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Entity : MonoBehaviour, IAffectable
 {
+    [HideInInspector] public float currentSpeedRatio = 1f;
+    public EntityData entityData;
     public virtual void Slow()
     {
+        currentSpeedRatio = entityData.slowSpeedRatio;
         Debug.Log("Slowing " + gameObject.name);
+    }
+    
+    public virtual void StopSlow()
+    {
+        currentSpeedRatio = 1f;
+        Debug.Log("Stopping slow on " + gameObject.name);
     }
 
     public virtual void Slide()
@@ -17,6 +24,7 @@ public class Entity : MonoBehaviour, IAffectable
     public virtual void Electrocute()
     {
         Debug.Log("Electrocuted " + gameObject.name);
+        Die();
     }
 
     public bool ignitable;
@@ -24,6 +32,7 @@ public class Entity : MonoBehaviour, IAffectable
     {
         if(ignitable) return;
         Debug.Log("Ignited " + gameObject.name);
+        Die();
     }
 
     public virtual void Stomp()
@@ -34,6 +43,7 @@ public class Entity : MonoBehaviour, IAffectable
     public virtual void Explode()
     {
         Debug.Log("Exploded " + gameObject.name);
+        Die();
     }
 
     public float asphyxiation;
@@ -50,6 +60,7 @@ public class Entity : MonoBehaviour, IAffectable
     {
         
         Debug.Log("Asphyxiated " + gameObject.name);
+        Die();
     }
 
     public virtual void Poison()
@@ -60,10 +71,46 @@ public class Entity : MonoBehaviour, IAffectable
     public virtual void Dissolve()
     {
         Debug.Log("Dissolved " + gameObject.name);
+        Die();
     }
 
     public void Grind()
     {
         Debug.Log("Grinded " + gameObject.name);
+    }
+
+    public virtual void Die()
+    {
+        
+    }
+
+    Puddle puddle = null;
+    private void OnCollisionEnter(Collision collision)
+    {
+        puddle = collision.gameObject.GetComponent<Puddle>();
+        if (puddle != null)
+        {
+            if (puddle.sticky)
+            {
+                Slow();
+            }
+
+            if (puddle.acid)
+            {
+                Dissolve();
+            }
+
+            if (puddle.slippy)
+            {
+                Slide();
+            }
+            
+            if(puddle.ignited)
+            {
+                Ignite();
+            }
+
+            puddle = null;
+        }
     }
 }
