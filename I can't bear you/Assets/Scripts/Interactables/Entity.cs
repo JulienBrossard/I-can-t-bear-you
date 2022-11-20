@@ -85,7 +85,7 @@ public class Entity : MonoBehaviour, IAffectable
     }
 
     Puddle puddle = null;
-    private void OnCollisionEnter(Collision collision)
+    /*private void OnCollisionEnter(Collision collision)
     {
         puddle = collision.gameObject.GetComponent<Puddle>();
         if (puddle != null)
@@ -112,5 +112,5 @@ public class Entity : MonoBehaviour, IAffectable
 
             puddle = null;
         }
-    }
+    }*/
 }

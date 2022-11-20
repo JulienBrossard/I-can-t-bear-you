@@ -71,6 +71,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   puddlePrefab: {fileID: 9090571231872204298, guid: dfcd0a8b24dd086438710a916757755c,
     type: 3}
+  zonePrefab: {fileID: 0}
+  charged: 0
   ignitable: 0
   poisonable: 0
   poisoned: 0
@@ -78,7 +80,7 @@ MonoBehaviour:
   rb: {fileID: 3778223884131960099}
   collider: {fileID: 3778223884131960110}
   bearserkerToAdd: 0.1
-  throwForce: 25
+  throwForce: 100
 --- !u!54 &3778223884131960099
 Rigidbody:
   m_ObjectHideFlags: 0

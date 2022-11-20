@@ -10,18 +10,10 @@ public class Awareness : MonoBehaviour
 
     public LayerMask targetMask;
     public LayerMask obstacleMask;
-
-    [HideInInspector]
-    public Transform visibleTarget;
-
-    [Header("Scripts")] 
-    [SerializeField] private Panic panicData;
-    [SerializeField] private StatusEffects statusEffects;
+    public List<Transform> visibleTargets;
 
     void Start() {
         StartCoroutine ("FindTargetsWithDelay", .2f);
-        viewRadius = viewRadius + (panicData.currentPanic * viewRadius) -
-                     ((1-statusEffects.currentData.currentAwarenessRatio) * viewRadius);
     }
 
 
@@ -34,9 +26,8 @@ public class Awareness : MonoBehaviour
 
     void FindVisibleTargets()
     {
-        visibleTarget = null;
         Collider[] targetsInViewRadius = Physics.OverlapSphere (transform.position, viewRadius, targetMask);
-
+        visibleTargets = new List<Transform> ();
         for (int i = 0; i < targetsInViewRadius.Length; i++) {
             Transform target = targetsInViewRadius [i].transform;
             Vector3 dirToTarget = (target.position - transform.position).normalized;
@@ -44,7 +35,7 @@ public class Awareness : MonoBehaviour
                 float dstToTarget = Vector3.Distance (transform.position, target.position);
 
                 if (!Physics.Raycast (transform.position, dirToTarget, dstToTarget, obstacleMask)) {
-                    visibleTarget = target;
+                    visibleTargets.Add(target);
                 }
             }
         }

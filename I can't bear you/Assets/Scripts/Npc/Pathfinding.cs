@@ -67,10 +67,9 @@ public class Pathfinding
             Random.Range(-radius,
                 radius));
         NavMeshPath path = new NavMeshPath();
-        NavMesh.CalculatePath(npcTransform.position, center 
-                                                     + new Vector3(randomPos.x, 
-                                                         height, 
-                                                         randomPos.y), agent.areaMask, path);
+        NavMesh.CalculatePath(npcTransform.position, new Vector3(center.x + randomPos.x, 
+            height, 
+            center.z + randomPos.y), agent.areaMask, path);
         if (path.status == NavMeshPathStatus.PathInvalid)
         {
             return CalculateRandomPosParty(agent, npcTransform, height, radius, center);

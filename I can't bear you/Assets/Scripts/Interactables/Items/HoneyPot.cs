@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,6 +9,7 @@ public class HoneyPot : Item,IInteractable,ISmashable,IGrabbable
     [SerializeField] private BoxCollider collider;
     [SerializeField, Range(0f, 1f)] private float bearserkerToAdd;
     [SerializeField] private float throwForce;
+    private bool shouldBreakOnHit;
     public void Interact()
     {
         Debug.Log("Eating Honey Pot");
@@ -43,11 +45,24 @@ public class HoneyPot : Item,IInteractable,ISmashable,IGrabbable
     {
         SetAsReleased();
         rb.AddForce(dir * throwForce, ForceMode.Impulse);
+        StartCoroutine(WaitForBreakable());
     }
     public void SetAsReleased()
     {
         collider.enabled = true;
         transform.SetParent(null);
         rb.isKinematic = false;
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(!shouldBreakOnHit) return;
+        Smash();
+    }
+
+    IEnumerator WaitForBreakable()
+    {
+        yield return new WaitForSeconds(0.25f);
+        shouldBreakOnHit = true;
     }
 }

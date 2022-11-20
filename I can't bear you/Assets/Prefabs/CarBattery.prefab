@@ -86,7 +86,7 @@ MonoBehaviour:
   poisoned: 0
   consumable: 0
   rb: {fileID: 4877492386470609555}
-  throwForce: 20
+  throwForce: 75
   collider: {fileID: 2600155183559485103}
 --- !u!1 &6215368017557157961
 GameObject:

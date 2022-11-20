@@ -10,7 +10,8 @@ public class Npc : Entity,ISmashable
         THIRST,
         HUNGER,
         BLADDER,
-        DANCING
+        DANCING,
+        ATTRACTED
     }
     
     [Header("Data")] 
@@ -25,7 +26,7 @@ public class Npc : Entity,ISmashable
     [Header("Animator")]
     [SerializeField] Animator animator;
 
-    private Vector3 currentDestination;
+    [HideInInspector] public Transform currentDestination;
     
     [Header("Waypoint Settings")]
     Transform[] runAwayPoints;
@@ -37,6 +38,7 @@ public class Npc : Entity,ISmashable
 
 
     private Vector3 randomPosParty;
+    [HideInInspector] public Vector3 attractedPoint;
 
     [HideInInspector] public bool isAction;
 
@@ -90,7 +92,7 @@ public class Npc : Entity,ISmashable
         stats.currentThirst -= Time.deltaTime;
         stats.currentBladder -= Time.deltaTime;
 
-        if (state == STATE.DANCING)
+        if (state == STATE.DANCING || state == STATE.ATTRACTED)
         {
             if (stats.currentHunger <= 0)
             {
@@ -111,8 +113,15 @@ public class Npc : Entity,ISmashable
             {
                 if (!agent.isStopped && randomPosParty == Vector3.zero)
                 {
-                    randomPosParty = pathfinding.CalculateRandomPosParty(agent,  transform, runAwayPoints[0].position.y,
-                        LevelManager.instance.level.partyData.radius, LevelManager.instance.level.partyData.partyPosition.position);
+                    if (state == STATE.ATTRACTED)
+                    {
+                        randomPosParty = attractedPoint;
+                    }
+                    else
+                    {
+                        randomPosParty = pathfinding.CalculateRandomPosParty(agent,  transform, runAwayPoints[0].position.y,
+                            LevelManager.instance.level.partyData.radius, LevelManager.instance.level.partyData.partyPosition.position);
+                    }
                 }
                 else if (agent.isStopped && randomPosParty != Vector3.zero)
                 {
@@ -121,7 +130,14 @@ public class Npc : Entity,ISmashable
                 agent.SetDestination(randomPosParty);
                 if (Vector3.Distance(transform.position, agent.destination) < 2f )
                 {
-                    animator.SetBool("isDancing", true);
+                    if (state == STATE.DANCING)
+                    {
+                        animator.SetBool("isDancing", true);
+                    }
+                    else
+                    {
+                        animator.SetBool("isIdle", true);
+                    }
                 }
             }
         }
@@ -130,7 +146,7 @@ public class Npc : Entity,ISmashable
             switch (state)
             {
                 case STATE.HUNGER :
-                    agent.SetDestination(currentDestination);
+                    agent.SetDestination(currentDestination.position);
                     if (Mathf.Abs(transform.position.x - agent.destination.x) <= 0.1f &&
                         Mathf.Abs(transform.position.z - agent.destination.z) <= 0.1f)
                     {
@@ -139,14 +155,14 @@ public class Npc : Entity,ISmashable
                     }
                     break;
                 case STATE.THIRST :
-                    agent.SetDestination(currentDestination);
+                    agent.SetDestination(currentDestination.position);
                     if(Mathf.Abs(transform.position.x - agent.destination.x) <= 1f && Mathf.Abs(transform.position.z - agent.destination.z) <= 1f)
                     {
                         animator.SetBool("isDrinking", true);
                     }
                     break;
                 case STATE.BLADDER :
-                    agent.SetDestination(currentDestination);
+                    agent.SetDestination(currentDestination.position);
                     if(Mathf.Abs(transform.position.x - agent.destination.x) <= 0.1f && Mathf.Abs(transform.position.z - agent.destination.z) <= 0.1f)
                     {
                         animator.SetBool("isBladder", true);
@@ -171,7 +187,7 @@ public class Npc : Entity,ISmashable
 
     void RunAway()
     {
-        agent.SetDestination(pathfinding.ChooseClosestTarget(runAwayPoints, transform, agent));
+        agent.SetDestination(pathfinding.ChooseClosestTarget(runAwayPoints, transform, agent).position);
         if (Mathf.Abs(transform.position.x - agent.destination.x) <= 0.5f &&
             Mathf.Abs(transform.position.z - agent.destination.z) <= 0.5f)
         {
@@ -220,6 +236,20 @@ public class Npc : Entity,ISmashable
     {
         base.Die();
         NpcManager.instance.UnSpawnNpc(gameObject.name.Replace("(Clone)", String.Empty), gameObject);
+    }
+    
+    public void Attracted(float radius, Vector3 position)
+    {
+        state = STATE.ATTRACTED;
+        randomPosParty = Vector3.zero;
+        attractedPoint = pathfinding.CalculateRandomPosParty(agent,  transform, runAwayPoints[0].position.y,
+            radius, position);
+    }
+
+    public void StopAttracted()
+    {
+        state = STATE.DANCING;
+        randomPosParty = Vector3.zero;
     }
 }
 
