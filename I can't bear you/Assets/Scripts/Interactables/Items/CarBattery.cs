@@ -7,6 +7,7 @@ public class CarBattery : Item,ISmashable,IGrabbable
     [SerializeField] private Rigidbody rb;
     [SerializeField] private float throwForce;
     [SerializeField] private BoxCollider collider;
+    private bool shouldBreakOnHit;
     
     public void Smash()
     {
@@ -35,6 +36,7 @@ public class CarBattery : Item,ISmashable,IGrabbable
     {
         SetAsReleased();
         rb.AddForce(dir * throwForce, ForceMode.Impulse);
+        StartCoroutine(WaitForBreakable());
     }
 
     public void Drop()
@@ -47,5 +49,16 @@ public class CarBattery : Item,ISmashable,IGrabbable
         collider.enabled = true;
         transform.SetParent(null);
         rb.isKinematic = false;
+    }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(!shouldBreakOnHit) return;
+        Smash();
+    }
+
+    IEnumerator WaitForBreakable()
+    {
+        yield return new WaitForSeconds(0.25f);
+        shouldBreakOnHit = true;
     }
 }
