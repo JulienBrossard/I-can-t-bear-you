@@ -12,6 +12,13 @@ public class Television : Item, ISmashable, IInteractable
         Electrocute();
     }
 
+    public override void Electrocute()
+    {
+        base.Electrocute();
+        CreateZone();
+        Debug.Log("Creating Zone");
+    }
+
     public void Interact()
     {
         Debug.Log("Interacting with Television");
@@ -21,10 +28,5 @@ public class Television : Item, ISmashable, IInteractable
     private void Switch()
     {
         functioning = !functioning;
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        //Attirer les PNJ vers la télévision
     }
 }
