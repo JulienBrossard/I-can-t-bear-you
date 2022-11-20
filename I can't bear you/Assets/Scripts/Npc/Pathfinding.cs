@@ -3,7 +3,7 @@ using UnityEngine.AI;
 
 public class Pathfinding
 {
-    public Vector3 ChooseClosestTarget(Transform[] wayPoints, Transform npcTransform, NavMeshAgent agent)
+    public Transform ChooseClosestTarget(Transform[] wayPoints, Transform npcTransform, NavMeshAgent agent)
     {
         Transform closestTarget = null;
         float closestTargetDistance = float.MaxValue;
@@ -32,7 +32,7 @@ public class Pathfinding
                 }
             }
         }
-        return closestTarget.position;
+        return closestTarget;
     }
 
     public void LoadWayPoints(out Transform[] hungerPoints, out Transform[] thirstPoints, out Transform[] bladderPoints, out Transform[] runAwayPoints)
@@ -67,10 +67,9 @@ public class Pathfinding
             Random.Range(-radius,
                 radius));
         NavMeshPath path = new NavMeshPath();
-        NavMesh.CalculatePath(npcTransform.position, center 
-                                                     + new Vector3(randomPos.x, 
-                                                         height, 
-                                                         randomPos.y), agent.areaMask, path);
+        NavMesh.CalculatePath(npcTransform.position, new Vector3(center.x + randomPos.x, 
+            height, 
+            center.z + randomPos.y), agent.areaMask, path);
         if (path.status == NavMeshPathStatus.PathInvalid)
         {
             return CalculateRandomPosParty(agent, npcTransform, height, radius, center);
