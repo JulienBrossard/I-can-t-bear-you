@@ -8,6 +8,16 @@ public class Television : Item, ISmashable, IInteractable
     [SerializeField] private Awareness awareness;
     public bool functioning = false;
     [SerializeField] float attractedDistance = 5f;
+    private int npcCount;
+
+    private void Update()
+    {
+        if (functioning)
+        {
+            Attracted();
+        }
+    }
+
     public void Smash()
     {
         if (charged) return;
@@ -31,19 +41,36 @@ public class Television : Item, ISmashable, IInteractable
     private void Switch()
     {
         functioning = !functioning;
-        if (functioning)
+        if (!functioning)
         {
-            for (int i = 0; i < awareness.visibleTargets.Count; i++)
-            {
-                awareness.visibleTargets[i].GetComponent<Npc>().Attracted(attractedDistance, transform.position);
-            }
-        }
-        else
-        {
-            for (int i = 0; i < awareness.visibleTargets.Count; i++)
-            {
-                awareness.visibleTargets[i].GetComponent<Npc>().StopAttracted();
-            }
+            StopAttracted();
         }
     }
+
+    private void Attracted()
+    {
+        if (npcCount != awareness.visibleTargets.Count)
+        {
+            for (int i = 0; i < awareness.visibleTargets.Count; i++)
+            {
+                Npc npc = awareness.visibleTargets[i].GetComponent<Npc>();
+                if (npc.state == Npc.STATE.DANCING)
+                {
+                    npc.Attracted(attractedDistance, transform.position);
+                }
+            }
+
+            npcCount = awareness.visibleTargets.Count;
+        }
+    }
+    private void StopAttracted()
+    {
+        for (int i = 0; i < awareness.visibleTargets.Count; i++)
+        {
+            awareness.visibleTargets[i].GetComponent<Npc>().StopAttracted();
+        }
+
+        npcCount = 0;
+    }
+    
 }
