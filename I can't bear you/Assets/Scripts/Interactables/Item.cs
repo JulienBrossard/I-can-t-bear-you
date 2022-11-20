@@ -18,7 +18,7 @@ public class Item : MonoBehaviour, IAffectable
     [SerializeField] private GameObject zonePrefab;
     public virtual void CreateZone()
     {
-        Instantiate(zonePrefab, transform.position, Quaternion.identity, transform);
+        Instantiate(zonePrefab, transform.position, Quaternion.identity);
     }
 
     public bool charged;

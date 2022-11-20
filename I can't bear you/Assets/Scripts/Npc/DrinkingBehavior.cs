@@ -24,11 +24,13 @@ public class DrinkingBehavior : StateMachineBehaviour
         npc.state = Npc.STATE.DANCING;
         npc.stats.currentThirst = npc.npcData.maxThirst;
         npc.isAction = false;
-        if (npc.currentDestination.childCount != 0)
-        {
-            if (npc.currentDestination.GetChild(0).TryGetComponent(out Item item)) return;
-            WasDrinkPoisonous(item);
-        }
+        Debug.Log("Drinking");
+        
+            if (npc.currentDestination.GetChild(0).TryGetComponent(out Item item))
+            {
+                WasDrinkPoisonous(item);
+            }
+ 
         
     }
 
