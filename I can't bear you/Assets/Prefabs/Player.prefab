@@ -145,6 +145,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d06375d6839a8a45aa59dce14c73db7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentSpeedRatio: 1
+  entityData: {fileID: 11400000, guid: 8d82193aa88f17146b352ede3c54ba6e, type: 2}
+  ignitable: 0
+  asphyxiation: 0
+  asphyxiationToDie: 0
   playerStateManager: {fileID: 2451688659374893307}
   rb: {fileID: 2451688659374893296}
   playerStats: {fileID: 11400000, guid: c898aea46dc492b49994537bfd0deeb3, type: 2}
@@ -163,6 +168,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba2e0f66a3ee1134cbbad34d74b8ab2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentSpeedRatio: 1
+  entityData: {fileID: 11400000, guid: 8d82193aa88f17146b352ede3c54ba6e, type: 2}
+  ignitable: 0
+  asphyxiation: 0
+  asphyxiationToDie: 0
   playerStateManager: {fileID: 2451688659374893307}
   rb: {fileID: 2451688659374893296}
   playerStats: {fileID: 11400000, guid: 2fd0072d78ce2d94c8fe3f700ee0099d, type: 2}

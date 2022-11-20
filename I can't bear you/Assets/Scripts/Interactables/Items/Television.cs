@@ -29,9 +29,4 @@ public class Television : Item, ISmashable, IInteractable
     {
         functioning = !functioning;
     }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        //Attirer les PNJ vers la télévision
-    }
 }

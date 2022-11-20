@@ -4,7 +4,7 @@ using UnityEngine.AI;
 using Random = UnityEngine.Random;
 using Vector3 = UnityEngine.Vector3;
 
-public class Npc : MonoBehaviour,ISmashable
+public class Npc : Entity,ISmashable
 {
     public enum STATE {
         THIRST,
@@ -49,6 +49,8 @@ public class Npc : MonoBehaviour,ISmashable
     private Transform player;
 
     [HideInInspector] public float currentSpeed;
+
+    private float npcSpeed;
 
     private void Start()
     {
@@ -186,7 +188,14 @@ public class Npc : MonoBehaviour,ISmashable
 
     public void UpdateSpeed(float newSpeed)
     {
-        currentSpeed = newSpeed * statusEffects.currentData.currentSpeedRatio;
+        currentSpeed = newSpeed * statusEffects.currentData.currentSpeedRatio * currentSpeedRatio;
+        npcSpeed = newSpeed;
+    }
+
+    public override void Slow()
+    {
+        base.Slow();
+        UpdateSpeed(npcSpeed);
     }
 
     public void UpdateWalking()
@@ -205,6 +214,12 @@ public class Npc : MonoBehaviour,ISmashable
     public void Smash() //Fonction appelée quand le joueur tape sur le NPC
     {
         Destroy(gameObject);
+    }
+
+    public override void Die()
+    {
+        base.Die();
+        NpcManager.instance.UnSpawnNpc(gameObject.name.Replace("(Clone)", String.Empty), gameObject);
     }
 }
 
