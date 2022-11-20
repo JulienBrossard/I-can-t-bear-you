@@ -26,7 +26,7 @@ public class Npc : Entity,ISmashable
     [Header("Animator")]
     [SerializeField] Animator animator;
 
-    private Vector3 currentDestination;
+    [HideInInspector] public Transform currentDestination;
     
     [Header("Waypoint Settings")]
     Transform[] runAwayPoints;
@@ -146,7 +146,7 @@ public class Npc : Entity,ISmashable
             switch (state)
             {
                 case STATE.HUNGER :
-                    agent.SetDestination(currentDestination);
+                    agent.SetDestination(currentDestination.position);
                     if (Mathf.Abs(transform.position.x - agent.destination.x) <= 0.1f &&
                         Mathf.Abs(transform.position.z - agent.destination.z) <= 0.1f)
                     {
@@ -155,14 +155,14 @@ public class Npc : Entity,ISmashable
                     }
                     break;
                 case STATE.THIRST :
-                    agent.SetDestination(currentDestination);
+                    agent.SetDestination(currentDestination.position);
                     if(Mathf.Abs(transform.position.x - agent.destination.x) <= 1f && Mathf.Abs(transform.position.z - agent.destination.z) <= 1f)
                     {
                         animator.SetBool("isDrinking", true);
                     }
                     break;
                 case STATE.BLADDER :
-                    agent.SetDestination(currentDestination);
+                    agent.SetDestination(currentDestination.position);
                     if(Mathf.Abs(transform.position.x - agent.destination.x) <= 0.1f && Mathf.Abs(transform.position.z - agent.destination.z) <= 0.1f)
                     {
                         animator.SetBool("isBladder", true);
@@ -187,7 +187,7 @@ public class Npc : Entity,ISmashable
 
     void RunAway()
     {
-        agent.SetDestination(pathfinding.ChooseClosestTarget(runAwayPoints, transform, agent));
+        agent.SetDestination(pathfinding.ChooseClosestTarget(runAwayPoints, transform, agent).position);
         if (Mathf.Abs(transform.position.x - agent.destination.x) <= 0.5f &&
             Mathf.Abs(transform.position.z - agent.destination.z) <= 0.5f)
         {
