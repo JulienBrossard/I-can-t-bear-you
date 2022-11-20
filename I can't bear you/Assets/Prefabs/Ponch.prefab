@@ -45,8 +45,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 3.924694, y: 1.788898, z: 4.4826946}
-  m_Center: {x: -0.01924324, y: 0.7792771, z: -0.0096206665}
+  m_Size: {x: 1.7867508, y: 1.788898, z: 1.8367758}
+  m_Center: {x: 0.004924774, y: 0.7792771, z: 0.071436405}
 --- !u!114 &774391405123640505
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -61,6 +61,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   puddlePrefab: {fileID: 4613415660787891898, guid: 5dcce8efd1ecd4e4191fe4b27a565f06,
     type: 3}
+  zonePrefab: {fileID: 0}
   charged: 0
   ignitable: 0
   poisonable: 1
@@ -93,7 +94,7 @@ Transform:
   m_GameObject: {fileID: 8004300985886166964}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 7, y: 7, z: 7}
+  m_LocalScale: {x: 3, y: 3, z: 3}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6769139441354017099}

@@ -5,6 +5,11 @@ using UnityEditor;
 public class AwarenessEditor : Editor
 {
     void OnSceneGUI() {
+        Display();
+    }
+
+    public virtual void Display()
+    {
         Awareness awareness = (Awareness)target;
         Handles.color = Color.white;
         Handles.DrawWireArc (awareness.transform.position, Vector3.up, Vector3.forward, 360, awareness.viewRadius);
@@ -15,9 +20,21 @@ public class AwarenessEditor : Editor
         Handles.DrawLine (awareness.transform.position, awareness.transform.position + viewAngleB * awareness.viewRadius);
 
         Handles.color = Color.red;
-        if (awareness.visibleTarget != null)
+        if (awareness.visibleTargets.Count > 0)
         {
-            Handles.DrawLine (awareness.transform.position, awareness.visibleTarget.position);
+            for (int i = 0; i < awareness.visibleTargets.Count; i++)
+            {
+                Handles.DrawLine (awareness.transform.position, awareness.visibleTargets[i].position);
+            }
         }
+    }
+}
+
+[CustomEditor (typeof(AwarenessNpc))]
+public class AwarenessNpcEditor : AwarenessEditor
+{
+    void OnSceneGUI()
+    {
+        base.Display();
     }
 }
