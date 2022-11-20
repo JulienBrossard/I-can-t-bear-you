@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class DrinkingBehavior : StateMachineBehaviour
@@ -26,6 +24,12 @@ public class DrinkingBehavior : StateMachineBehaviour
         npc.state = Npc.STATE.DANCING;
         npc.stats.currentThirst = npc.npcData.maxThirst;
         npc.isAction = false;
+        if (npc.currentDestination.childCount != 0)
+        {
+            if (npc.currentDestination.GetChild(0).TryGetComponent(out Item item)) return;
+            WasDrinkPoisonous(item);
+        }
+        
     }
 
     // OnStateMove is called right after Animator.OnAnimatorMove()
@@ -39,4 +43,13 @@ public class DrinkingBehavior : StateMachineBehaviour
     //{
     //    // Implement code that sets up animation IK (inverse kinematics)
     //}
+    
+    public void WasDrinkPoisonous(Item item)
+    {
+        if (item.poisoned)
+        {
+            Debug.Log("died from drinking" + item.name);
+            npc.Die();
+        }
+    }
 }

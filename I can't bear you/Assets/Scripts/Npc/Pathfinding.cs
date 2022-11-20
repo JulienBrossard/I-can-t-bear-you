@@ -3,7 +3,7 @@ using UnityEngine.AI;
 
 public class Pathfinding
 {
-    public Vector3 ChooseClosestTarget(Transform[] wayPoints, Transform npcTransform, NavMeshAgent agent)
+    public Transform ChooseClosestTarget(Transform[] wayPoints, Transform npcTransform, NavMeshAgent agent)
     {
         Transform closestTarget = null;
         float closestTargetDistance = float.MaxValue;
@@ -32,7 +32,7 @@ public class Pathfinding
                 }
             }
         }
-        return closestTarget.position;
+        return closestTarget;
     }
 
     public void LoadWayPoints(out Transform[] hungerPoints, out Transform[] thirstPoints, out Transform[] bladderPoints, out Transform[] runAwayPoints)
