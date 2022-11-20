@@ -9,14 +9,15 @@ public class Puddle : MonoBehaviour, IAffectable
 
     public void ApplyEffects(GameObject go)
     {
-        if(ignited) go.GetComponent<Entity>()?.Ignite();
-        if(acid) go.GetComponent<Entity>()?.Dissolve();
-        if(slippy) go.GetComponent<Entity>()?.Slide();
-        if(sticky) go.GetComponent<Entity>()?.Slow();
+        if(ignited) go.GetComponent<Entity>().Ignite();
+        if(acid) go.GetComponent<Entity>().Dissolve();
+        if(slippy) go.GetComponent<Entity>().Slide();
+        if(sticky) go.GetComponent<Entity>().Slow();
     }
 
     public void OnTriggerEnter(Collider other)
     {
+        if(other.gameObject.GetComponent<Entity>() == default) return;
         ApplyEffects(other.gameObject);
         Debug.Log("Applying effects to " + other.gameObject.name);
     }
