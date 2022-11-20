@@ -22,7 +22,5 @@ public class CameraManager : MonoBehaviour
 
     private void FixedUpdate()
     {
-        transform.DOLookAt(target.position, 0.1f);
-        //transform.LookAt(target.position);
     }
 }
