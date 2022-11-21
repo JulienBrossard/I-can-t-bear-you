@@ -8,6 +8,9 @@ public class Television : Item, ISmashable, IInteractable
     [SerializeField] private Awareness awareness;
     public bool functioning = false;
     [SerializeField] float attractedDistance = 5f;
+    [SerializeField] private Material tvOn;
+    [SerializeField] private Material tvOff;
+    [SerializeField] private MeshRenderer tvScreenMR;
     private int npcCount;
 
     private void Update()
