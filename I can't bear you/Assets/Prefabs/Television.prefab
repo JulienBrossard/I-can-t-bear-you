@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 2720199671327397155}
   - component: {fileID: 1328505424434272902}
   - component: {fileID: 3858243394791108172}
-  - component: {fileID: 1328505424434272900}
   - component: {fileID: 1328505424434272903}
   - component: {fileID: 8550208509231053647}
+  - component: {fileID: 7268691063454754274}
   m_Layer: 0
   m_Name: Television
   m_TagString: Untagged
@@ -87,19 +87,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &1328505424434272900
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3353993823778426777}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 5
-  m_Center: {x: 0, y: 2.27375, z: 0}
 --- !u!114 &1328505424434272903
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -123,6 +110,9 @@ MonoBehaviour:
   awareness: {fileID: 8550208509231053647}
   functioning: 0
   attractedDistance: 5
+  tvOn: {fileID: 2100000, guid: 41170d8d08ed02f40909fd88daa7c482, type: 2}
+  tvOff: {fileID: -8896051167825165466, guid: 947acc3757544534588067461132b2b0, type: 3}
+  tvScreenMR: {fileID: 3858243394791108172}
 --- !u!114 &8550208509231053647
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -144,3 +134,16 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 55
   visibleTargets: []
+--- !u!65 &7268691063454754274
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3353993823778426777}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 6.8480015, y: 7.5896354, z: 1.6092631}
+  m_Center: {x: 4.2492643e-10, y: 0.75268245, z: -0.1626314}

@@ -53,6 +53,7 @@ public class Npc : Entity,ISmashable
     [HideInInspector] public float currentSpeed;
 
     private float npcSpeed;
+    [SerializeField] private GameObject skull;
 
     private void Start()
     {
@@ -229,11 +230,12 @@ public class Npc : Entity,ISmashable
 
     public void Smash() //Fonction appelée quand le joueur tape sur le NPC
     {
-        Destroy(gameObject);
+        Die();
     }
 
     public override void Die()
     {
+        Instantiate(skull, new Vector3(transform.position.x,transform.position.y-1.5f,transform.position.z), transform.localRotation);
         base.Die();
         NpcManager.instance.UnSpawnNpc(gameObject.name.Replace("(Clone)", String.Empty), gameObject);
     }

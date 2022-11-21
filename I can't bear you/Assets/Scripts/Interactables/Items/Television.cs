@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Television : Item, ISmashable, IInteractable
@@ -11,6 +8,7 @@ public class Television : Item, ISmashable, IInteractable
     [SerializeField] private Material tvOn;
     [SerializeField] private Material tvOff;
     [SerializeField] private MeshRenderer tvScreenMR;
+    private Material[] tempMatList;
     private int npcCount;
 
     private void Update()
@@ -44,10 +42,17 @@ public class Television : Item, ISmashable, IInteractable
     private void Switch()
     {
         functioning = !functioning;
+        tempMatList = tvScreenMR.materials;
         if (!functioning)
         {
+            tempMatList[1] = tvOff;
             StopAttracted();
         }
+        else
+        { 
+            tempMatList[1] = tvOn;
+        }
+        tvScreenMR.materials = tempMatList;
     }
 
     private void Attracted()
