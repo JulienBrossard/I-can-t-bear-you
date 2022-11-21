@@ -17,6 +17,12 @@ PrefabInstance:
       propertyPath: slippy
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -6300631092923711271, guid: 6e545a7257b3bd9438778ab69c6cd140,
+        type: 3}
+      propertyPath: zonePrefab
+      value: 
+      objectReference: {fileID: 4272535733154748759, guid: 33d0356bf9742c04e81b8bd0843844db,
+        type: 3}
     - target: {fileID: 4326711515932819688, guid: 6e545a7257b3bd9438778ab69c6cd140,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
