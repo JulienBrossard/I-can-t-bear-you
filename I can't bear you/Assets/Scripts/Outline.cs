@@ -24,14 +24,14 @@ public class Outline : MonoBehaviour
         rend.enabled = true;
     }
     
-    [ContextMenu("Enabled Outline")]
-    void EnabledOutline()
+    [ContextMenu("Enable Outline")]
+    public void EnableOutline()
     {
         outlineObject.SetActive(true);
     }
     
-    [ContextMenu("Disabled Outline")]
-    void DisabledOutline()
+    [ContextMenu("Disable Outline")]
+    public void DisableOutline()
     {
         outlineObject.SetActive(false);
     }
