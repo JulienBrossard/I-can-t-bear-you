@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3858243394791108172}
   - component: {fileID: 1328505424434272900}
   - component: {fileID: 1328505424434272903}
+  - component: {fileID: 8550208509231053647}
   m_Layer: 0
   m_Name: Television
   m_TagString: Untagged
@@ -119,4 +120,27 @@ MonoBehaviour:
   poisonable: 0
   poisoned: 0
   consumable: 0
+  awareness: {fileID: 8550208509231053647}
   functioning: 0
+  attractedDistance: 5
+--- !u!114 &8550208509231053647
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3353993823778426777}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4a013db56de600499e77b0237f0caba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  viewRadius: 20
+  viewAngle: 360
+  targetMask:
+    serializedVersion: 2
+    m_Bits: 64
+  obstacleMask:
+    serializedVersion: 2
+    m_Bits: 55
+  visibleTargets: []
