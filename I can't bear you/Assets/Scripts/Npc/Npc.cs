@@ -119,7 +119,7 @@ public class Npc : Entity,ISmashable
                     }
                     else
                     {
-                        randomPosParty = pathfinding.CalculateRandomPosParty(agent,  transform, runAwayPoints[0].position.y,
+                        randomPosParty = pathfinding.CalculateRandomPosInSphere(agent,  transform, runAwayPoints[0].position.y,
                             LevelManager.instance.level.partyData.radius, LevelManager.instance.level.partyData.partyPosition.position);
                     }
                 }
@@ -176,7 +176,7 @@ public class Npc : Entity,ISmashable
     {
         if (investigatePoint == Vector3.zero)
         {
-            investigatePoint = pathfinding.CalculateRandomPosParty(agent, transform, runAwayPoints[0].position.y, panicData.panicData.investigateRadius, player.position);
+            investigatePoint = pathfinding.CalculateRandomPosInSphere(agent, transform, runAwayPoints[0].position.y, panicData.panicData.investigateRadius, player.position);
         }
         else if (pathfinding.Distance(transform, agent) < 2 && investigatePoint != Vector3.zero)
         {
@@ -238,12 +238,12 @@ public class Npc : Entity,ISmashable
         NpcManager.instance.UnSpawnNpc(gameObject.name.Replace("(Clone)", String.Empty), gameObject);
     }
     
-    public void Attracted(float radius, Vector3 position)
+    public void Attracted(float radius, Vector3 position, float angle)
     {
         state = STATE.ATTRACTED;
         randomPosParty = Vector3.zero;
-        attractedPoint = pathfinding.CalculateRandomPosParty(agent,  transform, runAwayPoints[0].position.y,
-            radius, position);
+        attractedPoint = pathfinding.CalculateRandomPosInCone(agent,  transform, runAwayPoints[0].position.y,
+            radius, angle, position);
     }
 
     public void StopAttracted()
