@@ -1,15 +1,13 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class DrinkingBehavior : StateMachineBehaviour
+public class ElectrocuteBehavior : StateMachineBehaviour
 {
-    
-    private Npc npc;
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        npc = animator.gameObject.GetComponent<Npc>();
-        npc.isAction = true;
-        animator.SetBool("isDrinking", false);
+        animator.SetBool("isElectrocuted", false);
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
@@ -19,21 +17,10 @@ public class DrinkingBehavior : StateMachineBehaviour
     //}
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
-    override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    {
-        npc.state = Npc.STATE.DANCING;
-        npc.stats.currentThirst = npc.npcData.maxThirst;
-        npc.isAction = false;
-        if (npc.currentDestination.childCount != 0)
-        {
-            if (npc.currentDestination.GetChild(0).TryGetComponent(out Item item)) return;
-            if (item.poisoned)
-            {
-                npc.Poison();
-            }
-        }
-        
-    }
+    //override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    //{
+    //    
+    //}
 
     // OnStateMove is called right after Animator.OnAnimatorMove()
     //override public void OnStateMove(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)

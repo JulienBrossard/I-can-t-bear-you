@@ -3,7 +3,13 @@ using UnityEngine;
 public class Entity : MonoBehaviour, IAffectable
 {
     [HideInInspector] public float currentSpeedRatio = 1f;
+    [Header("Entity Data")]
     public EntityData entityData;
+    [Header("Animator")]
+    public Animator animator;
+    [HideInInspector] public bool isDie;
+    
+    [ContextMenu("Slow")]
     public virtual void Slow()
     {
         currentSpeedRatio = entityData.slowSpeedRatio;
@@ -21,13 +27,19 @@ public class Entity : MonoBehaviour, IAffectable
         Debug.Log("Sliding " + gameObject.name);
     }
 
+    [ContextMenu("Electrocute")]
     public virtual void Electrocute()
     {
-        Debug.Log("Electrocuted " + gameObject.name);
-        Die();
+        if (!isDie)
+        {
+            animator.SetBool("isElectrocuted", true);
+            Debug.Log("Electrocuted " + gameObject.name);
+            Die();
+        }
     }
 
-    public bool ignitable;
+    [HideInInspector] public bool ignitable;
+    [ContextMenu("Ignite")]
     public virtual void Ignite()
     {
         if(ignitable) return;
@@ -40,14 +52,15 @@ public class Entity : MonoBehaviour, IAffectable
         Debug.Log("Stomped " + gameObject.name);
     }
 
+    [ContextMenu("Explode")]
     public virtual void Explode()
     {
         Debug.Log("Exploded " + gameObject.name);
         Die();
     }
 
-    public float asphyxiation;
-    public float asphyxiationToDie;
+    [HideInInspector] public float asphyxiation;
+    [HideInInspector] public float asphyxiationToDie;
     public virtual void Asphyxiate()
     {
         asphyxiation += 0.001f;
@@ -56,6 +69,7 @@ public class Entity : MonoBehaviour, IAffectable
             DieFromAsphyxiation();
         }
     }
+    [ContextMenu("Die From Asphyxiation")]
     public virtual void DieFromAsphyxiation()
     {
         
@@ -63,11 +77,18 @@ public class Entity : MonoBehaviour, IAffectable
         Die();
     }
 
+    [ContextMenu("Poison")]
     public virtual void Poison()
     {
-        Debug.Log("Poisoned " + gameObject.name);
+        if (!isDie)
+        {
+            animator.SetBool("isPoisoned", true);
+            Debug.Log("Poisoned " + gameObject.name);
+            Die();
+        }
     }
 
+    [ContextMenu("Dissolve")]
     public virtual void Dissolve()
     {
         Debug.Log("Dissolved " + gameObject.name);
@@ -81,6 +102,7 @@ public class Entity : MonoBehaviour, IAffectable
 
     public virtual void Die()
     {
+        isDie = true;
         Debug.Log(gameObject.name + " died");
     }
 

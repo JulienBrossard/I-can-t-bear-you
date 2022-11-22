@@ -22,9 +22,6 @@ public class Npc : Entity,ISmashable
     
     [Header("NavMesh")]
     public NavMeshAgent agent;
-    
-    [Header("Animator")]
-    [SerializeField] Animator animator;
 
     [HideInInspector] public Transform currentDestination;
     
@@ -229,13 +226,16 @@ public class Npc : Entity,ISmashable
 
     public void Smash() //Fonction appelée quand le joueur tape sur le NPC
     {
-        Destroy(gameObject);
+        if (!isDie)
+        { 
+            animator.SetBool("isSmashing",true);
+        }
     }
 
     public override void Die()
     {
         base.Die();
-        NpcManager.instance.UnSpawnNpc(gameObject.name.Replace("(Clone)", String.Empty), gameObject);
+        //NpcManager.instance.UnSpawnNpc(gameObject.name.Replace("(Clone)", String.Empty), gameObject);
     }
     
     public void Attracted(float radius, Vector3 position, float angle)
