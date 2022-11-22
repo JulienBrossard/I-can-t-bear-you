@@ -5,6 +5,10 @@ public class Television : Item, ISmashable, IInteractable
     [Header("Television Attraction")] 
     [SerializeField] private Awareness awareness;
     public bool functioning = false;
+    private Material[] tempMatList;
+    [SerializeField] private MeshRenderer tvScreenMR;
+    [SerializeField] private Material tvOff;
+    [SerializeField] private Material tvOn;
     public float attractedDistance = 5f;
     private int npcCount;
     [Range(0,180)]
@@ -42,10 +46,17 @@ public class Television : Item, ISmashable, IInteractable
     private void Switch()
     {
         functioning = !functioning;
+        tempMatList = tvScreenMR.materials;
         if (!functioning)
         {
+            tempMatList[1] = tvOff;
             StopAttracted();
         }
+        else
+        { 
+            tempMatList[1] = tvOn;
+        }
+        tvScreenMR.materials = tempMatList;
     }
 
     private void Attracted()

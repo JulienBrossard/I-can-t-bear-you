@@ -1597,10 +1597,13 @@ MonoBehaviour:
   state: 3
   agent: {fileID: 872662432960104353}
   animator: {fileID: 7426378792727152438}
+  currentDestination: {fileID: 0}
+  attractedPoint: {x: 0, y: 0, z: 0}
   isAction: 0
   panicData: {fileID: -7787597326935306304}
   statusEffects: {fileID: -2508231515378271730}
   currentSpeed: 0
+  skull: {fileID: 2447524571762446496, guid: d48d28e267c81a544b40790eb052045a, type: 3}
 --- !u!114 &-7787597326935306304
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1653,7 +1656,7 @@ MonoBehaviour:
   obstacleMask:
     serializedVersion: 2
     m_Bits: 119
-  visibleTarget: {fileID: 0}
+  visibleTargets: []
   panicData: {fileID: -7787597326935306304}
   statusEffects: {fileID: -2508231515378271730}
 --- !u!54 &6251284461837987246

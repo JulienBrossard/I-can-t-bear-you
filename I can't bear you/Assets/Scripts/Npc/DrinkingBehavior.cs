@@ -24,15 +24,16 @@ public class DrinkingBehavior : StateMachineBehaviour
         npc.state = Npc.STATE.DANCING;
         npc.stats.currentThirst = npc.npcData.maxThirst;
         npc.isAction = false;
-        if (npc.currentDestination.childCount != 0)
+        Debug.Log("Drinking");
+        if (npc.currentDestination.childCount > 0)
         {
-            if (npc.currentDestination.GetChild(0).TryGetComponent(out Item item)) return;
+
+            if (npc.currentDestination.GetChild(0).TryGetComponent(out Item item));
             if (item.poisoned)
             {
                 npc.Poison();
             }
         }
-        
     }
 
     // OnStateMove is called right after Animator.OnAnimatorMove()

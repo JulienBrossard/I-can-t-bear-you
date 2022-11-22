@@ -1,3 +1,5 @@
+using System.Collections;
+using UnityEditor.MemoryProfiler;
 using UnityEngine;
 
 public abstract class PlayerState : Entity
@@ -9,8 +11,9 @@ public abstract class PlayerState : Entity
     protected GameObject heldObject;
     [SerializeField] protected Transform handTransform;
     private float accelerationIndex;
-    //a ajouter dans player stats
-    private float turnTime = 0.1f;
+    [SerializeField] protected bool locked;
+    [SerializeField] protected bool roarReady;
+
     public abstract void OnStateEnter();
     public abstract void Behave();
     public abstract void FixedBehave();
@@ -22,7 +25,7 @@ public abstract class PlayerState : Entity
             return;
         }
         accelerationIndex = Mathf.Clamp(accelerationIndex + playerStats.accelerationStep, 0, 1);
-        transform.forward = Vector3.Slerp(new Vector3(transform.forward.x,0,transform.forward.z), new Vector3(rb.velocity.x,0,rb.velocity.z), turnTime); 
+        transform.forward = Vector3.Slerp(new Vector3(transform.forward.x,0,transform.forward.z), new Vector3(rb.velocity.x,0,rb.velocity.z), playerStats.turnTime); 
         //transform.LookAt(transform.position + new Vector3(InputManager.instance.input.Movement.Move.ReadValue<Vector2>().x, 0, InputManager.instance.input.Movement.Move.ReadValue<Vector2>().y).normalized);
         rb.velocity = new Vector3(InputManager.instance.input.Movement.Move.ReadValue<Vector2>().x * playerStats.accelerationCurve.Evaluate(accelerationIndex) * playerStats.maxSpeed * currentSpeedRatio,
             rb.velocity.y,
@@ -43,5 +46,28 @@ public abstract class PlayerState : Entity
             SendRayCast(transform.position,new Vector3(Mathf.Sin(-i+tempAngle),0,Mathf.Cos(-i+tempAngle)), range, i/angle);
         }
     }
+
+    public void Roar()
+    {
+        Collider[] npcAtRange = Physics.OverlapSphere(transform.position, playerStats.roarRange, LayerMask.GetMask("NPC"));
+        foreach (var npc in npcAtRange)
+        {
+            if (Random.Range(0f, 1f) < playerStats.roarFreezeChance)
+            {
+                //npc.GetComponent<Npc>().GetScared(playerStats.roarFreezeTime);
+            }
+        }
+        roarReady = false;
+        InputManager.instance.enabled = false;
+        StartCoroutine(RoarCd());
+        heldObject?.GetComponent<IGrabbable>().Drop();
+    }
+    
+    public IEnumerator RoarCd()
+    {
+        yield return new WaitForSeconds(playerStats.roarCD); 
+        roarReady = true;
+    }
+    
     protected abstract void SendRayCast(Vector3 origin, Vector3 dir, float length, float centerDistance);
 }

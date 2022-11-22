@@ -5,6 +5,7 @@ public class BearserkerState : PlayerState
     [SerializeField] private PlayerState stealthState;
     public override void OnStateEnter()
     {
+        StartCoroutine(RoarCd());
         PlayerAnimatorManager.instance.SetAnimatorBool("Bearserker", true);
     }
     public override void Behave()
@@ -38,10 +39,11 @@ public class BearserkerState : PlayerState
         }
         if (InputManager.instance.input.Actions.Roar.triggered)
         {
-            //Temporaire pour le debug
+            Roar();
             Debug.Log("Switching to Stealth");
-            heldObject?.GetComponent<IGrabbable>().Drop();
             playerStateManager.SwitchState(stealthState);
+            heldObject?.GetComponent<IGrabbable>().Drop();
+
         }
     }
     public override void FixedBehave()
