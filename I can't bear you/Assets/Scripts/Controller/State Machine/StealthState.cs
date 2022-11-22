@@ -10,52 +10,60 @@ public class StealthState : PlayerState
     }
     public override void Behave()
     {
-        if (InputManager.instance.input.Actions.Interact.triggered)
+        if (!locked)
         {
-            if (heldObject?.GetComponent<IInteractable>() != default)
+            if (InputManager.instance.input.Actions.Interact.triggered)
             {
-                heldObject.GetComponent<IInteractable>().Interact();
-                return;
+                if (heldObject?.GetComponent<IInteractable>() != default)
+                {
+                    heldObject.GetComponent<IInteractable>().Interact();
+                    return;
+                }
+                interestPointsManager.GetInteractable()?.Interact();
             }
-            interestPointsManager.GetInteractable()?.Interact();
-        }
-        if (InputManager.instance.input.Actions.Smash.triggered)
-        {
-            if (heldObject != default)
+            if (InputManager.instance.input.Actions.Smash.triggered)
             {
-                heldObject.GetComponent<IGrabbable>().Throw(transform.forward);
-                heldObject = null;
-                return;
+                if (heldObject != default)
+                {
+                    heldObject.GetComponent<IGrabbable>().Throw(transform.forward);
+                    heldObject = null;
+                    return;
+                }
+                interestPointsManager.GetSmashable()?.Smash();
             }
-            interestPointsManager.GetSmashable()?.Smash();
-        }
-        if (InputManager.instance.input.Actions.Grab.triggered)
-        {
-            if (heldObject == default)
+            if (InputManager.instance.input.Actions.Grab.triggered)
             {
-                if(interestPointsManager.GetGrabbable() == null) return;
-                heldObject = interestPointsManager.GetGrabbable().Grab(handTransform).gameObject;
+                if (heldObject == default)
+                {
+                    if(interestPointsManager.GetGrabbable() == null) return;
+                    heldObject = interestPointsManager.GetGrabbable().Grab(handTransform).gameObject;
+                }
+                else
+                {
+                    heldObject.GetComponent<IGrabbable>().Drop();
+                    heldObject = null;
+                }
             }
-            else
+            if (InputManager.instance.input.Actions.Roar.triggered)
             {
-                heldObject.GetComponent<IGrabbable>().Drop();
-                heldObject = null;
+                Roar();
+                playerStateManager.SwitchState(bearserkerState);
             }
         }
-        if (InputManager.instance.input.Actions.Roar.triggered)
-        {
-          Roar();
-          playerStateManager.SwitchState(bearserkerState);
-        }
+       
     }
 
   
 
     public override void FixedBehave()
     {
-        Move();
-        PlayerAnimatorManager.instance.SetAnimatorFloat("Speed", rb.velocity.magnitude);
-        LookForInterestPoints(playerStats.detectionAngle,playerStats.detectionRange,playerStats.detectionStep);
+        if (!locked)
+        {
+            Move();
+            PlayerAnimatorManager.instance.SetAnimatorFloat("Speed", rb.velocity.magnitude);
+            LookForInterestPoints(playerStats.detectionAngle,playerStats.detectionRange,playerStats.detectionStep);
+        }
+       
     }
 
     protected override void SendRayCast(Vector3 origin, Vector3 dir, float length, float centerDistance)

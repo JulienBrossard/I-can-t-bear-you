@@ -147,6 +147,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentSpeedRatio: 1
   entityData: {fileID: 11400000, guid: 8d82193aa88f17146b352ede3c54ba6e, type: 2}
+  animator: {fileID: 0}
+  isDie: 0
   ignitable: 0
   asphyxiation: 0
   asphyxiationToDie: 0
@@ -155,6 +157,8 @@ MonoBehaviour:
   playerStats: {fileID: 11400000, guid: c898aea46dc492b49994537bfd0deeb3, type: 2}
   interestPointsManager: {fileID: 2451688659374893304}
   handTransform: {fileID: 4511790121175914320}
+  locked: 0
+  roarReady: 1
   bearserkerState: {fileID: 2451688659374893305}
 --- !u!114 &2451688659374893305
 MonoBehaviour:
@@ -170,6 +174,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentSpeedRatio: 1
   entityData: {fileID: 11400000, guid: 8d82193aa88f17146b352ede3c54ba6e, type: 2}
+  animator: {fileID: 0}
+  isDie: 0
   ignitable: 0
   asphyxiation: 0
   asphyxiationToDie: 0
@@ -178,6 +184,8 @@ MonoBehaviour:
   playerStats: {fileID: 11400000, guid: 2fd0072d78ce2d94c8fe3f700ee0099d, type: 2}
   interestPointsManager: {fileID: 2451688659374893304}
   handTransform: {fileID: 6200872098281598526}
+  locked: 0
+  roarReady: 0
   stealthState: {fileID: 2451688659374893306}
 --- !u!1001 &2146153097024215185
 PrefabInstance:

@@ -20,4 +20,5 @@ public class PlayerStats : ScriptableObject
     public float roarCD;
     public float roarFreezeChance;
     public float roarFreezeDuration;
+    public float roarDuration;
 }
