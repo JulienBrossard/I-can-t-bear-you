@@ -127,5 +127,5 @@ MonoBehaviour:
   roarRange: 20
   roarCD: 10
   roarFreezeChance: 0.5
-  roarFreezeDuration: 3
+  roarFreezeDuration: 8.15
   roarDuration: 5.15

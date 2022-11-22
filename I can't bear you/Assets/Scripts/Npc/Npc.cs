@@ -231,11 +231,13 @@ public class Npc : Entity,ISmashable
         if (!isDie)
         { 
             animator.SetBool("isSmashing",true);
+            Die();
         }
     }
 
     public override void Die()
     {
+        animator.speed = 1;
         base.Die();
         //NpcManager.instance.UnSpawnNpc(gameObject.name.Replace("(Clone)", String.Empty), gameObject);
     }
@@ -261,6 +263,7 @@ public class Npc : Entity,ISmashable
             state = STATE.FREEZE;
             StopWalking();
             animator.speed = 0;
+            UpdateSpeed(0);
             StartCoroutine(FreezeCD(freezeTime));
         }
         else
@@ -272,6 +275,7 @@ public class Npc : Entity,ISmashable
     IEnumerator FreezeCD(float freezeTime)
     {
         yield return new WaitForSeconds(freezeTime);
+        UpdateSpeed(npcSpeed);
         animator.speed = 1;
         panicData.UpdatePanic(1);
     }

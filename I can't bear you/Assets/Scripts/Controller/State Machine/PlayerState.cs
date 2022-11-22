@@ -75,6 +75,7 @@ public abstract class PlayerState : Entity
     
     public IEnumerator LockTime(float time)
     {
+        locked = true;
         yield return new WaitForSeconds(time);
         locked = false;
     } 
