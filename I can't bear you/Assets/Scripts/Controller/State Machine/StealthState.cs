@@ -1,7 +1,4 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using Unity.Mathematics;
 using UnityEngine;
 
 public class StealthState : PlayerState
@@ -15,7 +12,6 @@ public class StealthState : PlayerState
     {
         if (InputManager.instance.input.Actions.Interact.triggered)
         {
-            
             if (heldObject?.GetComponent<IInteractable>() != default)
             {
                 heldObject.GetComponent<IInteractable>().Interact();
@@ -48,11 +44,12 @@ public class StealthState : PlayerState
         }
         if (InputManager.instance.input.Actions.Roar.triggered)
         {
-            Debug.Log("Switching to Bearserker");
-            heldObject?.GetComponent<IGrabbable>().Drop();
-            playerStateManager.SwitchState(bearserkerState);
+          Roar();
+          playerStateManager.SwitchState(bearserkerState);
         }
     }
+
+  
 
     public override void FixedBehave()
     {
