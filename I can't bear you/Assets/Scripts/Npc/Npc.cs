@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 using Random = UnityEngine.Random;
@@ -11,7 +12,8 @@ public class Npc : Entity,ISmashable
         HUNGER,
         BLADDER,
         DANCING,
-        ATTRACTED
+        ATTRACTED,
+        FREEZE
     }
     
     [Header("Data")] 
@@ -229,11 +231,13 @@ public class Npc : Entity,ISmashable
         if (!isDie)
         { 
             animator.SetBool("isSmashing",true);
+            Die();
         }
     }
 
     public override void Die()
     {
+        animator.speed = 1;
         base.Die();
         //NpcManager.instance.UnSpawnNpc(gameObject.name.Replace("(Clone)", String.Empty), gameObject);
     }
@@ -251,6 +255,31 @@ public class Npc : Entity,ISmashable
         state = STATE.DANCING;
         randomPosParty = Vector3.zero;
     }
+
+    public void GetFreezed(float freezeTime, bool isFreeze)
+    {
+        if (isFreeze)
+        {
+            state = STATE.FREEZE;
+            StopWalking();
+            animator.speed = 0;
+            UpdateSpeed(0);
+            StartCoroutine(FreezeCD(freezeTime));
+        }
+        else
+        {
+            panicData.UpdatePanic(1);
+        }
+ 
+    }
+    IEnumerator FreezeCD(float freezeTime)
+    {
+        yield return new WaitForSeconds(freezeTime);
+        UpdateSpeed(npcSpeed);
+        animator.speed = 1;
+        panicData.UpdatePanic(1);
+    }
+
 }
 
 [Serializable]

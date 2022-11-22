@@ -88,7 +88,8 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   detectionStep: 0.09
-  roarRange: 0
-  roarCD: 0
-  roarFreezeChance: 0
-  roarFreezeDuration: 0
+  roarRange: 20
+  roarCD: 10
+  roarFreezeChance: 0.5
+  roarFreezeDuration: 8.15
+  roarDuration: 5.15

@@ -49,19 +49,36 @@ public abstract class PlayerState : Entity
 
     public void Roar()
     {
-        Collider[] npcAtRange = Physics.OverlapSphere(transform.position, playerStats.roarRange, LayerMask.GetMask("NPC"));
-        foreach (var npc in npcAtRange)
+        if (roarReady)
         {
-            if (Random.Range(0f, 1f) < playerStats.roarFreezeChance)
+            Collider[] npcAtRange = Physics.OverlapSphere(transform.position, playerStats.roarRange, LayerMask.GetMask("Npc"));
+            foreach (var npc in npcAtRange)
             {
-                //npc.GetComponent<Npc>().GetScared(playerStats.roarFreezeTime);
+                Debug.Log("A NPC was in range of roar");
+                if (Random.Range(0f, 1f) < playerStats.roarFreezeChance)
+                {
+                    Debug.Log(npc.gameObject.name + " got freezed by roar");
+                    npc.GetComponent<Npc>().GetFreezed(playerStats.roarFreezeDuration, true);
+                }
+                else
+                {
+                    npc.GetComponent<Npc>().GetFreezed(playerStats.roarFreezeDuration, false);
+                }
             }
+            roarReady = false;
+            heldObject?.GetComponent<IGrabbable>().Drop();
+            locked = true;
+            StartCoroutine(RoarCd());
+            StartCoroutine(LockTime(playerStats.roarDuration));
         }
-        roarReady = false;
-        InputManager.instance.enabled = false;
-        StartCoroutine(RoarCd());
-        heldObject?.GetComponent<IGrabbable>().Drop();
     }
+    
+    public IEnumerator LockTime(float time)
+    {
+        locked = true;
+        yield return new WaitForSeconds(time);
+        locked = false;
+    } 
     
     public IEnumerator RoarCd()
     {
