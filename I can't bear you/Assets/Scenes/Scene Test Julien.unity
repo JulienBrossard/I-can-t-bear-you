@@ -2632,14 +2632,14 @@ MonoBehaviour:
     pool:
       prefab: {fileID: 4225555480404199414, guid: d9d78adb1c1738248a56b9aca3558a44,
         type: 3}
-      baseCount: 10
+      baseCount: 50
       baseRefreshSpeed: 5
       refreshSpeed: 5
   - key: Npc Test
     pool:
       prefab: {fileID: 4225555480404199414, guid: 2f97968e30b2e684fb8fd27336d3b286,
         type: 3}
-      baseCount: 20
+      baseCount: 50
       baseRefreshSpeed: 5
       refreshSpeed: 5
 --- !u!114 &377199017
@@ -2672,10 +2672,10 @@ MonoBehaviour:
   level:
     npc:
     - npc: {fileID: 4225555480404199414, guid: d9d78adb1c1738248a56b9aca3558a44, type: 3}
-      count: 10
+      count: 50
     - npc: {fileID: 4225555480404199414, guid: 2f97968e30b2e684fb8fd27336d3b286, type: 3}
-      count: 20
-    npcCount: 30
+      count: 50
+    npcCount: 100
     npcSpawnPositions:
     - {fileID: 1078110528}
     - {fileID: 1950366201}
@@ -15220,6 +15220,9 @@ MonoBehaviour:
   consumable: 0
   awareness: {fileID: 1930347865}
   functioning: 0
+  tvScreenMR: {fileID: 0}
+  tvOff: {fileID: 0}
+  tvOn: {fileID: 0}
   attractedDistance: 10
   angle: 180
   invertZAxis: 1
