@@ -10,7 +10,7 @@ public class AwarenessEditor : Editor
 
     public virtual void Display()
     {
-        Awareness awareness = (Awareness)target;
+        var awareness = (Awareness)target;
         Handles.color = Color.white;
         Handles.DrawWireArc (awareness.transform.position, Vector3.up, Vector3.forward, 360, awareness.viewRadius);
         Vector3 viewAngleA = awareness.DirFromAngle (-awareness.viewAngle / 2, false);

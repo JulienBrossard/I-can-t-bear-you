@@ -2,14 +2,18 @@ using UnityEngine;
 
 public class Television : Item, ISmashable, IInteractable
 {
+    [Header("Television Attraction")] 
     [SerializeField] private Awareness awareness;
     public bool functioning = false;
-    [SerializeField] float attractedDistance = 5f;
-    [SerializeField] private Material tvOn;
-    [SerializeField] private Material tvOff;
-    [SerializeField] private MeshRenderer tvScreenMR;
     private Material[] tempMatList;
+    [SerializeField] private MeshRenderer tvScreenMR;
+    [SerializeField] private Material tvOff;
+    [SerializeField] private Material tvOn;
+    public float attractedDistance = 5f;
     private int npcCount;
+    [Range(0,180)]
+    [SerializeField] public float angle;
+    [SerializeField] public bool invertZAxis;
 
     private void Update()
     {
@@ -64,7 +68,14 @@ public class Television : Item, ISmashable, IInteractable
                 Npc npc = awareness.visibleTargets[i].GetComponent<Npc>();
                 if (npc.state == Npc.STATE.DANCING)
                 {
-                    npc.Attracted(attractedDistance, transform.position);
+                    if (!invertZAxis)
+                    {
+                        npc.Attracted(attractedDistance, transform.position, angle);
+                    }
+                    else
+                    {
+                        npc.Attracted(-attractedDistance, transform.position, angle);
+                    }
                 }
             }
 
@@ -81,4 +92,10 @@ public class Television : Item, ISmashable, IInteractable
         npcCount = 0;
     }
     
+    public Vector3 DirFromAngle(float angleInDegrees, bool angleIsGlobal) {
+        if (!angleIsGlobal) {
+            angleInDegrees += transform.eulerAngles.y;
+        }
+        return new Vector3(Mathf.Sin(angleInDegrees * Mathf.Deg2Rad),0,Mathf.Cos(angleInDegrees * Mathf.Deg2Rad));
+    }
 }

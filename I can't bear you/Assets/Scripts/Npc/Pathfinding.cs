@@ -59,7 +59,7 @@ public class Pathfinding
         }
     }
 
-    public Vector3 CalculateRandomPosParty(NavMeshAgent agent, Transform npcTransform ,float height, float radius,Vector3 center )
+    public Vector3 CalculateRandomPosInSphere(NavMeshAgent agent, Transform npcTransform ,float height, float radius,Vector3 center )
     {
         Vector2 randomPos = new Vector2(
             Random.Range(-radius,
@@ -72,10 +72,28 @@ public class Pathfinding
             center.z + randomPos.y), agent.areaMask, path);
         if (path.status == NavMeshPathStatus.PathInvalid)
         {
-            return CalculateRandomPosParty(agent, npcTransform, height, radius, center);
+            return CalculateRandomPosInSphere(agent, npcTransform, height, radius, center);
         }
         return  center + new Vector3(randomPos.x, height, randomPos.y);
     }
+    
+    public Vector3 CalculateRandomPosInCone(NavMeshAgent agent, Transform npcTransform ,float height,float radius, float angle,Vector3 center )
+    {
+        float y = -Random.Range(0,radius);
+        float x = Random.Range(-radius * Mathf.Sin(angle/2 * Mathf.Deg2Rad), radius * Mathf.Sin(angle/2 * Mathf.Deg2Rad));
+        Vector2 randomPos = new Vector2(x, y);
+        NavMeshPath path = new NavMeshPath();
+        NavMesh.CalculatePath(npcTransform.position, new Vector3(center.x + randomPos.x, 
+            height, 
+            center.z + randomPos.y), agent.areaMask, path);
+        if (path.status == NavMeshPathStatus.PathInvalid)
+        {
+            return CalculateRandomPosInCone(agent, npcTransform, height, radius, angle, center);
+        }
+        return  center + new Vector3(randomPos.x, height, randomPos.y);
+    }
+    
+    
 
     public float Distance(Transform npcTransform, NavMeshAgent agent)
     {
