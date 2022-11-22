@@ -19,6 +19,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -6300631092923711271, guid: 6e545a7257b3bd9438778ab69c6cd140,
         type: 3}
+      propertyPath: conductor
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -6300631092923711271, guid: 6e545a7257b3bd9438778ab69c6cd140,
+        type: 3}
       propertyPath: zonePrefab
       value: 
       objectReference: {fileID: 4272535733154748759, guid: 33d0356bf9742c04e81b8bd0843844db,

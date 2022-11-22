@@ -117,6 +117,7 @@ MonoBehaviour:
   puddlePrefab: {fileID: 0}
   zonePrefab: {fileID: 4272535733154748759, guid: 33d0356bf9742c04e81b8bd0843844db,
     type: 3}
+  zone: {fileID: 0}
   charged: 0
   ignitable: 0
   poisonable: 0

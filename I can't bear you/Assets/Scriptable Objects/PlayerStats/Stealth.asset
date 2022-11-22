@@ -72,7 +72,7 @@ MonoBehaviour:
   accelerationStep: 0.02
   slowdownStep: 0.04
   maxSpeed: 5
-  detectionAngle: 0.93
+  detectionAngle: 1
   detectionAngleCurve:
     serializedVersion: 2
     m_Curve:
@@ -97,7 +97,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  detectionRange: 1.62
+  detectionRange: 2
   detectionRangeCurve:
     serializedVersion: 2
     m_Curve:
@@ -122,4 +122,4 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  detectionStep: 0.09
+  detectionStep: 0.1

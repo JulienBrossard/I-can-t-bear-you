@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEditor;
 
-[CustomEditor (typeof (Awareness))]
+[CustomEditor (typeof (Awareness),true)]
 public class AwarenessEditor : Editor
 {
     void OnSceneGUI() {
@@ -27,14 +27,5 @@ public class AwarenessEditor : Editor
                 Handles.DrawLine (awareness.transform.position, awareness.visibleTargets[i].position);
             }
         }
-    }
-}
-
-[CustomEditor (typeof(AwarenessNpc))]
-public class AwarenessNpcEditor : AwarenessEditor
-{
-    void OnSceneGUI()
-    {
-        base.Display();
     }
 }
