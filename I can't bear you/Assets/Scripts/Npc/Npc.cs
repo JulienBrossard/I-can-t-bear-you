@@ -26,6 +26,7 @@ public class Npc : Entity,ISmashable
     public NavMeshAgent agent;
 
     [HideInInspector] public Transform currentDestination;
+    Transform runAwayDestination;
     
     [Header("Waypoint Settings")]
     Transform[] runAwayPoints;
@@ -186,12 +187,14 @@ public class Npc : Entity,ISmashable
 
     void RunAway()
     {
-        agent.SetDestination(pathfinding.ChooseClosestTarget(runAwayPoints, transform, agent).position);
-        if (Mathf.Abs(transform.position.x - agent.destination.x) <= 0.5f &&
-            Mathf.Abs(transform.position.z - agent.destination.z) <= 0.5f)
+        if ((Mathf.Abs(transform.position.x - agent.destination.x) <= 0.5f &&
+             Mathf.Abs(transform.position.z - agent.destination.z) <= 0.5f) || runAwayDestination == null)
         {
-            NpcManager.instance.UnSpawnNpc(gameObject.name.Replace("(Clone)", String.Empty),gameObject);
+            runAwayDestination = runAwayPoints[Random.Range(0, runAwayPoints.Length)];
+            //NpcManager.instance.UnSpawnNpc(gameObject.name.Replace("(Clone)", String.Empty),gameObject);
+            agent.SetDestination(runAwayDestination.position);
         }
+        agent.SetDestination(runAwayDestination.position);
     }
 
     public void RandomStats()
