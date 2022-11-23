@@ -54,8 +54,7 @@ public class Puddle : MonoBehaviour, IAffectable
     {
         zone.SetActive(false);
     }
-
-
+    
     public bool emitterDependant;
     public GameObject emitter;
     public float zoneSize;
@@ -88,8 +87,7 @@ public class Puddle : MonoBehaviour, IAffectable
         Debug.Log("DeElectrocuted " + gameObject.name);
         charged = false;
         DisableZone();
-    } 
-
+    }
     private void Update()
     {
         if(!charged) return;
@@ -107,7 +105,6 @@ public class Puddle : MonoBehaviour, IAffectable
             }
         }
     }
-
     public void Explode()
     {
         
