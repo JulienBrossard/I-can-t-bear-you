@@ -10,23 +10,50 @@ using UnityEngine;
 public class ItemEditor : Editor
 {
     private Item item;
-    private bool chargedBuffer;
+    private bool conductorBuffer;
+    private float zoneSizeBuffer;
 
     private void OnEnable()
     {
         item = (Item)target;
-        chargedBuffer = item.charged;
+        conductorBuffer = item.conductor;
+        zoneSizeBuffer = item.zoneSize;
     }
 
     public override void OnInspectorGUI()
     {
         item = (Item)target;
         base.OnInspectorGUI();
-        if (chargedBuffer != item.charged)
+        if (conductorBuffer != item.conductor)
         {
-            chargedBuffer = item.charged;
-            if(chargedBuffer) CreateZone();
+            conductorBuffer = item.conductor;
+            if(conductorBuffer) CreateZone();
             else RemoveZone();
+        }
+        if(zoneSizeBuffer != item.zoneSize)
+        {
+            if(!item.conductor) return;
+            zoneSizeBuffer = item.zoneSize;
+            item.zone.GetComponent<ElectricityZone>().SetSize(zoneSizeBuffer);
+        }
+
+        if(!Application.isPlaying) return;
+        if (item.conductor)
+        {
+            if (!item.charged)
+            {
+                if (GUILayout.Button("Electrocute"))
+                {
+                    item.Electrocute();
+                }
+            }
+            else
+            {
+                if (GUILayout.Button("De Electrocute"))
+                {
+                    item.DeElectrocute();
+                }
+            }
         }
     }
 
@@ -41,12 +68,11 @@ public class ItemEditor : Editor
             }
         }
         item.CreateZone();
+        item.zone.GetComponent<ElectricityZone>().SetSize(zoneSizeBuffer);
         item.zone.SetActive(false);
-        return;
     }
     void RemoveZone()
     {
-        Debug.Log(0);
         for (int i = 0; i < item.gameObject.transform.childCount; i++)
         {
             if (item.gameObject.transform.GetChild(i).GetComponent<ElectricityZone>() != default)

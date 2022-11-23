@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Item : MonoBehaviour, IAffectable
@@ -10,23 +12,77 @@ public class Item : MonoBehaviour, IAffectable
     }
     
     [SerializeField] private GameObject puddlePrefab;
-    public virtual void CreatePuddle()
+    public virtual GameObject CreatePuddle()
     {
-        Instantiate(puddlePrefab, new Vector3(transform.position.x,0.5f,transform.position.z), Quaternion.identity);
+        return Instantiate(puddlePrefab, new Vector3(transform.position.x,0.5f,transform.position.z), Quaternion.identity);
     }
     
     [SerializeField] private GameObject zonePrefab;
     [HideInInspector] public GameObject zone;
-    public virtual void CreateZone()
+    public virtual GameObject CreateZone()
     {
         zone = Instantiate(zonePrefab, transform.position, Quaternion.identity,transform);
+        return zone;
+    }
+    public virtual void EnableZone()
+    {
+        zone.SetActive(true);
+    }
+    public virtual void DisableZone()
+    {
+        zone.SetActive(false);
     }
 
-    public bool charged;
+    public bool emitterDependant;
+    public GameObject emitter;
+    public float zoneSize;
+    [SerializeField] private bool itemCharged, itemConductor;
+    public bool charged { get => itemCharged; set => itemCharged = value;}
+    public bool conductor { get => itemConductor; set => itemConductor = value; }
+
     public virtual void Electrocute()
     {
-        Debug.Log("Electrocuted " + gameObject.name);
+        if(!conductor) return;
+        if (charged) return;
+        
+        Debug.Log("Electrocuted " + gameObject.name + " with no depedancy");
         charged = true;
+        EnableZone();
+    }
+    public virtual void Electrocute(GameObject emitter)
+    {
+        if(!conductor) return;
+        if (charged) return;
+        
+        Debug.Log("Electrocuted " + gameObject.name + " with depedancy of " + emitter.name);
+        emitterDependant = true;
+        this.emitter = emitter;
+        charged = true;
+        EnableZone();
+    }
+    public virtual void DeElectrocute()
+    {
+        Debug.Log("DeElectrocuted " + gameObject.name);
+        charged = false;
+        DisableZone();
+    } 
+
+    private void Update()
+    {
+        if(!charged) return;
+        if(emitterDependant)
+        {
+            if(emitter == null)
+            {
+                DeElectrocute();
+                return;
+            }
+            if(!emitter.GetComponent<IAffectable>().charged)
+            {
+                DeElectrocute();
+                return;
+            }
+        }
     }
 
     public bool ignitable;

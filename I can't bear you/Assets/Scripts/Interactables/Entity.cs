@@ -21,7 +21,16 @@ public class Entity : MonoBehaviour, IAffectable
         Debug.Log("Sliding " + gameObject.name);
     }
 
+    public bool charged { get; set; }
+    public bool conductor { get; set; }
+
     public virtual void Electrocute()
+    {
+        Debug.Log("Electrocuted " + gameObject.name);
+        Die();
+    }
+
+    public void Electrocute(GameObject emitter)
     {
         Debug.Log("Electrocuted " + gameObject.name);
         Die();
