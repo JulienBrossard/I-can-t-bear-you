@@ -39,6 +39,14 @@ public class LevelManager : MonoBehaviour
     {
         return level.player;
     }
+    
+    public void RemoveExitPoint(Transform exitPoint)
+    {
+        foreach (var npc in NpcManager.instance.npc)
+        {
+            npc.GetComponent<Npc>().RemoveExitPoint(exitPoint);
+        }
+    }
 
     public void ApplyModifications()
     {
@@ -69,7 +77,8 @@ public class LevelData
     [HideInInspector] public int npcCount;
     [Header("Waypoint Settings")]
     public Transform[] npcSpawnPositions;
-    public Transform[] runAwayPoints;
+    public Transform[] notExitPoints;
+    public Transform[] exitPoints;
     public Transform[] hungerPoints;
     public Transform[] thirstPoints;
     public Transform[] bladderPoints;

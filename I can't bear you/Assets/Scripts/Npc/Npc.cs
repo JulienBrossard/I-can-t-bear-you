@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using Random = UnityEngine.Random;
@@ -29,7 +30,8 @@ public class Npc : Entity,ISmashable
     Transform runAwayDestination;
     
     [Header("Waypoint Settings")]
-    Transform[] runAwayPoints;
+    Transform[] noExitPoints;
+    public List<Transform> exitPoints;
     Transform[] hungerPoints;
     Transform[] thirstPoints;
     Transform[] bladderPoints;
@@ -59,7 +61,7 @@ public class Npc : Entity,ISmashable
         pathfinding = new Pathfinding();
         agent.speed = npcData.speed;
         RandomStats();
-        pathfinding.LoadWayPoints(out hungerPoints, out thirstPoints, out bladderPoints, out runAwayPoints);
+        pathfinding.LoadWayPoints(out hungerPoints, out thirstPoints, out bladderPoints, out noExitPoints, out exitPoints);
         player = LevelManager.instance.GetPlayer();
         UpdateSpeed(npcData.speed);
     }
@@ -72,17 +74,17 @@ public class Npc : Entity,ISmashable
             animator.SetBool("isDancing", false);
         }
 
-        if (panicData.panicState == Panic.PanicState.Calm)
+        if (panicData.panicState == global::Panic.PanicState.Calm)
         {
             Calm();
         }
-        else if(panicData.panicState == Panic.PanicState.Tense)
+        else if(panicData.panicState == global::Panic.PanicState.Tense)
         {
             Investigate();
         }
         else
         {
-            RunAway();
+            Panic();
         }
     }
 
@@ -119,7 +121,7 @@ public class Npc : Entity,ISmashable
                     }
                     else
                     {
-                        randomPosParty = pathfinding.CalculateRandomPosInSphere(agent,  transform, runAwayPoints[0].position.y,
+                        randomPosParty = pathfinding.CalculateRandomPosInSphere(agent,  transform, noExitPoints[0].position.y,
                             LevelManager.instance.level.partyData.radius, LevelManager.instance.level.partyData.partyPosition.position);
                     }
                 }
@@ -176,7 +178,7 @@ public class Npc : Entity,ISmashable
     {
         if (investigatePoint == Vector3.zero)
         {
-            investigatePoint = pathfinding.CalculateRandomPosInSphere(agent, transform, runAwayPoints[0].position.y, panicData.panicData.investigateRadius, player.position);
+            investigatePoint = pathfinding.CalculateRandomPosInSphere(agent, transform, noExitPoints[0].position.y, panicData.panicData.investigateRadius, player.position);
         }
         else if (pathfinding.Distance(transform, agent) < 2 && investigatePoint != Vector3.zero)
         {
@@ -185,13 +187,25 @@ public class Npc : Entity,ISmashable
         agent.SetDestination(investigatePoint);
     }
 
-    void RunAway()
+    void Panic()
     {
         if ((Mathf.Abs(transform.position.x - agent.destination.x) <= 0.5f &&
              Mathf.Abs(transform.position.z - agent.destination.z) <= 0.5f) || runAwayDestination == null)
         {
-            runAwayDestination = runAwayPoints[Random.Range(0, runAwayPoints.Length)];
-            //NpcManager.instance.UnSpawnNpc(gameObject.name.Replace("(Clone)", String.Empty),gameObject);
+            if (exitPoints.Count > 0)
+            {
+                if (runAwayDestination != null && Mathf.Abs(transform.position.x - runAwayDestination.position.x) <= 0.5f &&
+                    Mathf.Abs(transform.position.z - runAwayDestination.position.z) <= 0.5f)
+                {
+                    NpcManager.instance.UnSpawnNpc(gameObject.name.Replace("(Clone)", String.Empty), gameObject);
+                    return;
+                }
+                runAwayDestination = pathfinding.ChooseClosestTarget(exitPoints.ToArray(), transform, agent);
+            }
+            else
+            {
+                runAwayDestination = noExitPoints[Random.Range(0, noExitPoints.Length)];
+            }
             agent.SetDestination(runAwayDestination.position);
         }
         agent.SetDestination(runAwayDestination.position);
@@ -249,7 +263,7 @@ public class Npc : Entity,ISmashable
     {
         state = STATE.ATTRACTED;
         randomPosParty = Vector3.zero;
-        attractedPoint = pathfinding.CalculateRandomPosInCone(agent,  transform, runAwayPoints[0].position.y,
+        attractedPoint = pathfinding.CalculateRandomPosInCone(agent,  transform, noExitPoints[0].position.y,
             radius, angle, position);
     }
 
@@ -281,6 +295,12 @@ public class Npc : Entity,ISmashable
         UpdateSpeed(npcSpeed);
         animator.speed = 1;
         panicData.UpdatePanic(1);
+    }
+
+    public void RemoveExitPoint(Transform exitPoint)
+    {
+        exitPoints.Remove(exitPoint);
+        runAwayDestination = null;
     }
 
 }

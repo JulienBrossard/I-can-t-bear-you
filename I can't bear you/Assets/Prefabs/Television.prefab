@@ -111,10 +111,12 @@ MonoBehaviour:
   consumable: 0
   awareness: {fileID: 8550208509231053647}
   functioning: 0
-  attractedDistance: 5
-  tvOn: {fileID: 2100000, guid: 41170d8d08ed02f40909fd88daa7c482, type: 2}
-  tvOff: {fileID: -8896051167825165466, guid: 947acc3757544534588067461132b2b0, type: 3}
   tvScreenMR: {fileID: 3858243394791108172}
+  tvOff: {fileID: -8896051167825165466, guid: 947acc3757544534588067461132b2b0, type: 3}
+  tvOn: {fileID: 2100000, guid: 41170d8d08ed02f40909fd88daa7c482, type: 2}
+  attractedDistance: 10
+  angle: 0
+  invertZAxis: 1
 --- !u!114 &8550208509231053647
 MonoBehaviour:
   m_ObjectHideFlags: 0
