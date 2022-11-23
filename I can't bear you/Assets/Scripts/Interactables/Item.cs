@@ -84,14 +84,6 @@ public class Item : MonoBehaviour, IAffectable
             }
         }
     }
-
-    public bool ignitable;
-    public virtual void Ignite()
-    {
-        if(!ignitable) return;
-        Debug.Log("Ignited " + gameObject.name);
-    }
-
     public virtual void Fall()
     {
         Debug.Log("Falling " + gameObject.name);
@@ -102,19 +94,11 @@ public class Item : MonoBehaviour, IAffectable
         Debug.Log("Exploded " + gameObject.name);
     }
 
-    public bool poisonable, poisoned;
-    public virtual void Poison()
-    {
-        if(!poisonable) return;
-        poisoned = true;
-        Debug.Log("Is now poisoned " + gameObject.name);
-    }
-
     public bool consumable;
     public virtual bool Consume()
     {
         if (!consumable) return false;
         Debug.Log("Being consumed " + gameObject.name);
-        return poisoned;
+        return false;
     }
 }

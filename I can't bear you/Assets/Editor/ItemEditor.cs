@@ -34,7 +34,7 @@ public class ItemEditor : Editor
         {
             if(!item.conductor) return;
             zoneSizeBuffer = item.zoneSize;
-            item.zone.GetComponent<ElectricityZone>().SetSize(zoneSizeBuffer);
+            item.zone.GetComponent<ElectricityZone>().SetSize(ZoneMode.SPHERE,zoneSizeBuffer);
         }
 
         if(!Application.isPlaying) return;
@@ -68,7 +68,7 @@ public class ItemEditor : Editor
             }
         }
         item.CreateZone();
-        item.zone.GetComponent<ElectricityZone>().SetSize(zoneSizeBuffer);
+        item.zone.GetComponent<ElectricityZone>().SetSize(ZoneMode.SPHERE,zoneSizeBuffer);
         item.zone.SetActive(false);
     }
     void RemoveZone()

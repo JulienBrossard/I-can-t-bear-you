@@ -6,9 +6,7 @@ public class Ponch : Item,IInteractable,ISmashable
 {
     public void Interact()
     {
-        if(poisoned) return;
-        Debug.Log("Poisoning Ponch");
-        Poison();
+        Debug.Log("Interacting Ponch");
     }
 
     public void Smash()

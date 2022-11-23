@@ -48,10 +48,11 @@ public class DrinkingBehavior : StateMachineBehaviour
     
     public void WasDrinkPoisonous(Item item)
     {
-        if (item.poisoned)
+        //Y'a plus de poison dans le jeu
+        /*if (item.poisoned)
         {
             Debug.Log("died from drinking" + item.name);
             npc.Die();
-        }
+        }*/
     }
 }

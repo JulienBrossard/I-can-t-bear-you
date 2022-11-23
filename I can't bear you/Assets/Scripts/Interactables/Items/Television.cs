@@ -27,11 +27,6 @@ public class Television : Item, ISmashable, IInteractable
         Electrocute();
     }
 
-    public override void Electrocute()
-    {
-        base.Electrocute();
-    }
-
     public void Interact()
     {
         Debug.Log("Interacting with Television");

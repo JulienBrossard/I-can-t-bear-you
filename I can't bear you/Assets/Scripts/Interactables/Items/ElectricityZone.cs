@@ -5,9 +5,17 @@ using UnityEngine;
 
 public class ElectricityZone : MonoBehaviour
 {
-    public void SetSize(float size)
+    public void SetSize(ZoneMode mode,float size)
     {
-        transform.localScale = Vector3.one * size;
+        switch (mode)
+        {
+            case ZoneMode.SPHERE:
+                transform.localScale = Vector3.one * size;
+                break;
+            case ZoneMode.PLANE:
+                transform.localScale = new Vector3(size, 1, size);
+                break;
+        }
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -15,4 +23,8 @@ public class ElectricityZone : MonoBehaviour
             other.GetComponent<IAffectable>().Electrocute(transform.parent.gameObject);
         }
     }
+}
+public enum ZoneMode
+{
+    SPHERE, PLANE
 }

@@ -34,7 +34,7 @@ public class PuddleEditor : Editor
         {
             if(!puddle.conductor) return;
             zoneSizeBuffer = puddle.zoneSize;
-            puddle.zone.GetComponent<ElectricityZone>().SetSize(zoneSizeBuffer);
+            puddle.zone.GetComponent<ElectricityZone>().SetSize(ZoneMode.PLANE, zoneSizeBuffer);
         }
 
         if(!Application.isPlaying) return;
@@ -68,7 +68,7 @@ public class PuddleEditor : Editor
             }
         }
         puddle.CreateZone();
-        puddle.zone.GetComponent<ElectricityZone>().SetSize(zoneSizeBuffer);
+        puddle.zone.GetComponent<ElectricityZone>().SetSize(ZoneMode.PLANE,zoneSizeBuffer);
         puddle.zone.SetActive(false);
     }
     void RemoveZone()

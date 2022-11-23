@@ -24,23 +24,15 @@ public class Entity : MonoBehaviour, IAffectable
     public bool charged { get; set; }
     public bool conductor { get; set; }
 
-    public virtual void Electrocute()
+    public virtual void Electrocute() //Electrocute étant sa propre source électrique
     {
         Debug.Log("Electrocuted " + gameObject.name);
         Die();
     }
 
-    public void Electrocute(GameObject emitter)
+    public void Electrocute(GameObject emitter) //Electrocute dépendant d'un émetteur
     {
         Debug.Log("Electrocuted " + gameObject.name);
-        Die();
-    }
-
-    public bool ignitable;
-    public virtual void Ignite()
-    {
-        if(ignitable) return;
-        Debug.Log("Ignited " + gameObject.name);
         Die();
     }
 
@@ -55,71 +47,8 @@ public class Entity : MonoBehaviour, IAffectable
         Die();
     }
 
-    public float asphyxiation;
-    public float asphyxiationToDie;
-    public virtual void Asphyxiate()
-    {
-        asphyxiation += 0.001f;
-        if (asphyxiation > asphyxiationToDie)
-        {
-            DieFromAsphyxiation();
-        }
-    }
-    public virtual void DieFromAsphyxiation()
-    {
-        
-        Debug.Log("Asphyxiated " + gameObject.name);
-        Die();
-    }
-
-    public virtual void Poison()
-    {
-        Debug.Log("Poisoned " + gameObject.name);
-    }
-
-    public virtual void Dissolve()
-    {
-        Debug.Log("Dissolved " + gameObject.name);
-        Die();
-    }
-
-    public void Grind()
-    {
-        Debug.Log("Grinded " + gameObject.name);
-    }
-
     public virtual void Die()
     {
         Debug.Log(gameObject.name + " died");
     }
-
-    Puddle puddle = null;
-    /*private void OnCollisionEnter(Collision collision)
-    {
-        puddle = collision.gameObject.GetComponent<Puddle>();
-        if (puddle != null)
-        {
-            if (puddle.sticky)
-            {
-                Slow();
-            }
-
-            if (puddle.acid)
-            {
-                Dissolve();
-            }
-
-            if (puddle.slippy)
-            {
-                Slide();
-            }
-            
-            if(puddle.ignited)
-            {
-                Ignite();
-            }
-
-            puddle = null;
-        }
-    }*/
 }

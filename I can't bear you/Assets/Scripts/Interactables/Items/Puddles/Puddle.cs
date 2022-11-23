@@ -5,12 +5,10 @@ using UnityEngine;
 
 public class Puddle : MonoBehaviour, IAffectable
 {
-    public bool ignitable, ignited, acid, slippy, sticky;
+    public bool slippy, sticky;
 
     public void ApplyEffects(GameObject go)
     {
-        if(ignited) go.GetComponent<Entity>().Ignite();
-        if(acid) go.GetComponent<Entity>().Dissolve();
         if(slippy) go.GetComponent<Entity>().Slide();
         if(sticky) go.GetComponent<Entity>().Slow();
     }
@@ -110,13 +108,8 @@ public class Puddle : MonoBehaviour, IAffectable
         }
     }
 
-    public void Ignite()
-    {
-        ignited = true;
-    }
-
     public void Explode()
     {
-        if(ignitable) Ignite();
+        
     }
 }
