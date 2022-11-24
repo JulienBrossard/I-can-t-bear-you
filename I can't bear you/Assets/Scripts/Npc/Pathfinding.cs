@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -35,12 +36,13 @@ public class Pathfinding
         return closestTarget;
     }
 
-    public void LoadWayPoints(out Transform[] hungerPoints, out Transform[] thirstPoints, out Transform[] bladderPoints, out Transform[] runAwayPoints)
+    public void LoadWayPoints(out Transform[] hungerPoints, out Transform[] thirstPoints, out Transform[] bladderPoints, out Transform[] runAwayPoints, out List<Transform> exitPoints)
     {
         hungerPoints = new Transform[LevelManager.instance.level.hungerPoints.Length];
         thirstPoints = new Transform[LevelManager.instance.level.thirstPoints.Length];
         bladderPoints = new Transform[LevelManager.instance.level.bladderPoints.Length];
-        runAwayPoints = new Transform[LevelManager.instance.level.runAwayPoints.Length];
+        runAwayPoints = new Transform[LevelManager.instance.level.notExitPoints.Length];
+        exitPoints = new List<Transform>();
         for (int i = 0; i < LevelManager.instance.level.hungerPoints.Length; i++)
         {
             hungerPoints[i] = LevelManager.instance.level.hungerPoints[i];
@@ -53,9 +55,14 @@ public class Pathfinding
         {
             bladderPoints[i] = LevelManager.instance.level.bladderPoints[i];
         }
-        for (int i = 0; i < LevelManager.instance.level.runAwayPoints.Length; i++)
+        for (int i = 0; i < LevelManager.instance.level.notExitPoints.Length; i++)
         {
-            runAwayPoints[i] = LevelManager.instance.level.runAwayPoints[i];
+            runAwayPoints[i] = LevelManager.instance.level.notExitPoints[i];
+        }
+
+        for (int i = 0; i < LevelManager.instance.level.exitPoints.Length; i++)
+        {
+            exitPoints.Add(LevelManager.instance.level.exitPoints[i]);
         }
     }
 
