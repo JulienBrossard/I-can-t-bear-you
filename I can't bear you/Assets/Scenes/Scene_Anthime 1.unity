@@ -2784,6 +2784,7 @@ MonoBehaviour:
   npcCountRemaining: 0
   npcCountkilled: 0
   npcCountfleed: 0
+  npc: []
 --- !u!114 &377199018
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2810,7 +2811,9 @@ MonoBehaviour:
     - {fileID: 1561423816}
     - {fileID: 414548088}
     - {fileID: 1702298361}
-    runAwayPoints:
+    notExitPoints:
+    - {fileID: 1613996417}
+    exitPoints:
     - {fileID: 1613996417}
     hungerPoints:
     - {fileID: 1335668391}
@@ -18977,6 +18980,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1328505424434272903, guid: 54ea5e5148630f146b335bc55a473208,
+        type: 3}
+      propertyPath: angle
+      value: 180
+      objectReference: {fileID: 0}
     - target: {fileID: 2720199671327397155, guid: 54ea5e5148630f146b335bc55a473208,
         type: 3}
       propertyPath: m_RootOrder
