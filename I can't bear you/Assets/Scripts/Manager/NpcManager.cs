@@ -1,13 +1,13 @@
 using System;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class NpcManager : MonoBehaviour
 {
     public static NpcManager instance;
     public int npcCountRemaining;
-    public int npcCountMax;
-    
+    public int npcCountkilled;
+    public int npcCountfleed;
+
     private void Awake()
     {
         if (instance != null)
@@ -27,12 +27,22 @@ public class NpcManager : MonoBehaviour
             UiManager.instance.UpdateRemainingNpcText();
         }
     }
-    
-    [ContextMenu("UnSpawn Npc")]
+
+    [ContextMenu("Npc")]
     public void UnSpawnNpc(String name, GameObject npc)
     {
         Pooler.instance.DePop(name, npc);
         npcCountRemaining--;
+        npcCountfleed++;
+        CheckForLvlEnd();
         UiManager.instance.UpdateRemainingNpcText();
+    }
+    
+    public void CheckForLvlEnd()
+    {
+        if (npcCountRemaining == 0)
+        {
+            LevelManager.instance.EndLevel(false);
+        }
     }
 }

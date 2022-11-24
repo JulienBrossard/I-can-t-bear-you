@@ -79,9 +79,8 @@ public class BearserkerState : PlayerState
     }
     public void Sleep()
     {
-        Debug.Log("Switching to Stealth");
+        Debug.Log("End lvl by sleeping");
         heldObject?.GetComponent<IGrabbable>().Drop();
-        playerStateManager.SwitchState(stealthState); //Pour le debug
-        //insert Sleep consequence
+        LevelManager.instance.EndLevel(true);
     }
 }

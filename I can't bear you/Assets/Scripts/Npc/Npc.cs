@@ -72,11 +72,11 @@ public class Npc : Entity,ISmashable
             animator.SetBool("isDancing", false);
         }
 
-        if (panicData.panicState == Panic.PanicState.Calm)
+        if (panicData.panicState == global::Panic.PanicState.Calm)
         {
             Calm();
         }
-        else if(panicData.panicState == Panic.PanicState.Tense)
+        else if(panicData.panicState == global::Panic.PanicState.Tense)
         {
             Investigate();
         }
@@ -187,11 +187,19 @@ public class Npc : Entity,ISmashable
 
     void RunAway()
     {
+ 
+        
         if ((Mathf.Abs(transform.position.x - agent.destination.x) <= 0.5f &&
              Mathf.Abs(transform.position.z - agent.destination.z) <= 0.5f) || runAwayDestination == null)
         {
             runAwayDestination = runAwayPoints[Random.Range(0, runAwayPoints.Length)];
-            //NpcManager.instance.UnSpawnNpc(gameObject.name.Replace("(Clone)", String.Empty),gameObject);
+            if (Mathf.Abs(transform.position.x - runAwayDestination.position.x) <= 0.5f &&
+                Mathf.Abs(transform.position.z - runAwayDestination.position.z) <= 0.5f)
+            {
+                NpcManager.instance.UnSpawnNpc(gameObject.name.Replace("(Clone)", String.Empty),gameObject);
+                return;
+            }
+
             agent.SetDestination(runAwayDestination.position);
         }
         agent.SetDestination(runAwayDestination.position);
@@ -242,8 +250,8 @@ public class Npc : Entity,ISmashable
     {
         animator.speed = 1;
         base.Die();
-        //NpcManager.instance.UnSpawnNpc(gameObject.name.Replace("(Clone)", String.Empty), gameObject);
     }
+    
     
     public void Attracted(float radius, Vector3 position, float angle)
     {

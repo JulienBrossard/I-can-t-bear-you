@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 public class LevelManager : MonoBehaviour
@@ -60,6 +59,18 @@ public class LevelManager : MonoBehaviour
             Debug.LogWarning("Npc List is empty");
         }
     }
+
+    public void EndLevel(bool bySleeping)
+    {
+        if (level.npcCount < level.requiredNpcKillCount)
+        {
+            UiManager.instance.LaunchEndLevelScreen(true);
+        }
+        else
+        {
+            UiManager.instance.LaunchEndLevelScreen(false);
+        }
+    }
 }
 
 [Serializable]
@@ -67,6 +78,7 @@ public class LevelData
 {
     public SpawnNpc[] npc;
     [HideInInspector] public int npcCount;
+    public int requiredNpcKillCount;
     [Header("Waypoint Settings")]
     public Transform[] npcSpawnPositions;
     public Transform[] runAwayPoints;

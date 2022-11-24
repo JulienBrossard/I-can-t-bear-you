@@ -32,7 +32,7 @@ public class Entity : MonoBehaviour, IAffectable
     {
         if (!isDie)
         {
-            animator.SetBool("isElectrocuted", true);
+            //animator.SetBool("isElectrocuted", true);
             Debug.Log("Electrocuted " + gameObject.name);
             Die();
         }
@@ -102,6 +102,10 @@ public class Entity : MonoBehaviour, IAffectable
 
     public virtual void Die()
     {
+        NpcManager.instance.npcCountRemaining--;
+        NpcManager.instance.CheckForLvlEnd();
+        NpcManager.instance.npcCountkilled++;
+        UiManager.instance.UpdateRemainingNpcText();
         isDie = true;
         Debug.Log(gameObject.name + " died");
     }
