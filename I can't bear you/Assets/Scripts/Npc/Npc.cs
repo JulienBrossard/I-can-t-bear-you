@@ -25,6 +25,7 @@ public class Npc : Entity,ISmashable
     
     [Header("NavMesh")]
     public NavMeshAgent agent;
+    public float minimumDistanceWithDestination = 0.5f;
 
     [HideInInspector] public Transform currentDestination;
     Transform runAwayDestination;
@@ -55,6 +56,11 @@ public class Npc : Entity,ISmashable
     [HideInInspector] public float currentSpeed;
 
     private float npcSpeed;
+    
+    [Header("State Feedback")]
+    [SerializeField] private GameObject thirstImage;
+    [SerializeField] private GameObject hungerImage;
+    [SerializeField] private GameObject bladderImage;
 
     private void Start()
     {
@@ -100,16 +106,19 @@ public class Npc : Entity,ISmashable
             {
                 state = STATE.HUNGER;
                 currentDestination = pathfinding.ChooseClosestTarget(hungerPoints, transform, agent);
+                hungerImage.SetActive(true);
             }
             else if (stats.currentThirst <= 0)
             {
                 state = STATE.THIRST;
                 currentDestination = pathfinding.ChooseClosestTarget(thirstPoints, transform, agent);
+                thirstImage.SetActive(true);
             }
             else if (stats.currentBladder <= 0)
             {
                 state = STATE.BLADDER;
                 currentDestination = pathfinding.ChooseClosestTarget(bladderPoints, transform, agent);
+                bladderImage.SetActive(true);
             }
             else
             {
@@ -130,7 +139,7 @@ public class Npc : Entity,ISmashable
                     randomPosParty = Vector3.zero;
                 }
                 agent.SetDestination(randomPosParty);
-                if (Vector3.Distance(transform.position, agent.destination) < 2f )
+                if (Vector3.Distance(transform.position, agent.destination) < agent.stoppingDistance + minimumDistanceWithDestination )
                 {
                     if (state == STATE.DANCING)
                     {
@@ -149,25 +158,28 @@ public class Npc : Entity,ISmashable
             {
                 case STATE.HUNGER :
                     agent.SetDestination(currentDestination.position);
-                    if (Mathf.Abs(transform.position.x - agent.destination.x) <= 0.1f &&
-                        Mathf.Abs(transform.position.z - agent.destination.z) <= 0.1f)
+                    if (Mathf.Abs(transform.position.x - agent.destination.x) <= agent.stoppingDistance + minimumDistanceWithDestination &&
+                        Mathf.Abs(transform.position.z - agent.destination.z) <= agent.stoppingDistance + minimumDistanceWithDestination)
                     {
                         state = STATE.DANCING;
                         stats.currentHunger = npcData.maxHunger;
+                        hungerImage.SetActive(false);
                     }
                     break;
                 case STATE.THIRST :
                     agent.SetDestination(currentDestination.position);
-                    if(Mathf.Abs(transform.position.x - agent.destination.x) <= 1f && Mathf.Abs(transform.position.z - agent.destination.z) <= 1f)
+                    if(Mathf.Abs(transform.position.x - agent.destination.x) <= agent.stoppingDistance + minimumDistanceWithDestination && Mathf.Abs(transform.position.z - agent.destination.z) <= agent.stoppingDistance + minimumDistanceWithDestination)
                     {
                         animator.SetBool("isDrinking", true);
+                        thirstImage.SetActive(false);
                     }
                     break;
                 case STATE.BLADDER :
                     agent.SetDestination(currentDestination.position);
-                    if(Mathf.Abs(transform.position.x - agent.destination.x) <= 0.1f && Mathf.Abs(transform.position.z - agent.destination.z) <= 0.1f)
+                    if(Mathf.Abs(transform.position.x - agent.destination.x) <= agent.stoppingDistance + minimumDistanceWithDestination && Mathf.Abs(transform.position.z - agent.destination.z) <= agent.stoppingDistance + minimumDistanceWithDestination)
                     {
                         animator.SetBool("isBladder", true);
+                        bladderImage.SetActive(false);
                     }
                     break;
             }
@@ -191,13 +203,13 @@ public class Npc : Entity,ISmashable
     {
  
         
-        if ((Mathf.Abs(transform.position.x - agent.destination.x) <= 0.5f &&
-             Mathf.Abs(transform.position.z - agent.destination.z) <= 0.5f) || runAwayDestination == null)
+        if ((Mathf.Abs(transform.position.x - agent.destination.x) <= agent.stoppingDistance + minimumDistanceWithDestination &&
+             Mathf.Abs(transform.position.z - agent.destination.z) <= agent.stoppingDistance + minimumDistanceWithDestination) || runAwayDestination == null)
         {
             if (exitPoints.Count > 0)
             {
-                if (runAwayDestination != null && Mathf.Abs(transform.position.x - runAwayDestination.position.x) <= 0.5f &&
-                    Mathf.Abs(transform.position.z - runAwayDestination.position.z) <= 0.5f)
+                if (runAwayDestination != null && Mathf.Abs(transform.position.x - runAwayDestination.position.x) <= agent.stoppingDistance + minimumDistanceWithDestination &&
+                    Mathf.Abs(transform.position.z - runAwayDestination.position.z) <= agent.stoppingDistance + minimumDistanceWithDestination)
                 {
                     NpcManager.instance.UnSpawnNpc(gameObject.name.Replace("(Clone)", String.Empty), gameObject);
                     return;

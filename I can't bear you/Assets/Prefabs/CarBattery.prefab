@@ -83,7 +83,12 @@ MonoBehaviour:
     type: 3}
   zonePrefab: {fileID: 4272535733154748759, guid: 33d0356bf9742c04e81b8bd0843844db,
     type: 3}
-  charged: 1
+  zone: {fileID: 0}
+  emitterDependant: 0
+  emitter: {fileID: 0}
+  zoneSize: 5
+  itemCharged: 0
+  itemConductor: 0
   ignitable: 0
   poisonable: 0
   poisoned: 0

@@ -7,10 +7,7 @@ public class Ponch : Item,IInteractable,ISmashable
     [SerializeField] private GameObject psBubblePoisoned;
     public void Interact()
     {
-        if(poisoned) return;
-        Debug.Log("Poisoning Ponch");
-        psBubblePoisoned.SetActive(true);
-        Poison();
+        Debug.Log("Interacting Ponch");
     }
 
     public void Smash()
