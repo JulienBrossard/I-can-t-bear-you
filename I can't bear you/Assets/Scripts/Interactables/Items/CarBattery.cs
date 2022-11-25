@@ -12,8 +12,7 @@ public class CarBattery : Item,ISmashable,IGrabbable
     public void Smash()
     {
         Debug.Log("Breaking the battery");
-        CreatePuddle();
-        CreateZone();
+        CreatePuddle().GetComponent<Puddle>().Electrocute();
         DeleteItem();
     }
 
