@@ -1,4 +1,5 @@
 using System.Collections;
+using DG.Tweening;
 using UnityEditor.MemoryProfiler;
 using UnityEngine;
 
@@ -13,6 +14,7 @@ public abstract class PlayerState : Entity
     private float accelerationIndex;
     [SerializeField] protected bool locked;
     [SerializeField] protected bool roarReady;
+    [SerializeField] protected Transform roarFX;
 
     public abstract void OnStateEnter();
     public abstract void Behave();
@@ -51,6 +53,10 @@ public abstract class PlayerState : Entity
     {
         if (roarReady)
         {
+            CameraManager.instance.CameraShake(playerStats.roarDuration, new Vector3(10f,10f,0f),5f, 5, 0.5f);
+            roarFX.gameObject.SetActive(true);
+            roarFX.localScale = Vector3.zero;
+            roarFX.DOScale(playerStats.roarRange, playerStats.roarDuration).SetEase(Ease.OutBack).OnComplete(() => roarFX.DOScale(99999, 0.5f).OnComplete(() =>roarFX.gameObject.SetActive(false)));
             Collider[] npcAtRange = Physics.OverlapSphere(transform.position, playerStats.roarRange, LayerMask.GetMask("Npc"));
             foreach (var npc in npcAtRange)
             {

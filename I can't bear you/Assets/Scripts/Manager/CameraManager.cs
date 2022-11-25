@@ -20,6 +20,11 @@ public class CameraManager : MonoBehaviour
         transform.DOMove(roomWayPoint.transform.position, 1f);
     }
 
+    public void CameraShake(float duration, Vector3 vector3, float strength, int vibrato, float randomness)
+    {
+        transform.DOShakePosition(duration, strength, vibrato, randomness);
+    }
+
     private void FixedUpdate()
     {
     }

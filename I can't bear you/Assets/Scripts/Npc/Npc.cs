@@ -189,6 +189,8 @@ public class Npc : Entity,ISmashable
 
     void Panic()
     {
+ 
+        
         if ((Mathf.Abs(transform.position.x - agent.destination.x) <= 0.5f &&
              Mathf.Abs(transform.position.z - agent.destination.z) <= 0.5f) || runAwayDestination == null)
         {
@@ -256,8 +258,8 @@ public class Npc : Entity,ISmashable
     {
         animator.speed = 1;
         base.Die();
-        //NpcManager.instance.UnSpawnNpc(gameObject.name.Replace("(Clone)", String.Empty), gameObject);
     }
+    
     
     public void Attracted(float radius, Vector3 position, float angle)
     {
