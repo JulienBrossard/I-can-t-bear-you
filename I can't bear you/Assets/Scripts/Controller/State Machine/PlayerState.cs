@@ -1,3 +1,6 @@
+using System.Collections;
+using DG.Tweening;
+using UnityEditor.MemoryProfiler;
 using UnityEngine;
 
 public abstract class PlayerState : Entity
@@ -9,8 +12,10 @@ public abstract class PlayerState : Entity
     protected GameObject heldObject;
     [SerializeField] protected Transform handTransform;
     private float accelerationIndex;
-    //a ajouter dans player stats
-    private float turnTime = 0.1f;
+    [SerializeField] protected bool locked;
+    [SerializeField] protected bool roarReady;
+    [SerializeField] protected Transform roarFX;
+
     public abstract void OnStateEnter();
     public abstract void Behave();
     public abstract void FixedBehave();
@@ -22,7 +27,7 @@ public abstract class PlayerState : Entity
             return;
         }
         accelerationIndex = Mathf.Clamp(accelerationIndex + playerStats.accelerationStep, 0, 1);
-        transform.forward = Vector3.Slerp(new Vector3(transform.forward.x,0,transform.forward.z), new Vector3(rb.velocity.x,0,rb.velocity.z), turnTime); 
+        transform.forward = Vector3.Slerp(new Vector3(transform.forward.x,0,transform.forward.z), new Vector3(rb.velocity.x,0,rb.velocity.z), playerStats.turnTime); 
         //transform.LookAt(transform.position + new Vector3(InputManager.instance.input.Movement.Move.ReadValue<Vector2>().x, 0, InputManager.instance.input.Movement.Move.ReadValue<Vector2>().y).normalized);
         rb.velocity = new Vector3(InputManager.instance.input.Movement.Move.ReadValue<Vector2>().x * playerStats.accelerationCurve.Evaluate(accelerationIndex) * playerStats.maxSpeed * currentSpeedRatio,
             rb.velocity.y,
@@ -43,5 +48,49 @@ public abstract class PlayerState : Entity
             SendRayCast(transform.position,new Vector3(Mathf.Sin(-i+tempAngle),0,Mathf.Cos(-i+tempAngle)), range, i/angle);
         }
     }
+
+    public void Roar()
+    {
+        if (roarReady)
+        {
+            CameraManager.instance.CameraShake(playerStats.roarDuration, new Vector3(10f,10f,0f),5f, 5, 0.5f);
+            roarFX.gameObject.SetActive(true);
+            roarFX.localScale = Vector3.zero;
+            roarFX.DOScale(playerStats.roarRange, playerStats.roarDuration).SetEase(Ease.OutBack).OnComplete(() => roarFX.DOScale(99999, 0.5f).OnComplete(() =>roarFX.gameObject.SetActive(false)));
+            Collider[] npcAtRange = Physics.OverlapSphere(transform.position, playerStats.roarRange, LayerMask.GetMask("Npc"));
+            foreach (var npc in npcAtRange)
+            {
+                Debug.Log("A NPC was in range of roar");
+                if (Random.Range(0f, 1f) < playerStats.roarFreezeChance)
+                {
+                    Debug.Log(npc.gameObject.name + " got freezed by roar");
+                    npc.GetComponent<Npc>().GetFreezed(playerStats.roarFreezeDuration, true);
+                }
+                else
+                {
+                    npc.GetComponent<Npc>().GetFreezed(playerStats.roarFreezeDuration, false);
+                }
+            }
+            roarReady = false;
+            heldObject?.GetComponent<IGrabbable>().Drop();
+            locked = true;
+            StartCoroutine(RoarCd());
+            StartCoroutine(LockTime(playerStats.roarDuration));
+        }
+    }
+    
+    public IEnumerator LockTime(float time)
+    {
+        locked = true;
+        yield return new WaitForSeconds(time);
+        locked = false;
+    } 
+    
+    public IEnumerator RoarCd()
+    {
+        yield return new WaitForSeconds(playerStats.roarCD); 
+        roarReady = true;
+    }
+    
     protected abstract void SendRayCast(Vector3 origin, Vector3 dir, float length, float centerDistance);
 }

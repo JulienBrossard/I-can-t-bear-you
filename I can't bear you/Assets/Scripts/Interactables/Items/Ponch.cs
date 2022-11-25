@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class Ponch : Item,IInteractable,ISmashable
 {
+    [SerializeField] private GameObject psBubblePoisoned;
     public void Interact()
     {
         if(poisoned) return;
         Debug.Log("Poisoning Ponch");
+        psBubblePoisoned.SetActive(true);
         Poison();
     }
 

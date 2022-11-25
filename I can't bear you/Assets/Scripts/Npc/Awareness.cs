@@ -38,6 +38,7 @@ public class Awareness : MonoBehaviour
                     visibleTargets.Add(target);
                 }
             }
+            
         }
     }
     

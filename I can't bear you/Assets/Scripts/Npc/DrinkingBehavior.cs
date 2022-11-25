@@ -25,13 +25,15 @@ public class DrinkingBehavior : StateMachineBehaviour
         npc.stats.currentThirst = npc.npcData.maxThirst;
         npc.isAction = false;
         Debug.Log("Drinking");
-        
-            if (npc.currentDestination.GetChild(0).TryGetComponent(out Item item))
+        if (npc.currentDestination.childCount > 0)
+        {
+
+            if (npc.currentDestination.GetChild(0).TryGetComponent(out Item item));
+            if (item.poisoned)
             {
-                WasDrinkPoisonous(item);
+                npc.Poison();
             }
- 
-        
+        }
     }
 
     // OnStateMove is called right after Animator.OnAnimatorMove()
@@ -45,13 +47,4 @@ public class DrinkingBehavior : StateMachineBehaviour
     //{
     //    // Implement code that sets up animation IK (inverse kinematics)
     //}
-    
-    public void WasDrinkPoisonous(Item item)
-    {
-        if (item.poisoned)
-        {
-            Debug.Log("died from drinking" + item.name);
-            npc.Die();
-        }
-    }
 }

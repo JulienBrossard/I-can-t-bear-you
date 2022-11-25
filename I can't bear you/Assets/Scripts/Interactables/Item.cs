@@ -12,7 +12,7 @@ public class Item : MonoBehaviour, IAffectable
     [SerializeField] private GameObject puddlePrefab;
     public virtual void CreatePuddle()
     {
-        Instantiate(puddlePrefab, transform.position, Quaternion.identity);
+        Instantiate(puddlePrefab, new Vector3(transform.position.x,0.5f,transform.position.z), Quaternion.identity);
     }
 
     [SerializeField] private GameObject zonePrefab;

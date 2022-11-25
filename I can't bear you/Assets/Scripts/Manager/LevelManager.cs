@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 public class LevelManager : MonoBehaviour
@@ -39,6 +38,14 @@ public class LevelManager : MonoBehaviour
     {
         return level.player;
     }
+    
+    public void RemoveExitPoint(Transform exitPoint)
+    {
+        foreach (var npc in NpcManager.instance.npc)
+        {
+            npc.GetComponent<Npc>().RemoveExitPoint(exitPoint);
+        }
+    }
 
     public void ApplyModifications()
     {
@@ -60,6 +67,18 @@ public class LevelManager : MonoBehaviour
             Debug.LogWarning("Npc List is empty");
         }
     }
+
+    public void EndLevel(bool bySleeping)
+    {
+        if (level.npcCount < level.requiredNpcKillCount)
+        {
+            UiManager.instance.LaunchEndLevelScreen(true);
+        }
+        else
+        {
+            UiManager.instance.LaunchEndLevelScreen(false);
+        }
+    }
 }
 
 [Serializable]
@@ -67,9 +86,11 @@ public class LevelData
 {
     public SpawnNpc[] npc;
     [HideInInspector] public int npcCount;
+    public int requiredNpcKillCount;
     [Header("Waypoint Settings")]
     public Transform[] npcSpawnPositions;
-    public Transform[] runAwayPoints;
+    public Transform[] notExitPoints;
+    public Transform[] exitPoints;
     public Transform[] hungerPoints;
     public Transform[] thirstPoints;
     public Transform[] bladderPoints;

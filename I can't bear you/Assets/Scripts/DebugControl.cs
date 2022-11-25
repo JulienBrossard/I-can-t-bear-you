@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class DebugConsole : MonoBehaviour
+public class DebugControl : MonoBehaviour
 { 
     void Start()
     {
@@ -18,6 +18,11 @@ public class DebugConsole : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.F1))
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
+        
+        if (Input.GetKeyDown(KeyCode.F2))
+        {
+            BearserkerGaugeManager.instance.AddBearserker(1);
         }
     }
 }

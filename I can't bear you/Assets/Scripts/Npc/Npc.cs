@@ -1,4 +1,6 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using Random = UnityEngine.Random;
@@ -11,7 +13,8 @@ public class Npc : Entity,ISmashable
         HUNGER,
         BLADDER,
         DANCING,
-        ATTRACTED
+        ATTRACTED,
+        FREEZE
     }
     
     [Header("Data")] 
@@ -22,14 +25,13 @@ public class Npc : Entity,ISmashable
     
     [Header("NavMesh")]
     public NavMeshAgent agent;
-    
-    [Header("Animator")]
-    [SerializeField] Animator animator;
 
     [HideInInspector] public Transform currentDestination;
+    Transform runAwayDestination;
     
     [Header("Waypoint Settings")]
-    Transform[] runAwayPoints;
+    Transform[] noExitPoints;
+    public List<Transform> exitPoints;
     Transform[] hungerPoints;
     Transform[] thirstPoints;
     Transform[] bladderPoints;
@@ -59,7 +61,7 @@ public class Npc : Entity,ISmashable
         pathfinding = new Pathfinding();
         agent.speed = npcData.speed;
         RandomStats();
-        pathfinding.LoadWayPoints(out hungerPoints, out thirstPoints, out bladderPoints, out runAwayPoints);
+        pathfinding.LoadWayPoints(out hungerPoints, out thirstPoints, out bladderPoints, out noExitPoints, out exitPoints);
         player = LevelManager.instance.GetPlayer();
         UpdateSpeed(npcData.speed);
     }
@@ -72,17 +74,17 @@ public class Npc : Entity,ISmashable
             animator.SetBool("isDancing", false);
         }
 
-        if (panicData.panicState == Panic.PanicState.Calm)
+        if (panicData.panicState == global::Panic.PanicState.Calm)
         {
             Calm();
         }
-        else if(panicData.panicState == Panic.PanicState.Tense)
+        else if(panicData.panicState == global::Panic.PanicState.Tense)
         {
             Investigate();
         }
         else
         {
-            RunAway();
+            Panic();
         }
     }
 
@@ -119,7 +121,7 @@ public class Npc : Entity,ISmashable
                     }
                     else
                     {
-                        randomPosParty = pathfinding.CalculateRandomPosParty(agent,  transform, runAwayPoints[0].position.y,
+                        randomPosParty = pathfinding.CalculateRandomPosInSphere(agent,  transform, noExitPoints[0].position.y,
                             LevelManager.instance.level.partyData.radius, LevelManager.instance.level.partyData.partyPosition.position);
                     }
                 }
@@ -176,7 +178,7 @@ public class Npc : Entity,ISmashable
     {
         if (investigatePoint == Vector3.zero)
         {
-            investigatePoint = pathfinding.CalculateRandomPosParty(agent, transform, runAwayPoints[0].position.y, panicData.panicData.investigateRadius, player.position);
+            investigatePoint = pathfinding.CalculateRandomPosInSphere(agent, transform, noExitPoints[0].position.y, panicData.panicData.investigateRadius, player.position);
         }
         else if (pathfinding.Distance(transform, agent) < 2 && investigatePoint != Vector3.zero)
         {
@@ -185,14 +187,30 @@ public class Npc : Entity,ISmashable
         agent.SetDestination(investigatePoint);
     }
 
-    void RunAway()
+    void Panic()
     {
-        agent.SetDestination(pathfinding.ChooseClosestTarget(runAwayPoints, transform, agent).position);
-        if (Mathf.Abs(transform.position.x - agent.destination.x) <= 0.5f &&
-            Mathf.Abs(transform.position.z - agent.destination.z) <= 0.5f)
+ 
+        
+        if ((Mathf.Abs(transform.position.x - agent.destination.x) <= 0.5f &&
+             Mathf.Abs(transform.position.z - agent.destination.z) <= 0.5f) || runAwayDestination == null)
         {
-            NpcManager.instance.UnSpawnNpc(gameObject.name.Replace("(Clone)", String.Empty),gameObject);
+            if (exitPoints.Count > 0)
+            {
+                if (runAwayDestination != null && Mathf.Abs(transform.position.x - runAwayDestination.position.x) <= 0.5f &&
+                    Mathf.Abs(transform.position.z - runAwayDestination.position.z) <= 0.5f)
+                {
+                    NpcManager.instance.UnSpawnNpc(gameObject.name.Replace("(Clone)", String.Empty), gameObject);
+                    return;
+                }
+                runAwayDestination = pathfinding.ChooseClosestTarget(exitPoints.ToArray(), transform, agent);
+            }
+            else
+            {
+                runAwayDestination = noExitPoints[Random.Range(0, noExitPoints.Length)];
+            }
+            agent.SetDestination(runAwayDestination.position);
         }
+        agent.SetDestination(runAwayDestination.position);
     }
 
     public void RandomStats()
@@ -229,21 +247,26 @@ public class Npc : Entity,ISmashable
 
     public void Smash() //Fonction appelée quand le joueur tape sur le NPC
     {
-        Destroy(gameObject);
+        if (!isDie)
+        { 
+            animator.SetBool("isSmashing",true);
+            Die();
+        }
     }
 
     public override void Die()
     {
+        animator.speed = 1;
         base.Die();
-        NpcManager.instance.UnSpawnNpc(gameObject.name.Replace("(Clone)", String.Empty), gameObject);
     }
     
-    public void Attracted(float radius, Vector3 position)
+    
+    public void Attracted(float radius, Vector3 position, float angle)
     {
         state = STATE.ATTRACTED;
         randomPosParty = Vector3.zero;
-        attractedPoint = pathfinding.CalculateRandomPosParty(agent,  transform, runAwayPoints[0].position.y,
-            radius, position);
+        attractedPoint = pathfinding.CalculateRandomPosInCone(agent,  transform, noExitPoints[0].position.y,
+            radius, angle, position);
     }
 
     public void StopAttracted()
@@ -251,6 +274,37 @@ public class Npc : Entity,ISmashable
         state = STATE.DANCING;
         randomPosParty = Vector3.zero;
     }
+
+    public void GetFreezed(float freezeTime, bool isFreeze)
+    {
+        if (isFreeze)
+        {
+            state = STATE.FREEZE;
+            StopWalking();
+            animator.speed = 0;
+            UpdateSpeed(0);
+            StartCoroutine(FreezeCD(freezeTime));
+        }
+        else
+        {
+            panicData.UpdatePanic(1);
+        }
+ 
+    }
+    IEnumerator FreezeCD(float freezeTime)
+    {
+        yield return new WaitForSeconds(freezeTime);
+        UpdateSpeed(npcSpeed);
+        animator.speed = 1;
+        panicData.UpdatePanic(1);
+    }
+
+    public void RemoveExitPoint(Transform exitPoint)
+    {
+        exitPoints.Remove(exitPoint);
+        runAwayDestination = null;
+    }
+
 }
 
 [Serializable]

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class InterestPointsManager : MonoBehaviour
@@ -22,9 +23,21 @@ public class InterestPointsManager : MonoBehaviour
         SortInterestPoints();
     }
 
+    private GameObject outlineGoBuffer;
     void SortInterestPoints()
     {
         interestPoints = interestPoints.OrderByDescending(o=>o.score).ToList();
+        if (!outlineGoBuffer.IsDestroyed())
+        {
+            outlineGoBuffer?.GetComponent<Outline>()?.DisableOutline();
+        }
+        if (interestPoints.Count == 0)
+        {
+            outlineGoBuffer = default;
+            return;
+        }
+        outlineGoBuffer = interestPoints[0]?.go;
+        outlineGoBuffer.GetComponent<Outline>()?.EnableOutline();
     }
     public IInteractable GetInteractable()
     {
