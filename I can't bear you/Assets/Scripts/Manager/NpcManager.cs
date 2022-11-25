@@ -10,6 +10,7 @@ public class NpcManager : MonoBehaviour
     public int npcCountkilled;
     public int npcCountfleed;
     public List<GameObject> npc = new List<GameObject>();
+    public Dictionary<GameObject, Panic> panicDict = new Dictionary<GameObject, Panic>();
     
     private void Awake()
     {
@@ -30,11 +31,13 @@ public class NpcManager : MonoBehaviour
         {
             UiManager.instance.UpdateRemainingNpcText();
         }
+        panicDict.Add(npc[^1], npc[^1].GetComponent<Panic>());
     }
 
     [ContextMenu("Npc")]
     public void UnSpawnNpc(String name, GameObject npc)
     {
+        panicDict.Remove(npc);
         this.npc.Remove(npc);
         Pooler.instance.DePop(name, npc);
         npcCountRemaining--;
