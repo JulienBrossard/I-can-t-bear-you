@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.3069224, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2796,7 +2796,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   npcCountRemaining: 0
-  npcCountMax: 0
+  npcCountkilled: 0
+  npcCountfleed: 0
+  npc: []
 --- !u!114 &377199018
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2815,6 +2817,7 @@ MonoBehaviour:
     - npc: {fileID: 4225555480404199414, guid: d9d78adb1c1738248a56b9aca3558a44, type: 3}
       count: 10
     npcCount: 10
+    requiredNpcKillCount: 0
     npcSpawnPositions:
     - {fileID: 1078110528}
     - {fileID: 1950366201}
@@ -2822,7 +2825,9 @@ MonoBehaviour:
     - {fileID: 1561423816}
     - {fileID: 414548088}
     - {fileID: 1702298361}
-    runAwayPoints:
+    notExitPoints:
+    - {fileID: 1613996417}
+    exitPoints:
     - {fileID: 1613996417}
     hungerPoints:
     - {fileID: 1335668391}

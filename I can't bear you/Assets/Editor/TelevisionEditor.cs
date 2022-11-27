@@ -3,7 +3,7 @@ using UnityEditor;
 using UnityEngine;
 
 [CustomEditor (typeof (Television))]
-public class TelevisionEditor : Editor
+public class TelevisionEditor : ItemEditor
 {
     private void OnSceneGUI()
     {

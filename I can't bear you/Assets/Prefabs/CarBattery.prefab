@@ -89,9 +89,6 @@ MonoBehaviour:
   zoneSize: 5
   itemCharged: 0
   itemConductor: 0
-  ignitable: 0
-  poisonable: 0
-  poisoned: 0
   consumable: 0
   rb: {fileID: 4877492386470609555}
   throwForce: 37.5
