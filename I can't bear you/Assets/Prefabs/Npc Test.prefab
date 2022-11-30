@@ -1734,7 +1734,7 @@ MonoBehaviour:
     m_Bits: 8
   obstacleMask:
     serializedVersion: 2
-    m_Bits: 119
+    m_Bits: 55
   visibleTargets: []
   panicData: {fileID: -7787597326935306304}
   statusEffects: {fileID: -2508231515378271730}
