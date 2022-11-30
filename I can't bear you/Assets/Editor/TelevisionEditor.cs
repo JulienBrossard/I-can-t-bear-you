@@ -22,5 +22,6 @@ public class TelevisionEditor : ItemEditor
 
         Handles.DrawLine (television.transform.position, television.transform.position + viewAngleA * television.attractedDistance * axisDir);
         Handles.DrawLine (television.transform.position, television.transform.position + viewAngleB * television.attractedDistance * axisDir);
+        OnSceneDraw();
     }
 }

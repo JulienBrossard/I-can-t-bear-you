@@ -75,10 +75,13 @@ MonoBehaviour:
     type: 3}
   zonePrefab: {fileID: 0}
   zone: {fileID: 0}
-  charged: 0
-  ignitable: 0
-  poisonable: 0
-  poisoned: 0
+  emitterDependant: 0
+  emitter: {fileID: 0}
+  zoneSize: 0
+  itemCharged: 0
+  itemConductor: 0
+  fallable: 0
+  falls: []
   consumable: 1
   rb: {fileID: 3778223884131960099}
   collider: {fileID: 3778223884131960110}

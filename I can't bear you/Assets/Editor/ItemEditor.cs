@@ -5,6 +5,7 @@ using System.Numerics;
 using System.Reflection;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.XR;
 
 [CustomEditor(typeof(Item), true)]
 public class ItemEditor : Editor
@@ -12,6 +13,7 @@ public class ItemEditor : Editor
     private Item item;
     private bool conductorBuffer;
     private float zoneSizeBuffer;
+    private float fallHandleSize = 2.5f;
 
     private void OnEnable()
     {
@@ -20,10 +22,31 @@ public class ItemEditor : Editor
         zoneSizeBuffer = item.zoneSize;
     }
 
+    private void OnSceneGUI()
+    {
+        OnSceneDraw();
+    }
+    
+    public void OnSceneDraw()
+    {
+        Handles.color = Color.red;
+        foreach (FallAsset fall in item.falls)
+        {
+            Handles.DrawLine(item.transform.position, item.transform.position + fall.Dir * fallHandleSize);
+        }
+    }
+
     public override void OnInspectorGUI()
     {
         item = (Item)target;
         base.OnInspectorGUI();
+        
+        if(item.fallable && item.GetComponent<Rigidbody>() == default)
+        {
+            Debug.LogWarning(item.name + " is fallable but has no rigidbody, it has been added and set to kinematic.");
+            item.gameObject.AddComponent<Rigidbody>().isKinematic = true;
+        }
+        
         if (conductorBuffer != item.conductor)
         {
             conductorBuffer = item.conductor;

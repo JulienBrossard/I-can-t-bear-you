@@ -89,6 +89,10 @@ MonoBehaviour:
   zoneSize: 5
   itemCharged: 0
   itemConductor: 0
+  fallable: 0
+  falls:
+  - dir: {x: 1, y: 1, z: 1}
+    force: 0
   consumable: 0
   rb: {fileID: 4877492386470609555}
   throwForce: 37.5

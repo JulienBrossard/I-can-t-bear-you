@@ -84,9 +84,15 @@ public class Item : MonoBehaviour, IAffectable
             }
         }
     }
+
+    public bool fallable;
+    public List<FallAsset> falls = new List<FallAsset>();
     public virtual void Fall()
     {
-        Debug.Log("Falling " + gameObject.name);
+        if(!fallable)return;
+        Debug.Log( "Falling " + gameObject.name);
+        GetComponent<Rigidbody>().isKinematic = false;
+        GetComponent<Rigidbody>().AddForce(falls[0].Dir * falls[0].force);
     }
 
     public virtual void Explode()
@@ -101,4 +107,12 @@ public class Item : MonoBehaviour, IAffectable
         Debug.Log("Being consumed " + gameObject.name);
         return false;
     }
+}
+
+[Serializable]
+public class FallAsset
+{
+    [SerializeField] private Vector3 dir;
+    public Vector3 Dir{get => dir; set => dir = value.normalized;}
+    public float force;
 }
