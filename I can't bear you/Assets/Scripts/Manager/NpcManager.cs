@@ -11,7 +11,7 @@ public class NpcManager : MonoBehaviour
     public int npcCountfleed;
     public List<GameObject> npc = new List<GameObject>();
     public Dictionary<GameObject, Panic> panicDict = new Dictionary<GameObject, Panic>();
-    
+
     private void Awake()
     {
         if (instance != null)
@@ -29,8 +29,8 @@ public class NpcManager : MonoBehaviour
         npcCountRemaining++;
         if (npcCountRemaining == LevelManager.instance.level.npcCount)
         {
-            UiManager.instance.UpdateRemainingNpcText();
         }
+        UiManager.instance.UpdateRemainingNpcText();
         panicDict.Add(npc[^1], npc[^1].GetComponent<Panic>());
     }
 

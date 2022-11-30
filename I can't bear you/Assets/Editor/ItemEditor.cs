@@ -9,6 +9,8 @@ using UnityEngine;
 [CustomEditor(typeof(Item), true)]
 public class ItemEditor : Editor
 {
+    
+#if UNITY_EDITOR
     private Item item;
     private bool conductorBuffer;
     private float zoneSizeBuffer;
@@ -81,4 +83,5 @@ public class ItemEditor : Editor
             }
         }
     }
+#endif
 }

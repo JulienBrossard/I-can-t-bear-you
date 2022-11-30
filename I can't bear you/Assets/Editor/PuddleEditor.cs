@@ -9,6 +9,7 @@ using UnityEngine;
 [CustomEditor(typeof(Puddle), true)]
 public class PuddleEditor : Editor
 {
+#if UNITY_EDITOR
     private Puddle puddle;
     private bool conductorBuffer;
     private float zoneSizeBuffer;
@@ -81,4 +82,5 @@ public class PuddleEditor : Editor
             }
         }
     }
+#endif
 }
