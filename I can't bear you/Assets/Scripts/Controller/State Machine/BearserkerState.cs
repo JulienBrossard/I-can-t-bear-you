@@ -5,6 +5,7 @@ public class BearserkerState : PlayerState
     [SerializeField] private PlayerState stealthState;
     public override void OnStateEnter()
     {
+        currentSusState = SUSSTATE.FREIGHTNED;
         StartCoroutine(RoarCd());
         PlayerAnimatorManager.instance.SetAnimatorBool("Bearserker", true);
     }

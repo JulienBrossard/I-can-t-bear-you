@@ -4,7 +4,6 @@ using UnityEngine;
 public class PanicData : ScriptableObject
 {
     [Header("Panic rate")]
-    public float murder;
     public float suspicious;
     public float investigateRadius;
 }

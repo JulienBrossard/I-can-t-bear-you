@@ -12,6 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02a6add0b71dd7749b00fc5038e5d44b, type: 3}
   m_Name: Panic Data
   m_EditorClassIdentifier: 
-  murder: 0
-  suspicious: 0
+  suspicious: 0.01
   investigateRadius: 18
