@@ -1,7 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Item : MonoBehaviour, IAffectable
@@ -60,6 +56,8 @@ public class Item : MonoBehaviour, IAffectable
         charged = true;
         EnableZone();
     }
+    
+
     public virtual void DeElectrocute()
     {
         Debug.Log("DeElectrocuted " + gameObject.name);
@@ -89,8 +87,15 @@ public class Item : MonoBehaviour, IAffectable
         Debug.Log("Falling " + gameObject.name);
     }
 
+    [SerializeField] private bool isExplosive;
+    public GameObject explosionPrefab;
+    public bool explosive { get => isExplosive; set => isExplosive = value; }
+
+
     public virtual void Explode()
     {
+        Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+        
         Debug.Log("Exploded " + gameObject.name);
     }
 
