@@ -66,20 +66,16 @@ public class Pathfinding
         }
     }
 
-    public Vector3 CalculateRandomPosInSphere(NavMeshAgent agent, Transform npcTransform ,float height, float radius,Vector3 center )
+    public Vector3 CalculateRandomPosInCircle(NavMeshAgent agent, Transform npcTransform ,float height, float radius,Vector3 center )
     {
-        Vector2 randomPos = new Vector2(
-            Random.Range(-radius,
-                radius),
-            Random.Range(-radius,
-                radius));
+        Vector2 randomPos = CalculateRandomPointInCircle(radius);
         NavMeshPath path = new NavMeshPath();
         NavMesh.CalculatePath(npcTransform.position, new Vector3(center.x + randomPos.x, 
             height, 
             center.z + randomPos.y), agent.areaMask, path);
         if (path.status == NavMeshPathStatus.PathInvalid)
         {
-            return CalculateRandomPosInSphere(agent, npcTransform, height, radius, center);
+            return CalculateRandomPosInCircle(agent, npcTransform, height, radius, center);
         }
         return  center + new Vector3(randomPos.x, height, randomPos.y);
     }
@@ -98,6 +94,39 @@ public class Pathfinding
             return CalculateRandomPosInCone(agent, npcTransform, height, radius, angle, center);
         }
         return  center + new Vector3(randomPos.x, height, randomPos.y);
+    }
+    
+    /// <summary>
+    /// Calcule a random position on the circle periphery
+    /// </summary>
+    /// <param name="agent"> NavMeshAgent of the gameobject</param>
+    /// <param name="npcTransform"> Transform of the npc</param>
+    /// <param name="height"> Height of the destination</param>
+    /// <param name="radius"> Radius of the sphere</param>
+    /// <param name="center"> Center of the sphere</param>
+    /// <returns></returns>
+    public Vector3 CalculateRandomPosOnCirclePeriphery(NavMeshAgent agent, Transform npcTransform ,float height, float radius,Vector3 center )
+    {
+        Vector2 direction = (CalculateRandomPointInCircle(radius) - new Vector2(center.x, center.z)).normalized ;
+        Vector2 randomPos = direction * radius;
+        NavMeshPath path = new NavMeshPath();
+        NavMesh.CalculatePath(npcTransform.position, new Vector3(center.x + randomPos.x, 
+            height, 
+            center.z + randomPos.y), agent.areaMask, path);
+        if (path.status == NavMeshPathStatus.PathInvalid)
+        {
+            return CalculateRandomPosInCircle(agent, npcTransform, height, radius, center);
+        }
+        return  center + new Vector3(randomPos.x, height, randomPos.y);
+    }
+
+    public Vector2 CalculateRandomPointInCircle(float radius)
+    {
+        return new Vector2(
+            Random.Range(-radius,
+                radius),
+            Random.Range(-radius,
+                radius));
     }
     
     
