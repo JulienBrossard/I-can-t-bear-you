@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Awareness : MonoBehaviour
@@ -11,6 +12,7 @@ public class Awareness : MonoBehaviour
     public LayerMask targetMask;
     public LayerMask obstacleMask;
     public List<Transform> visibleTargets;
+    [SerializeField] float maxTargets = 5;
 
     void Start() {
         StartCoroutine ("FindTargetsWithDelay", .2f);
@@ -27,8 +29,13 @@ public class Awareness : MonoBehaviour
     void FindVisibleTargets()
     {
         Collider[] targetsInViewRadius = Physics.OverlapSphere (transform.position, viewRadius, targetMask);
+        targetsInViewRadius.OrderBy(x => Vector3.Distance(transform.position, x.transform.position)).ToArray().CopyTo(targetsInViewRadius, 0);
         visibleTargets = new List<Transform> ();
         for (int i = 0; i < targetsInViewRadius.Length; i++) {
+            if (i>maxTargets-1)
+            {
+                break;
+            }
             Transform target = targetsInViewRadius [i].transform;
             Vector3 dirToTarget = (target.position - transform.position).normalized;
             if (Vector3.Angle (transform.forward, dirToTarget) < viewAngle / 2) {
