@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Item : MonoBehaviour, IAffectable
@@ -97,15 +99,11 @@ public class Item : MonoBehaviour, IAffectable
         falling = true;
     }
 
-    [SerializeField] private bool isExplosive;
-    public GameObject explosionPrefab;
-    public bool explosive { get => isExplosive; set => isExplosive = value; }
-
-
+    [SerializeField] private GameObject stompZone;
     private void OnCollisionEnter(Collision collision)
     {
         if(!falling) return;
-        // Sphere cast
+        Instantiate(stompZone, transform.position, Quaternion.identity);
         DeleteItem();
     }
 
@@ -118,7 +116,10 @@ public class Item : MonoBehaviour, IAffectable
         }
         return fallBuffer;
     }
-
+    
+    [SerializeField] private bool isExplosive;
+    public GameObject explosionPrefab;
+    public bool explosive { get => isExplosive; set => isExplosive = value; }
     public virtual void Explode()
     {
         Instantiate(explosionPrefab, transform.position, Quaternion.identity);

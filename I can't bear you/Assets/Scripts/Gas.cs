@@ -25,6 +25,11 @@ public class Gas : MonoBehaviour, IAffectable
     {
     }
 
+    public void Stomp()
+    {
+        return;
+    }
+
     public void Explode()
     {
         Instantiate(explosionPrefab, transform.position, Quaternion.identity);
