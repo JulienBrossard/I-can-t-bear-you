@@ -6,6 +6,7 @@ using System.Reflection;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.XR;
+using Vector3 = System.Numerics.Vector3;
 
 [CustomEditor(typeof(Item), true)]
 public class ItemEditor : Editor
@@ -32,7 +33,7 @@ public class ItemEditor : Editor
         Handles.color = Color.red;
         foreach (FallAsset fall in item.falls)
         {
-            Handles.DrawLine(item.transform.position, item.transform.position + fall.Dir * fallHandleSize);
+            Handles.DrawLine(item.transform.position, item.transform.position + fall.Dir.normalized * fallHandleSize);
         }
     }
 

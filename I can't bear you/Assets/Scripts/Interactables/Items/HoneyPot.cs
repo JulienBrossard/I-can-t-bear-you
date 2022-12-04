@@ -10,7 +10,7 @@ public class HoneyPot : Item,IInteractable,ISmashable,IGrabbable
     [SerializeField, Range(0f, 1f)] private float bearserkerToAdd;
     [SerializeField] private float throwForce;
     private bool shouldBreakOnHit;
-    public void Interact()
+    public void Interact(Vector3 sourcePos)
     {
         Debug.Log("Eating Honey Pot");
         BearserkerGaugeManager.instance.AddBearserker(bearserkerToAdd);

@@ -29,7 +29,7 @@ public class Television : Item, ISmashable, IInteractable
         Electrocute();
     }
 
-    public void Interact()
+    public void Interact(Vector3 sourcePos)
     {
         Debug.Log("Interacting with Television");
         Switch();

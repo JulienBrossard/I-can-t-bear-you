@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class FallableThing : Item, IInteractable
 {
-    public void Interact()
+    public void Interact(Vector3 sourcePos)
     {
-        Fall();
+        Fall(sourcePos);
     }
 }

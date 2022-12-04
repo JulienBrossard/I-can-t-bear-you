@@ -16,10 +16,16 @@ public class StealthState : PlayerState
             {
                 if (heldObject?.GetComponent<IInteractable>() != default)
                 {
-                    heldObject.GetComponent<IInteractable>().Interact();
+                    heldObject.GetComponent<IInteractable>().Interact((transform.position - heldObject.transform.position).normalized);
                     return;
                 }
-                interestPointsManager.GetInteractable()?.Interact();
+                foreach (InterestPoint interestPoint in interestPointsManager.interestPoints)
+                {
+                    if(interestPoint.go.GetComponent<IInteractable>() != null)
+                    {
+                        interestPoint.go.GetComponent<IInteractable>().Interact((transform.position - interestPoint.go.transform.position).normalized);
+                    }
+                }
             }
             if (InputManager.instance.input.Actions.Smash.triggered)
             {

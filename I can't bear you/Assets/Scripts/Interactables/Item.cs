@@ -87,12 +87,22 @@ public class Item : MonoBehaviour, IAffectable
 
     public bool fallable;
     public List<FallAsset> falls = new List<FallAsset>();
-    public virtual void Fall()
+    public virtual void Fall(Vector3 source)
     {
         if(!fallable)return;
         Debug.Log( "Falling " + gameObject.name);
         GetComponent<Rigidbody>().isKinematic = false;
-        GetComponent<Rigidbody>().AddForce(falls[0].Dir * falls[0].force);
+        GetComponent<Rigidbody>().AddForce(GetFall(source).Dir * GetFall(source).force);
+    }
+
+    private FallAsset fallBuffer = new (Vector3.zero, 0);
+    private FallAsset GetFall(Vector3 source)
+    {
+        foreach (FallAsset fall in falls)
+        {
+            if (fallBuffer.Dir.normalized == default || Vector3.Dot(fall.Dir.normalized,source.normalized) < Vector3.Dot(fallBuffer.Dir.normalized,source.normalized)) fallBuffer = fall;
+        }
+        return fallBuffer;
     }
 
     public virtual void Explode()
@@ -113,6 +123,12 @@ public class Item : MonoBehaviour, IAffectable
 public class FallAsset
 {
     [SerializeField] private Vector3 dir;
+
+    public FallAsset(Vector3 newDir, float newForce)
+    {
+        Dir = newDir;
+        force = newForce;
+    }
     public Vector3 Dir{get => dir; set => dir = value.normalized;}
     public float force;
 }
