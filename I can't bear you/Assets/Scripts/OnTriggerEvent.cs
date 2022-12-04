@@ -7,8 +7,9 @@ public class OnTriggerEvent : MonoBehaviour
 {
     [SerializeField] private UnityEvent onTriggerEnter;
     [SerializeField] private UnityEvent onTriggerExit;
+
     [SerializeField] private bool checkForTag;
-    [SerializeField] private string tagToCheckFor;
+    [SerializeField] private string tagToCheckFor = "Player";
     
     private void OnTriggerEnter(Collider other)
     {

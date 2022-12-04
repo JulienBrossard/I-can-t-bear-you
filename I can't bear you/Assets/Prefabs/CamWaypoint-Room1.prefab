@@ -116,6 +116,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 3142666374852528850}
+        m_TargetAssemblyTypeName: WallUpdater, Assembly-CSharp
+        m_MethodName: UpdateWallOnExit
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   onTriggerExit:
     m_PersistentCalls:
       m_Calls: []
@@ -192,6 +204,7 @@ GameObject:
   - component: {fileID: 9213936563506891044}
   - component: {fileID: 6271849930870637580}
   - component: {fileID: 4799669697904225719}
+  - component: {fileID: 3142666374852528850}
   m_Layer: 0
   m_Name: TriggerEnterRoom
   m_TagString: Untagged
@@ -265,6 +278,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 3142666374852528850}
+        m_TargetAssemblyTypeName: WallUpdater, Assembly-CSharp
+        m_MethodName: UpdateWallOnEnter
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   onTriggerExit:
     m_PersistentCalls:
       m_Calls: []
@@ -295,3 +320,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5946436571b190b4088c6acf6fdcdcbd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &3142666374852528850
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7156888241180942555}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 756a7189412905a47a6debc8a85f57f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  wallToShow: []
+  wallToHide: []

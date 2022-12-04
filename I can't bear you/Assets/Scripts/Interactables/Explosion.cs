@@ -7,7 +7,7 @@ public  class Explosion : MonoBehaviour, IAffectable
     public float explosionRadius;
     public GameObject npcPoolOfBloodPrefab;
 
-    
+
     private void OnEnable()
     {
         Explode();
@@ -27,6 +27,7 @@ public  class Explosion : MonoBehaviour, IAffectable
 
     public  void Explode()
     {
+        Camera.main.transform.DOShakePosition(0.2f, 0.5f, 10, 90, false, true);
         transform.localScale = Vector3.zero;
         transform.DOScale(explosionRadius,0.5f).OnComplete(() => gameObject.SetActive(false));
     }

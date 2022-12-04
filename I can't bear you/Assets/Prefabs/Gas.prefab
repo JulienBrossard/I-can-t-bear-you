@@ -48,7 +48,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeBeforeFading: 10
-  explosionPrefab: {fileID: 0}
+  explosionPrefab: {fileID: 6307271810872161894, guid: ec779f342bcc2a34784b7fc79cc61a74,
+    type: 3}
   isExplosive: 1
 --- !u!135 &4432694532978113032
 SphereCollider:
