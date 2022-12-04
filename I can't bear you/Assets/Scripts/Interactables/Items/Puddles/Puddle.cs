@@ -82,6 +82,12 @@ public class Puddle : MonoBehaviour, IAffectable
         charged = true;
         EnableZone();
     }
+
+    public void Stomp()
+    {
+        return;
+    }
+
     public virtual void DeElectrocute()
     {
         Debug.Log("DeElectrocuted " + gameObject.name);

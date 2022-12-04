@@ -60,6 +60,10 @@ public class Item : MonoBehaviour, IAffectable
         charged = true;
         EnableZone();
     }
+    public virtual void Stomp()
+    {
+        return;
+    }
     public virtual void DeElectrocute()
     {
         Debug.Log("DeElectrocuted " + gameObject.name);
@@ -86,13 +90,22 @@ public class Item : MonoBehaviour, IAffectable
     }
 
     public bool fallable;
-    public List<FallAsset> falls = new List<FallAsset>();
+    public List<FallAsset> falls;
+    private bool falling;
     public virtual void Fall(Vector3 source)
     {
         if(!fallable)return;
         Debug.Log( "Falling " + gameObject.name);
         GetComponent<Rigidbody>().isKinematic = false;
         GetComponent<Rigidbody>().AddForce(GetFall(source).Dir * GetFall(source).force);
+        falling = true;
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(!falling) return;
+        // Sphere cast
+        DeleteItem();
     }
 
     private FallAsset fallBuffer = new (Vector3.zero, 0);

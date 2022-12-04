@@ -19,7 +19,8 @@ public class StealthState : PlayerState
                     heldObject.GetComponent<IInteractable>().Interact((transform.position - heldObject.transform.position).normalized);
                     return;
                 }
-                foreach (InterestPoint interestPoint in interestPointsManager.interestPoints)
+                //Dégueulasse mais c'est le seul moyen que j'ai trouvé pour avoir la position de la cible sans tout revoir
+                foreach (InterestPoint interestPoint in interestPointsManager.interestPoints) 
                 {
                     if(interestPoint.go.GetComponent<IInteractable>() != null)
                     {
