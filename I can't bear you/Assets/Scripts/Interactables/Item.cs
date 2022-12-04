@@ -1,7 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Item : MonoBehaviour, IAffectable
@@ -101,6 +97,11 @@ public class Item : MonoBehaviour, IAffectable
         falling = true;
     }
 
+    [SerializeField] private bool isExplosive;
+    public GameObject explosionPrefab;
+    public bool explosive { get => isExplosive; set => isExplosive = value; }
+
+
     private void OnCollisionEnter(Collision collision)
     {
         if(!falling) return;
@@ -120,6 +121,8 @@ public class Item : MonoBehaviour, IAffectable
 
     public virtual void Explode()
     {
+        Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+        
         Debug.Log("Exploded " + gameObject.name);
     }
 

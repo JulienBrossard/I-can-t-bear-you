@@ -61,6 +61,7 @@ public class Puddle : MonoBehaviour, IAffectable
     [SerializeField] private bool puddleCharged,puddleConductor;
     public bool charged { get => puddleCharged; set => puddleCharged = value;}
     public bool conductor { get => puddleConductor; set => puddleConductor = value; }
+    public bool explosive { get; set; }
 
     public virtual void Electrocute()
     {

@@ -1993,7 +1993,7 @@ MonoBehaviour:
   uiInGame: {fileID: 1650096597191598261}
   npcIcon: {fileID: 1760731376419925947, guid: b602b49864f071a458fa524b2d92c877, type: 3}
   npcIconParent: {fileID: 5925604494993631516}
-  speed: 0.1
+  speed: 0.2
   timeBetweenIconKill:
     serializedVersion: 2
     m_Curve:

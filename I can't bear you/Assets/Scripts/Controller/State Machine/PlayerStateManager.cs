@@ -6,9 +6,17 @@ using UnityEngine;
 public class PlayerStateManager : MonoBehaviour
 {
     [SerializeField] private PlayerState baseState;
-    private PlayerState currentState;
+    public PlayerState currentState;
     [SerializeField] private InterestPointsManager interestPointsManager;
-    
+    public static PlayerStateManager instance;
+
+
+
+    private void Awake()
+    {
+        instance = this;
+    }
+
     private void Start()
     {
         currentState = baseState;

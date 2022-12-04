@@ -1,8 +1,13 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class DebugControl : MonoBehaviour
-{ 
+{
+    private float fps;
+    [SerializeField] private TextMeshProUGUI fpsText;
+
+
     void Start()
     {
         Debug.developerConsoleVisible = true;
@@ -24,5 +29,23 @@ public class DebugControl : MonoBehaviour
         {
             BearserkerGaugeManager.instance.AddBearserker(1);
         }
+
+        if (Input.GetKeyDown(KeyCode.F3))
+        {
+            fpsText.gameObject.SetActive(!fpsText.gameObject.activeSelf);
+        }
+
+        if (Input.GetKey(KeyCode.F4))
+        {
+            NpcManager.instance.SpawnNpc("Npc (After)");
+        }
+
+        if (fpsText.gameObject.activeSelf)
+        {
+            fps = 1.0f / Time.unscaledDeltaTime;
+            fpsText.text = fps.ToString("F0"); 
+        }
     }
+    
+
 }

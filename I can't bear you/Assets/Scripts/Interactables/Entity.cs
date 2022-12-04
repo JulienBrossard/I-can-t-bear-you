@@ -29,21 +29,22 @@ public class Entity : MonoBehaviour, IAffectable
 
     public bool charged { get; set; }
     public bool conductor { get; set; }
+    public bool explosive { get; set; }
 
     public virtual void Electrocute()
     {
         if (!isDie)
         {
-            //animator.SetBool("isElectrocuted", true);
+            animator.SetBool("isElectrocuted", true);
             Debug.Log("Electrocuted " + gameObject.name);
-            Die();
+            Die(false);
         }
     }
 
     public void Electrocute(GameObject emitter)
     {
         Debug.Log("Electrocuted " + gameObject.name);
-        Die();
+        Die(false);
     }
 
     public virtual void Stomp()
@@ -55,10 +56,10 @@ public class Entity : MonoBehaviour, IAffectable
     public virtual void Explode()
     {
         Debug.Log("Exploded " + gameObject.name);
-        Die();
+        Die(true);
     }
 
-    public virtual void Die()
+    public virtual void Die(bool unspawn)
     {
         NpcManager.instance.npcCountRemaining--;
         NpcManager.instance.CheckForLvlEnd();
@@ -66,5 +67,6 @@ public class Entity : MonoBehaviour, IAffectable
         UiManager.instance.UpdateRemainingNpcText();
         isDie = true;
         Debug.Log(gameObject.name + " died");
+            
     }
 }

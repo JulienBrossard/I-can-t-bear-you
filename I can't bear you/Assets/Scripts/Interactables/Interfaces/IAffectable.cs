@@ -4,8 +4,9 @@ using UnityEngine;
 
 public interface IAffectable
 {
-    public bool charged { get; set; }
-    public bool conductor { get; set; }
+    [SerializeField] public bool charged { get; set; }
+    [SerializeField] public bool conductor { get; set; }
+    [SerializeField] public bool explosive { get; set; }
     public void Electrocute();
     public void Electrocute(GameObject emitter);
     public void Stomp();

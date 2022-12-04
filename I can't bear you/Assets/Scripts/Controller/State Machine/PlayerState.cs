@@ -15,6 +15,14 @@ public abstract class PlayerState : Entity
     [SerializeField] protected bool locked;
     [SerializeField] protected bool roarReady;
     [SerializeField] protected Transform roarFX;
+    public enum SUSSTATE
+    {
+        NORMAL,
+        SUSPICIOUS,
+        FREIGHTNED
+    }
+    
+    public SUSSTATE currentSusState = SUSSTATE.NORMAL;
 
     public abstract void OnStateEnter();
     public abstract void Behave();
