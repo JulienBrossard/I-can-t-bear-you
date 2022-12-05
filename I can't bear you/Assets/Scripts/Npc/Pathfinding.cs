@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -6,6 +7,11 @@ public class Pathfinding
 {
     public Transform ChooseClosestTarget(Transform[] wayPoints, Transform npcTransform, NavMeshAgent agent)
     {
+        if (wayPoints.Length == 0)
+        {
+            Debug.LogWarning("No waypoints found or no valid path found");
+            return null;
+        }
         Transform closestTarget = null;
         float closestTargetDistance = float.MaxValue;
         NavMeshPath path = new NavMeshPath();
@@ -33,6 +39,14 @@ public class Pathfinding
                 }
             }
         }
+
+        if (!CheckPathStatus(path))
+        {
+            Transform[] newWayPoints = wayPoints;
+            newWayPoints.ToList().Remove(closestTarget);
+            return ChooseClosestTarget(newWayPoints, npcTransform, agent);
+        }
+        
         return closestTarget;
     }
 
@@ -73,7 +87,7 @@ public class Pathfinding
         NavMesh.CalculatePath(npcTransform.position, new Vector3(center.x + randomPos.x, 
             height, 
             center.z + randomPos.y), agent.areaMask, path);
-        if (path.status == NavMeshPathStatus.PathInvalid)
+        if (!CheckPathStatus(path))
         {
             return CalculateRandomPosInCircle(agent, npcTransform, height, radius, center);
         }
@@ -89,7 +103,7 @@ public class Pathfinding
         NavMesh.CalculatePath(npcTransform.position, new Vector3(center.x + randomPos.x, 
             height, 
             center.z + randomPos.y), agent.areaMask, path);
-        if (path.status == NavMeshPathStatus.PathInvalid)
+        if (!CheckPathStatus(path))
         {
             return CalculateRandomPosInCone(agent, npcTransform, height, radius, angle, center);
         }
@@ -113,7 +127,7 @@ public class Pathfinding
         NavMesh.CalculatePath(npcTransform.position, new Vector3(center.x + randomPos.x, 
             height, 
             center.z + randomPos.y), agent.areaMask, path);
-        if (path.status == NavMeshPathStatus.PathInvalid)
+        if (!CheckPathStatus(path))
         {
             return CalculateRandomPosInCircle(agent, npcTransform, height, radius, center);
         }
@@ -129,7 +143,14 @@ public class Pathfinding
                 radius));
     }
     
-    
+    public bool CheckPathStatus(NavMeshPath path)
+    {
+        if (path.status == NavMeshPathStatus.PathInvalid)
+        {
+            return false;
+        }
+        return true;
+    }
 
     public float Distance(Transform npcTransform, NavMeshAgent agent)
     {
