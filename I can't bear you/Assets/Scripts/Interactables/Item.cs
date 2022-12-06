@@ -8,18 +8,36 @@ public class Item : MonoBehaviour, IAffectable
     {
         Destroy(gameObject);
     }
-    
-    [SerializeField] private GameObject puddlePrefab;
+
+    [Header("Puddle")]
+    [SerializeField] private PuddleType puddleType;
     public virtual GameObject CreatePuddle()
     {
-        return Instantiate(puddlePrefab, new Vector3(transform.position.x,0.5f,transform.position.z), Quaternion.identity);
+        switch (puddleType)
+        {
+            case PuddleType.NONE:
+                Debug.LogError("Puddle type of " + gameObject.name + " is set to NONE.");
+                return null;
+            case PuddleType.WATER:
+                return Instantiate((GameObject)Resources.Load("Water Puddle"), new Vector3(transform.position.x,0.5f,transform.position.z), Quaternion.identity);
+            case PuddleType.HONEY:
+                return Instantiate((GameObject)Resources.Load("Honey Puddle"), new Vector3(transform.position.x,0.5f,transform.position.z), Quaternion.identity);
+            case PuddleType.ALCOOL:
+                return Instantiate((GameObject)Resources.Load("Alcool Puddle"), new Vector3(transform.position.x,0.5f,transform.position.z), Quaternion.identity);
+            case PuddleType.ACID:
+                return Instantiate((GameObject)Resources.Load("Acid Puddle"), new Vector3(transform.position.x,0.5f,transform.position.z), Quaternion.identity);
+            case PuddleType.BLOOD:
+                return Instantiate((GameObject)Resources.Load("Blood Puddle"), new Vector3(transform.position.x,0.5f,transform.position.z), Quaternion.identity);
+            default:
+                Debug.LogError("Unknown puddle type of " + gameObject.name);
+                return null;
+        }
     }
     
-    [SerializeField] private GameObject zonePrefab;
     [HideInInspector] public GameObject zone;
     public virtual GameObject CreateZone()
     {
-        zone = Instantiate(zonePrefab, transform.position, Quaternion.identity,transform);
+        zone = Instantiate((GameObject)Resources.Load("Electricity Zone"), transform.position, Quaternion.identity,transform);
         return zone;
     }
     public virtual void EnableZone()
@@ -31,10 +49,11 @@ public class Item : MonoBehaviour, IAffectable
         zone.SetActive(false);
     }
 
+    [Header("Electricity")]
+    [SerializeField] private bool itemCharged, itemConductor;
+    public float zoneSize;
     public bool emitterDependant;
     public GameObject emitter;
-    public float zoneSize;
-    [SerializeField] private bool itemCharged, itemConductor;
     public bool charged { get => itemCharged; set => itemCharged = value;}
     public bool conductor { get => itemConductor; set => itemConductor = value; }
 
@@ -87,6 +106,7 @@ public class Item : MonoBehaviour, IAffectable
         }
     }
 
+    [Header("Heavy")]
     public bool fallable;
     public List<FallAsset> falls;
     private bool falling;
@@ -99,11 +119,10 @@ public class Item : MonoBehaviour, IAffectable
         falling = true;
     }
 
-    [SerializeField] private GameObject stompZone;
     private void OnCollisionEnter(Collision collision)
     {
         if(!falling) return;
-        Instantiate(stompZone, transform.position, Quaternion.identity);
+        Instantiate((GameObject)Resources.Load("Stomp Zone"), transform.position, Quaternion.identity);
         DeleteItem();
     }
 
@@ -117,22 +136,13 @@ public class Item : MonoBehaviour, IAffectable
         return fallBuffer;
     }
     
+    [Header("Explosive")]
     [SerializeField] private bool isExplosive;
-    public GameObject explosionPrefab;
     public bool explosive { get => isExplosive; set => isExplosive = value; }
     public virtual void Explode()
     {
-        Instantiate(explosionPrefab, transform.position, Quaternion.identity);
-        
+        Instantiate((GameObject)Resources.Load("Explosion"), transform.position, Quaternion.identity);
         Debug.Log("Exploded " + gameObject.name);
-    }
-
-    public bool consumable;
-    public virtual bool Consume()
-    {
-        if (!consumable) return false;
-        Debug.Log("Being consumed " + gameObject.name);
-        return false;
     }
 }
 
