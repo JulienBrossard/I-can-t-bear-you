@@ -102,16 +102,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   puddleType: 0
+  puddleSize: 1
   zone: {fileID: 3365355756540188612}
-  emitterDependant: 0
-  emitter: {fileID: 0}
-  zoneSize: 7.5
   itemCharged: 0
   itemConductor: 1
+  zoneSize: 7.5
+  emitterDependant: 0
+  emitter: {fileID: 0}
   fallable: 0
   falls: []
   isExplosive: 0
-  consumable: 0
   awareness: {fileID: 8550208509231053647}
   functioning: 0
   tvScreenMR: {fileID: 3858243394791108172}

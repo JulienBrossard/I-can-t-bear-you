@@ -11,27 +11,36 @@ public class Item : MonoBehaviour, IAffectable
 
     [Header("Puddle")]
     [SerializeField] private PuddleType puddleType;
+    [Range(0.5f,5f)]public float puddleSize = 1;
     public virtual GameObject CreatePuddle()
     {
+        GameObject puddleBuffer;
         switch (puddleType)
         {
             case PuddleType.NONE:
                 Debug.LogError("Puddle type of " + gameObject.name + " is set to NONE.");
                 return null;
             case PuddleType.WATER:
-                return Instantiate((GameObject)Resources.Load("Water Puddle"), new Vector3(transform.position.x,0.5f,transform.position.z), Quaternion.identity);
+                puddleBuffer = Instantiate((GameObject)Resources.Load("Water Puddle"), new Vector3(transform.position.x,0.5f,transform.position.z), Quaternion.identity);
+                break;
             case PuddleType.HONEY:
-                return Instantiate((GameObject)Resources.Load("Honey Puddle"), new Vector3(transform.position.x,0.5f,transform.position.z), Quaternion.identity);
+                puddleBuffer = Instantiate((GameObject)Resources.Load("Honey Puddle"), new Vector3(transform.position.x,0.5f,transform.position.z), Quaternion.identity);
+                break;
             case PuddleType.ALCOOL:
-                return Instantiate((GameObject)Resources.Load("Alcool Puddle"), new Vector3(transform.position.x,0.5f,transform.position.z), Quaternion.identity);
+                puddleBuffer = Instantiate((GameObject)Resources.Load("Alcool Puddle"), new Vector3(transform.position.x,0.5f,transform.position.z), Quaternion.identity);
+                break;
             case PuddleType.ACID:
-                return Instantiate((GameObject)Resources.Load("Acid Puddle"), new Vector3(transform.position.x,0.5f,transform.position.z), Quaternion.identity);
+                puddleBuffer = Instantiate((GameObject)Resources.Load("Acid Puddle"), new Vector3(transform.position.x,0.5f,transform.position.z), Quaternion.identity);
+                break;
             case PuddleType.BLOOD:
-                return Instantiate((GameObject)Resources.Load("Blood Puddle"), new Vector3(transform.position.x,0.5f,transform.position.z), Quaternion.identity);
+                puddleBuffer = Instantiate((GameObject)Resources.Load("Blood Puddle"), new Vector3(transform.position.x,0.5f,transform.position.z), Quaternion.identity);
+                break;
             default:
                 Debug.LogError("Unknown puddle type of " + gameObject.name);
                 return null;
         }
+        puddleBuffer.transform.localScale = Vector3.one * puddleSize;
+        return puddleBuffer;
     }
     
     [HideInInspector] public GameObject zone;
@@ -120,6 +129,11 @@ public class Item : MonoBehaviour, IAffectable
     }
 
     private void OnCollisionEnter(Collision collision)
+    {
+        OnHitGround();
+    }
+
+    public virtual void OnHitGround()
     {
         if(!falling) return;
         Instantiate((GameObject)Resources.Load("Stomp Zone"), transform.position, Quaternion.identity);
