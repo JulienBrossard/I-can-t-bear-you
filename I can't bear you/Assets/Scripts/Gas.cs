@@ -32,7 +32,7 @@ public class Gas : MonoBehaviour, IAffectable
 
     public void Explode()
     {
-        Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+        Instantiate(explosionPrefab, transform.position, Quaternion.identity, transform);
         StopAllCoroutines();
         gameObject.SetActive(false);
     }

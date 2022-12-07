@@ -150,6 +150,14 @@ public class Item : MonoBehaviour, IAffectable
         return fallBuffer;
     }
     
+    [Header("Gas")]
+    [Range(0.5f,5f)]
+    [SerializeField] private float gasSize;
+    public void CreateGas()
+    {
+        Instantiate((GameObject)Resources.Load("Gas"), transform.position, Quaternion.identity, transform).transform.localScale = Vector3.one * gasSize;
+    }
+    
     [Header("Explosive")]
     [SerializeField] private bool isExplosive;
     public bool explosive { get => isExplosive; set => isExplosive = value; }
