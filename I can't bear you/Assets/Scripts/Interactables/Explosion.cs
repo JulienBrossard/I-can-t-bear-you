@@ -5,10 +5,12 @@ public  class Explosion : MonoBehaviour
 {
 
     public float explosionRadius;
-    public GameObject npcPoolOfBloodPrefab;
+    [SerializeField] private GameObject npcPoolOfBloodPrefab;
+    [SerializeField] private GameObject ExplosionVFX;
     
     private void OnEnable()
     {
+        Instantiate(ExplosionVFX, transform.position, Quaternion.identity);
         Camera.main.transform.DOShakePosition(0.2f, 0.5f, 10, 90, false, true);
         transform.localScale = Vector3.zero;
         transform.DOScale(explosionRadius,0.5f).OnComplete(() => gameObject.SetActive(false));
