@@ -3,7 +3,7 @@ using UnityEditor;
 using UnityEngine;
 
 [CustomEditor (typeof (Television))]
-public class TelevisionEditor : Editor
+public class TelevisionEditor : ItemEditor
 {
     private void OnSceneGUI()
     {
@@ -22,5 +22,6 @@ public class TelevisionEditor : Editor
 
         Handles.DrawLine (television.transform.position, television.transform.position + viewAngleA * television.attractedDistance * axisDir);
         Handles.DrawLine (television.transform.position, television.transform.position + viewAngleB * television.attractedDistance * axisDir);
+        OnSceneDraw();
     }
 }

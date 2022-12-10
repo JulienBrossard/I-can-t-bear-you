@@ -1,42 +1,55 @@
-using System.Collections;
-using System.Collections.Generic;
 using DG.Tweening;
-using UnityEditor.Rendering;
 using UnityEngine;
-using UnityEngine.Rendering;
 
 public class WallUpdater : MonoBehaviour
 {
-    [SerializeField] private Renderer[] wallToShow;
-    [SerializeField] private Renderer[] wallToHide;
+    private Renderer objRenderer;
+    [SerializeField] private Material[] transparentMaterials;
+    [SerializeField] private bool wallInRoomYouStart = false;
+    private Material[] opaqueMaterials;
 
-
-
-    public void UpdateWallOnEnter()
+    private void Start()
     {
-        foreach (var wall in wallToHide)
+        objRenderer = gameObject.GetComponent<Renderer>();
+        opaqueMaterials = objRenderer.materials;
+        if (wallInRoomYouStart)
         {
-            wall.shadowCastingMode = ShadowCastingMode.ShadowsOnly;
-            
-        }
-        foreach (var wall in wallToShow)
-        {
-         wall.shadowCastingMode = ShadowCastingMode.On;
+            HideWalls();
         }
     }
-
-    public void UpdateWallOnExit()
+    public void ShowWalls()
     {
-        foreach (var wall in wallToHide)
+        for (int x = 0; x < opaqueMaterials.Length; x++)
         {
-            wall.shadowCastingMode = ShadowCastingMode.On;
-
+            transparentMaterials[x].DOFade(1, 0.1f);
         }
-        foreach (var wall in wallToShow)
+    }
+    
+    public void HideWalls()
+    {
+        SwitchToTransparentMaterials();
+        foreach (var mat in transparentMaterials)
         {
-            wall.shadowCastingMode = ShadowCastingMode.ShadowsOnly;
+            mat.DOFade(0, 0.1f).OnComplete (() => SwitchToOpaqueMaterials());
         }
     }
     
     
+    private void SwitchToTransparentMaterials()
+    {
+        for (int i = 0; i < objRenderer.materials.Length; i++)
+        {
+            objRenderer.materials[i] = transparentMaterials[i];
+        }
+    }
+    
+    
+    private void SwitchToOpaqueMaterials()
+    {
+        for (int i = 0; i < objRenderer.materials.Length; i++)
+        {
+            objRenderer.materials[i] = opaqueMaterials[i];
+        }
+    }
+
 }

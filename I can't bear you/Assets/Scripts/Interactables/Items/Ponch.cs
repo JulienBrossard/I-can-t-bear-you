@@ -5,7 +5,7 @@ using UnityEngine;
 public class Ponch : Item,IInteractable,ISmashable
 {
     [SerializeField] private GameObject psBubblePoisoned;
-    public void Interact()
+    public void Interact(Vector3 sourcePos)
     {
         Debug.Log("Interacting Ponch");
     }

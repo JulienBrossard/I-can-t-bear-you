@@ -26,5 +26,5 @@ public class ElectricityZone : MonoBehaviour
 }
 public enum ZoneMode
 {
-    SPHERE, PLANE
+    NONE, SPHERE, PLANE
 }

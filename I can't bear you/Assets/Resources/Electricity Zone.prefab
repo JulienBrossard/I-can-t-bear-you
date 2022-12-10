@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: -442273556345669875}
   - component: {fileID: 3303329627622686444}
   m_Layer: 0
-  m_Name: Sphere Electricity Zone
+  m_Name: Electricity Zone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

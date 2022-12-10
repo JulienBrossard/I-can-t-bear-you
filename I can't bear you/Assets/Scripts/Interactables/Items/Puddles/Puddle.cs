@@ -40,11 +40,10 @@ public class Puddle : MonoBehaviour, IAffectable
         Debug.Log("Disapplying effects to " + other.gameObject.name);
     }
 
-    [SerializeField] private GameObject zonePrefab;
     [HideInInspector] public GameObject zone;
     public virtual void CreateZone()
     {
-        zone = Instantiate(zonePrefab, transform.position, Quaternion.identity,transform);
+        zone = Instantiate((GameObject)Resources.Load("Electricity Zone"), transform.position, Quaternion.identity,transform);
     }
     public virtual void EnableZone()
     {
@@ -83,6 +82,12 @@ public class Puddle : MonoBehaviour, IAffectable
         charged = true;
         EnableZone();
     }
+
+    public void Stomp()
+    {
+        return;
+    }
+
     public virtual void DeElectrocute()
     {
         Debug.Log("DeElectrocuted " + gameObject.name);
@@ -110,4 +115,9 @@ public class Puddle : MonoBehaviour, IAffectable
     {
         
     }
+}
+
+public enum PuddleType
+{
+    NONE, WATER, HONEY, ALCOOL, BLOOD, ACID
 }
