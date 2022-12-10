@@ -213,6 +213,7 @@ public class Item : MonoBehaviour,IGrabbable, IAffectable
     public bool explosive { get => isExplosive; set => isExplosive = value; }
     public virtual void Explode()
     {
+        if(!explosive) return;
         Instantiate((GameObject)Resources.Load("Explosion"), transform.position, Quaternion.identity);
         if (TryGetComponent<Collider>(out Collider col)) col.enabled = false;
         Debug.Log("Exploded " + gameObject.name);
