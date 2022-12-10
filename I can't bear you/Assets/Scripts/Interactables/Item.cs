@@ -215,8 +215,8 @@ public class Item : MonoBehaviour,IGrabbable, IAffectable
     {
         Instantiate((GameObject)Resources.Load("Explosion"), transform.position, Quaternion.identity);
         if (TryGetComponent<Collider>(out Collider col)) col.enabled = false;
-        
         Debug.Log("Exploded " + gameObject.name);
+        DeleteItem();
     }
 }
 
