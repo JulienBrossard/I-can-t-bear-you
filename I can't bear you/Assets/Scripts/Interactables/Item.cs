@@ -1,8 +1,9 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Item : MonoBehaviour, IAffectable
+public class Item : MonoBehaviour,IGrabbable, IAffectable
 {
     public virtual void DeleteItem()
     {
@@ -56,6 +57,53 @@ public class Item : MonoBehaviour, IAffectable
     public virtual void DisableZone()
     {
         zone.SetActive(false);
+    }
+
+    [Header("Grab")] 
+    [SerializeField] private bool grabbable;
+    [SerializeField] private Rigidbody rb;
+    [SerializeField] private BoxCollider collider;
+    [SerializeField] private float throwForce;
+    [HideInInspector] public bool thrown;
+    
+    public Transform Grab(Transform hand)
+    {
+        if (!grabbable) return default;
+        Debug.Log("Grabbing " + gameObject.name);
+        SetAsGrabbed(hand);
+        return transform;
+    }
+
+    public void SetAsGrabbed(Transform hand)
+    {
+        collider.enabled = false;
+        gameObject.layer = LayerMask.NameToLayer("Held Item");
+        transform.SetParent(hand);
+        rb.isKinematic = true;
+        transform.localPosition = Vector3.zero;
+    }
+    public void Drop()
+    {
+        SetAsReleased();
+    }
+    public void Throw(Vector3 dir)
+    {
+        SetAsReleased();
+        rb.AddForce(dir * throwForce, ForceMode.Impulse);
+        thrown = true;
+    }
+    public void SetAsReleased()
+    {
+        collider.enabled = true;
+        transform.SetParent(null);
+        rb.isKinematic = false;
+        StartCoroutine(WaitForPlayerCollision());
+    }
+
+    IEnumerator WaitForPlayerCollision()
+    {
+        yield return new WaitForSeconds(0.25f);
+        gameObject.layer = LayerMask.NameToLayer("Default");
     }
 
     [Header("Electricity")]
@@ -135,6 +183,8 @@ public class Item : MonoBehaviour, IAffectable
 
     public virtual void OnHitGround()
     {
+        thrown = false;
+        
         if(!falling) return;
         Instantiate((GameObject)Resources.Load("Stomp Zone"), transform.position, Quaternion.identity);
         DeleteItem();

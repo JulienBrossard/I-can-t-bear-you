@@ -82,6 +82,11 @@ MonoBehaviour:
   puddleType: 5
   puddleSize: 1
   zone: {fileID: 0}
+  grabbable: 1
+  rb: {fileID: 4877492386470609555}
+  collider: {fileID: 2600155183559485103}
+  throwForce: 37.5
+  thrown: 0
   itemCharged: 0
   itemConductor: 0
   zoneSize: 5
@@ -91,10 +96,8 @@ MonoBehaviour:
   falls:
   - dir: {x: 1, y: 1, z: 1}
     force: 0
+  gasSize: 0
   isExplosive: 0
-  rb: {fileID: 4877492386470609555}
-  throwForce: 37.5
-  collider: {fileID: 2600155183559485103}
 --- !u!114 &1175892753527929288
 MonoBehaviour:
   m_ObjectHideFlags: 0
