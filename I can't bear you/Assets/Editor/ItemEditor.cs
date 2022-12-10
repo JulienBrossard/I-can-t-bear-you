@@ -6,6 +6,7 @@ using System.Reflection;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.XR;
+using Random = UnityEngine.Random;
 using Vector3 = System.Numerics.Vector3;
 
 [CustomEditor(typeof(Item), true)]
@@ -77,6 +78,22 @@ public class ItemEditor : Editor
                 {
                     item.DeElectrocute();
                 }
+            }
+        }
+
+        if (item.fallable && item.falls.Count > 0)
+        {
+            if (GUILayout.Button("Fall"))
+            {
+                item.Fall(Random.insideUnitSphere);
+            }
+        }
+
+        if (item.explosive)
+        {
+            if (GUILayout.Button("Explode"))
+            {
+                item.Explode();
             }
         }
     }
