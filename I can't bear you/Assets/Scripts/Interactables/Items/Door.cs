@@ -1,10 +1,9 @@
-using System;
 using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Door : MonoBehaviour
+public class Door : MonoBehaviour, IInteractable
 {
     private Vector3 initRotation;
     private bool isOpen;
@@ -13,7 +12,7 @@ public class Door : MonoBehaviour
 
     void Start()
     {
-        initRotation = transform.parent.transform.eulerAngles;
+        initRotation = transform.GetChild(0).transform.eulerAngles;
     }
     
     /// <summary>
@@ -24,8 +23,8 @@ public class Door : MonoBehaviour
     {
         if (!isOpen)
         {
-            float direction = Mathf.Sign(Vector3.Dot(transform.parent.transform.forward, entity.forward));
-            transform.parent.transform.DORotate(new Vector3(0, initRotation.y - 90 * direction , 0), 2f);
+            float direction = Mathf.Sign(Vector3.Dot(transform.GetChild(0).transform.forward, entity.forward));
+            transform.GetChild(0).transform.DORotate(new Vector3(0, initRotation.y - 90 * direction , 0), 2f);
             isOpen = true;
             obstacle.enabled = true;
         }
@@ -34,7 +33,7 @@ public class Door : MonoBehaviour
     void Close()
     {
         isOpen = false;
-        transform.parent.transform.DORotate(initRotation, 2f);
+        transform.GetChild(0).transform.DORotate(initRotation, 2f);
         obstacle.enabled = false;
     }
 
@@ -58,6 +57,22 @@ public class Door : MonoBehaviour
             if (entitiesInTrigger.Count == 0)
             {
                 Close();
+            }
+        }
+    }
+
+    [ContextMenu("Interact")]
+    public void Interact()
+    {
+        if (entitiesInTrigger.Count == 0)
+        {
+            if (isOpen)
+            {
+                Close();
+            }
+            else
+            {
+                Open(LevelManager.instance.GetPlayer());
             }
         }
     }
