@@ -7,7 +7,7 @@ public class Door : MonoBehaviour, IInteractable
 {
     private Vector3 initRotation;
     private bool isOpen;
-    List<GameObject> entitiesInTrigger = new List<GameObject>(); 
+    List<GameObject> npcIntTrigger = new List<GameObject>(); 
     [SerializeField] NavMeshObstacle obstacle;
 
     void Start()
@@ -30,6 +30,9 @@ public class Door : MonoBehaviour, IInteractable
         }
     }
     
+    /// <summary>
+    /// Close the door
+    /// </summary>
     void Close()
     {
         isOpen = false;
@@ -37,11 +40,12 @@ public class Door : MonoBehaviour, IInteractable
         obstacle.enabled = false;
     }
 
+    // Npc open the door
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Npc"))
         {
-            entitiesInTrigger.Add(other.gameObject);
+            npcIntTrigger.Add(other.gameObject);
             if (!isOpen)
             {
                 Open(other.transform);
@@ -49,22 +53,24 @@ public class Door : MonoBehaviour, IInteractable
         }
     }
 
+    // Npc close the door
     private void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Npc"))
         {
-            entitiesInTrigger.Remove(other.gameObject);
-            if (entitiesInTrigger.Count == 0)
+            npcIntTrigger.Remove(other.gameObject);
+            if (npcIntTrigger.Count == 0)
             {
                 Close();
             }
         }
     }
 
+    // Player open or close the door
     [ContextMenu("Interact")]
     public void Interact()
     {
-        if (entitiesInTrigger.Count == 0)
+        if (npcIntTrigger.Count == 0)
         {
             if (isOpen)
             {

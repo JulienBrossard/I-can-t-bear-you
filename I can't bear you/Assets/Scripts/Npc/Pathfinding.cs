@@ -1,10 +1,13 @@
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class Pathfinding
 {
+    public Dictionary<Vector3, float> dispersePoints = new Dictionary<Vector3, float>();
+
     public Transform ChooseClosestTarget(Transform[] wayPoints, Transform npcTransform, NavMeshAgent agent)
     {
         if (wayPoints.Length == 0)
@@ -148,6 +151,14 @@ public class Pathfinding
         if (path.status == NavMeshPathStatus.PathInvalid)
         {
             return false;
+        }
+
+        foreach (var key in dispersePoints.Keys)
+        {
+            if (Vector3.Distance(path.corners[^1], key) < dispersePoints[key])
+            {
+                return false;
+            }
         }
         return true;
     }

@@ -56,4 +56,20 @@ public class NpcManager : MonoBehaviour
             LevelManager.instance.EndLevel(false);
         }
     }
+
+    public void SetDispersePoint(Vector3 center, float radius, Disperse.DisperseType type)
+    {
+        foreach (var npc in npcScriptDict.Values)
+        {
+            npc.pathfinding.dispersePoints.Add(center, radius);
+        }
+    }
+    
+    public void RemoveDispersePoint(Vector3 center, Disperse.DisperseType type)
+    {
+        foreach (var npc in npcScriptDict.Values)
+        {
+            npc.pathfinding.dispersePoints.Remove(center);
+        }
+    }
 }

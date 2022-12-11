@@ -1,7 +1,15 @@
+using System;
 using UnityEngine;
 
 public class Disperse : Awareness
 {
+    public enum DisperseType
+    {
+        RANDOM
+    }
+    
+    [SerializeField] private DisperseType disperseType;
+    
     private void Update()
     {
         DisperseNpc();
@@ -25,5 +33,15 @@ public class Disperse : Awareness
                 NpcManager.instance.npcScriptDict[target.gameObject].Disperse(transform.position, direction, viewRadius);
             }
         }
+    }
+
+    private void OnEnable()
+    {
+        NpcManager.instance.SetDispersePoint(transform.position, viewRadius, disperseType);
+    }
+
+    private void OnDisable()
+    {
+        NpcManager.instance.RemoveDispersePoint(transform.position, disperseType);
     }
 }

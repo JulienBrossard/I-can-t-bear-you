@@ -38,7 +38,6 @@ public class Npc : Entity,ISmashable
     Transform[] thirstPoints;
     Transform[] bladderPoints;
     Vector3 investigatePoint;
-    
 
 
     private Vector3 randomPosParty;
@@ -47,7 +46,7 @@ public class Npc : Entity,ISmashable
 
     [HideInInspector] public bool isAction;
 
-    Pathfinding pathfinding;
+    [HideInInspector] public Pathfinding pathfinding;
 
     [Header("Scripts")] 
     [SerializeField] private Panic panicData;
