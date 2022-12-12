@@ -74,6 +74,10 @@ MonoBehaviour:
   puddleType: 2
   puddleSize: 1
   zone: {fileID: 0}
+  grabbable: 1
+  rb: {fileID: 3778223884131960099}
+  collider: {fileID: 3778223884131960110}
+  throwForce: 33.333332
   itemCharged: 0
   itemConductor: 0
   zoneSize: 0
@@ -81,11 +85,9 @@ MonoBehaviour:
   emitter: {fileID: 0}
   fallable: 0
   falls: []
+  gasSize: 0
   isExplosive: 0
-  rb: {fileID: 3778223884131960099}
-  collider: {fileID: 3778223884131960110}
   bearserkerToAdd: 0.1
-  throwForce: 33.333332
 --- !u!54 &3778223884131960099
 Rigidbody:
   m_ObjectHideFlags: 0

@@ -274,6 +274,7 @@ public class Npc : Entity,ISmashable
     public override void Die(bool unspawn)
     {
         animator.speed = 1;
+        BearserkerGaugeManager.instance.AddBearserker(0.1f);
         base.Die(unspawn);
         if (unspawn)
             NpcManager.instance.UnSpawnNpc(gameObject.name.Replace("(Clone)", String.Empty), gameObject);
