@@ -20,7 +20,9 @@ public class UiManager : MonoBehaviour
     [SerializeField] private float speed;
     private int iconTokill;
     private int iconWhoFlee;
+    private int noIconToSwitch;
     private int currentIcon;
+    private float timeToWait;
     [SerializeField] private AnimationCurve timeBetweenIconKill;
     private int maxNpc;
     private bool endScreenLaunched;
@@ -62,10 +64,10 @@ public class UiManager : MonoBehaviour
         {
             iconWhoFlee = NpcManager.instance.npcCountfleed;
             iconTokill = NpcManager.instance.npcCountkilled;
+            noIconToSwitch = iconTokill + iconWhoFlee;
             winLoseText.text = win ? "You Win" : "Looser";
             uiInGame.SetActive(false);
             endLvlMenu.SetActive(true);
-            Debug.Log(LevelManager.instance.level.npcCount);
             for (int x = 0; x < LevelManager.instance.level.npcCount; x++)
             {
                 Instantiate(npcIcon, npcIconParent.transform);
@@ -82,7 +84,8 @@ public class UiManager : MonoBehaviour
         if (iconTokill >= 0)
         {
             npcIconParent.transform.GetChild(currentIcon).GetComponent<Image>().DOColor(Color.red, 0.1f);
-            yield return new WaitForSeconds(timeBetweenIconKill.Evaluate((float)currentIcon/iconTokill+iconWhoFlee)*speed);
+            timeToWait = timeBetweenIconKill.Evaluate((float)currentIcon / noIconToSwitch) * speed;
+            yield return new WaitForSeconds(timeToWait);
             iconTokill--;
             currentIcon++;
             StartCoroutine(ShowDeadNpc());
@@ -99,7 +102,8 @@ public class UiManager : MonoBehaviour
         if (iconWhoFlee >= 0)
         {
             npcIconParent.transform.GetChild(currentIcon).GetComponent<Image>().DOColor(Color.gray, 0.1f);
-            yield return new WaitForSeconds(timeBetweenIconKill.Evaluate((float)currentIcon/iconTokill+iconWhoFlee)*speed);
+            timeToWait = timeBetweenIconKill.Evaluate((float)currentIcon / noIconToSwitch) * speed;
+            yield return new WaitForSeconds(timeToWait);
             iconWhoFlee--;
             currentIcon++;
             StartCoroutine(ShowFleeNpc());

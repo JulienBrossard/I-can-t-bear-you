@@ -68,7 +68,7 @@ public class Door : MonoBehaviour, IInteractable
 
     // Player open or close the door
     [ContextMenu("Interact")]
-    public void Interact()
+    public void Interact(Vector3 direction)
     {
         if (npcIntTrigger.Count == 0)
         {

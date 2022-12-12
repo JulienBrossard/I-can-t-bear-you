@@ -267,14 +267,18 @@ public class Npc : Entity,ISmashable
         if (!isDie)
         { 
             animator.SetBool("isSmashing",true);
-            Die();
+            Die(false);
         }
     }
 
-    public override void Die()
+    public override void Die(bool unspawn)
     {
         animator.speed = 1;
-        base.Die();
+        BearserkerGaugeManager.instance.AddBearserker(0.1f);
+        base.Die(unspawn);
+        if (unspawn)
+            NpcManager.instance.UnSpawnNpc(gameObject.name.Replace("(Clone)", String.Empty), gameObject);
+
     }
     
     
