@@ -43,8 +43,12 @@ public class Entity : MonoBehaviour, IAffectable
 
     public void Electrocute(GameObject emitter)
     {
-        Debug.Log("Electrocuted " + gameObject.name);
-        Die(false);
+        if (!isDie)
+        {
+            animator.SetBool("isElectrocuted", true);
+            Debug.Log("Electrocuted " + gameObject.name);
+            Die(false);
+        }
     }
 
     public virtual void Stomp()
@@ -61,12 +65,11 @@ public class Entity : MonoBehaviour, IAffectable
 
     public virtual void Die(bool unspawn)
     {
+        isDie = true;
         NpcManager.instance.npcCountRemaining--;
         NpcManager.instance.CheckForLvlEnd();
         NpcManager.instance.npcCountkilled++;
         UiManager.instance.UpdateRemainingNpcText();
-        isDie = true;
-        Debug.Log(gameObject.name + " died");
-            
+        Debug.Log(gameObject.name + " died");  
     }
 }
