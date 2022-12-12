@@ -1,11 +1,20 @@
 using System.Collections.Generic;
+using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class Pathfinding
 {
+    public Dictionary<Vector3, float> dispersePoints = new Dictionary<Vector3, float>();
+
     public Transform ChooseClosestTarget(Transform[] wayPoints, Transform npcTransform, NavMeshAgent agent)
     {
+        if (wayPoints.Length == 0)
+        {
+            Debug.LogWarning("No waypoints found or no valid path found");
+            return null;
+        }
         Transform closestTarget = null;
         float closestTargetDistance = float.MaxValue;
         NavMeshPath path = new NavMeshPath();
@@ -33,6 +42,14 @@ public class Pathfinding
                 }
             }
         }
+
+        if (!CheckPathStatus(path))
+        {
+            Transform[] newWayPoints = wayPoints;
+            newWayPoints.ToList().Remove(closestTarget);
+            return ChooseClosestTarget(newWayPoints, npcTransform, agent);
+        }
+        
         return closestTarget;
     }
 
@@ -66,20 +83,16 @@ public class Pathfinding
         }
     }
 
-    public Vector3 CalculateRandomPosInSphere(NavMeshAgent agent, Transform npcTransform ,float height, float radius,Vector3 center )
+    public Vector3 CalculateRandomPosInCircle(NavMeshAgent agent, Transform npcTransform ,float height, float radius,Vector3 center )
     {
-        Vector2 randomPos = new Vector2(
-            Random.Range(-radius,
-                radius),
-            Random.Range(-radius,
-                radius));
+        Vector2 randomPos = CalculateRandomPointInCircle(radius);
         NavMeshPath path = new NavMeshPath();
         NavMesh.CalculatePath(npcTransform.position, new Vector3(center.x + randomPos.x, 
             height, 
             center.z + randomPos.y), agent.areaMask, path);
-        if (path.status == NavMeshPathStatus.PathInvalid)
+        if (!CheckPathStatus(path))
         {
-            return CalculateRandomPosInSphere(agent, npcTransform, height, radius, center);
+            return CalculateRandomPosInCircle(agent, npcTransform, height, radius, center);
         }
         return  center + new Vector3(randomPos.x, height, randomPos.y);
     }
@@ -93,14 +106,62 @@ public class Pathfinding
         NavMesh.CalculatePath(npcTransform.position, new Vector3(center.x + randomPos.x, 
             height, 
             center.z + randomPos.y), agent.areaMask, path);
-        if (path.status == NavMeshPathStatus.PathInvalid)
+        if (!CheckPathStatus(path))
         {
             return CalculateRandomPosInCone(agent, npcTransform, height, radius, angle, center);
         }
         return  center + new Vector3(randomPos.x, height, randomPos.y);
     }
     
+    /// <summary>
+    /// Calcule a random position on the circle periphery
+    /// </summary>
+    /// <param name="agent"> NavMeshAgent of the gameobject</param>
+    /// <param name="npcTransform"> Transform of the npc</param>
+    /// <param name="height"> Height of the destination</param>
+    /// <param name="radius"> Radius of the sphere</param>
+    /// <param name="center"> Center of the sphere</param>
+    /// <returns></returns>
+    public Vector3 CalculateRandomPosOnCirclePeriphery(NavMeshAgent agent, Transform npcTransform ,float height, float radius,Vector3 center )
+    {
+        Vector2 direction = (CalculateRandomPointInCircle(radius) - new Vector2(center.x, center.z)).normalized ;
+        Vector2 randomPos = direction * radius;
+        NavMeshPath path = new NavMeshPath();
+        NavMesh.CalculatePath(npcTransform.position, new Vector3(center.x + randomPos.x, 
+            height, 
+            center.z + randomPos.y), agent.areaMask, path);
+        if (!CheckPathStatus(path))
+        {
+            return CalculateRandomPosInCircle(agent, npcTransform, height, radius, center);
+        }
+        return  center + new Vector3(randomPos.x, height, randomPos.y);
+    }
+
+    public Vector2 CalculateRandomPointInCircle(float radius)
+    {
+        return new Vector2(
+            Random.Range(-radius,
+                radius),
+            Random.Range(-radius,
+                radius));
+    }
     
+    public bool CheckPathStatus(NavMeshPath path)
+    {
+        if (path.status == NavMeshPathStatus.PathInvalid)
+        {
+            return false;
+        }
+
+        foreach (var key in dispersePoints.Keys)
+        {
+            if (Vector3.Distance(path.corners[^1], key) < dispersePoints[key])
+            {
+                return false;
+            }
+        }
+        return true;
+    }
 
     public float Distance(Transform npcTransform, NavMeshAgent agent)
     {

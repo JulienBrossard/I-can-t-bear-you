@@ -14,7 +14,8 @@ public class Npc : Entity,ISmashable
         BLADDER,
         DANCING,
         ATTRACTED,
-        FREEZE
+        FREEZE,
+        MOVEAWAY
     }
     
     [Header("Data")] 
@@ -37,15 +38,15 @@ public class Npc : Entity,ISmashable
     Transform[] thirstPoints;
     Transform[] bladderPoints;
     Vector3 investigatePoint;
-    
 
 
     private Vector3 randomPosParty;
     [HideInInspector] public Vector3 attractedPoint;
+    [HideInInspector] public Vector3 moveAwayPoint;
 
     [HideInInspector] public bool isAction;
 
-    Pathfinding pathfinding;
+    [HideInInspector] public Pathfinding pathfinding;
 
     [Header("Scripts")] 
     [SerializeField] private Panic panicData;
@@ -100,7 +101,7 @@ public class Npc : Entity,ISmashable
         stats.currentThirst -= Time.deltaTime;
         stats.currentBladder -= Time.deltaTime;
 
-        if (state == STATE.DANCING || state == STATE.ATTRACTED)
+        if (state == STATE.DANCING || state == STATE.ATTRACTED  || state == STATE.MOVEAWAY)
         {
             if (stats.currentHunger <= 0)
             {
@@ -124,13 +125,17 @@ public class Npc : Entity,ISmashable
             {
                 if (!agent.isStopped && randomPosParty == Vector3.zero)
                 {
-                    if (state == STATE.ATTRACTED)
+                    if (state == STATE.MOVEAWAY)
+                    {
+                        randomPosParty = moveAwayPoint;
+                    }
+                    else if (state == STATE.ATTRACTED)
                     {
                         randomPosParty = attractedPoint;
                     }
                     else
                     {
-                        randomPosParty = pathfinding.CalculateRandomPosInSphere(agent,  transform, noExitPoints[0].position.y,
+                        randomPosParty = pathfinding.CalculateRandomPosInCircle(agent,  transform, noExitPoints[0].position.y,
                             LevelManager.instance.level.partyData.radius, LevelManager.instance.level.partyData.partyPosition.position);
                     }
                 }
@@ -141,11 +146,11 @@ public class Npc : Entity,ISmashable
                 agent.SetDestination(randomPosParty);
                 if (Vector3.Distance(transform.position, agent.destination) < agent.stoppingDistance + minimumDistanceWithDestination )
                 {
-                    if (state == STATE.DANCING)
+                    if (state == STATE.DANCING || state == STATE.MOVEAWAY)
                     {
                         animator.SetBool("isDancing", true);
                     }
-                    else
+                    else if(state == STATE.ATTRACTED)
                     {
                         animator.SetBool("isIdle", true);
                     }
@@ -190,7 +195,7 @@ public class Npc : Entity,ISmashable
     {
         if (investigatePoint == Vector3.zero)
         {
-            investigatePoint = pathfinding.CalculateRandomPosInSphere(agent, transform, noExitPoints[0].position.y, panicData.panicData.investigateRadius, player.position);
+            investigatePoint = pathfinding.CalculateRandomPosInCircle(agent, transform, noExitPoints[0].position.y, panicData.panicData.investigateRadius, player.position);
         }
         else if (pathfinding.Distance(transform, agent) < 2 && investigatePoint != Vector3.zero)
         {
@@ -315,6 +320,22 @@ public class Npc : Entity,ISmashable
     {
         exitPoints.Remove(exitPoint);
         runAwayDestination = null;
+    }
+
+    /// <summary>
+    /// Disperse npc if they are in the radius
+    /// </summary>
+    /// /// <param name="center"> Center of the item </param>
+    /// <param name="direction"> Direction normalized between item center and npc </param>
+    /// <param name="radius"> Radius of the item </param>
+    public void Disperse(Vector3 center, Vector3 direction, float radius)
+    {
+        randomPosParty = Vector3.zero;
+        state = STATE.MOVEAWAY;
+        agent.SetDestination(pathfinding.CalculateRandomPosOnCirclePeriphery(agent, transform, noExitPoints[0].position.y, radius, center));
+        /*moveAwayPoint = new Vector3(center.x, 0, center.z) + new Vector3(direction.x, noExitPoints[0].position.y, direction.z) * (radius+2);
+        Debug.Log("Pos : " + transform.position);
+        Debug.Log("move away : " + moveAwayPoint);*/
     }
 
 }

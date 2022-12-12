@@ -4,6 +4,8 @@ using UnityEditor;
 [CustomEditor (typeof (Awareness),true)]
 public class AwarenessEditor : Editor
 {
+    
+#if UNITY_EDITOR
     void OnSceneGUI() {
         Display();
     }
@@ -28,4 +30,6 @@ public class AwarenessEditor : Editor
             }
         }
     }
+    
+#endif
 }

@@ -4,6 +4,7 @@ using UnityEngine;
 [CustomEditor (typeof (Npc))]
 public class PathfindinEditor : Editor
 {
+#if UNITY_EDITOR
     void OnSceneGUI() {
         Npc npc = (Npc)target;
         Handles.color = Color.blue;
@@ -12,4 +13,5 @@ public class PathfindinEditor : Editor
             Handles.DrawLine(npc.agent.path.corners[i], npc.agent.path.corners[i+1]);
         }
     }
+#endif
 }

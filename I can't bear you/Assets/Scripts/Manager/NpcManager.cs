@@ -11,7 +11,8 @@ public class NpcManager : MonoBehaviour
     public int npcCountfleed;
     public List<GameObject> npc = new List<GameObject>();
     public Dictionary<GameObject, Panic> panicDict = new Dictionary<GameObject, Panic>();
-    
+    public Dictionary<GameObject, Npc> npcScriptDict = new Dictionary<GameObject, Npc>();
+
     private void Awake()
     {
         if (instance != null)
@@ -29,15 +30,17 @@ public class NpcManager : MonoBehaviour
         npcCountRemaining++;
         if (npcCountRemaining == LevelManager.instance.level.npcCount)
         {
-            UiManager.instance.UpdateRemainingNpcText();
         }
+        UiManager.instance.UpdateRemainingNpcText();
         panicDict.Add(npc[^1], npc[^1].GetComponent<Panic>());
+        npcScriptDict.Add(npc[^1], npc[^1].GetComponent<Npc>());
     }
 
     [ContextMenu("Npc")]
     public void UnSpawnNpc(String name, GameObject npc)
     {
         panicDict.Remove(npc);
+        npcScriptDict.Remove(npc);
         this.npc.Remove(npc);
         Pooler.instance.DePop(name, npc);
         npcCountRemaining--;
@@ -51,6 +54,22 @@ public class NpcManager : MonoBehaviour
         if (npcCountRemaining == 0)
         {
             LevelManager.instance.EndLevel(false);
+        }
+    }
+
+    public void SetDispersePoint(Vector3 center, float radius, Disperse.DisperseType type)
+    {
+        foreach (var npc in npcScriptDict.Values)
+        {
+            npc.pathfinding.dispersePoints.Add(center, radius);
+        }
+    }
+    
+    public void RemoveDispersePoint(Vector3 center, Disperse.DisperseType type)
+    {
+        foreach (var npc in npcScriptDict.Values)
+        {
+            npc.pathfinding.dispersePoints.Remove(center);
         }
     }
 }

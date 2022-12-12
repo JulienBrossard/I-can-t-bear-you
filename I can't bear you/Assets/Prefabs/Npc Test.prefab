@@ -1564,7 +1564,7 @@ GameObject:
   - component: {fileID: 2543116014984234402}
   m_Layer: 6
   m_Name: Npc Test
-  m_TagString: Untagged
+  m_TagString: Npc
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1676,6 +1676,7 @@ MonoBehaviour:
   currentDestination: {fileID: 0}
   exitPoints: []
   attractedPoint: {x: 0, y: 0, z: 0}
+  moveAwayPoint: {x: 0, y: 0, z: 0}
   isAction: 0
   panicData: {fileID: -7787597326935306304}
   statusEffects: {fileID: -2508231515378271730}
@@ -1736,6 +1737,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 55
   visibleTargets: []
+  maxTargets: 5
   panicData: {fileID: -7787597326935306304}
   statusEffects: {fileID: -2508231515378271730}
 --- !u!54 &2543116014984234402

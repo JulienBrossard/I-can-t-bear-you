@@ -6,6 +6,7 @@ using UnityEngine;
 [CustomEditor(typeof(LevelManager))]
 public class LevelManagerCustomInspector : Editor
 {
+#if UNITY_EDITOR
     private int currentNpcCount;
     List<GameObject> npcList = new List<GameObject>();
 
@@ -82,4 +83,5 @@ public class LevelManagerCustomInspector : Editor
             }
         }
     }
+#endif
 }
