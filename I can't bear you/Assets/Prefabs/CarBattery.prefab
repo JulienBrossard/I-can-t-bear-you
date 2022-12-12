@@ -79,20 +79,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d1e8144ed52b854f99519dd229435a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  puddlePrefab: {fileID: 4613415660787891898, guid: 8e732e25445045c44aa3f8479e834343,
-    type: 3}
-  zonePrefab: {fileID: 4272535733154748759, guid: 33d0356bf9742c04e81b8bd0843844db,
-    type: 3}
+  puddleType: 5
+  puddleSize: 1
   zone: {fileID: 0}
-  emitterDependant: 0
-  emitter: {fileID: 0}
-  zoneSize: 5
   itemCharged: 0
   itemConductor: 0
-  ignitable: 0
-  poisonable: 0
-  poisoned: 0
-  consumable: 0
+  zoneSize: 5
+  emitterDependant: 0
+  emitter: {fileID: 0}
+  fallable: 0
+  falls:
+  - dir: {x: 1, y: 1, z: 1}
+    force: 0
+  isExplosive: 0
   rb: {fileID: 4877492386470609555}
   throwForce: 37.5
   collider: {fileID: 2600155183559485103}
