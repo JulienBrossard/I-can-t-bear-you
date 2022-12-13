@@ -13,6 +13,7 @@ public class PlayerStats : ScriptableObject
     [Range(0.1f,Mathf.PI)]public float detectionAngle;
     [SerializeField] public AnimationCurve detectionAngleCurve;
     [Range(0.1f,5f)]public float detectionRange;
+    [Range(0.1f,10f)]public float detectionHeight;
     [SerializeField] public AnimationCurve detectionRangeCurve;
     [Range(0.01f,0.5f)]public float detectionStep;
     [Header("Roar")]

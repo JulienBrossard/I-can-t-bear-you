@@ -133,6 +133,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   baseState: {fileID: 2451688659374893306}
+  currentState: {fileID: 0}
   interestPointsManager: {fileID: 2451688659374893304}
 --- !u!114 &2451688659374893306
 MonoBehaviour:
@@ -150,9 +151,6 @@ MonoBehaviour:
   entityData: {fileID: 11400000, guid: 8d82193aa88f17146b352ede3c54ba6e, type: 2}
   animator: {fileID: 0}
   isDie: 0
-  ignitable: 0
-  asphyxiation: 0
-  asphyxiationToDie: 0
   playerStateManager: {fileID: 2451688659374893307}
   rb: {fileID: 2451688659374893296}
   playerStats: {fileID: 11400000, guid: c898aea46dc492b49994537bfd0deeb3, type: 2}
@@ -161,6 +159,7 @@ MonoBehaviour:
   locked: 0
   roarReady: 1
   roarFX: {fileID: 6981436402318415202}
+  currentSusState: 0
   bearserkerState: {fileID: 2451688659374893305}
 --- !u!114 &2451688659374893305
 MonoBehaviour:
@@ -178,9 +177,6 @@ MonoBehaviour:
   entityData: {fileID: 11400000, guid: 8d82193aa88f17146b352ede3c54ba6e, type: 2}
   animator: {fileID: 0}
   isDie: 0
-  ignitable: 0
-  asphyxiation: 0
-  asphyxiationToDie: 0
   playerStateManager: {fileID: 2451688659374893307}
   rb: {fileID: 2451688659374893296}
   playerStats: {fileID: 11400000, guid: 2fd0072d78ce2d94c8fe3f700ee0099d, type: 2}
@@ -189,6 +185,7 @@ MonoBehaviour:
   locked: 0
   roarReady: 0
   roarFX: {fileID: 6981436402318415202}
+  currentSusState: 0
   stealthState: {fileID: 2451688659374893306}
 --- !u!1001 &110025411890658847
 PrefabInstance:
@@ -426,7 +423,7 @@ PrefabInstance:
     - target: {fileID: 4425532498778494946, guid: a803df3caa6eae542ac12423d73a8d89,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.067
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4425532498778494946, guid: a803df3caa6eae542ac12423d73a8d89,
         type: 3}
