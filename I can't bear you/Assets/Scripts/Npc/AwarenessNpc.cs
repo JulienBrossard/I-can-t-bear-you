@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using UnityEngine;
 
 public class AwarenessNpc : Awareness
@@ -45,6 +46,13 @@ public class AwarenessNpc : Awareness
         {
             foreach (var npc in visibleTargets)
             {
+                if (NpcManager.instance.npcScriptDict.ContainsKey(npc.gameObject))
+                {
+                    if (NpcManager.instance.npcScriptDict[npc.gameObject].isDie)
+                    {
+                        panicData.UpdatePanic(1);
+                    }
+                }
                 if (NpcManager.instance.panicDict.ContainsKey(npc.gameObject))
                 {
                     if (NpcManager.instance.panicDict[npc.gameObject].panicState == Panic.PanicState.Tense)
@@ -60,10 +68,7 @@ public class AwarenessNpc : Awareness
                         panicData.UpdatePanic(panicData.panicData.suspicious);
                     }
                 }
-            }
- 
-               
-            
+            } 
         }
     }
      

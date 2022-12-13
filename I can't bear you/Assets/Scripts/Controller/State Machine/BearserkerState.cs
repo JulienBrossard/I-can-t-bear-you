@@ -8,6 +8,8 @@ public class BearserkerState : PlayerState
         currentSusState = SUSSTATE.FREIGHTNED;
         StartCoroutine(RoarCd());
         PlayerAnimatorManager.instance.SetAnimatorBool("Bearserker", true);
+        Roar();
+        roarReady = false;
     }
     public override void Behave()
     {
@@ -45,8 +47,6 @@ public class BearserkerState : PlayerState
                 Roar();
                 Debug.Log("Switching to Stealth");
                 playerStateManager.SwitchState(stealthState);
-                heldObject?.GetComponent<IGrabbable>().Drop();
-
             }
         }
      
@@ -57,7 +57,7 @@ public class BearserkerState : PlayerState
         {
             Move();
             PlayerAnimatorManager.instance.SetAnimatorFloat("Speed", rb.velocity.magnitude);
-            LookForInterestPoints(playerStats.detectionAngle,playerStats.detectionRange,playerStats.detectionStep);
+            LookForInterestPoints(playerStats.detectionAngle,playerStats.detectionRange,playerStats.detectionHeight,playerStats.detectionStep);
             BearserkerGaugeManager.instance.Use();
         }
     }
@@ -81,7 +81,10 @@ public class BearserkerState : PlayerState
     public void Sleep()
     {
         Debug.Log("End lvl by sleeping");
-        heldObject?.GetComponent<IGrabbable>().Drop();
+        if (heldObject != default)
+        {
+            heldObject.GetComponent<IGrabbable>().Drop();
+        }
         LevelManager.instance.EndLevel(true);
     }
 }

@@ -5,6 +5,15 @@ using UnityEngine;
 
 public class Item : MonoBehaviour,IGrabbable, IAffectable
 {
+    enum DangerState
+    {
+        Safe,
+        Suspicious,
+        Dangerous
+    }
+    [Header("Danger State")]
+    [SerializeField] DangerState dangerState;
+    
     public virtual void DeleteItem()
     {
         Destroy(gameObject);
@@ -69,6 +78,20 @@ public class Item : MonoBehaviour,IGrabbable, IAffectable
     public Transform Grab(Transform hand)
     {
         if (!grabbable) return default;
+        
+        // Set Player SusState
+        switch (dangerState)
+        {
+            case DangerState.Safe:
+                break;
+            case DangerState.Suspicious:
+                PlayerStateManager.instance.currentState.currentSusState = PlayerState.SUSSTATE.SUSPICIOUS;
+                break;
+            case DangerState.Dangerous:
+                PlayerStateManager.instance.currentState.currentSusState = PlayerState.SUSSTATE.FREIGHTNED;
+                break;
+        }
+        
         Debug.Log("Grabbing " + gameObject.name);
         SetAsGrabbed(hand);
         return transform;
@@ -84,6 +107,9 @@ public class Item : MonoBehaviour,IGrabbable, IAffectable
     }
     public void Drop()
     {
+        // Set Player SusState to normal
+        PlayerStateManager.instance.currentState.currentSusState = PlayerState.SUSSTATE.NORMAL;
+        
         SetAsReleased();
     }
     public void Throw(Vector3 dir)

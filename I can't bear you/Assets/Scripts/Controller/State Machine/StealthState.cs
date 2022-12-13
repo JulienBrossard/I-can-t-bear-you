@@ -8,6 +8,10 @@ public class StealthState : PlayerState
     {
         currentSusState = SUSSTATE.NORMAL;
         PlayerAnimatorManager.instance.SetAnimatorBool("Bearserker", false);
+        if (heldObject != default)
+        {
+            heldObject.GetComponent<IGrabbable>().Drop();
+        }
     }
     public override void Behave()
     {
@@ -15,10 +19,13 @@ public class StealthState : PlayerState
         {
             if (InputManager.instance.input.Actions.Interact.triggered)
             {
-                if (heldObject?.GetComponent<IInteractable>() != default)
+                if (heldObject != default)
                 {
-                    heldObject.GetComponent<IInteractable>().Interact((transform.position - heldObject.transform.position).normalized);
-                    return;
+                    if (heldObject.GetComponent<IInteractable>() != default)
+                    {
+                        heldObject.GetComponent<IInteractable>().Interact((transform.position - heldObject.transform.position).normalized);
+                        return;
+                    }
                 }
                 //Dégueulasse mais c'est le seul moyen que j'ai trouvé pour avoir la position de la cible sans tout revoir
                 foreach (InterestPoint interestPoint in interestPointsManager.interestPoints) 
@@ -38,12 +45,14 @@ public class StealthState : PlayerState
                     return;
                 }
                 interestPointsManager.GetSmashable()?.Smash();
+                animator.SetTrigger("Attack");
             }
             if (InputManager.instance.input.Actions.Grab.triggered)
             {
                 if (heldObject == default)
                 {
                     if(interestPointsManager.GetGrabbable() == null) return;
+                    if(interestPointsManager.GetGrabbable().Grab(handTransform) == default) return;
                     heldObject = interestPointsManager.GetGrabbable().Grab(handTransform).gameObject;
                 }
                 else
@@ -54,7 +63,7 @@ public class StealthState : PlayerState
             }
             if (InputManager.instance.input.Actions.Roar.triggered)
             {
-                Roar();
+                //Roar();
                 playerStateManager.SwitchState(bearserkerState);
             }
         }
@@ -69,7 +78,7 @@ public class StealthState : PlayerState
         {
             Move();
             PlayerAnimatorManager.instance.SetAnimatorFloat("Speed", rb.velocity.magnitude);
-            LookForInterestPoints(playerStats.detectionAngle,playerStats.detectionRange,playerStats.detectionStep);
+            LookForInterestPoints(playerStats.detectionAngle,playerStats.detectionRange,playerStats.detectionHeight,playerStats.detectionStep);
         }
        
     }

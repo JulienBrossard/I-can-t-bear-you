@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 5192322362080822731}
   - component: {fileID: 8550208509231053647}
   - component: {fileID: 856431995341345583}
+  - component: {fileID: 6616642245741510310}
   m_Layer: 0
   m_Name: Television
   m_TagString: Untagged
@@ -104,6 +105,11 @@ MonoBehaviour:
   puddleType: 0
   puddleSize: 1
   zone: {fileID: 3365355756540188612}
+  grabbable: 0
+  rb: {fileID: 0}
+  collider: {fileID: 0}
+  throwForce: 0
+  thrown: 0
   itemCharged: 0
   itemConductor: 1
   zoneSize: 7.5
@@ -111,6 +117,7 @@ MonoBehaviour:
   emitter: {fileID: 0}
   fallable: 0
   falls: []
+  gasSize: 0
   isExplosive: 0
   awareness: {fileID: 8550208509231053647}
   functioning: 0
@@ -141,6 +148,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 55
   visibleTargets: []
+  maxTargets: 5
 --- !u!114 &856431995341345583
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -155,6 +163,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   outlineData: {fileID: 11400000, guid: a8ca930fdc07a3c4dac31119b528899c, type: 2}
   outlineObject: {fileID: 7780325189226547905}
+--- !u!65 &6616642245741510310
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3353993823778426777}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 6.848, y: 4.5475, z: 1.284}
+  m_Center: {x: 0, y: 2.27375, z: 0}
 --- !u!1 &3365355756540188612
 GameObject:
   m_ObjectHideFlags: 0
