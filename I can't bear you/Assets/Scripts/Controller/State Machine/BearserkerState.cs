@@ -81,7 +81,10 @@ public class BearserkerState : PlayerState
     public void Sleep()
     {
         Debug.Log("End lvl by sleeping");
-        heldObject?.GetComponent<IGrabbable>().Drop();
+        if (heldObject != default)
+        {
+            heldObject.GetComponent<IGrabbable>().Drop();
+        }
         LevelManager.instance.EndLevel(true);
     }
 }

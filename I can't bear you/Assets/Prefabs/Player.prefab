@@ -133,6 +133,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   baseState: {fileID: 2451688659374893306}
+  bearserkerState: {fileID: 2451688659374893305}
   currentState: {fileID: 0}
   interestPointsManager: {fileID: 2451688659374893304}
 --- !u!114 &2451688659374893306
@@ -155,6 +156,7 @@ MonoBehaviour:
   rb: {fileID: 2451688659374893296}
   playerStats: {fileID: 11400000, guid: c898aea46dc492b49994537bfd0deeb3, type: 2}
   interestPointsManager: {fileID: 2451688659374893304}
+  heldObject: {fileID: 0}
   handTransform: {fileID: 4511790121175914320}
   locked: 0
   roarReady: 1
@@ -181,6 +183,7 @@ MonoBehaviour:
   rb: {fileID: 2451688659374893296}
   playerStats: {fileID: 11400000, guid: 2fd0072d78ce2d94c8fe3f700ee0099d, type: 2}
   interestPointsManager: {fileID: 2451688659374893304}
+  heldObject: {fileID: 0}
   handTransform: {fileID: 6200872098281598526}
   locked: 0
   roarReady: 0

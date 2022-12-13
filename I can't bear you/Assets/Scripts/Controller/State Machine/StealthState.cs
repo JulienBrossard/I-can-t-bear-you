@@ -8,7 +8,10 @@ public class StealthState : PlayerState
     {
         currentSusState = SUSSTATE.NORMAL;
         PlayerAnimatorManager.instance.SetAnimatorBool("Bearserker", false);
-        heldObject?.GetComponent<IGrabbable>().Drop();
+        if (heldObject != default)
+        {
+            heldObject.GetComponent<IGrabbable>().Drop();
+        }
     }
     public override void Behave()
     {
@@ -16,10 +19,13 @@ public class StealthState : PlayerState
         {
             if (InputManager.instance.input.Actions.Interact.triggered)
             {
-                if (heldObject?.GetComponent<IInteractable>() != default)
+                if (heldObject != default)
                 {
-                    heldObject.GetComponent<IInteractable>().Interact((transform.position - heldObject.transform.position).normalized);
-                    return;
+                    if (heldObject.GetComponent<IInteractable>() != default)
+                    {
+                        heldObject.GetComponent<IInteractable>().Interact((transform.position - heldObject.transform.position).normalized);
+                        return;
+                    }
                 }
                 //Dégueulasse mais c'est le seul moyen que j'ai trouvé pour avoir la position de la cible sans tout revoir
                 foreach (InterestPoint interestPoint in interestPointsManager.interestPoints) 
