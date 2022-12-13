@@ -83,5 +83,12 @@ public class LevelManagerCustomInspector : Editor
             }
         }
     }
+
+    private void OnSceneGUI()
+    {
+        LevelManager levelManager = (LevelManager)target;
+        Handles.color = Color.white;
+        Handles.DrawWireArc (levelManager.level.partyData.partyPosition.position, Vector3.up, Vector3.forward, 360, levelManager.level.partyData.radius);
+    }
 #endif
 }
