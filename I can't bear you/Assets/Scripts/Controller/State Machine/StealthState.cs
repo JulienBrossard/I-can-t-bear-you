@@ -38,6 +38,7 @@ public class StealthState : PlayerState
                     return;
                 }
                 interestPointsManager.GetSmashable()?.Smash();
+                animator.SetTrigger("Attack");
             }
             if (InputManager.instance.input.Actions.Grab.triggered)
             {

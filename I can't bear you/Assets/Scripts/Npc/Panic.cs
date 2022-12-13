@@ -39,6 +39,10 @@ public class Panic : MonoBehaviour
             npc.UpdateSpeed(npc.npcData.runSpeed);
             panicState = PanicState.Panic;
             currentPanic = 1f;
+            if (!NpcManager.instance.npcScriptDict[gameObject].isDie)
+            {
+                PlayerStateManager.instance.SwitchState(PlayerStateManager.instance.bearserkerState);
+            }
         }
     }
 }
