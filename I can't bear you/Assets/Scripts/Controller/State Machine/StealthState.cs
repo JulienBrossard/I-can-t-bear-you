@@ -8,6 +8,7 @@ public class StealthState : PlayerState
     {
         currentSusState = SUSSTATE.NORMAL;
         PlayerAnimatorManager.instance.SetAnimatorBool("Bearserker", false);
+        heldObject?.GetComponent<IGrabbable>().Drop();
     }
     public override void Behave()
     {
@@ -45,6 +46,7 @@ public class StealthState : PlayerState
                 if (heldObject == default)
                 {
                     if(interestPointsManager.GetGrabbable() == null) return;
+                    if(interestPointsManager.GetGrabbable().Grab(handTransform) == default) return;
                     heldObject = interestPointsManager.GetGrabbable().Grab(handTransform).gameObject;
                 }
                 else
@@ -55,7 +57,7 @@ public class StealthState : PlayerState
             }
             if (InputManager.instance.input.Actions.Roar.triggered)
             {
-                Roar();
+                //Roar();
                 playerStateManager.SwitchState(bearserkerState);
             }
         }

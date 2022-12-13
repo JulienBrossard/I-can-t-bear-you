@@ -32,6 +32,7 @@ public class PlayerStateManager : MonoBehaviour
     {
         if (currentState != bearserkerState)
         {
+            currentState.heldObject?.GetComponent<IGrabbable>().Drop();
             currentState = newState;
             currentState.OnStateEnter();
             interestPointsManager.Clear();

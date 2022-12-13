@@ -1015,6 +1015,11 @@ PrefabInstance:
       propertyPath: m_CastShadows
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5334354312650553421, guid: 8af20d25f844330498a9ea0fe3a0017d,
+        type: 3}
+      propertyPath: dangerState
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7017279530098439350, guid: 8af20d25f844330498a9ea0fe3a0017d,
         type: 3}
       propertyPath: m_Mesh
@@ -2896,7 +2901,7 @@ MonoBehaviour:
     pool:
       prefab: {fileID: 4225555480404199414, guid: d9d78adb1c1738248a56b9aca3558a44,
         type: 3}
-      baseCount: 2
+      baseCount: 100
       baseRefreshSpeed: 5
       refreshSpeed: 5
 --- !u!114 &377199017
@@ -2931,8 +2936,8 @@ MonoBehaviour:
   level:
     npc:
     - npc: {fileID: 4225555480404199414, guid: d9d78adb1c1738248a56b9aca3558a44, type: 3}
-      count: 2
-    npcCount: 2
+      count: 100
+    npcCount: 100
     requiredNpcKillCount: 50
     npcSpawnPositions:
     - {fileID: 1078110528}
@@ -13951,6 +13956,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2451688659374893305, guid: 4e52ee41f60bb1c4d96e9822b7ff2abc,
+        type: 3}
+      propertyPath: roarReady
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2451688659374893306, guid: 4e52ee41f60bb1c4d96e9822b7ff2abc,
         type: 3}
       propertyPath: animator
@@ -15777,7 +15787,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!23 &1742492279
 MeshRenderer:
   m_ObjectHideFlags: 0

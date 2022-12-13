@@ -8,6 +8,8 @@ using Vector3 = UnityEngine.Vector3;
 
 public class Npc : Entity,ISmashable
 {
+    [Header("Canvas")]
+    [SerializeField] GameObject canvas;
     public enum STATE {
         THIRST,
         HUNGER,
@@ -281,7 +283,7 @@ public class Npc : Entity,ISmashable
         base.Die(unspawn);
         if (unspawn)
             NpcManager.instance.UnSpawnNpc(gameObject.name.Replace("(Clone)", String.Empty), gameObject);
-
+        canvas.SetActive(false);
     }
     
     

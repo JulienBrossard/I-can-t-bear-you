@@ -8,6 +8,8 @@ public class BearserkerState : PlayerState
         currentSusState = SUSSTATE.FREIGHTNED;
         StartCoroutine(RoarCd());
         PlayerAnimatorManager.instance.SetAnimatorBool("Bearserker", true);
+        Roar();
+        roarReady = false;
     }
     public override void Behave()
     {
@@ -45,8 +47,6 @@ public class BearserkerState : PlayerState
                 Roar();
                 Debug.Log("Switching to Stealth");
                 playerStateManager.SwitchState(stealthState);
-                heldObject?.GetComponent<IGrabbable>().Drop();
-
             }
         }
      
