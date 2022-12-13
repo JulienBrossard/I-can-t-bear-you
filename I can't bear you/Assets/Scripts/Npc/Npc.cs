@@ -8,6 +8,8 @@ using Vector3 = UnityEngine.Vector3;
 
 public class Npc : Entity,ISmashable
 {
+    [Header("Canvas")]
+    [SerializeField] GameObject canvas;
     public enum STATE {
         THIRST,
         HUNGER,
@@ -75,23 +77,26 @@ public class Npc : Entity,ISmashable
 
     private void Update()
     {
-        if (!animator.GetBool("isWalking") && Vector3.Distance(transform.position, agent.destination) > 2f)
+        if (!isDie)
         {
-            animator.SetBool("isWalking", true);
-            animator.SetBool("isDancing", false);
-        }
+            if (!animator.GetBool("isWalking") && Vector3.Distance(transform.position, agent.destination) > 2f)
+            {
+                animator.SetBool("isWalking", true);
+                animator.SetBool("isDancing", false);
+            }
 
-        if (panicData.panicState == global::Panic.PanicState.Calm)
-        {
-            Calm();
-        }
-        else if(panicData.panicState == global::Panic.PanicState.Tense)
-        {
-            Investigate();
-        }
-        else
-        {
-            Panic();
+            if (panicData.panicState == global::Panic.PanicState.Calm)
+            {
+                Calm();
+            }
+            else if(panicData.panicState == global::Panic.PanicState.Tense)
+            {
+                Investigate();
+            }
+            else
+            {
+                Panic();
+            }
         }
     }
 
@@ -278,7 +283,7 @@ public class Npc : Entity,ISmashable
         base.Die(unspawn);
         if (unspawn)
             NpcManager.instance.UnSpawnNpc(gameObject.name.Replace("(Clone)", String.Empty), gameObject);
-
+        canvas.SetActive(false);
     }
     
     

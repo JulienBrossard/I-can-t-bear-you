@@ -8,7 +8,7 @@ public abstract class PlayerState : Entity
     [SerializeField] protected Rigidbody rb;
     [SerializeField] protected PlayerStats playerStats;
     [SerializeField] protected InterestPointsManager interestPointsManager;
-    protected GameObject heldObject;
+    public GameObject heldObject;
     [SerializeField] protected Transform handTransform;
     private float accelerationIndex;
     [SerializeField] protected bool locked;
@@ -79,7 +79,6 @@ public abstract class PlayerState : Entity
                 }
             }
             roarReady = false;
-            heldObject?.GetComponent<IGrabbable>().Drop();
             locked = true;
             StartCoroutine(RoarCd());
             StartCoroutine(LockTime(playerStats.roarDuration));

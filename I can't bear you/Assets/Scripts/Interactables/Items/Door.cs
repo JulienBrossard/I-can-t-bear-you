@@ -3,7 +3,7 @@ using DG.Tweening;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Door : MonoBehaviour, IInteractable
+public class Door : Item, ISmashable, IInteractable
 {
     private Vector3 initRotation;
     private bool isOpen;
@@ -12,7 +12,7 @@ public class Door : MonoBehaviour, IInteractable
 
     void Start()
     {
-        initRotation = transform.GetChild(0).transform.eulerAngles;
+        initRotation = transform.parent.transform.eulerAngles;
     }
     
     /// <summary>
@@ -23,8 +23,8 @@ public class Door : MonoBehaviour, IInteractable
     {
         if (!isOpen)
         {
-            float direction = Mathf.Sign(Vector3.Dot(transform.GetChild(0).transform.forward, entity.forward));
-            transform.GetChild(0).transform.DORotate(new Vector3(0, initRotation.y - 90 * direction , 0), 2f);
+            float direction = Mathf.Sign(Vector3.Dot(transform.parent.transform.forward, entity.forward));
+            transform.parent.transform.DORotate(new Vector3(0, initRotation.y - 90 * direction , 0), 2f);
             isOpen = true;
             obstacle.enabled = true;
         }
@@ -36,7 +36,7 @@ public class Door : MonoBehaviour, IInteractable
     void Close()
     {
         isOpen = false;
-        transform.GetChild(0).transform.DORotate(initRotation, 2f);
+        transform.parent.transform.DORotate(initRotation, 2f);
         obstacle.enabled = false;
     }
 
@@ -81,5 +81,10 @@ public class Door : MonoBehaviour, IInteractable
                 Open(LevelManager.instance.GetPlayer());
             }
         }
+    }
+
+    public void Smash()
+    {
+        DeleteItem();
     }
 }

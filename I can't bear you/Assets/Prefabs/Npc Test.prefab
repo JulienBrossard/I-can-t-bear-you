@@ -1665,6 +1665,7 @@ MonoBehaviour:
   entityData: {fileID: 11400000, guid: 8d82193aa88f17146b352ede3c54ba6e, type: 2}
   animator: {fileID: 7426378792727152438}
   isDie: 0
+  canvas: {fileID: 7175927798535219223}
   stats:
     currentHunger: 100
     currentThirst: 100
@@ -1700,6 +1701,8 @@ MonoBehaviour:
   panicState: 0
   panicData: {fileID: 11400000, guid: a3c6d08dab0c19b4a87684c76dfff81f, type: 2}
   npc: {fileID: 2523814097983844807}
+  suspiciousImage: {fileID: 0}
+  panicImage: {fileID: 0}
 --- !u!114 &-2508231515378271730
 MonoBehaviour:
   m_ObjectHideFlags: 0
