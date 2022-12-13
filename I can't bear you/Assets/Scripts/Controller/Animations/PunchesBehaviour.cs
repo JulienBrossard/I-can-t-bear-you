@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PunchesBehaviour : StateMachineBehaviour
 {
@@ -6,6 +7,7 @@ public class PunchesBehaviour : StateMachineBehaviour
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         PlayerStateManager.instance.currentState.currentSusState = PlayerState.SUSSTATE.FREIGHTNED;
+        InputManager.instance.input.Movement.Disable();
     }
 
     // OnStateUpdate is called before OnStateUpdate is called on any state inside this state machine
@@ -18,6 +20,7 @@ public class PunchesBehaviour : StateMachineBehaviour
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         PlayerStateManager.instance.currentState.currentSusState = PlayerState.SUSSTATE.NORMAL;
+        InputManager.instance.input.Movement.Enable();
     }
 
     // OnStateMove is called before OnStateMove is called on any state inside this state machine
