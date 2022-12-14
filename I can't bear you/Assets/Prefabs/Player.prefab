@@ -133,6 +133,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   baseState: {fileID: 2451688659374893306}
+  bearserkerState: {fileID: 2451688659374893305}
   currentState: {fileID: 0}
   interestPointsManager: {fileID: 2451688659374893304}
 --- !u!114 &2451688659374893306
@@ -149,12 +150,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentSpeedRatio: 1
   entityData: {fileID: 11400000, guid: 8d82193aa88f17146b352ede3c54ba6e, type: 2}
-  animator: {fileID: 0}
+  animator: {fileID: 8521408999808423177}
   isDie: 0
   playerStateManager: {fileID: 2451688659374893307}
   rb: {fileID: 2451688659374893296}
   playerStats: {fileID: 11400000, guid: c898aea46dc492b49994537bfd0deeb3, type: 2}
   interestPointsManager: {fileID: 2451688659374893304}
+  heldObject: {fileID: 0}
   handTransform: {fileID: 4511790121175914320}
   locked: 0
   roarReady: 1
@@ -175,12 +177,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentSpeedRatio: 1
   entityData: {fileID: 11400000, guid: 8d82193aa88f17146b352ede3c54ba6e, type: 2}
-  animator: {fileID: 0}
+  animator: {fileID: 8521408999808423177}
   isDie: 0
   playerStateManager: {fileID: 2451688659374893307}
   rb: {fileID: 2451688659374893296}
   playerStats: {fileID: 11400000, guid: 2fd0072d78ce2d94c8fe3f700ee0099d, type: 2}
   interestPointsManager: {fileID: 2451688659374893304}
+  heldObject: {fileID: 0}
   handTransform: {fileID: 6200872098281598526}
   locked: 0
   roarReady: 0
@@ -492,6 +495,12 @@ Transform:
 --- !u!4 &6200872098281598526 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5459847704023611055, guid: a803df3caa6eae542ac12423d73a8d89,
+    type: 3}
+  m_PrefabInstance: {fileID: 2146153097024215185}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &8521408999808423177 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 7749158428632567192, guid: a803df3caa6eae542ac12423d73a8d89,
     type: 3}
   m_PrefabInstance: {fileID: 2146153097024215185}
   m_PrefabAsset: {fileID: 0}

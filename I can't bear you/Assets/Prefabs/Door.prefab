@@ -141,6 +141,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fad1a79c6c40ef40be56c9d91323d7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dangerState: 0
   puddleType: 0
   puddleSize: 1
   zone: {fileID: 0}

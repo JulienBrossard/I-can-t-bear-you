@@ -42,11 +42,11 @@ public class BearserkerState : PlayerState
                     heldObject = null;
                 }
             }
-            if (InputManager.instance.input.Actions.Roar.triggered)
+            if ((InputManager.instance.input.Actions.Roar.triggered) && (roarReady))
             {
+                animator.SetTrigger("roarInBerserk");
                 Roar();
-                Debug.Log("Switching to Stealth");
-                playerStateManager.SwitchState(stealthState);
+                Debug.Log("has roared in berserk state");
             }
         }
      
@@ -81,7 +81,10 @@ public class BearserkerState : PlayerState
     public void Sleep()
     {
         Debug.Log("End lvl by sleeping");
-        heldObject?.GetComponent<IGrabbable>().Drop();
+        if (heldObject != default)
+        {
+            heldObject.GetComponent<IGrabbable>().Drop();
+        }
         LevelManager.instance.EndLevel(true);
     }
 }
