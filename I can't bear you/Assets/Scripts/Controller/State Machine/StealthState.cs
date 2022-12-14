@@ -63,7 +63,7 @@ public class StealthState : PlayerState
             }
             if (InputManager.instance.input.Actions.Roar.triggered)
             {
-                //Roar();
+                Roar();
                 playerStateManager.SwitchState(bearserkerState);
             }
         }

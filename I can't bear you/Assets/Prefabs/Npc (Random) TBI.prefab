@@ -31,7 +31,7 @@ Transform:
   m_GameObject: {fileID: 6469360050269068880}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 3.107, y: 3.921, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.75, y: 1.75, z: 1.75}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 753610480805179767}
@@ -90,6 +90,7 @@ MonoBehaviour:
   entityData: {fileID: 0}
   animator: {fileID: 6671362022683880205}
   isDie: 0
+  canvas: {fileID: 0}
   stats:
     currentHunger: 100
     currentThirst: 100
@@ -125,6 +126,8 @@ MonoBehaviour:
   panicState: 0
   panicData: {fileID: 11400000, guid: a3c6d08dab0c19b4a87684c76dfff81f, type: 2}
   npc: {fileID: 6469360050269068887}
+  suspiciousImage: {fileID: 0}
+  panicImage: {fileID: 0}
 --- !u!114 &3685955440935880399
 MonoBehaviour:
   m_ObjectHideFlags: 0

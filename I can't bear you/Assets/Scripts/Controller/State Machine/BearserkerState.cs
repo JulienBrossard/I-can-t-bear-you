@@ -42,11 +42,11 @@ public class BearserkerState : PlayerState
                     heldObject = null;
                 }
             }
-            if (InputManager.instance.input.Actions.Roar.triggered)
+            if ((InputManager.instance.input.Actions.Roar.triggered) && (roarReady))
             {
+                animator.SetTrigger("roarInBerserk");
                 Roar();
-                Debug.Log("Switching to Stealth");
-                playerStateManager.SwitchState(stealthState);
+                Debug.Log("has roared in berserk state");
             }
         }
      
