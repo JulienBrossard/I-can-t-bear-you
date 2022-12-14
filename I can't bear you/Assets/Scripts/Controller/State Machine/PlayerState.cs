@@ -46,13 +46,17 @@ public abstract class PlayerState : Entity
         rb.velocity = new Vector3(transform.forward.x,0,transform.forward.z) * (playerStats.slowdownCurve.Evaluate(Mathf.Lerp(1,0,accelerationIndex)) * playerStats.maxSpeed * currentSpeedRatio) + new Vector3(0,rb.velocity.y,0);
     }
     private float tempAngle;
-    public void LookForInterestPoints(float angle, float range, float step)
+    public void LookForInterestPoints(float angle, float range,float height, float step)
     {
         tempAngle = transform.rotation.eulerAngles.y/180f*Mathf.PI;
         for (float i = 0; i < angle; i += step)
         {
-            SendRayCast(transform.position,new Vector3(Mathf.Sin(i+tempAngle),0,Mathf.Cos(i+tempAngle)), range, i/angle);
-            SendRayCast(transform.position,new Vector3(Mathf.Sin(-i+tempAngle),0,Mathf.Cos(-i+tempAngle)), range, i/angle);
+            for (float j = 0; j < height; j += step)
+            {
+                Debug.Log(tempAngle);
+                SendRayCast(transform.position + Vector3.up * (j),new Vector3(Mathf.Sin(i+tempAngle),0,Mathf.Cos(i+tempAngle)), range, i/angle);
+                SendRayCast(transform.position + Vector3.up * (j),new Vector3(Mathf.Sin(-i+tempAngle),0,Mathf.Cos(-i+tempAngle)), range, i/angle);
+            }
         }
     }
 

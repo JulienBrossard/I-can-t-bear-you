@@ -73,7 +73,7 @@ MonoBehaviour:
   slowdownStep: 0.04
   maxSpeed: 5
   turnTime: 0.1
-  detectionAngle: 0.93
+  detectionAngle: 1
   detectionAngleCurve:
     serializedVersion: 2
     m_Curve:
@@ -98,7 +98,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  detectionRange: 2
+  detectionRange: 2.33
+  detectionHeight: 3.38
   detectionRangeCurve:
     serializedVersion: 2
     m_Curve:
@@ -123,7 +124,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  detectionStep: 0.09
+  detectionStep: 0.3
   roarRange: 20
   roarCD: 10
   roarFreezeChance: 0.5
