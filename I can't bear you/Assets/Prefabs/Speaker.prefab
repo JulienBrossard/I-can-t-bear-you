@@ -50,6 +50,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec448df2b8ae1f24d9aaea9fae20b1df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dangerState: 0
   puddleType: 0
   puddleSize: 0.5
   zone: {fileID: 7888784108612554508}
@@ -60,7 +61,7 @@ MonoBehaviour:
   thrown: 0
   itemCharged: 0
   itemConductor: 1
-  zoneSize: 0.5
+  zoneSize: 5
   emitterDependant: 0
   emitter: {fileID: 0}
   fallable: 0
@@ -153,7 +154,7 @@ Transform:
   m_GameObject: {fileID: 7888784108612554508}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.22999725, y: 0, z: 0.089999974}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_LocalScale: {x: 5, y: 5, z: 5}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7353997017903222251}
