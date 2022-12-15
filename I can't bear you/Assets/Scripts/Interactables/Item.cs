@@ -204,16 +204,15 @@ public class Item : MonoBehaviour,IGrabbable, IAffectable
 
     private void OnCollisionEnter(Collision collision)
     {
-        OnHitGround();
+        OnHitGround(collision);
     }
 
-    public virtual void OnHitGround()
+    public virtual void OnHitGround(Collision collision)
     {
         thrown = false;
         
         if(!falling) return;
         Instantiate((GameObject)Resources.Load("Stomp Zone"), transform.position, Quaternion.identity);
-        DeleteItem();
     }
 
     private FallAsset fallBuffer = new (Vector3.zero, 0);
