@@ -43,7 +43,8 @@ public class LevelManager : MonoBehaviour
     {
         foreach (var npc in NpcManager.instance.npc)
         {
-            npc.GetComponent<Npc>().RemoveExitPoint(exitPoint);
+            Debug.Log(npc);
+            NpcManager.instance.npcScriptDict[npc].RemoveExitPoint(exitPoint);
         }
     }
 
@@ -70,7 +71,7 @@ public class LevelManager : MonoBehaviour
 
     public void EndLevel(bool bySleeping)
     {
-        if (level.npcCount < level.requiredNpcKillCount)
+        if (NpcManager.instance.npcCountkilled < level.requiredNpcKillCount)
         {
             UiManager.instance.LaunchEndLevelScreen(true);
         }
