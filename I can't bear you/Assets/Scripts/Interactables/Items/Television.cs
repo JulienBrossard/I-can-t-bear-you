@@ -1,19 +1,12 @@
 using UnityEngine;
 
-public class Television : Item, ISmashable, IInteractable
+public class Television : AttractiveItem, ISmashable, IInteractable
 {
-    [Header("Television Attraction")] 
-    [SerializeField] private Awareness awareness;
-    public bool functioning = false;
+    [Header("Television Materials")]
     private Material[] tempMatList;
     [SerializeField] private MeshRenderer tvScreenMR;
     [SerializeField] private Material tvOff;
     [SerializeField] private Material tvOn;
-    public float attractedDistance = 5f;
-    private int npcCount;
-    [Range(0,180)]
-    [SerializeField] public float angle;
-    [SerializeField] public bool invertZAxis;
 
     private void Update()
     {
@@ -29,14 +22,8 @@ public class Television : Item, ISmashable, IInteractable
         Electrocute();
     }
 
-    public void Interact(Vector3 sourcePos)
-    {
-        Debug.Log("Interacting with Television");
-        Switch();
-    }
-
     [ContextMenu("Switch")]
-    private void Switch()
+    public override void Switch()
     {
         functioning = !functioning;
         tempMatList = tvScreenMR.materials;
@@ -51,44 +38,11 @@ public class Television : Item, ISmashable, IInteractable
         }
         tvScreenMR.materials = tempMatList;
     }
-
-    private void Attracted()
+    
+    public void Interact(Vector3 sourcePos)
     {
-        if (npcCount != awareness.visibleTargets.Count)
-        {
-            for (int i = 0; i < awareness.visibleTargets.Count; i++)
-            {
-                Npc npc = awareness.visibleTargets[i].GetComponent<Npc>();
-                if (npc.state == Npc.STATE.DANCING)
-                {
-                    if (!invertZAxis)
-                    {
-                        npc.Attracted(attractedDistance, transform.position, angle);
-                    }
-                    else
-                    {
-                        npc.Attracted(-attractedDistance, transform.position, angle);
-                    }
-                }
-            }
-
-            npcCount = awareness.visibleTargets.Count;
-        }
-    }
-    private void StopAttracted()
-    {
-        for (int i = 0; i < awareness.visibleTargets.Count; i++)
-        {
-            awareness.visibleTargets[i].GetComponent<Npc>().StopAttracted();
-        }
-
-        npcCount = 0;
+        Debug.Log("Interacting with " + gameObject.name);
+        Switch();
     }
     
-    public Vector3 DirFromAngle(float angleInDegrees, bool angleIsGlobal) {
-        if (!angleIsGlobal) {
-            angleInDegrees += transform.eulerAngles.y;
-        }
-        return new Vector3(Mathf.Sin(angleInDegrees * Mathf.Deg2Rad),0,Mathf.Cos(angleInDegrees * Mathf.Deg2Rad));
-    }
 }

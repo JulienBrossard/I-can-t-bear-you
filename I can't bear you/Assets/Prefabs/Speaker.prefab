@@ -9,10 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7353997017903222251}
-  - component: {fileID: 846790867960782083}
   - component: {fileID: 3847977567671870343}
   - component: {fileID: 5200560531691555815}
   - component: {fileID: 3847977567671870342}
+  - component: {fileID: 1353248594867417953}
   m_Layer: 0
   m_Name: Speaker
   m_TagString: Untagged
@@ -38,43 +38,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &846790867960782083
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7873829263782647633}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ec448df2b8ae1f24d9aaea9fae20b1df, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  puddleType: 0
-  puddleSize: 0.5
-  zone: {fileID: 7888784108612554508}
-  grabbable: 0
-  rb: {fileID: 0}
-  collider: {fileID: 0}
-  throwForce: 0
-  thrown: 0
-  itemCharged: 0
-  itemConductor: 1
-  zoneSize: 0.5
-  emitterDependant: 0
-  emitter: {fileID: 0}
-  fallable: 0
-  falls: []
-  gasSize: 0
-  isExplosive: 0
-  awareness: {fileID: 3847977567671870343}
-  functioning: 0
-  tvScreenMR: {fileID: 0}
-  tvOff: {fileID: -8896051167825165466, guid: b71a686cca81e7a459f671fed62d8d40, type: 3}
-  tvOn: {fileID: 2100000, guid: 41170d8d08ed02f40909fd88daa7c482, type: 2}
-  attractedDistance: 18.08
-  angle: 75
-  invertZAxis: 1
 --- !u!114 &3847977567671870343
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -88,13 +51,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   viewRadius: 25
-  viewAngle: 287
+  viewAngle: 360
   targetMask:
     serializedVersion: 2
     m_Bits: 64
   obstacleMask:
     serializedVersion: 2
-    m_Bits: 55
+    m_Bits: 51
   visibleTargets: []
   maxTargets: 6
 --- !u!114 &5200560531691555815
@@ -124,6 +87,42 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.6556638, y: 6.4195404, z: 1.5801233}
   m_Center: {x: 0.2600137, y: 0.9597759, z: 0.029136866}
+--- !u!114 &1353248594867417953
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7873829263782647633}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af989874e6ae7eb448e50bbf99aa00a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dangerState: 0
+  puddleType: 0
+  puddleSize: 0.5
+  zone: {fileID: 0}
+  grabbable: 0
+  rb: {fileID: 0}
+  collider: {fileID: 0}
+  throwForce: 0
+  thrown: 0
+  itemCharged: 0
+  itemConductor: 1
+  zoneSize: 0.5
+  emitterDependant: 0
+  emitter: {fileID: 0}
+  fallable: 0
+  falls: []
+  gasSize: 0
+  isExplosive: 0
+  awareness: {fileID: 3847977567671870343}
+  functioning: 0
+  attractedDistance: 10
+  npcCount: 0
+  angle: 75
+  invertZAxis: 1
 --- !u!1 &7888784108612554508
 GameObject:
   m_ObjectHideFlags: 0

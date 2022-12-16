@@ -29,7 +29,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3353993823778426777}
-  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 10.360428, y: 4, z: 0.8123245}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -122,12 +122,13 @@ MonoBehaviour:
   isExplosive: 0
   awareness: {fileID: 8550208509231053647}
   functioning: 0
+  attractedDistance: 10
+  npcCount: 0
+  angle: 180
+  invertZAxis: 1
   tvScreenMR: {fileID: 3858243394791108172}
   tvOff: {fileID: -8896051167825165466, guid: b71a686cca81e7a459f671fed62d8d40, type: 3}
   tvOn: {fileID: 2100000, guid: 41170d8d08ed02f40909fd88daa7c482, type: 2}
-  attractedDistance: 10
-  angle: 180
-  invertZAxis: 1
 --- !u!114 &8550208509231053647
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -147,7 +148,7 @@ MonoBehaviour:
     m_Bits: 64
   obstacleMask:
     serializedVersion: 2
-    m_Bits: 55
+    m_Bits: 51
   visibleTargets: []
   maxTargets: 5
 --- !u!114 &856431995341345583
