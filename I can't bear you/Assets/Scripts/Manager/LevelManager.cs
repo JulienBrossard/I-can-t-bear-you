@@ -146,7 +146,6 @@ public class PartyData
     public bool test;
     public Transform partyPosition;
     [ConditionalEnumHide("shape", 0)] public float radius;
-    [ConditionalHide("test", true)] public float radius;
     public SpawnNpc[] npc;
 }
 
