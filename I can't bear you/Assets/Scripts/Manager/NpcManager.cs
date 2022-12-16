@@ -23,9 +23,10 @@ public class NpcManager : MonoBehaviour
     }
 
     [ContextMenu("Spawn Npc")]
-    public void SpawnNpc(String name)
+    public Npc SpawnNpc(String name)
     {
-        npc.Add(Pooler.instance.Pop(name));
+        GameObject currentNpc = Pooler.instance.Pop(name);
+        npc.Add(currentNpc);
         npc[^1].transform.position = LevelManager.instance.GetRandomNpcSpawn();
         npcCountRemaining++;
         if (npcCountRemaining == LevelManager.instance.level.npcCount)
@@ -34,6 +35,7 @@ public class NpcManager : MonoBehaviour
         UiManager.instance.UpdateRemainingNpcText();
         panicDict.Add(npc[^1], npc[^1].GetComponent<Panic>());
         npcScriptDict.Add(npc[^1], npc[^1].GetComponent<Npc>());
+        return npcScriptDict[npc[^1]];
     }
 
     [ContextMenu("Npc")]
