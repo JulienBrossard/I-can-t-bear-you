@@ -17,10 +17,10 @@ public class HoneyPot : Item,IInteractable,ISmashable
         Break();
     }
 
-    public override void OnHitGround()
+    public override void OnHitGround(Collision collision)
     {
         if (thrown) Break();
-        base.OnHitGround();
+        base.OnHitGround(collision);
     }
 
     private void Break()

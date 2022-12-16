@@ -9,7 +9,7 @@ public class Outline : MonoBehaviour
     [SerializeField] private GameObject outlineObject;
     private void Start()
     {
-        CreateOutline(outlineData.outlineMaterial, outlineData.outlineScaleFactor, outlineData.outlineColor);
+        //CreateOutline(outlineData.outlineMaterial, outlineData.outlineScaleFactor, outlineData.outlineColor);
     }
 
     void CreateOutline(Material outlineMat, float scaleFactor, Color color)

@@ -71,6 +71,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f738988bbf5b745408fe97d152c9a826, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dangerState: 0
   puddleType: 2
   puddleSize: 1
   zone: {fileID: 0}
@@ -78,6 +79,7 @@ MonoBehaviour:
   rb: {fileID: 3778223884131960099}
   collider: {fileID: 3778223884131960110}
   throwForce: 33.333332
+  thrown: 0
   itemCharged: 0
   itemConductor: 0
   zoneSize: 0
