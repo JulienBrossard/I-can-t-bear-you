@@ -19,10 +19,12 @@ public class Gas : MonoBehaviour, IAffectable
 
     public void Electrocute()
     {
+        Explode();
     }
 
     public void Electrocute(GameObject emitter)
     {
+        Explode();
     }
 
     public void Stomp()

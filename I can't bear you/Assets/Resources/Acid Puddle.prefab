@@ -93,5 +93,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Acid Puddle
       objectReference: {fileID: 0}
+    - target: {fileID: 4326711515932819691, guid: 6e545a7257b3bd9438778ab69c6cd140,
+        type: 3}
+      propertyPath: m_TagString
+      value: Danger
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6e545a7257b3bd9438778ab69c6cd140, type: 3}

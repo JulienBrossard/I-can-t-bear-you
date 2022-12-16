@@ -43,7 +43,8 @@ public class LevelManager : MonoBehaviour
     {
         foreach (var npc in NpcManager.instance.npc)
         {
-            npc.GetComponent<Npc>().RemoveExitPoint(exitPoint);
+            Debug.Log(npc);
+            NpcManager.instance.npcScriptDict[npc].RemoveExitPoint(exitPoint);
         }
     }
 

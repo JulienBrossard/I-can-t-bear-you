@@ -231,7 +231,7 @@ public class Item : MonoBehaviour,IGrabbable, IAffectable
     [SerializeField] private float gasSize;
     public void CreateGas()
     {
-        Instantiate((GameObject)Resources.Load("Gas"), transform.position, Quaternion.identity, transform).transform.localScale = Vector3.one * gasSize;
+        Instantiate((GameObject)Resources.Load("Gas"), transform.position, Quaternion.identity).transform.localScale = Vector3.one * gasSize;
     }
     
     [Header("Explosive")]

@@ -10,11 +10,12 @@ public  class Explosion : MonoBehaviour
     
     private void OnEnable()
     {
-        Instantiate(ExplosionVFX, transform.position, Quaternion.identity);
+        ExplosionVFX = Instantiate(ExplosionVFX, transform.position, Quaternion.identity);
         Camera.main.transform.DOShakePosition(0.2f, 0.5f, 10, 90, false, true);
         transform.localScale = Vector3.zero;
+        ExplosionVFX.transform.localScale = Vector3.one * explosionRadius;
         transform.DOScale(explosionRadius,0.5f).OnComplete(() => gameObject.SetActive(false));
-    }
+         }
     private void OnTriggerEnter(Collider other)
     {
         if (other.TryGetComponent(out Entity entity))

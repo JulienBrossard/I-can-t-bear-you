@@ -98,7 +98,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  detectionRange: 2.33
+  detectionRange: 5
   detectionHeight: 3.38
   detectionRangeCurve:
     serializedVersion: 2

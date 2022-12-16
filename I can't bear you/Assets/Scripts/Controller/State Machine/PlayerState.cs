@@ -53,7 +53,6 @@ public abstract class PlayerState : Entity
         {
             for (float j = 0; j < height; j += step)
             {
-                Debug.Log(tempAngle);
                 SendRayCast(transform.position + Vector3.up * (j),new Vector3(Mathf.Sin(i+tempAngle),0,Mathf.Cos(i+tempAngle)), range, i/angle);
                 SendRayCast(transform.position + Vector3.up * (j),new Vector3(Mathf.Sin(-i+tempAngle),0,Mathf.Cos(-i+tempAngle)), range, i/angle);
             }
