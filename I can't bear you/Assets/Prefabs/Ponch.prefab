@@ -62,9 +62,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9884b6d974f06aa449eb64f5ce7a6d46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dangerState: 0
   puddleType: 0
   puddleSize: 1
   zone: {fileID: 0}
+  grabbable: 0
+  rb: {fileID: 0}
+  collider: {fileID: 0}
+  throwForce: 0
+  thrown: 0
   itemCharged: 0
   itemConductor: 1
   zoneSize: 0
@@ -72,6 +78,7 @@ MonoBehaviour:
   emitter: {fileID: 0}
   fallable: 0
   falls: []
+  gasSize: 0
   isExplosive: 0
   psBubblePoisoned: {fileID: 5643027034211683321}
 --- !u!114 &1340949396713235726

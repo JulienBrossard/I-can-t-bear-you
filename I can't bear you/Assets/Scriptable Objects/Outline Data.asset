@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Outline Data
   m_EditorClassIdentifier: 
   outlineMaterial: {fileID: 2100000, guid: 8de310a7d5ce0984998b872829c56b08, type: 2}
-  outlineScaleFactor: -1.05
+  outlineScaleFactor: 1
   outlineColor: {r: 1, g: 0.9128059, b: 0, a: 0}
