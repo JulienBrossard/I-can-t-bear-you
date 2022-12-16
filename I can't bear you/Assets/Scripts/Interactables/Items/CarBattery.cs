@@ -9,10 +9,10 @@ public class CarBattery : Item,ISmashable
     {
         Break();
     }
-    public override void OnHitGround()
+    public override void OnHitGround(Collision collision)
     {
         if (thrown) Break();
-        base.OnHitGround();
+        base.OnHitGround(collision);
     }
     private void Break()
     {
