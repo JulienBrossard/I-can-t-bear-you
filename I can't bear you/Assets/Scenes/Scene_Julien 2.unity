@@ -2239,6 +2239,37 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 307559076}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &312293877
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 312293878}
+  m_Layer: 0
+  m_Name: Party point (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: -5938655980376293919, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &312293878
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 312293877}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 23.6, y: 0.22000003, z: -10.1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1996519075}
+  m_RootOrder: 12
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &313124549 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3773924572516838598, guid: 4bc19f1ccb601124f9dccd4a1225dcb8,
@@ -2896,14 +2927,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2feb9b4aad3d64042a1fb45d66c2b1ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  poolKeys:
-  - key: Npc (After)
-    pool:
-      prefab: {fileID: 4225555480404199414, guid: d9d78adb1c1738248a56b9aca3558a44,
-        type: 3}
-      baseCount: 50
-      baseRefreshSpeed: 5
-      refreshSpeed: 5
+  poolKeys: []
 --- !u!114 &377199017
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2934,10 +2958,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pooler: {fileID: 377199016}
   level:
-    npc:
-    - npc: {fileID: 4225555480404199414, guid: d9d78adb1c1738248a56b9aca3558a44, type: 3}
-      count: 50
-    npcCount: 50
+    partyData:
+    - shape: 1
+      test: 0
+      partyPosition: {fileID: 0}
+      radius: 0
+      npc: []
+    - shape: 0
+      test: 0
+      partyPosition: {fileID: 0}
+      radius: 0
+      npc: []
+    npcCount: 0
     requiredNpcKillCount: 50
     npcSpawnPositions:
     - {fileID: 1078110528}
@@ -2964,9 +2996,6 @@ MonoBehaviour:
     bladderPoints:
     - {fileID: 665679915}
     player: {fileID: 2102163164}
-    partyData:
-      partyPosition: {fileID: 20144190}
-      radius: 20
 --- !u!4 &377199019
 Transform:
   m_ObjectHideFlags: 0
@@ -12470,7 +12499,7 @@ Transform:
   - {fileID: 1524654932}
   - {fileID: 1165388777}
   m_Father: {fileID: 1996519075}
-  m_RootOrder: 12
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1451056619
 PrefabInstance:
@@ -18184,6 +18213,7 @@ Transform:
   - {fileID: 697021035}
   - {fileID: 1395112346}
   - {fileID: 20144190}
+  - {fileID: 312293878}
   - {fileID: 1442642778}
   m_Father: {fileID: 0}
   m_RootOrder: 9

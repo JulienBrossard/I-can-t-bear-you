@@ -8,6 +8,8 @@ using Vector3 = UnityEngine.Vector3;
 
 public class Npc : Entity,ISmashable
 {
+    PartyData partyData;
+    
     [Header("Canvas")]
     [SerializeField] GameObject canvas;
     public enum STATE {
@@ -100,6 +102,11 @@ public class Npc : Entity,ISmashable
         }
     }
 
+    public void InitPartyData(PartyData partyData)
+    {
+        this.partyData = partyData;
+    }
+
     void Calm()
     {
         stats.currentHunger -= Time.deltaTime;
@@ -141,7 +148,7 @@ public class Npc : Entity,ISmashable
                     else
                     {
                         randomPosParty = pathfinding.CalculateRandomPosInCircle(agent,  transform, noExitPoints[0].position.y,
-                            LevelManager.instance.level.partyData.radius, LevelManager.instance.level.partyData.partyPosition.position);
+                            partyData.radius, partyData.partyPosition.position);
                     }
                 }
                 else if (agent.isStopped && randomPosParty != Vector3.zero)
