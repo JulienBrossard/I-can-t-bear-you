@@ -3868,18 +3868,18 @@ Transform:
   - {fileID: 1769474355}
   - {fileID: 1629725423}
   - {fileID: 787278210}
+  - {fileID: 1930214792}
   - {fileID: 232067026}
   - {fileID: 901458187}
+  - {fileID: 669296141}
   - {fileID: 320251687}
   - {fileID: 1089391772}
-  - {fileID: 1930214792}
   - {fileID: 465703625}
   - {fileID: 415252875}
   - {fileID: 1887488483}
   - {fileID: 1786928467}
   - {fileID: 2027467542}
   - {fileID: 1801464612}
-  - {fileID: 669296141}
   m_Father: {fileID: 255894068}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -11932,8 +11932,31 @@ PrefabInstance:
     - target: {fileID: 3353993823778426777, guid: 54ea5e5148630f146b335bc55a473208,
         type: 3}
       propertyPath: m_Name
-      value: Television (1)
+      value: Radio
       objectReference: {fileID: 0}
+    - target: {fileID: 3858243394791108172, guid: 54ea5e5148630f146b335bc55a473208,
+        type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3858243394791108172, guid: 54ea5e5148630f146b335bc55a473208,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 4821569825883369354, guid: 27c0262bd75fe7b4b8b35f06be18ace7,
+        type: 3}
+    - target: {fileID: 3858243394791108172, guid: 54ea5e5148630f146b335bc55a473208,
+        type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: -8067726398312463513, guid: 27c0262bd75fe7b4b8b35f06be18ace7,
+        type: 3}
+    - target: {fileID: 3858243394791108172, guid: 54ea5e5148630f146b335bc55a473208,
+        type: 3}
+      propertyPath: m_Materials.Array.data[2]
+      value: 
+      objectReference: {fileID: -8896051167825165466, guid: 27c0262bd75fe7b4b8b35f06be18ace7,
+        type: 3}
     - target: {fileID: 5052782279118696883, guid: 54ea5e5148630f146b335bc55a473208,
         type: 3}
       propertyPath: m_Mesh

@@ -2,13 +2,13 @@ using System;
 using UnityEditor;
 using UnityEngine;
 
-[CustomEditor (typeof (Television))]
+[CustomEditor (typeof (AttractiveItem), true)]
 public class TelevisionEditor : ItemEditor
 {
 #if UNITY_EDITOR
     private void OnSceneGUI()
     {
-        var television = (Television)target;
+        var television = (AttractiveItem)target;
         Handles.color = Color.blue;
         Handles.DrawWireArc (television.transform.position, Vector3.up, Vector3.forward, 360, television.attractedDistance);
         Vector3 viewAngleA = television.DirFromAngle (-television.angle / 2, false);

@@ -18,6 +18,12 @@ public class LevelManagerCustomInspector : Editor
         
         UpdateNpcGameObject(levelManager);
         
+        /*GUI.enabled = false;
+        var scriptProp = so.FindProperty("m_Script");
+        EditorGUILayout.PropertyField(scriptProp);
+        GUI.enabled = true;*/
+ 
+        // Draw subclass props
         base.OnInspectorGUI();
     }
     
@@ -28,13 +34,19 @@ public class LevelManagerCustomInspector : Editor
 
     void UpdateNpcCount(LevelManager levelManager)
     {
-        if (levelManager.level.npc != null)
+        if (levelManager.level.partyData != null)
         {
             int count = 0;
 
-            for (int i = 0; i < levelManager.level.npc.Length; i++)
+            for (int i = 0; i < levelManager.level.partyData.Length; i++)
             {
-                count += levelManager.level.npc[i].count;
+                if (levelManager.level.partyData[i] != null && levelManager.level.partyData[i].npc != null)
+                {
+                    for (int j = 0; j < levelManager.level.partyData[i].npc.Length; j++)
+                    {
+                        count += levelManager.level.partyData[i].npc[j].count;
+                    }
+                }
             }
 
             if (currentNpcCount != count)
@@ -56,12 +68,18 @@ public class LevelManagerCustomInspector : Editor
 
     void UpdateNpcGameObject(LevelManager levelManager)
     {
-        if (levelManager.level.npc != null)
+        if (levelManager.level.partyData != null)
         {
             List<GameObject> npc = new List<GameObject>();
-            for (int i = 0; i < levelManager.level.npc.Length; i++)
+            for (int i = 0; i < levelManager.level.partyData.Length; i++)
             {
-                npc.Add(levelManager.level.npc[i].npc);
+                if (levelManager.level.partyData[i] != null && levelManager.level.partyData[i].npc != null)
+                {
+                    for (int j = 0; j < levelManager.level.partyData[i].npc.Length; j++)
+                    {
+                        npc.Add(levelManager.level.partyData[i].npc[j].npc);
+                    }
+                }
             }
 
             if (npc.Count != npcList.Count)
@@ -88,7 +106,19 @@ public class LevelManagerCustomInspector : Editor
     {
         LevelManager levelManager = (LevelManager)target;
         Handles.color = Color.white;
-        Handles.DrawWireArc (levelManager.level.partyData.partyPosition.position, Vector3.up, Vector3.forward, 360, levelManager.level.partyData.radius);
+        if (levelManager.level.partyData != null)
+        {
+            for (int i = 0; i < levelManager.level.partyData.Length; i++)
+            {
+                if (levelManager.level.partyData[i] != null)
+                {
+                    if (levelManager.level.partyData[i].partyPosition != null )
+                    {
+                        Handles.DrawWireArc (levelManager.level.partyData[i].partyPosition.position, Vector3.up, Vector3.forward, 360, levelManager.level.partyData[i].radius);
+                    }
+                }
+            }
+        }
     }
 #endif
 }
