@@ -15,39 +15,37 @@ public class StealthState : PlayerState
     }
     public override void Behave()
     {
-        if (!locked)
+        if (locked) return;
+        if (InputManager.instance.input.Actions.Interact.triggered)
         {
-            if (InputManager.instance.input.Actions.Interact.triggered)
+            if (heldObject != default)
             {
-                if (heldObject != default)
+                if (heldObject.GetComponent<IInteractable>() != default)
                 {
-                    if (heldObject.GetComponent<IInteractable>() != default)
-                    {
-                        heldObject.GetComponent<IInteractable>().Interact((transform.position - heldObject.transform.position).normalized);
-                        return;
-                    }
-                }
-                //Dégueulasse mais c'est le seul moyen que j'ai trouvé pour avoir la position de la cible sans tout revoir
-                foreach (InterestPoint interestPoint in interestPointsManager.interestPoints) 
-                {
-                    if(interestPoint.go.GetComponent<IInteractable>() != null)
-                    {
-                        interestPoint.go.GetComponent<IInteractable>().Interact((transform.position - interestPoint.go.transform.position).normalized);
-                    }
-                }
-            }
-            if (InputManager.instance.input.Actions.Smash.triggered)
-            {
-                if (heldObject != default)
-                {
-                    heldObject.GetComponent<IGrabbable>().Throw(transform.forward);
-                    heldObject = null;
+                    heldObject.GetComponent<IInteractable>().Interact((transform.position - heldObject.transform.position).normalized);
                     return;
                 }
-                interestPointsManager.GetSmashable()?.Smash();
-                animator.SetTrigger("Attack");
             }
-            if (InputManager.instance.input.Actions.Grab.triggered)
+            if(TryGrab()) return;
+            //Dégueulasse mais c'est le seul moyen que j'ai trouvé pour avoir la position de la cible sans tout revoir
+            if(interestPointsManager.GetFirstItem()?.GetComponent<IInteractable>() != null)
+            {
+                interestPointsManager.GetFirstItem().GetComponent<IInteractable>().Interact((transform.position - interestPointsManager.GetFirstItem().transform.position).normalized);
+                return;
+            }
+        }
+        if (InputManager.instance.input.Actions.Smash.triggered)
+        {
+            if (heldObject != default)
+            {
+                heldObject.GetComponent<IGrabbable>().Throw(transform.forward);
+                heldObject = null;
+                return;
+            }
+            interestPointsManager.GetSmashable()?.Smash();
+            animator.SetTrigger("Attack");
+        }
+            /*if (InputManager.instance.input.Actions.Grab.triggered)
             {
                 if (heldObject == default)
                 {
@@ -60,14 +58,12 @@ public class StealthState : PlayerState
                     heldObject.GetComponent<IGrabbable>().Drop();
                     heldObject = null;
                 }
-            }
-            if (InputManager.instance.input.Actions.Roar.triggered)
-            {
-                Roar();
-                playerStateManager.SwitchState(bearserkerState);
-            }
+            }*/
+        if (InputManager.instance.input.Actions.Roar.triggered)
+        {
+            Roar();
+            playerStateManager.SwitchState(bearserkerState);
         }
-       
     }
 
   

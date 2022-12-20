@@ -182,15 +182,6 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Grab"",
-                    ""type"": ""Button"",
-                    ""id"": ""9210af63-f6dc-413e-9f77-42c6c303cc29"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
                     ""name"": ""Pause"",
                     ""type"": ""Button"",
                     ""id"": ""c9d4e033-e588-4803-909f-98d715cfd3ab"",
@@ -269,28 +260,6 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""808d069d-8a13-47bc-90d3-d7c5b4cc03ee"",
-                    ""path"": ""<Keyboard>/t"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Grab"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""4757eae3-eac9-4392-a582-07e1a2ec749d"",
-                    ""path"": ""<Gamepad>/buttonEast"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Player"",
-                    ""action"": ""Grab"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""afa73703-ae20-4979-8a7a-9840ff8f42bc"",
                     ""path"": ""<Keyboard>/escape"",
                     ""interactions"": """",
@@ -346,7 +315,6 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         m_Actions_Roar = m_Actions.FindAction("Roar", throwIfNotFound: true);
         m_Actions_Interact = m_Actions.FindAction("Interact", throwIfNotFound: true);
         m_Actions_Smash = m_Actions.FindAction("Smash", throwIfNotFound: true);
-        m_Actions_Grab = m_Actions.FindAction("Grab", throwIfNotFound: true);
         m_Actions_Pause = m_Actions.FindAction("Pause", throwIfNotFound: true);
     }
 
@@ -443,7 +411,6 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     private readonly InputAction m_Actions_Roar;
     private readonly InputAction m_Actions_Interact;
     private readonly InputAction m_Actions_Smash;
-    private readonly InputAction m_Actions_Grab;
     private readonly InputAction m_Actions_Pause;
     public struct ActionsActions
     {
@@ -452,7 +419,6 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         public InputAction @Roar => m_Wrapper.m_Actions_Roar;
         public InputAction @Interact => m_Wrapper.m_Actions_Interact;
         public InputAction @Smash => m_Wrapper.m_Actions_Smash;
-        public InputAction @Grab => m_Wrapper.m_Actions_Grab;
         public InputAction @Pause => m_Wrapper.m_Actions_Pause;
         public InputActionMap Get() { return m_Wrapper.m_Actions; }
         public void Enable() { Get().Enable(); }
@@ -472,9 +438,6 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @Smash.started -= m_Wrapper.m_ActionsActionsCallbackInterface.OnSmash;
                 @Smash.performed -= m_Wrapper.m_ActionsActionsCallbackInterface.OnSmash;
                 @Smash.canceled -= m_Wrapper.m_ActionsActionsCallbackInterface.OnSmash;
-                @Grab.started -= m_Wrapper.m_ActionsActionsCallbackInterface.OnGrab;
-                @Grab.performed -= m_Wrapper.m_ActionsActionsCallbackInterface.OnGrab;
-                @Grab.canceled -= m_Wrapper.m_ActionsActionsCallbackInterface.OnGrab;
                 @Pause.started -= m_Wrapper.m_ActionsActionsCallbackInterface.OnPause;
                 @Pause.performed -= m_Wrapper.m_ActionsActionsCallbackInterface.OnPause;
                 @Pause.canceled -= m_Wrapper.m_ActionsActionsCallbackInterface.OnPause;
@@ -491,9 +454,6 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @Smash.started += instance.OnSmash;
                 @Smash.performed += instance.OnSmash;
                 @Smash.canceled += instance.OnSmash;
-                @Grab.started += instance.OnGrab;
-                @Grab.performed += instance.OnGrab;
-                @Grab.canceled += instance.OnGrab;
                 @Pause.started += instance.OnPause;
                 @Pause.performed += instance.OnPause;
                 @Pause.canceled += instance.OnPause;
@@ -519,7 +479,6 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         void OnRoar(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
         void OnSmash(InputAction.CallbackContext context);
-        void OnGrab(InputAction.CallbackContext context);
         void OnPause(InputAction.CallbackContext context);
     }
 }

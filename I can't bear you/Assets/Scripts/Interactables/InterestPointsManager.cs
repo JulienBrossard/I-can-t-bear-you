@@ -54,6 +54,12 @@ public class InterestPointsManager : MonoBehaviour
         outlineGoBuffer = interestPoints[0]?.go;
         outlineGoBuffer.GetComponent<Outline>()?.EnableOutline();
     }
+
+    public GameObject GetFirstItem()
+    {
+        if (interestPoints.Count == 0) return default;
+        return interestPoints[0].go;
+    }
     public IInteractable GetInteractable()
     {
         foreach (InterestPoint interestPoint in interestPoints)

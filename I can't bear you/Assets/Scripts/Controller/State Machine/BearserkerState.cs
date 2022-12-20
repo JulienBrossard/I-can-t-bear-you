@@ -13,23 +13,37 @@ public class BearserkerState : PlayerState
     }
     public override void Behave()
     {
-        if (!locked)
+        if (locked) return;
+        if (InputManager.instance.input.Actions.Interact.triggered)
         {
-            if (InputManager.instance.input.Actions.Smash.triggered)
+            if (heldObject != default)
             {
-                if (heldObject != default)
+                if (heldObject.GetComponent<IInteractable>() != default)
                 {
-                    heldObject.GetComponent<IGrabbable>().Throw(transform.forward);
-                    heldObject = null;
+                    heldObject.GetComponent<IInteractable>().Interact((transform.position - heldObject.transform.position).normalized);
                     return;
                 }
-                if (interestPointsManager.GetSmashable() != default)
-                {
-                    interestPointsManager.GetSmashable().Smash();
-                    PlayerAnimatorManager.instance.SetAnimatorTrigger("Attack");
-                }
             }
-            if (InputManager.instance.input.Actions.Grab.triggered)
+            if(TryGrab()) return;
+            //Dégueulasse mais c'est le seul moyen que j'ai trouvé pour avoir la position de la cible sans tout revoir
+            if(interestPointsManager.GetFirstItem()?.GetComponent<IInteractable>() != null)
+            {
+                interestPointsManager.GetFirstItem().GetComponent<IInteractable>().Interact((transform.position - interestPointsManager.GetFirstItem().transform.position).normalized);
+                return;
+            }
+        }
+        if (InputManager.instance.input.Actions.Smash.triggered)
+        {
+            if (heldObject != default)
+            {
+                heldObject.GetComponent<IGrabbable>().Throw(transform.forward);
+                heldObject = null;
+                return;
+            }
+            interestPointsManager.GetSmashable()?.Smash();
+            animator.SetTrigger("Attack");
+        }
+            /*if (InputManager.instance.input.Actions.Grab.triggered)
             {
                 if (heldObject == default)
                 {
@@ -41,15 +55,13 @@ public class BearserkerState : PlayerState
                     heldObject.GetComponent<IGrabbable>().Drop();
                     heldObject = null;
                 }
-            }
-            if ((InputManager.instance.input.Actions.Roar.triggered) && (roarReady))
-            {
-                animator.SetTrigger("roarInBerserk");
-                Roar();
-                Debug.Log("has roared in berserk state");
-            }
+            }*/
+        if ((InputManager.instance.input.Actions.Roar.triggered) && (roarReady))
+        {
+            animator.SetTrigger("roarInBerserk");
+            Roar();
+            Debug.Log("has roared in berserk state");
         }
-     
     }
     public override void FixedBehave()
     {

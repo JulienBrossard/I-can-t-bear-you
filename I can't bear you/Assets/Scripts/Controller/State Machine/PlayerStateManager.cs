@@ -17,7 +17,7 @@ public class PlayerStateManager : MonoBehaviour
     private void Start()
     {
         currentState = baseState;
-        sightManager.UpdateStats(currentState.playerStats);
+        sightManager.UpdateState(currentState);
     }
     void Update()
     {
@@ -38,7 +38,7 @@ public class PlayerStateManager : MonoBehaviour
             }
             currentState = newState;
             currentState.OnStateEnter();
-            sightManager.UpdateStats(currentState.playerStats);
+            sightManager.UpdateState(currentState);
             interestPointsManager.Clear();
         }
     }

@@ -160,15 +160,6 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Grab",
-                    "type": "Button",
-                    "id": "9210af63-f6dc-413e-9f77-42c6c303cc29",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "Pause",
                     "type": "Button",
                     "id": "c9d4e033-e588-4803-909f-98d715cfd3ab",
@@ -242,28 +233,6 @@
                     "processors": "",
                     "groups": "Player",
                     "action": "Smash",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "808d069d-8a13-47bc-90d3-d7c5b4cc03ee",
-                    "path": "<Keyboard>/t",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Grab",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "4757eae3-eac9-4392-a582-07e1a2ec749d",
-                    "path": "<Gamepad>/buttonEast",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Player",
-                    "action": "Grab",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

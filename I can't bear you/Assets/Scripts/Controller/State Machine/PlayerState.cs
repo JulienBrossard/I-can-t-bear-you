@@ -47,6 +47,15 @@ public abstract class PlayerState : Entity
     }
     private float tempAngle;
 
+    public bool TryGrab()
+    {
+        if(interestPointsManager.GetGrabbable() == null) return false;
+        if(interestPointsManager.GetGrabbable().Grab(handTransform) == default) return false;
+                
+        heldObject = interestPointsManager.GetGrabbable().Grab(handTransform).gameObject;
+        return true;
+    }
+
     public void Roar()
     {
         if (roarReady)
