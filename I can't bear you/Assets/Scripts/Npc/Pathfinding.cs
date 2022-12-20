@@ -113,6 +113,23 @@ public class Pathfinding
         return  center + new Vector3(randomPos.x, height, randomPos.y);
     }
     
+    public Vector3 CalculateRandomPosInRectangle(NavMeshAgent agent, Transform npcTransform ,float height, float width, float length,Transform center )
+    {
+        Vector2 randomPos = CalculateRandomPointInRectangle(length, width);
+        Vector3 result = new Vector3(randomPos.x, 0, randomPos.y);
+        result = result.x * center.forward + result.z * center.right;
+        randomPos = new Vector2(result.x , result.z);
+        NavMeshPath path = new NavMeshPath();
+        NavMesh.CalculatePath(npcTransform.position, new Vector3(center.position.x + randomPos.x, 
+            height, 
+            center.position.z + randomPos.y), agent.areaMask, path);
+        if (!CheckPathStatus(path))
+        {
+            return CalculateRandomPosInRectangle(agent, npcTransform, height, width, length, center);
+        }
+        return  new Vector3(center.position.x + randomPos.x, height, center.position.z + randomPos.y);
+    }
+    
     /// <summary>
     /// Calcule a random position on the circle periphery
     /// </summary>
@@ -145,6 +162,15 @@ public class Pathfinding
             Random.Range(-radius,
                 radius));
     }
+    public Vector2 CalculateRandomPointInRectangle(float length, float width)
+    {
+        return new Vector2(
+            Random.Range(-length/2,
+                length/2),
+            Random.Range(-width/2,
+                width/2));
+    }
+    
     
     public bool CheckPathStatus(NavMeshPath path)
     {

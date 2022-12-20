@@ -137,15 +137,16 @@ public class LevelData
 [Serializable]
 public class PartyData
 {
-    enum Shape
+    public enum Shape
     {
         CIRCLE,
         RECTANGLE
     }
-    [SerializeField] private Shape shape = Shape.CIRCLE;
-    public bool test;
+    public Shape shape = Shape.CIRCLE;
     public Transform partyPosition;
     [ConditionalEnumHide("shape", 0)] public float radius;
+    [ConditionalEnumHide("shape", 1)] public float width;
+    [ConditionalEnumHide("shape", 1)] public float length;
     public SpawnNpc[] npc;
 }
 
