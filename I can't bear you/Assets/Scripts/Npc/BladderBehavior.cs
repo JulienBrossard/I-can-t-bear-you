@@ -21,9 +21,7 @@ public class BladderBehavior : StateMachineBehaviour
     // OnStateExit is called before OnStateExit is called on any state inside this state machine
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        npc.state = Npc.STATE.DANCING;
-        npc.stats.currentBladder = npc.npcData.maxBladder;
-        npc.isAction = false;
+        npc.Pee();
     }
 
     // OnStateMove is called before OnStateMove is called on any state inside this state machine

@@ -6,8 +6,26 @@ using UnityEngine.AI;
 
 public class Pathfinding
 {
+    [Header("Waypoint Settings")]
+    public Transform[] noExitPoints;
+    public List<Transform> exitPoints;
+    public Transform[] hungerPoints;
+    public Transform[] thirstPoints;
+    public Transform[] bladderPoints;
     public Dictionary<Vector3, float> dispersePoints = new Dictionary<Vector3, float>();
 
+    public Pathfinding()
+    {
+        LoadWayPoints();
+    }
+    
+    /// <summary>
+    /// Choose Closest Target
+    /// </summary>
+    /// <param name="wayPoints"> WayPoints of target </param>
+    /// <param name="npcTransform"> Transform of the npc </param>
+    /// <param name="agent"> Agent of the npc </param>
+    /// <returns></returns>
     public Transform ChooseClosestTarget(Transform[] wayPoints, Transform npcTransform, NavMeshAgent agent)
     {
         if (wayPoints.Length == 0)
@@ -53,12 +71,16 @@ public class Pathfinding
         return closestTarget;
     }
 
-    public void LoadWayPoints(out Transform[] hungerPoints, out Transform[] thirstPoints, out Transform[] bladderPoints, out Transform[] runAwayPoints, out List<Transform> exitPoints)
+    
+    /// <summary>
+    /// Load Way Points from the level
+    /// </summary>
+    public void LoadWayPoints()
     {
         hungerPoints = new Transform[LevelManager.instance.level.hungerPoints.Length];
         thirstPoints = new Transform[LevelManager.instance.level.thirstPoints.Length];
         bladderPoints = new Transform[LevelManager.instance.level.bladderPoints.Length];
-        runAwayPoints = new Transform[LevelManager.instance.level.notExitPoints.Length];
+        noExitPoints = new Transform[LevelManager.instance.level.notExitPoints.Length];
         exitPoints = new List<Transform>();
         for (int i = 0; i < LevelManager.instance.level.hungerPoints.Length; i++)
         {
@@ -74,7 +96,7 @@ public class Pathfinding
         }
         for (int i = 0; i < LevelManager.instance.level.notExitPoints.Length; i++)
         {
-            runAwayPoints[i] = LevelManager.instance.level.notExitPoints[i];
+            noExitPoints[i] = LevelManager.instance.level.notExitPoints[i];
         }
 
         for (int i = 0; i < LevelManager.instance.level.exitPoints.Length; i++)
@@ -83,51 +105,77 @@ public class Pathfinding
         }
     }
 
-    public Vector3 CalculateRandomPosInCircle(NavMeshAgent agent, Transform npcTransform ,float height, float radius,Vector3 center )
+    /// <summary>
+    /// Calculate Random Pos In a circle
+    /// </summary>
+    /// <param name="agent"> Agent of the npc </param>
+    /// <param name="npcTransform"> Transform of the npc </param>
+    /// <param name="radius"> Radius of the circle </param>
+    /// <param name="center"> Center of the circle </param>
+    /// <returns></returns>
+    public Vector3 CalculateRandomPosInCircle(NavMeshAgent agent, Transform npcTransform , float radius,Vector3 center )
     {
-        Vector2 randomPos = CalculateRandomPointInCircle(radius);
+        Vector2 randomPos = Tools.instance.CalculateRandomPointInCircle(radius);
         NavMeshPath path = new NavMeshPath();
         NavMesh.CalculatePath(npcTransform.position, new Vector3(center.x + randomPos.x, 
-            height, 
+            noExitPoints[0].position.y, 
             center.z + randomPos.y), agent.areaMask, path);
         if (!CheckPathStatus(path))
         {
-            return CalculateRandomPosInCircle(agent, npcTransform, height, radius, center);
+            return CalculateRandomPosInCircle(agent, npcTransform, radius, center);
         }
-        return  center + new Vector3(randomPos.x, height, randomPos.y);
+        return  center + new Vector3(randomPos.x,  noExitPoints[0].position.y, randomPos.y);
     }
     
-    public Vector3 CalculateRandomPosInCone(NavMeshAgent agent, Transform npcTransform ,float height,float radius, float angle,Vector3 center )
+    /// <summary>
+    /// Calculate Random Pos In a cone
+    /// </summary>
+    /// <param name="agent"> Agent of the npc </param>
+    /// <param name="npcTransform"> Transform of the npc </param>
+    /// <param name="radius"> Radius of the cone </param>
+    /// <param name="angle"> Angle of the cone </param>
+    /// <param name="center"> Center of the cone </param>
+    /// <returns></returns>
+    public Vector3 CalculateRandomPosInCone(NavMeshAgent agent, Transform npcTransform ,float radius, float angle,Vector3 center )
     {
         float y = -Random.Range(0,radius);
         float x = Random.Range(-radius * Mathf.Sin(angle/2 * Mathf.Deg2Rad), radius * Mathf.Sin(angle/2 * Mathf.Deg2Rad));
         Vector2 randomPos = new Vector2(x, y);
         NavMeshPath path = new NavMeshPath();
         NavMesh.CalculatePath(npcTransform.position, new Vector3(center.x + randomPos.x, 
-            height, 
+            noExitPoints[0].position.y, 
             center.z + randomPos.y), agent.areaMask, path);
         if (!CheckPathStatus(path))
         {
-            return CalculateRandomPosInCone(agent, npcTransform, height, radius, angle, center);
+            return CalculateRandomPosInCone(agent, npcTransform, radius, angle, center);
         }
-        return  center + new Vector3(randomPos.x, height, randomPos.y);
+        return  center + new Vector3(randomPos.x, noExitPoints[0].position.y, randomPos.y);
     }
     
-    public Vector3 CalculateRandomPosInRectangle(NavMeshAgent agent, Transform npcTransform ,float height, float width, float length,Transform center )
+    /// <summary>
+    /// Calculate Random Pos In a Rectangle
+    /// </summary>
+    /// <param name="agent"> Agent of the npc </param>
+    /// <param name="npcTransform"> Transform of the npc </param>
+    /// <param name="width"> Width of the rectangle </param>
+    /// <param name="length"> Length of the rectangle </param>
+    /// <param name="center"> Center of the rectangle </param>
+    /// <returns></returns>
+    public Vector3 CalculateRandomPosInRectangle(NavMeshAgent agent, Transform npcTransform , float width, float length,Transform center )
     {
-        Vector2 randomPos = CalculateRandomPointInRectangle(length, width);
+        Vector2 randomPos = Tools.instance.CalculateRandomPointInRectangle(length, width);
         Vector3 result = new Vector3(randomPos.x, 0, randomPos.y);
         result = result.x * center.forward + result.z * center.right;
         randomPos = new Vector2(result.x , result.z);
         NavMeshPath path = new NavMeshPath();
         NavMesh.CalculatePath(npcTransform.position, new Vector3(center.position.x + randomPos.x, 
-            height, 
+            noExitPoints[0].position.y, 
             center.position.z + randomPos.y), agent.areaMask, path);
         if (!CheckPathStatus(path))
         {
-            return CalculateRandomPosInRectangle(agent, npcTransform, height, width, length, center);
+            return CalculateRandomPosInRectangle(agent, npcTransform, width, length, center);
         }
-        return  new Vector3(center.position.x + randomPos.x, height, center.position.z + randomPos.y);
+        return  new Vector3(center.position.x + randomPos.x, noExitPoints[0].position.y, center.position.z + randomPos.y);
     }
     
     /// <summary>
@@ -141,7 +189,7 @@ public class Pathfinding
     /// <returns></returns>
     public Vector3 CalculateRandomPosOnCirclePeriphery(NavMeshAgent agent, Transform npcTransform ,float height, float radius,Vector3 center )
     {
-        Vector2 direction = (CalculateRandomPointInCircle(radius) - new Vector2(center.x, center.z)).normalized ;
+        Vector2 direction = (Tools.instance.CalculateRandomPointInCircle(radius) - new Vector2(center.x, center.z)).normalized ;
         Vector2 randomPos = direction * radius;
         NavMeshPath path = new NavMeshPath();
         NavMesh.CalculatePath(npcTransform.position, new Vector3(center.x + randomPos.x, 
@@ -149,29 +197,16 @@ public class Pathfinding
             center.z + randomPos.y), agent.areaMask, path);
         if (!CheckPathStatus(path))
         {
-            return CalculateRandomPosInCircle(agent, npcTransform, height, radius, center);
+            return CalculateRandomPosInCircle(agent, npcTransform, radius, center);
         }
         return  center + new Vector3(randomPos.x, height, randomPos.y);
     }
-
-    public Vector2 CalculateRandomPointInCircle(float radius)
-    {
-        return new Vector2(
-            Random.Range(-radius,
-                radius),
-            Random.Range(-radius,
-                radius));
-    }
-    public Vector2 CalculateRandomPointInRectangle(float length, float width)
-    {
-        return new Vector2(
-            Random.Range(-length/2,
-                length/2),
-            Random.Range(-width/2,
-                width/2));
-    }
     
-    
+    /// <summary>
+    /// Check if the path is valid
+    /// </summary>
+    /// <param name="path"> Path to check </param>
+    /// <returns></returns>
     public bool CheckPathStatus(NavMeshPath path)
     {
         if (path.status == NavMeshPathStatus.PathInvalid)
@@ -179,16 +214,54 @@ public class Pathfinding
             return false;
         }
 
-        foreach (var key in dispersePoints.Keys)
+        if (CheckPointInDispersePoints(path.corners[^1]))
         {
-            if (Vector3.Distance(path.corners[^1], key) < dispersePoints[key])
-            {
-                return false;
-            }
+            return false;
         }
         return true;
     }
-
+    
+    /// <summary>
+    /// Check if point is in Disperse Points
+    /// </summary>
+    /// <param name="point"> Point to check </param>
+    /// <returns></returns>
+    public bool CheckPointInDispersePoints(Vector3 point)
+    {
+        foreach (var key in dispersePoints.Keys)
+        {
+            if (Tools.instance.CheckPointInCircle(point, dispersePoints[key], key))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    /// <summary>
+    /// Get key of the point in disperse points
+    /// </summary>
+    /// <param name="point"> Point to check </param>
+    /// <returns></returns>
+    public Vector3 GetDispersePointKey(Vector3 point)
+    {
+        foreach (var key in dispersePoints.Keys)
+        {
+            if (Tools.instance.CheckPointInCircle(point, dispersePoints[key], key))
+            {
+                return key;
+            }
+        }
+        Debug.LogWarning("Npc is not in a disperse point");
+        return Vector3.zero;
+    }
+    
+    /// <summary>
+    /// Distance of path
+    /// </summary>
+    /// <param name="npcTransform"> Transform of the npc </param>
+    /// <param name="agent"> Agent of the npc </param>
+    /// <returns></returns>
     public float Distance(Transform npcTransform, NavMeshAgent agent)
     {
         return Vector3.Distance(npcTransform.position, agent.destination);

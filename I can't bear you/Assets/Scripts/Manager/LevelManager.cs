@@ -1,9 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Runtime.Serialization;
 using UnityEngine;
-using UnityEngine.Rendering;
 using Debug = UnityEngine.Debug;
 using Random = UnityEngine.Random;
 
@@ -24,28 +21,41 @@ public class LevelManager : MonoBehaviour
 
     private void Start()
     {
+        //Init Level (Spawn NPC)
         for (int i = 0; i < level.partyData.Length; i++)
         {
             for (int j = 0; j < level.partyData[i].npc.Length; j++)
             {
                 for (int k = 0; k < level.partyData[i].npc[j].count; k++)
                 {
-                    NpcManager.instance.SpawnNpc(level.partyData[i].npc[j].npc.name).InitPartyData(level.partyData[i]);
+                    NpcManager.instance.SpawnNpc(level.partyData[i].npc[j].npc.name).InitPartyData(level.partyData[i]); //Spawn NPC + loaded party data
                 }
             }
         }
     }
 
+    /// <summary>
+    /// Spawn Npc to Random point
+    /// </summary>
+    /// <returns></returns>
     public Vector3 GetRandomNpcSpawn()
     {
         return level.npcSpawnPositions[Random.Range(0, level.npcSpawnPositions.Length)].position;
     }
 
+    /// <summary>
+    /// Get Player
+    /// </summary>
+    /// <returns></returns>
     public Transform GetPlayer()
     {
         return level.player;
     }
     
+    /// <summary>
+    /// Remove Exit point from npc list
+    /// </summary>
+    /// <param name="exitPoint"> Exit point to remove</param>
     public void RemoveExitPoint(Transform exitPoint)
     {
         foreach (var npc in NpcManager.instance.npc)
@@ -53,8 +63,12 @@ public class LevelManager : MonoBehaviour
             Debug.Log(npc);
             NpcManager.instance.npcScriptDict[npc].RemoveExitPoint(exitPoint);
         }
+        Debug.Log(exitPoint.name + " removed");
     }
 
+    /// <summary>
+    /// Apply modifications to inspector
+    /// </summary>
     public void ApplyModifications()
     {
         if (level.partyData != null)
@@ -72,6 +86,8 @@ public class LevelManager : MonoBehaviour
                     if (level.partyData[j].npc[i].npc != null)
                     {
                         found = false;
+                        
+                        //Check if pool key already exists
                         for (int k = 0; k < pooler.poolKeys.Count; k++)
                         {
                             if (pooler.poolKeys[k].key == level.partyData[j].npc[i].npc.name)
@@ -82,6 +98,7 @@ public class LevelManager : MonoBehaviour
                             }
                         }
 
+                        // Create new pool key if not already exists
                         if (!found)
                         {
                             pooler.poolKeys.Add(new Pooler.PoolKey()
@@ -101,6 +118,10 @@ public class LevelManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// End Level
+    /// </summary>
+    /// <param name="bySleeping"> ? </param>
     public void EndLevel(bool bySleeping)
     {
         if (NpcManager.instance.npcCountkilled < level.requiredNpcKillCount)

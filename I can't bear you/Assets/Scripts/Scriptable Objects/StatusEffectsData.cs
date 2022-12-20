@@ -13,6 +13,7 @@ public class StatusEffectsData : ScriptableObject
 [Serializable]
 public class Data
 {
+    [Range(0, 1)] public float minimumValue;
     public float speedRatio;
     public float panicRatio;
     public float awarenessRatio;

@@ -19,7 +19,7 @@ public class AudioManager : MonoBehaviour
     private void Awake()
     {
         instance = this;
-        tools = new Tools();
+        tools = Tools.instance;
     }
 
     // Joue le son
