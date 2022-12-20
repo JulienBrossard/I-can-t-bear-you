@@ -147,8 +147,16 @@ public class Npc : Entity,ISmashable
                     }
                     else
                     {
-                        randomPosParty = pathfinding.CalculateRandomPosInCircle(agent,  transform, noExitPoints[0].position.y,
-                            partyData.radius, partyData.partyPosition.position);
+                        if (partyData.shape == PartyData.Shape.CIRCLE)
+                        {
+                            randomPosParty = pathfinding.CalculateRandomPosInCircle(agent,  transform, noExitPoints[0].position.y,
+                                partyData.radius, partyData.partyPosition.position);
+                        }
+                        else
+                        {
+                            randomPosParty = pathfinding.CalculateRandomPosInRectangle(agent,  transform, noExitPoints[0].position.y,
+                                partyData.width, partyData.length, partyData.partyPosition);
+                        }
                     }
                 }
                 else if (agent.isStopped && randomPosParty != Vector3.zero)
