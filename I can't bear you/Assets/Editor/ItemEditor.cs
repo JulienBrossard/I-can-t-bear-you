@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Numerics;
 using System.Reflection;
 using Unity.VisualScripting;
@@ -76,6 +77,14 @@ public class ItemEditor : Editor
                 Outline outline = item.AddComponent<Outline>();
                 outline.outlineData = (OutlineData)Resources.Load("Outline Data");
                 outline.outlineObject = outlineObject;
+                
+                List<Material> materials = new List<Material>();
+                for (int i = 0; i < item.GetComponent<MeshRenderer>().sharedMaterials.Length; i++)
+                {
+                    materials.Add(outline.outlineData.outlineMaterial);
+                }
+                
+                outlineObject.GetComponent<MeshRenderer>().sharedMaterials = materials.ToArray();
             }
         }
 
