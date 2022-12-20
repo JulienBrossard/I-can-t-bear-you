@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.3069224, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2675,7 +2675,7 @@ MonoBehaviour:
     pool:
       prefab: {fileID: 4225555480404199414, guid: d9d78adb1c1738248a56b9aca3558a44,
         type: 3}
-      baseCount: 10
+      baseCount: 0
       baseRefreshSpeed: 5
       refreshSpeed: 5
 --- !u!114 &377199017
@@ -2710,8 +2710,8 @@ MonoBehaviour:
   level:
     npc:
     - npc: {fileID: 4225555480404199414, guid: d9d78adb1c1738248a56b9aca3558a44, type: 3}
-      count: 10
-    npcCount: 10
+      count: 0
+    npcCount: 0
     requiredNpcKillCount: 0
     npcSpawnPositions:
     - {fileID: 1078110528}
@@ -2768,7 +2768,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-2394
+  m_Name: pb_Mesh-3726
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -4615,7 +4615,7 @@ PrefabInstance:
     - target: {fileID: 6811373642876133851, guid: 5d5712882db785244b30fbc9534a5877,
         type: 3}
       propertyPath: m_VersionIndex
-      value: 3265
+      value: 3268
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5d5712882db785244b30fbc9534a5877, type: 3}
@@ -5822,7 +5822,7 @@ PrefabInstance:
     - target: {fileID: 6811373642876133851, guid: 5d5712882db785244b30fbc9534a5877,
         type: 3}
       propertyPath: m_VersionIndex
-      value: 3268
+      value: 3271
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5d5712882db785244b30fbc9534a5877, type: 3}
@@ -10833,7 +10833,7 @@ PrefabInstance:
     - target: {fileID: 6811373642876133851, guid: 5d5712882db785244b30fbc9534a5877,
         type: 3}
       propertyPath: m_VersionIndex
-      value: 3271
+      value: 3274
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5d5712882db785244b30fbc9534a5877, type: 3}
@@ -12858,7 +12858,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-2512
+  m_Name: pb_Mesh-3844
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -14418,7 +14418,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-2834
+  m_Name: pb_Mesh-4168
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -15668,6 +15668,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8263bfd4a540e5047a74e050a2136107, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dangerState: 0
   puddleType: 0
   puddleSize: 0
   zone: {fileID: 0}

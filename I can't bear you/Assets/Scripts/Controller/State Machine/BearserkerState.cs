@@ -57,26 +57,8 @@ public class BearserkerState : PlayerState
         {
             Move();
             PlayerAnimatorManager.instance.SetAnimatorFloat("Speed", rb.velocity.magnitude);
-            LookForInterestPoints(playerStats.detectionAngle,playerStats.detectionRange,playerStats.detectionHeight,playerStats.detectionStep);
             BearserkerGaugeManager.instance.Use();
         }
-    }
-    protected override void SendRayCast(Vector3 origin, Vector3 dir, float length, float centerDistance)
-    {
-        RaycastHit hit;
-        if (Physics.Raycast(origin, dir, out hit, length))
-        {
-            if (hit.collider.GetComponent<ISmashable>() != default || hit.collider.GetComponent<IGrabbable>() != default)
-            {
-                interestPointsManager.AddInterestPoint(new InterestPoint(hit.collider.gameObject, Mathf.InverseLerp(0,length,hit.distance),Mathf.Lerp(1,0,centerDistance),playerStats.detectionRangeCurve,playerStats.detectionAngleCurve));
-                Debug.DrawRay(origin, dir * hit.distance, Color.blue);
-                return;
-            }
-            Debug.DrawRay(origin, dir * length, Color.green);
-            return;
-        }
-        Debug.DrawRay(origin, dir * length, Color.green);
-        return;
     }
     public void Sleep()
     {
