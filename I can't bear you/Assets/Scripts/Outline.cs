@@ -3,10 +3,10 @@ using UnityEngine;
 public class Outline : MonoBehaviour
 {
     [Header("Outline Data")] [SerializeField]
-    private OutlineData outlineData;
+    public OutlineData outlineData;
     private Renderer outlineRenderer;
     [Header("Outline Object")]
-    [SerializeField] private GameObject outlineObject;
+    [SerializeField] public GameObject outlineObject;
     private void Start()
     {
         //CreateOutline(outlineData.outlineMaterial, outlineData.outlineScaleFactor, outlineData.outlineColor);
