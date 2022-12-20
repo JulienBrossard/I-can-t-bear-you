@@ -1,7 +1,9 @@
 using UnityEngine;
 
+[RequireComponent(typeof(Animator))]
 public class Entity : MonoBehaviour, IAffectable
 {
+    [SerializeField] private Tools.FIELD field = Tools.FIELD.HIDDEN;
     [HideInInspector] public float currentSpeedRatio = 1f;
     [Header("Entity Data")]
     public EntityData entityData;

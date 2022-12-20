@@ -32,6 +32,10 @@ public class Awareness : MonoBehaviour
         targetsInViewRadius.OrderBy(x => Vector3.Distance(transform.position, x.transform.position)).ToArray().CopyTo(targetsInViewRadius, 0);
         visibleTargets = new List<Transform> ();
         for (int i = 0; i < targetsInViewRadius.Length; i++) {
+            if (targetsInViewRadius[i].gameObject == gameObject)
+            {
+                continue;
+            }
             if (i>maxTargets-1)
             {
                 break;

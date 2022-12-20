@@ -1486,6 +1486,8 @@ GameObject:
   - component: {fileID: -2508231515378271730}
   - component: {fileID: -494915484157778321}
   - component: {fileID: 6251284461837987246}
+  - component: {fileID: -8868701823519541962}
+  - component: {fileID: 2280188384493704573}
   m_Layer: 6
   m_Name: Npc (After)
   m_TagString: Npc
@@ -1585,30 +1587,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83b69b0fbea79084bb43439c07b23be0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  field: 1
   currentSpeedRatio: 1
   entityData: {fileID: 11400000, guid: 8d82193aa88f17146b352ede3c54ba6e, type: 2}
   animator: {fileID: 7426378792727152438}
   isDie: 0
-  canvas: {fileID: 2996533809276896565}
+  initStats: 0
   stats:
+    field: 1
     currentHunger: 100
     currentThirst: 100
     currentBladder: 100
   npcData: {fileID: 11400000, guid: 076b23ef35ff6774cad62ab6788037dc, type: 2}
   state: 3
+  stateStack: 03000000
+  stateLayers:
+  - states: 000000000100000002000000
+  - states: 06000000
+  - states: 04000000
+  - states: 03000000
   agent: {fileID: 872662432960104353}
   minimumDistanceWithDestination: 2
-  currentDestination: {fileID: 0}
-  exitPoints: []
+  npcScripts: {fileID: 2280188384493704573}
+  currentDestination: {x: 0, y: 0, z: 0}
   attractedPoint: {x: 0, y: 0, z: 0}
-  moveAwayPoint: {x: 0, y: 0, z: 0}
   isAction: 0
-  panicData: {fileID: -7787597326935306304}
-  statusEffects: {fileID: -2508231515378271730}
   currentSpeed: 0
-  thirstImage: {fileID: 1990072160080199034}
-  hungerImage: {fileID: 6172065514164076523}
-  bladderImage: {fileID: 1371270809263687258}
 --- !u!114 &-7787597326935306304
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1621,12 +1625,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19991cee13099a242981d613ac467c7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  field: 1
   currentPanic: 0
   panicState: 0
   panicData: {fileID: 11400000, guid: a3c6d08dab0c19b4a87684c76dfff81f, type: 2}
   npc: {fileID: 2523814097983844807}
-  suspiciousImage: {fileID: 568010118910124097}
-  panicImage: {fileID: 1221042086877761332}
 --- !u!114 &-2508231515378271730
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1639,9 +1642,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09050fecb80059049b1372be8bbded69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  field: 1
   panicData: {fileID: -7787597326935306304}
   statusEffectsData: {fileID: 11400000, guid: 35641d8d07adf9e4ca68673db1f2341d, type: 2}
-  currentStatueEffectValue: 0
+  currentStatusEffectValue: 0
   status: 0
 --- !u!114 &-494915484157778321
 MonoBehaviour:
@@ -1683,6 +1687,39 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
+--- !u!114 &-8868701823519541962
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4225555480404199414}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ecbf520fd53650a4180c2979c0fa5db0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canvas: {fileID: 2996533809276896565}
+  thirstImage: {fileID: 1990072160080199034}
+  hungerImage: {fileID: 6172065514164076523}
+  bladderImage: {fileID: 1371270809263687258}
+  suspiciousImage: {fileID: 568010118910124097}
+  panicImage: {fileID: 1221042086877761332}
+--- !u!114 &2280188384493704573
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4225555480404199414}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0cad1d545c061d4fa828895e6ecf72a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  panicData: {fileID: -7787597326935306304}
+  statusEffects: {fileID: -2508231515378271730}
+  npcUI: {fileID: -8868701823519541962}
 --- !u!1 &4518432834019712719
 GameObject:
   m_ObjectHideFlags: 0

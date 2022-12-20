@@ -23,7 +23,7 @@ public class Disperse : Awareness
             {
                 if (NpcManager.instance.npcScriptDict.ContainsKey(target.gameObject))
                 {
-                    if (NpcManager.instance.npcScriptDict[target.gameObject].state != Npc.STATE.DANCING && NpcManager.instance.npcScriptDict[target.gameObject].state != Npc.STATE.ATTRACTED)
+                    if (NpcManager.instance.npcScriptDict[target.gameObject].state != Npc.STATE.PARTY && NpcManager.instance.npcScriptDict[target.gameObject].state != Npc.STATE.ATTRACTED)
                     {
                         continue;
                     }

@@ -36,7 +36,7 @@ public class AttractiveItem : Item, IInteractable, ISmashable
             for (int i = 0; i < awareness.visibleTargets.Count; i++)
             {
                 Npc npc = awareness.visibleTargets[i].GetComponent<Npc>();
-                if (npc.state == Npc.STATE.DANCING)
+                if (npc.state == Npc.STATE.PARTY)
                 {
                     if (!invertZAxis)
                     {

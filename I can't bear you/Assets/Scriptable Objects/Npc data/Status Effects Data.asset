@@ -13,21 +13,25 @@ MonoBehaviour:
   m_Name: Status Effects Data
   m_EditorClassIdentifier: 
   normalData:
+    minimumValue: 0
     speedRatio: 1
     panicRatio: 0
     awarenessRatio: 1
     damageRatio: 1
   littleDrunkData:
+    minimumValue: 0.33
     speedRatio: 0.8
     panicRatio: 0.5
     awarenessRatio: 0.75
     damageRatio: 0.8
   drunkData:
+    minimumValue: 0.66
     speedRatio: 0.5
     panicRatio: 1
     awarenessRatio: 0.25
     damageRatio: 0.5
   veryDrunkData:
+    minimumValue: 1
     speedRatio: 0.8
     panicRatio: 1
     awarenessRatio: 0

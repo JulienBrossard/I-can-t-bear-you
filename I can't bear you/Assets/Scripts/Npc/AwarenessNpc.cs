@@ -1,12 +1,11 @@
-using System;
-using System.Linq;
 using UnityEngine;
 
+[RequireComponent(typeof(Panic), typeof(StatusEffects))]
 public class AwarenessNpc : Awareness
 {
     [Header("Scripts")] 
-    [SerializeField] private Panic panicData;
-    [SerializeField] private StatusEffects statusEffects;
+    public Panic panicData;
+    public StatusEffects statusEffects;
     
     void Start()
     {
@@ -21,17 +20,22 @@ public class AwarenessNpc : Awareness
         CheckForNpcPanic();
     }
 
+    /// <summary>
+    /// Check Bear State
+    /// </summary>
     private void CheckForBear()
     {
         if (visibleTargets.Count > 0)
         {
             if (visibleTargets.Contains(LevelManager.instance.GetPlayer()))
             {
+                // If Player Suspicious
                 if (PlayerStateManager.instance.currentState.currentSusState == PlayerState.SUSSTATE.SUSPICIOUS)
                 {
                     panicData.UpdatePanic(panicData.panicData.suspicious);
                 }
 
+                // If Player Alerted
                 if (PlayerStateManager.instance.currentState.currentSusState == PlayerState.SUSSTATE.FREIGHTNED)
                 {
                     panicData.UpdatePanic(1);
@@ -40,6 +44,10 @@ public class AwarenessNpc : Awareness
         }
     }
 
+    
+    /// <summary>
+    /// Check Npc State
+    /// </summary>
     private void CheckForNpcPanic()
     {
         if (visibleTargets.Count > 0)
@@ -48,19 +56,17 @@ public class AwarenessNpc : Awareness
             {
                 if (NpcManager.instance.npcScriptDict.ContainsKey(npc.gameObject))
                 {
+                    // If npc is died
                     if (NpcManager.instance.npcScriptDict[npc.gameObject].isDie)
                     {
                         panicData.UpdatePanic(1);
                     }
                 }
-                if (NpcManager.instance.panicDict.ContainsKey(npc.gameObject))
+                if (NpcManager.instance.npcScriptDict.ContainsKey(npc.gameObject))
                 {
-                    if (NpcManager.instance.panicDict[npc.gameObject].panicState == Panic.PanicState.Tense)
+                    if(NpcManager.instance.npcScriptDict[npc.gameObject].npcScripts.panicData.panicState == Panic.PanicState.Panic)
                     {
-                        panicData.UpdatePanic(panicData.panicData.suspicious);
-                    }
-                    else if(NpcManager.instance.panicDict[npc.gameObject].panicState == Panic.PanicState.Panic)
-                    {
+                        // If npc is panicked
                         if (panicData.currentPanic < 0.5f)
                         {
                             panicData.UpdatePanic(panicData.currentPanic + 0.5f);
