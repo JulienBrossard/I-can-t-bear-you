@@ -4,17 +4,18 @@ using UnityEngine;
 
 public class ParticleMeshAttributer : MonoBehaviour
 {
-    public GameObject parent;
-    private MeshRenderer
-    // Start is called before the first frame update
-    void Start()
+    private MeshRenderer meshToAttribute;
+    [Tooltip("Only put in the Particle Systems that need a mesh as emissive shape.")]
+    public ParticleSystem[] particleSystems;
+    public int AttributeMesh(MeshRenderer _mesh)
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        foreach (ParticleSystem system in particleSystems)
+        {
+            var shape = system.shape;
+            shape.enabled = true;
+            shape.shapeType = ParticleSystemShapeType.MeshRenderer;
+            shape.meshRenderer = meshToAttribute;
+        }
+        return particleSystems.Length;
     }
 }
