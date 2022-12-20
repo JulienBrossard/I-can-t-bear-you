@@ -114,45 +114,7 @@ public class LevelManagerCustomInspector : Editor
                 {
                     if (levelManager.level.partyData[i].partyPosition != null )
                     {
-                        if (levelManager.level.partyData[i].shape == PartyData.Shape.CIRCLE)
-                        {
-                            Handles.DrawWireArc (levelManager.level.partyData[i].partyPosition.position, Vector3.up, Vector3.forward, 360, levelManager.level.partyData[i].radius);
-                        }
-                        else
-                        {
-                            Handles.DrawLine(levelManager.level.partyData[i].partyPosition.position - levelManager.level.partyData[i].length/2 * levelManager.level.partyData[i].partyPosition.forward +
-                                             levelManager.level.partyData[i].width/2 *
-                                levelManager.level.partyData[i].partyPosition.right,
-                                levelManager.level.partyData[i].partyPosition.position + levelManager.level.partyData[i].length/2 * levelManager.level.partyData[i].partyPosition.forward +
-                                + levelManager.level.partyData[i].width/2 *
-                                levelManager.level.partyData[i].partyPosition.right);
-                            Handles.DrawLine(levelManager.level.partyData[i].partyPosition.position - levelManager.level.partyData[i].length/2 * levelManager.level.partyData[i].partyPosition.forward -
-                                             levelManager.level.partyData[i].width/2 *
-                                             levelManager.level.partyData[i].partyPosition.right,
-                                levelManager.level.partyData[i].partyPosition.position + levelManager.level.partyData[i].length/2 * levelManager.level.partyData[i].partyPosition.forward -
-                                + levelManager.level.partyData[i].width/2 *
-                                levelManager.level.partyData[i].partyPosition.right);
-                            Handles.DrawLine(levelManager.level.partyData[i].partyPosition.position -
-                                             levelManager.level.partyData[i].length/2 *
-                                             levelManager.level.partyData[i].partyPosition.forward
-                                             + levelManager.level.partyData[i].width/2 *
-                                             levelManager.level.partyData[i].partyPosition.right,
-                                levelManager.level.partyData[i].partyPosition.position -
-                                levelManager.level.partyData[i].length/2 *
-                                levelManager.level.partyData[i].partyPosition.forward
-                                - levelManager.level.partyData[i].width/2 *
-                                levelManager.level.partyData[i].partyPosition.right);
-                            Handles.DrawLine(levelManager.level.partyData[i].partyPosition.position +
-                                             levelManager.level.partyData[i].length/2 *
-                                             levelManager.level.partyData[i].partyPosition.forward
-                                             + levelManager.level.partyData[i].width/2 *
-                                             levelManager.level.partyData[i].partyPosition.right,
-                                levelManager.level.partyData[i].partyPosition.position +
-                                levelManager.level.partyData[i].length/2 *
-                                levelManager.level.partyData[i].partyPosition.forward
-                                - levelManager.level.partyData[i].width/2 *
-                                levelManager.level.partyData[i].partyPosition.right);
-                        }
+                        Handles.DrawWireArc (levelManager.level.partyData[i].partyPosition.position, Vector3.up, Vector3.forward, 360, levelManager.level.partyData[i].radius);
                     }
                 }
             }
