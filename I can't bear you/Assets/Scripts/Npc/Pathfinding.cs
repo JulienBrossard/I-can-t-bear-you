@@ -153,32 +153,6 @@ public class Pathfinding
     }
     
     /// <summary>
-    /// Calculate Random Pos In a Rectangle
-    /// </summary>
-    /// <param name="agent"> Agent of the npc </param>
-    /// <param name="npcTransform"> Transform of the npc </param>
-    /// <param name="width"> Width of the rectangle </param>
-    /// <param name="length"> Length of the rectangle </param>
-    /// <param name="center"> Center of the rectangle </param>
-    /// <returns></returns>
-    public Vector3 CalculateRandomPosInRectangle(NavMeshAgent agent, Transform npcTransform , float width, float length,Transform center )
-    {
-        Vector2 randomPos = Tools.instance.CalculateRandomPointInRectangle(length, width);
-        Vector3 result = new Vector3(randomPos.x, 0, randomPos.y);
-        result = result.x * center.forward + result.z * center.right;
-        randomPos = new Vector2(result.x , result.z);
-        NavMeshPath path = new NavMeshPath();
-        NavMesh.CalculatePath(npcTransform.position, new Vector3(center.position.x + randomPos.x, 
-            noExitPoints[0].position.y, 
-            center.position.z + randomPos.y), agent.areaMask, path);
-        if (!CheckPathStatus(path))
-        {
-            return CalculateRandomPosInRectangle(agent, npcTransform, width, length, center);
-        }
-        return  new Vector3(center.position.x + randomPos.x, noExitPoints[0].position.y, center.position.z + randomPos.y);
-    }
-    
-    /// <summary>
     /// Calcule a random position on the circle periphery
     /// </summary>
     /// <param name="agent"> NavMeshAgent of the gameobject</param>
@@ -201,12 +175,16 @@ public class Pathfinding
         }
         return  center + new Vector3(randomPos.x, height, randomPos.y);
     }
+
+    public Vector2 CalculateRandomPointInCircle(float radius)
+    {
+        return new Vector2(
+            Random.Range(-radius,
+                radius),
+            Random.Range(-radius,
+                radius));
+    }
     
-    /// <summary>
-    /// Check if the path is valid
-    /// </summary>
-    /// <param name="path"> Path to check </param>
-    /// <returns></returns>
     public bool CheckPathStatus(NavMeshPath path)
     {
         if (path.status == NavMeshPathStatus.PathInvalid)

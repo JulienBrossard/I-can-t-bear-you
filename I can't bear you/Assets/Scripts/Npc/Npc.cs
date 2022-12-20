@@ -178,8 +178,8 @@ public class Npc : Entity,ISmashable
                     }
                     else
                     {
-                        currentDestination = pathfinding.CalculateRandomPosInRectangle(agent,  transform,
-                            partyData.width, partyData.length, partyData.partyPosition);
+                        randomPosParty = pathfinding.CalculateRandomPosInCircle(agent,  transform, noExitPoints[0].position.y,
+                            partyData.radius, partyData.partyPosition.position);
                     }
                     return;
             }
