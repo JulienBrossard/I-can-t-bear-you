@@ -36,27 +36,13 @@ public class BearserkerState : PlayerState
         {
             if (heldObject != default)
             {
-                heldObject.GetComponent<IGrabbable>().Throw(transform.forward);
-                heldObject = null;
+                StartCoroutine(EvaluateThrowForce());
                 return;
             }
             interestPointsManager.GetSmashable()?.Smash();
             animator.SetTrigger("Attack");
         }
-            /*if (InputManager.instance.input.Actions.Grab.triggered)
-            {
-                if (heldObject == default)
-                {
-                    if(interestPointsManager.GetGrabbable() == null) return;
-                    heldObject = interestPointsManager.GetGrabbable()?.Grab(handTransform).gameObject;
-                }
-                else
-                {
-                    heldObject.GetComponent<IGrabbable>().Drop();
-                    heldObject = null;
-                }
-            }*/
-        if ((InputManager.instance.input.Actions.Roar.triggered) && (roarReady))
+        if (InputManager.instance.input.Actions.Roar.triggered && roarReady)
         {
             animator.SetTrigger("roarInBerserk");
             Roar();

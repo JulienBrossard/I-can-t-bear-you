@@ -123,6 +123,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  maxTimeThrowHeld: 0.5
+  mitigationRatioDropThrow: 0.3
   roarRange: 20
   roarCD: 10
   roarFreezeChance: 0.5

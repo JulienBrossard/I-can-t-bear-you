@@ -90,8 +90,23 @@ public abstract class PlayerState : Entity
         locked = true;
         yield return new WaitForSeconds(time);
         locked = false;
-    } 
-    
+    }
+
+    private float time;
+    public IEnumerator EvaluateThrowForce()
+    {
+        time = 0;
+        while (!InputManager.instance.input.Actions.Smash.WasReleasedThisFrame() && time < playerStats.maxTimeThrowHeld)
+        {
+            yield return new WaitForEndOfFrame();
+            time += Time.deltaTime;
+        }
+
+        if (time / playerStats.maxTimeThrowHeld < playerStats.mitigationRatioDropThrow) heldObject.GetComponent<IGrabbable>().Drop();
+        else heldObject.GetComponent<IGrabbable>().Throw(transform.forward,time / playerStats.maxTimeThrowHeld);
+        
+        heldObject = null;
+    }
     public IEnumerator RoarCd()
     {
         yield return new WaitForSeconds(playerStats.roarCD); 

@@ -112,10 +112,10 @@ public class Item : MonoBehaviour,IGrabbable, IAffectable
         
         SetAsReleased();
     }
-    public void Throw(Vector3 dir)
+    public void Throw(Vector3 dir, float forceRatio)
     {
         SetAsReleased();
-        rb.AddForce(dir * throwForce, ForceMode.Impulse);
+        rb.AddForce(dir * (throwForce*forceRatio), ForceMode.Impulse);
         thrown = true;
     }
     public void SetAsReleased()
