@@ -26,8 +26,8 @@ public class NpcCreator : EditorWindow
     
     void OnGUI()
     {
-        name = GUILayout.TextField(name, 25);
         GUILayout.Label("Create Npc",EditorStyles.boldLabel);
+        name = GUILayout.TextField(name, 25);
         model = EditorGUILayout.ObjectField("Npc model", model ,typeof(GameObject),true) as GameObject;
         //npc = EditorGUILayout.ObjectField("Npc script", model ,typeof(Npc),true) as Npc;
         entityData = EditorGUILayout.ObjectField("Entity Data", entityData ,typeof(EntityData),true) as EntityData;
