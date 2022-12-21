@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Status Effects Data", menuName = "Status Effects Data")]
+[CreateAssetMenu(fileName = "Status Effects Data", menuName = "ScriptableObjects/Status Effects Data")]
 public class StatusEffectsData : ScriptableObject
 {
     public Data normalData;

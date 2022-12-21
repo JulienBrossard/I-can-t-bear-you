@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-[Serializable] [RequireComponent(typeof(Npc), typeof(CapsuleCollider))]
+[Serializable] [RequireComponent(typeof(Npc), typeof(CapsuleCollider), typeof(AwarenessNpc))]
 public class Panic : MonoBehaviour
 {
     #region Enums
@@ -20,7 +20,7 @@ public class Panic : MonoBehaviour
     [Header("Data")]
     [Range(0,1)]
     public float currentPanic;
-    [ConditionalEnumHide("field", 0)] public PanicState panicState = PanicState.Tense;
+    [ConditionalEnumHide("field", 0)] public PanicState panicState = PanicState.Calm;
     public PanicData panicData;
     
     [Header("Npc Script")]

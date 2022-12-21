@@ -39,12 +39,15 @@ public class Npc : Entity,ISmashable
     [Header("State")]
     [ConditionalEnumHide("field", 0)] public STATE state = STATE.PARTY;
     [ConditionalEnumHide("field", 0)] [SerializeField] List<STATE> stateStack = new List<STATE>(){STATE.PARTY};
-    public StateLayer[] stateLayers;
+    public StateLayer[] stateLayers = new StateLayer[4]{new StateLayer(){states =  new [] { Npc.STATE.THIRST , Npc.STATE.HUNGER, Npc.STATE.BLADDER}},
+        new StateLayer(){states = new [] { Npc.STATE.MOVEAWAY }},
+        new StateLayer(){states = new [] { Npc.STATE.ATTRACTED }},
+        new StateLayer(){states = new [] { Npc.STATE.PARTY }}};
 
 
     [Header("NavMesh")]
     public NavMeshAgent agent;
-    public float minimumDistanceWithDestination = 0.5f;
+    public float minimumDistanceWithDestination = 2;
     
     [Header("Scripts")]
     public NpcScripts npcScripts;
