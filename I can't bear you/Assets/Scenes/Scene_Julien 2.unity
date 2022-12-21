@@ -2933,14 +2933,7 @@ MonoBehaviour:
     pool:
       prefab: {fileID: 4225555480404199414, guid: d9d78adb1c1738248a56b9aca3558a44,
         type: 3}
-      baseCount: 2
-      baseRefreshSpeed: 5
-      refreshSpeed: 5
-  - key: Npc name
-    pool:
-      prefab: {fileID: 9026867570702886210, guid: 7d8edf5931d48d3418861c6e267c19b9,
-        type: 3}
-      baseCount: 5
+      baseCount: 7
       baseRefreshSpeed: 5
       refreshSpeed: 5
 --- !u!114 &377199017
@@ -2990,7 +2983,7 @@ MonoBehaviour:
       width: 10.96
       length: 20.23
       npc:
-      - npc: {fileID: 9026867570702886210, guid: 7d8edf5931d48d3418861c6e267c19b9,
+      - npc: {fileID: 4225555480404199414, guid: d9d78adb1c1738248a56b9aca3558a44,
           type: 3}
         count: 5
     npcCount: 7
@@ -15958,6 +15951,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31b279ebfde7e2544851fc841a48441a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  field: 1
   viewRadius: 10
   viewAngle: 360
   targetMask:

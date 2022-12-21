@@ -74,6 +74,8 @@ public class NpcCreator : EditorWindow
         npc.GetComponent<AwarenessNpc>().obstacleMask = LayerMask.GetMask("Default") + LayerMask.GetMask("TransparentFX") +
                                                         LayerMask.GetMask("Water") + LayerMask.GetMask("UI");
         npc.GetComponent<AwarenessNpc>().maxTargets = 5;
+        npc.GetComponent<AwarenessNpc>().panicData = npc.GetComponent<Panic>();
+        npc.GetComponent<AwarenessNpc>().statusEffects = npc.GetComponent<StatusEffects>();
         PrefabUtility.SaveAsPrefabAsset(npc, "Assets/Prefabs/" + name + ".prefab");
         DestroyImmediate(npc);
     }

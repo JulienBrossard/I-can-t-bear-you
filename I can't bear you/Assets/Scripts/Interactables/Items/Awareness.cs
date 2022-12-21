@@ -5,13 +5,15 @@ using UnityEngine;
 
 public class Awareness : MonoBehaviour
 {
+    [SerializeField] private Tools.FIELD field = Tools.FIELD.HIDDEN;
+    
     public float viewRadius;
     [Range(0,360)]
     public float viewAngle;
 
     public LayerMask targetMask;
     public LayerMask obstacleMask;
-    public List<Transform> visibleTargets;
+    [ConditionalEnumHide("field",0)] public List<Transform> visibleTargets;
     public float maxTargets = 5;
 
     void Start() {
