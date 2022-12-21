@@ -5,14 +5,16 @@ using UnityEngine;
 
 public class Awareness : MonoBehaviour
 {
+    [SerializeField] private Tools.FIELD field = Tools.FIELD.HIDDEN;
+    
     public float viewRadius;
     [Range(0,360)]
     public float viewAngle;
 
     public LayerMask targetMask;
     public LayerMask obstacleMask;
-    public List<Transform> visibleTargets;
-    [SerializeField] float maxTargets = 5;
+    [ConditionalEnumHide("field",0)] public List<Transform> visibleTargets;
+    public float maxTargets = 5;
 
     void Start() {
         StartCoroutine ("FindTargetsWithDelay", .2f);
@@ -32,6 +34,10 @@ public class Awareness : MonoBehaviour
         targetsInViewRadius.OrderBy(x => Vector3.Distance(transform.position, x.transform.position)).ToArray().CopyTo(targetsInViewRadius, 0);
         visibleTargets = new List<Transform> ();
         for (int i = 0; i < targetsInViewRadius.Length; i++) {
+            if (targetsInViewRadius[i].gameObject == gameObject)
+            {
+                continue;
+            }
             if (i>maxTargets-1)
             {
                 break;
@@ -40,8 +46,7 @@ public class Awareness : MonoBehaviour
             Vector3 dirToTarget = (target.position - transform.position).normalized;
             if (Vector3.Angle (transform.forward, dirToTarget) < viewAngle / 2) {
                 float dstToTarget = Vector3.Distance (transform.position, target.position);
-
-                if (!Physics.Raycast (transform.position, dirToTarget, dstToTarget, obstacleMask)) {
+                if (!Physics.Raycast (transform.position, dirToTarget,dstToTarget, obstacleMask)) {
                     visibleTargets.Add(target);
                 }
             }

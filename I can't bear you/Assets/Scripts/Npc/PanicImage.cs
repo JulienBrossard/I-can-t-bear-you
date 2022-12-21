@@ -6,7 +6,7 @@ public class PanicImage : MonoBehaviour
     public UnityEvent onEnable;
     public UnityEvent onDisable;
     [SerializeField] private GameObject canvas;
-    [SerializeField] private GameObject npc;
+    public GameObject npc;
     
     private void OnEnable()
     {

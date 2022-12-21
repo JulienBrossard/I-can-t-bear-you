@@ -1,76 +1,102 @@
 using System;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.UI;
 
-[Serializable]
+[Serializable] [RequireComponent(typeof(Npc), typeof(CapsuleCollider), typeof(AwarenessNpc))]
 public class Panic : MonoBehaviour
 {
+    #region Enums
     public enum PanicState
     {
         Calm,
         Tense,
         Panic,
     }
+
+    [SerializeField] Tools.FIELD field = Tools.FIELD.HIDDEN;
+
+    #endregion
     
     [Header("Data")]
     [Range(0,1)]
     public float currentPanic;
-    public PanicState panicState = PanicState.Tense;
+    [ConditionalEnumHide("field", 0)] public PanicState panicState = PanicState.Calm;
     public PanicData panicData;
     
     [Header("Npc Script")]
-    [SerializeField] private Npc npc;
+    public Npc npc;
 
-    [Header("Visual Feedback")] [SerializeField]
-    private Image suspiciousImage;
-    [SerializeField] private Image panicImage;
-
+    /// <summary>
+    /// Update Panic of npc
+    /// </summary>
+    /// <param name="panic"> Value to added </param>
     public void UpdatePanic(float panic)
     {
         currentPanic += panic;
-        if (currentPanic < 0.5f)
+        if (currentPanic < panicData.tenseValue)
         {
             npc.UpdateSpeed(npc.npcData.speed);
-            panicState = PanicState.Calm;
+            SwitchPanicState(PanicState.Calm);
             StopCoroutine(UpdateSuspicious());
             StartCoroutine(UpdateSuspicious());
             return;
         }
-        if(currentPanic >= 0.5f && currentPanic <1f)
+        if(currentPanic >= panicData.tenseValue && currentPanic <1f)
         {
             npc.UpdateSpeed(npc.npcData.speed);
-            panicState = PanicState.Tense;
+            SwitchPanicState(PanicState.Tense);
             StopCoroutine(UpdatePanic());
             StartCoroutine(UpdatePanic());
         }
         else if(currentPanic >= 1f)
         {
             npc.UpdateSpeed(npc.npcData.runSpeed);
-            panicState = PanicState.Panic;
+            SwitchPanicState(PanicState.Panic);
             currentPanic = 1f;
             if (!NpcManager.instance.npcScriptDict[gameObject].isDie)
             {
                 PlayerStateManager.instance.SwitchState(PlayerStateManager.instance.bearserkerState);
-                panicImage.transform.parent.gameObject.SetActive(true);
-                panicImage.fillAmount = 1;
+                npc.npcScripts.npcUI.panicImage.transform.parent.gameObject.SetActive(true);
+                npc.npcScripts.npcUI.panicImage.fillAmount = 1;
             }
         }
     }
 
+    /// <summary>
+    /// Update Suspicious Image
+    /// </summary>
+    /// <returns></returns>
     IEnumerator UpdateSuspicious()
     {
-        suspiciousImage.transform.parent.gameObject.SetActive(true);
-        suspiciousImage.fillAmount = currentPanic*2;
+        npc.npcScripts.npcUI.suspiciousImage.transform.parent.gameObject.SetActive(true);
+        npc.npcScripts.npcUI.suspiciousImage.fillAmount = currentPanic*1/panicData.tenseValue;
         yield return new WaitForSeconds(3f);
-        suspiciousImage.transform.parent.gameObject.SetActive(false);
+        npc.npcScripts.npcUI.suspiciousImage.transform.parent.gameObject.SetActive(false);
     }
     
+    /// <summary>
+    /// Update Panic Image
+    /// </summary>
+    /// <returns></returns>
     IEnumerator UpdatePanic()
     {
-        panicImage.transform.parent.gameObject.SetActive(true);
-        panicImage.fillAmount = (currentPanic-0.5f)*2;
+        npc.npcScripts.npcUI.panicImage.transform.parent.gameObject.SetActive(true);
+        npc.npcScripts.npcUI.panicImage.fillAmount = (currentPanic-panicData.tenseValue)*1/panicData.tenseValue;
         yield return new WaitForSeconds(3f);
-        panicImage.transform.parent.gameObject.SetActive(false);
+        npc.npcScripts.npcUI.panicImage.transform.parent.gameObject.SetActive(false);
+    }
+
+    /// <summary>
+    /// Switch Panic State
+    /// </summary>
+    /// <param name="panicState"> New Panic State </param>
+    void SwitchPanicState(PanicState panicState)
+    {
+        if (this.panicState != panicState)
+        {
+            this.panicState = panicState;
+            NpcManager.instance.npcScriptDict[gameObject].currentDestination = Vector3.zero;
+            Debug.Log("New Panic State : " + panicState);
+        }
     }
 }

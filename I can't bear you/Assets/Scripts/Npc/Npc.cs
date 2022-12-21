@@ -6,260 +6,317 @@ using UnityEngine.AI;
 using Random = UnityEngine.Random;
 using Vector3 = UnityEngine.Vector3;
 
+[RequireComponent(typeof(NpcScripts), typeof(NavMeshAgent), typeof(Rigidbody))]
 public class Npc : Entity,ISmashable
 {
-    [Header("Canvas")]
-    [SerializeField] GameObject canvas;
+
+    #region Enum
+    enum STATS
+    {
+        RANDOM,
+        NOT_RANDOM
+    }
     public enum STATE {
         THIRST,
         HUNGER,
         BLADDER,
-        DANCING,
+        PARTY,
         ATTRACTED,
         FREEZE,
         MOVEAWAY
     }
+    #endregion
     
+    [Header("Initialisation")]
+    [SerializeField] STATS initStats = STATS.RANDOM;
+    
+    PartyData partyData;
+
     [Header("Data")] 
     public Stats stats;
     [SerializeField] public NpcData npcData;
-    public STATE state = STATE.DANCING;
-
     
+    [Header("State")]
+    [ConditionalEnumHide("field", 0)] public STATE state = STATE.PARTY;
+    [ConditionalEnumHide("field", 0)] [SerializeField] List<STATE> stateStack = new List<STATE>(){STATE.PARTY};
+    public StateLayer[] stateLayers = new StateLayer[4]{new StateLayer(){states =  new [] { Npc.STATE.THIRST , Npc.STATE.HUNGER, Npc.STATE.BLADDER}},
+        new StateLayer(){states = new [] { Npc.STATE.MOVEAWAY }},
+        new StateLayer(){states = new [] { Npc.STATE.ATTRACTED }},
+        new StateLayer(){states = new [] { Npc.STATE.PARTY }}};
+
+
     [Header("NavMesh")]
     public NavMeshAgent agent;
-    public float minimumDistanceWithDestination = 0.5f;
-
-    [HideInInspector] public Transform currentDestination;
-    Transform runAwayDestination;
+    public float minimumDistanceWithDestination = 2;
     
-    [Header("Waypoint Settings")]
-    Transform[] noExitPoints;
-    public List<Transform> exitPoints;
-    Transform[] hungerPoints;
-    Transform[] thirstPoints;
-    Transform[] bladderPoints;
-    Vector3 investigatePoint;
+    [Header("Scripts")]
+    public NpcScripts npcScripts;
 
-
-    private Vector3 randomPosParty;
+    
+    [HideInInspector] public Vector3 currentDestination;
     [HideInInspector] public Vector3 attractedPoint;
-    [HideInInspector] public Vector3 moveAwayPoint;
-
     [HideInInspector] public bool isAction;
-
     [HideInInspector] public Pathfinding pathfinding;
-
-    [Header("Scripts")] 
-    [SerializeField] private Panic panicData;
-    [SerializeField] private StatusEffects statusEffects;
-    
     private Transform player;
-
     [HideInInspector] public float currentSpeed;
-
+    Vector3 disperseCenter;
     private float npcSpeed;
-    
-    [Header("State Feedback")]
-    [SerializeField] private GameObject thirstImage;
-    [SerializeField] private GameObject hungerImage;
-    [SerializeField] private GameObject bladderImage;
 
+    //Init Npc
     private void Start()
     {
+        //Init Pathfinding
         pathfinding = new Pathfinding();
         agent.speed = npcData.speed;
-        RandomStats();
-        pathfinding.LoadWayPoints(out hungerPoints, out thirstPoints, out bladderPoints, out noExitPoints, out exitPoints);
-        player = LevelManager.instance.GetPlayer();
+        
+        //Init Speed
         UpdateSpeed(npcData.speed);
+        
+        //Init Stats
+        if (initStats == STATS.RANDOM)
+        {
+            RandomStats();
+        }
+        else
+        {
+            SetStats(npcData.maxBladder, npcData.maxHunger, npcData.maxThirst);
+        }
+        
+        //Init State
+        //stateStack.Add(STATE.PARTY);
+
+        //Init Player
+        player = LevelManager.instance.GetPlayer();
     }
 
     private void Update()
     {
         if (!isDie)
         {
+            
+            //Player Walk animation when npc is moving
             if (!animator.GetBool("isWalking") && Vector3.Distance(transform.position, agent.destination) > 2f)
             {
                 animator.SetBool("isWalking", true);
                 animator.SetBool("isDancing", false);
             }
 
-            if (panicData.panicState == global::Panic.PanicState.Calm)
+            //Npc calm
+            if (npcScripts.panicData.panicState == global::Panic.PanicState.Calm)
             {
                 Calm();
             }
-            else if(panicData.panicState == global::Panic.PanicState.Tense)
+            
+            //Npc investigate
+            else if(npcScripts.panicData.panicState == global::Panic.PanicState.Tense)
             {
                 Investigate();
             }
+            
+            //Npc panic
             else
             {
                 Panic();
             }
+
+            if (gameObject.activeSelf)
+            {
+                agent.SetDestination(currentDestination);
+            }
         }
     }
 
+    /// <summary>
+    /// Load Party Data
+    /// </summary>
+    /// <param name="partyData"> Current Party Data </param>
+    public void InitPartyData(PartyData partyData)
+    {
+        this.partyData = partyData;
+    }
+
+    /// <summary>
+    /// Play Calm State
+    /// </summary>
     void Calm()
     {
+        //Update Stats
         stats.currentHunger -= Time.deltaTime;
         stats.currentThirst -= Time.deltaTime;
         stats.currentBladder -= Time.deltaTime;
 
-        if (state == STATE.DANCING || state == STATE.ATTRACTED  || state == STATE.MOVEAWAY)
-        {
-            if (stats.currentHunger <= 0)
-            {
-                state = STATE.HUNGER;
-                currentDestination = pathfinding.ChooseClosestTarget(hungerPoints, transform, agent);
-                hungerImage.SetActive(true);
-            }
-            else if (stats.currentThirst <= 0)
-            {
-                state = STATE.THIRST;
-                currentDestination = pathfinding.ChooseClosestTarget(thirstPoints, transform, agent);
-                thirstImage.SetActive(true);
-            }
-            else if (stats.currentBladder <= 0)
-            {
-                state = STATE.BLADDER;
-                currentDestination = pathfinding.ChooseClosestTarget(bladderPoints, transform, agent);
-                bladderImage.SetActive(true);
-            }
-            else
-            {
-                if (!agent.isStopped && randomPosParty == Vector3.zero)
-                {
-                    if (state == STATE.MOVEAWAY)
-                    {
-                        randomPosParty = moveAwayPoint;
-                    }
-                    else if (state == STATE.ATTRACTED)
-                    {
-                        randomPosParty = attractedPoint;
-                    }
-                    else
-                    {
-                        randomPosParty = pathfinding.CalculateRandomPosInCircle(agent,  transform, noExitPoints[0].position.y,
-                            LevelManager.instance.level.partyData.radius, LevelManager.instance.level.partyData.partyPosition.position);
-                    }
-                }
-                else if (agent.isStopped && randomPosParty != Vector3.zero)
-                {
-                    randomPosParty = Vector3.zero;
-                }
-                agent.SetDestination(randomPosParty);
-                if (Vector3.Distance(transform.position, agent.destination) < agent.stoppingDistance + minimumDistanceWithDestination )
-                {
-                    if (state == STATE.DANCING || state == STATE.MOVEAWAY)
-                    {
-                        animator.SetBool("isDancing", true);
-                    }
-                    else if(state == STATE.ATTRACTED)
-                    {
-                        animator.SetBool("isIdle", true);
-                    }
-                }
-            }
-        }
-        else if(!isAction)
+        UpdateStateStack();
+
+        state = stateStack[0];
+
+        // Set Npc Destination
+        if (currentDestination == Vector3.zero)
         {
             switch (state)
             {
                 case STATE.HUNGER :
-                    agent.SetDestination(currentDestination.position);
-                    if (Mathf.Abs(transform.position.x - agent.destination.x) <= agent.stoppingDistance + minimumDistanceWithDestination &&
-                        Mathf.Abs(transform.position.z - agent.destination.z) <= agent.stoppingDistance + minimumDistanceWithDestination)
-                    {
-                        state = STATE.DANCING;
-                        stats.currentHunger = npcData.maxHunger;
-                        hungerImage.SetActive(false);
-                    }
-                    break;
+                    SetStateDestination(pathfinding.hungerPoints, npcScripts.npcUI.hungerImage);
+                    return;
                 case STATE.THIRST :
-                    agent.SetDestination(currentDestination.position);
-                    if(Mathf.Abs(transform.position.x - agent.destination.x) <= agent.stoppingDistance + minimumDistanceWithDestination && Mathf.Abs(transform.position.z - agent.destination.z) <= agent.stoppingDistance + minimumDistanceWithDestination)
-                    {
-                        animator.SetBool("isDrinking", true);
-                        thirstImage.SetActive(false);
-                    }
-                    break;
+                    SetStateDestination(pathfinding.thirstPoints, npcScripts.npcUI.thirstImage);
+                    return;
                 case STATE.BLADDER :
-                    agent.SetDestination(currentDestination.position);
-                    if(Mathf.Abs(transform.position.x - agent.destination.x) <= agent.stoppingDistance + minimumDistanceWithDestination && Mathf.Abs(transform.position.z - agent.destination.z) <= agent.stoppingDistance + minimumDistanceWithDestination)
+                    SetStateDestination(pathfinding.bladderPoints, npcScripts.npcUI.bladderImage);
+                    return;
+                case STATE.MOVEAWAY :
+                    disperseCenter = pathfinding.GetDispersePointKey(transform.position); 
+                    currentDestination = pathfinding.CalculateRandomPosOnCirclePeriphery(agent, transform, pathfinding.noExitPoints[0].position.y, pathfinding.dispersePoints[disperseCenter], disperseCenter);
+                    return;
+                case STATE.ATTRACTED :
+                    currentDestination = attractedPoint;
+                    return;
+                default:
+                    if (partyData.shape == PartyData.Shape.CIRCLE)
                     {
-                        animator.SetBool("isBladder", true);
-                        bladderImage.SetActive(false);
+                        currentDestination = pathfinding.CalculateRandomPosInCircle(agent,  transform,
+                            partyData.radius, partyData.partyPosition.position);
                     }
-                    break;
+                    else
+                    {
+                        currentDestination = pathfinding.CalculateRandomPosInRectangle(agent,  transform,
+                            partyData.width, partyData.length, partyData.partyPosition);
+                    }
+                    return;
+            }
+        }
+        
+        //Npc is near to Destination
+        if (CheckNpcDistanceToDestination() && !isAction)
+        {
+            switch (state)
+            {
+                case STATE.HUNGER :
+                    animator.SetBool("isEating", true);
+                    npcScripts.npcUI.hungerImage.SetActive(false);
+                    return;
+                case STATE.THIRST :
+                    animator.SetBool("isDrinking", true);
+                    npcScripts.npcUI.thirstImage.SetActive(false);
+                    return;
+                case STATE.BLADDER :
+                    animator.SetBool("isBladder", true);
+                    npcScripts.npcUI.bladderImage.SetActive(false);
+                    return;
+                case STATE.ATTRACTED :
+                    animator.SetBool("isIdle", true);
+                    return;
+                default:
+                    animator.SetBool("isDancing", true);
+                    return;
             }
         }
     }
 
+    
+    /// <summary>
+    /// Play Tense State
+    /// </summary>
     void Investigate()
     {
-        if (investigatePoint == Vector3.zero)
+        if (currentDestination == Vector3.zero)
         {
-            investigatePoint = pathfinding.CalculateRandomPosInCircle(agent, transform, noExitPoints[0].position.y, panicData.panicData.investigateRadius, player.position);
+            currentDestination = pathfinding.CalculateRandomPosInCircle(agent, transform, npcScripts.panicData.panicData.investigateRadius, player.position);
         }
-        else if (pathfinding.Distance(transform, agent) < 2 && investigatePoint != Vector3.zero)
+        else if (CheckNpcDistanceToDestination())
         {
-            investigatePoint = Vector3.zero;
+            currentDestination = Vector3.zero;
         }
-        agent.SetDestination(investigatePoint);
     }
 
+    /// <summary>
+    /// Play Panic State
+    /// </summary>
     void Panic()
     {
- 
-        
-        if ((Mathf.Abs(transform.position.x - agent.destination.x) <= agent.stoppingDistance + minimumDistanceWithDestination &&
-             Mathf.Abs(transform.position.z - agent.destination.z) <= agent.stoppingDistance + minimumDistanceWithDestination) || runAwayDestination == null)
+        // Set Destination
+
+        if (currentDestination == Vector3.zero)
         {
-            if (exitPoints.Count > 0)
+            if (pathfinding.exitPoints.Count > 0)
             {
-                if (runAwayDestination != null && Mathf.Abs(transform.position.x - runAwayDestination.position.x) <= agent.stoppingDistance + minimumDistanceWithDestination &&
-                    Mathf.Abs(transform.position.z - runAwayDestination.position.z) <= agent.stoppingDistance + minimumDistanceWithDestination)
-                {
-                    NpcManager.instance.UnSpawnNpc(gameObject.name.Replace("(Clone)", String.Empty), gameObject);
-                    return;
-                }
-                runAwayDestination = pathfinding.ChooseClosestTarget(exitPoints.ToArray(), transform, agent);
+                currentDestination = pathfinding.ChooseClosestTarget(pathfinding.exitPoints.ToArray(), transform, agent).position;
             }
             else
             {
-                runAwayDestination = noExitPoints[Random.Range(0, noExitPoints.Length)];
+                currentDestination = pathfinding.noExitPoints[Random.Range(0, pathfinding.noExitPoints.Length)].position;
             }
-            agent.SetDestination(runAwayDestination.position);
         }
-        agent.SetDestination(runAwayDestination.position);
+        
+        // Check if npc is near destination
+        if (CheckNpcDistanceToDestination())
+        {
+            if (pathfinding.exitPoints.Count > 0)
+            {
+                NpcManager.instance.UnSpawnNpc(gameObject.name.Replace("(Clone)", String.Empty), gameObject);
+            }
+            else
+            {
+                currentDestination = pathfinding.noExitPoints[Random.Range(0, pathfinding.noExitPoints.Length)].position;
+            }
+        }
     }
 
+    
+    /// <summary>
+    /// Set Random Stats To Npc
+    /// </summary>
     public void RandomStats()
     {
         stats.currentBladder = Random.Range(0, npcData.maxBladder);
         stats.currentHunger = Random.Range(0, npcData.maxHunger);
         stats.currentThirst = Random.Range(0, npcData.maxThirst);
     }
+    
+    /// <summary>
+    /// Set Stats To Npc
+    /// </summary>
+    /// <param name="bladder"> Bladder Stat</param>
+    /// <param name="hunger"> Hunger Stat</param>
+    /// <param name="thirst"> Thirst Stat</param>
+    public void SetStats(float bladder, float hunger, float thirst)
+    {
+        stats.currentBladder = bladder;
+        stats.currentHunger = hunger;
+        stats.currentThirst = thirst;
+    }
 
+    /// <summary>
+    /// Update Npc Speed
+    /// </summary>
+    /// <param name="newSpeed"></param>
     public void UpdateSpeed(float newSpeed)
     {
-        currentSpeed = newSpeed * statusEffects.currentData.currentSpeedRatio * currentSpeedRatio;
+        currentSpeed = newSpeed * npcScripts.statusEffects.currentData.currentSpeedRatio * currentSpeedRatio;
         npcSpeed = newSpeed;
     }
 
+    /// <summary>
+    /// Slow Npc Speed
+    /// </summary>
     public override void Slow()
     {
         base.Slow();
         UpdateSpeed(npcSpeed);
     }
 
+    /// <summary>
+    /// Update Npc Speed
+    /// </summary>
     public void UpdateWalking()
     {
         agent.speed = Mathf.Lerp(agent.speed, currentSpeed, npcData.acceleration * Time.deltaTime);
         animator.SetFloat("Speed", agent.speed);
     }
 
+    
+    /// <summary>
+    /// Stop Npc
+    /// </summary>
     public void StopWalking()
     {
         agent.speed = 0;
@@ -276,6 +333,10 @@ public class Npc : Entity,ISmashable
         }
     }
 
+    /// <summary>
+    /// Call when npc die
+    /// </summary>
+    /// <param name="unspawn"> True if unspawn, else false</param>
     public override void Die(bool unspawn)
     {
         animator.speed = 1;
@@ -283,24 +344,36 @@ public class Npc : Entity,ISmashable
         base.Die(unspawn);
         if (unspawn)
             NpcManager.instance.UnSpawnNpc(gameObject.name.Replace("(Clone)", String.Empty), gameObject);
-        canvas.SetActive(false);
+        npcScripts.npcUI.canvas.SetActive(false);
     }
     
-    
+    /// <summary>
+    /// Attracted Npc
+    /// </summary>
+    /// <param name="radius"> Radius of the attracted object </param>
+    /// <param name="position"> Position of the attracted object </param>
+    /// <param name="angle"> Angle of the attracted object </param>
     public void Attracted(float radius, Vector3 position, float angle)
     {
-        state = STATE.ATTRACTED;
-        randomPosParty = Vector3.zero;
-        attractedPoint = pathfinding.CalculateRandomPosInCone(agent,  transform, noExitPoints[0].position.y,
+        AddStateToStack(STATE.ATTRACTED);
+        attractedPoint = pathfinding.CalculateRandomPosInCone(agent,  transform,
             radius, angle, position);
     }
 
+    /// <summary>
+    /// Stop Attracted Npc
+    /// </summary>
     public void StopAttracted()
     {
-        state = STATE.DANCING;
-        randomPosParty = Vector3.zero;
+        stateStack.Remove(STATE.ATTRACTED);
+        currentDestination = Vector3.zero;
     }
 
+    /// <summary>
+    /// Freezed Npc
+    /// </summary>
+    /// <param name="freezeTime"> Freeze Time </param>
+    /// <param name="isFreeze"> If is freeze </param>
     public void GetFreezed(float freezeTime, bool isFreeze)
     {
         if (isFreeze)
@@ -313,22 +386,31 @@ public class Npc : Entity,ISmashable
         }
         else
         {
-            panicData.UpdatePanic(1);
+            npcScripts.panicData.UpdatePanic(1);
         }
  
     }
+    
+    /// <summary>
+    /// Freeze Cooldown
+    /// </summary>
+    /// <param name="freezeTime"> Freeze Time </param>
+    /// <returns></returns>
     IEnumerator FreezeCD(float freezeTime)
     {
         yield return new WaitForSeconds(freezeTime);
         UpdateSpeed(npcSpeed);
         animator.speed = 1;
-        panicData.UpdatePanic(1);
+        npcScripts.panicData.UpdatePanic(1);
     }
 
+    /// <summary>
+    /// Remove Exit Point from the list
+    /// </summary>
+    /// <param name="exitPoint"> Exit Point to remove </param>
     public void RemoveExitPoint(Transform exitPoint)
     {
-        exitPoints.Remove(exitPoint);
-        runAwayDestination = null;
+        pathfinding.exitPoints.Remove(exitPoint);
     }
 
     /// <summary>
@@ -339,12 +421,126 @@ public class Npc : Entity,ISmashable
     /// <param name="radius"> Radius of the item </param>
     public void Disperse(Vector3 center, Vector3 direction, float radius)
     {
-        randomPosParty = Vector3.zero;
-        state = STATE.MOVEAWAY;
-        agent.SetDestination(pathfinding.CalculateRandomPosOnCirclePeriphery(agent, transform, noExitPoints[0].position.y, radius, center));
-        /*moveAwayPoint = new Vector3(center.x, 0, center.z) + new Vector3(direction.x, noExitPoints[0].position.y, direction.z) * (radius+2);
-        Debug.Log("Pos : " + transform.position);
-        Debug.Log("move away : " + moveAwayPoint);*/
+        AddStateToStack(STATE.MOVEAWAY);
+    }
+
+    /// <summary>
+    /// Update State Stack
+    /// </summary>
+    void UpdateStateStack()
+    {
+        if (stats.currentHunger <= 0 && !stateStack.Contains(STATE.HUNGER))
+        {
+            AddStateToStack(STATE.HUNGER);
+            return;
+        }
+        
+        if(stats.currentThirst <= 0 && !stateStack.Contains(STATE.THIRST))
+        {
+            AddStateToStack(STATE.THIRST);
+            return;
+        }
+        
+        if(stats.currentBladder <= 0 && !stateStack.Contains(STATE.BLADDER))
+        {
+            AddStateToStack(STATE.BLADDER);
+            return;
+        }
+    }
+    
+    /// <summary>
+    /// Add State to State Stack
+    /// </summary>
+    /// <param name="state"> State to add </param>
+    void AddStateToStack(STATE state)
+    {
+        stateStack.Add(state);
+        SortStateStack();
+    }
+    
+    /// <summary>
+    /// Sort State Stack with layers states
+    /// </summary>
+    void SortStateStack()
+    {
+        List<STATE> sortedList = new List<STATE>();
+        for (int i = 0; i < stateLayers.Length; i++)
+        {
+            foreach (var state in stateLayers[i].states)
+            {
+                if (stateStack.Contains(state))
+                {
+                    sortedList.Add(state);
+                }
+            }
+        }
+
+        if (stateStack[0] != sortedList[0])
+        {
+            currentDestination = Vector3.zero;
+        }
+        stateStack = sortedList;
+    }
+
+    /// <summary>
+    /// Check if is near to destination
+    /// </summary>
+    /// <returns></returns>
+    bool CheckNpcDistanceToDestination()
+    {
+        if (Vector3.Distance(transform.position, agent.destination) < agent.stoppingDistance + minimumDistanceWithDestination)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    /// <summary>
+    /// Call when finished to drink
+    /// </summary>
+    public void Drink()
+    {
+        stateStack.Remove(STATE.THIRST);
+        stats.currentThirst = npcData.maxThirst;
+        isAction = false;
+        currentDestination = Vector3.zero;
+        Debug.Log("Drinking");
+    }
+    
+    /// <summary>
+    /// Call when finished to pee
+    /// </summary>
+    public void Pee()
+    {
+        stateStack.Remove(STATE.BLADDER);
+        stats.currentBladder = npcData.maxBladder;
+        isAction = false;
+        currentDestination = Vector3.zero;
+        Debug.Log("Peeing");
+    }
+    
+    /// <summary>
+    /// Call when finished to eat
+    /// </summary>
+    public void Eat()
+    {
+        stateStack.Remove(STATE.HUNGER);
+        stats.currentHunger = npcData.maxHunger;
+        isAction = false;
+        currentDestination = Vector3.zero;
+        Debug.Log("Eating");
+    }
+
+    /// <summary>
+    /// Set State Destination
+    /// </summary>
+    /// <param name="waypoints"> Way Points of the state</param>
+    /// <param name="image"> Image of the state </param>
+    void SetStateDestination(Transform[] waypoints, GameObject image)
+    {
+        currentDestination = pathfinding.ChooseClosestTarget(waypoints, transform, agent).position;
+        image.SetActive(true);
     }
 
 }
@@ -352,7 +548,15 @@ public class Npc : Entity,ISmashable
 [Serializable]
 public class Stats
 {
-    public float currentHunger = 100;
-    public float currentThirst = 100;
-    public float currentBladder = 100;
+    [SerializeField] Tools.FIELD field = Tools.FIELD.HIDDEN;
+    
+    [ConditionalEnumHide("field", 0)] public float currentHunger = 100;
+    [ConditionalEnumHide("field", 0)] public float currentThirst = 100;
+    [ConditionalEnumHide("field", 0)] public float currentBladder = 100;
+}
+
+[Serializable]
+public class StateLayer
+{
+    public Npc.STATE[] states;
 }

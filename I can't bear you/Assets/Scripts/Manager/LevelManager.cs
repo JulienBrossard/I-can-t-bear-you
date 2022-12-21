@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Debug = UnityEngine.Debug;
 using Random = UnityEngine.Random;
 
 public class LevelManager : MonoBehaviour
@@ -20,57 +21,110 @@ public class LevelManager : MonoBehaviour
 
     private void Start()
     {
-        for (int i = 0; i < level.npc.Length; i++)
+        //Init Level (Spawn NPC)
+        for (int i = 0; i < level.partyData.Length; i++)
         {
-            for (int j = 0; j < level.npc[i].count; j++)
+            for (int j = 0; j < level.partyData[i].npc.Length; j++)
             {
-                NpcManager.instance.SpawnNpc(level.npc[i].npc.name);
+                for (int k = 0; k < level.partyData[i].npc[j].count; k++)
+                {
+                    NpcManager.instance.SpawnNpc(level.partyData[i].npc[j].npc.name).InitPartyData(level.partyData[i]); //Spawn NPC + loaded party data
+                }
             }
         }
     }
 
+    /// <summary>
+    /// Spawn Npc to Random point
+    /// </summary>
+    /// <returns></returns>
     public Vector3 GetRandomNpcSpawn()
     {
         return level.npcSpawnPositions[Random.Range(0, level.npcSpawnPositions.Length)].position;
     }
 
+    /// <summary>
+    /// Get Player
+    /// </summary>
+    /// <returns></returns>
     public Transform GetPlayer()
     {
         return level.player;
     }
     
+    /// <summary>
+    /// Remove Exit point from npc list
+    /// </summary>
+    /// <param name="exitPoint"> Exit point to remove</param>
     public void RemoveExitPoint(Transform exitPoint)
     {
         foreach (var npc in NpcManager.instance.npc)
         {
-            npc.GetComponent<Npc>().RemoveExitPoint(exitPoint);
+            Debug.Log(npc);
+            NpcManager.instance.npcScriptDict[npc].RemoveExitPoint(exitPoint);
         }
+        Debug.Log(exitPoint.name + " removed");
     }
 
+    /// <summary>
+    /// Apply modifications to inspector
+    /// </summary>
     public void ApplyModifications()
     {
-        if (level.npc != null)
+        if (level.partyData != null)
         {
             pooler.poolKeys = new List<Pooler.PoolKey>();
-            for (int i = 0; i < level.npc.Length; i++)
+            bool found;
+            for (int j = 0; j < level.partyData.Length; j++)
             {
-                pooler.poolKeys.Add(new Pooler.PoolKey()
+                if (level.partyData[j].npc == null)
                 {
-                    key = level.npc[i].npc.name,
-                    pool = new Pooler.Pool(){ prefab = level.npc[i].npc,baseCount = level.npc[i].count,baseRefreshSpeed = 5,refreshSpeed = 5}
-                });
+                    continue;
+                }
+                for (int i = 0; i < level.partyData[j].npc.Length; i++)
+                {
+                    if (level.partyData[j].npc[i].npc != null)
+                    {
+                        found = false;
+                        
+                        //Check if pool key already exists
+                        for (int k = 0; k < pooler.poolKeys.Count; k++)
+                        {
+                            if (pooler.poolKeys[k].key == level.partyData[j].npc[i].npc.name)
+                            {
+                                pooler.poolKeys[k].pool.baseCount += level.partyData[j].npc[i].count;
+                                found = true;
+                                break;
+                            }
+                        }
+
+                        // Create new pool key if not already exists
+                        if (!found)
+                        {
+                            pooler.poolKeys.Add(new Pooler.PoolKey()
+                            {
+                                key = level.partyData[j].npc[i].npc.name,
+                                pool = new Pooler.Pool(){ prefab = level.partyData[j].npc[i].npc,baseCount = level.partyData[j].npc[i].count,baseRefreshSpeed = 5,refreshSpeed = 5}
+                            });
+                        }
+                    }
+                }
             }
             Debug.Log("Apply modifications successful");
         }
         else
         {
-            Debug.LogWarning("Npc List is empty");
+            Debug.LogWarning("Party Data List is empty");
         }
     }
 
+    /// <summary>
+    /// End Level
+    /// </summary>
+    /// <param name="bySleeping"> ? </param>
     public void EndLevel(bool bySleeping)
     {
-        if (level.npcCount < level.requiredNpcKillCount)
+        if (NpcManager.instance.npcCountkilled < level.requiredNpcKillCount)
         {
             UiManager.instance.LaunchEndLevelScreen(true);
         }
@@ -84,9 +138,11 @@ public class LevelManager : MonoBehaviour
 [Serializable]
 public class LevelData
 {
-    public SpawnNpc[] npc;
+    [Header("Party Data")]
+    public PartyData[] partyData;
     [HideInInspector] public int npcCount;
     public int requiredNpcKillCount;
+    
     [Header("Waypoint Settings")]
     public Transform[] npcSpawnPositions;
     public Transform[] notExitPoints;
@@ -97,16 +153,22 @@ public class LevelData
     
     [Header("Player")]
     public Transform player;
-
-    [Header("Party Data")]
-    public PartyData partyData;
 }
 
 [Serializable]
 public class PartyData
 {
+    public enum Shape
+    {
+        CIRCLE,
+        RECTANGLE
+    }
+    public Shape shape = Shape.CIRCLE;
     public Transform partyPosition;
-    public float radius;
+    [ConditionalEnumHide("shape", 0)] public float radius;
+    [ConditionalEnumHide("shape", 1)] public float width;
+    [ConditionalEnumHide("shape", 1)] public float length;
+    public SpawnNpc[] npc;
 }
 
 [Serializable]

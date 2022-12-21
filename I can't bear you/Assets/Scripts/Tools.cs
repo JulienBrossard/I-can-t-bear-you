@@ -3,11 +3,17 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class Tools
+public class Tools : MonoBehaviour
 {
     #region Declarations
 
     public static Tools instance;
+    
+    public enum FIELD
+    {
+        SERIALIZED,
+        HIDDEN
+    }
     
     #endregion
 
@@ -183,6 +189,69 @@ public class Tools
         EventSystem.current.RaycastAll(pe, hits);
         return hits;
     }
+    
+    #endregion
+
+    #region Math
+
+    #region Circle
+
+    
+    /// <summary>
+    /// Check if a point is in a circle
+    /// </summary>
+    /// <param name="point"> Point </param>
+    /// <param name="radius"> Radius of the circle </param>
+    /// <param name="center"> Center of the circle </param>
+    /// <returns></returns>
+    public bool CheckPointInCircle(Vector3 point, float radius, Vector3 center)
+    {
+        if (Vector3.Distance(point, center) < radius)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    
+    /// <summary>
+    /// Calculate Random point in a circle
+    /// </summary>
+    /// <param name="radius"> Radius of the circle </param>
+    /// <returns></returns>
+    public Vector2 CalculateRandomPointInCircle(float radius)
+    {
+        return new Vector2(
+            Random.Range(-radius,
+                radius),
+            Random.Range(-radius,
+                radius));
+    }
+
+    #endregion
+
+
+    #region Rectangle
+
+    
+    /// <summary>
+    /// Calculate Random point in a rectangle
+    /// </summary>
+    /// <param name="length"> Length of the rectangle </param>
+    /// <param name="width"> Width of the rectangle </param>
+    /// <returns></returns>
+    public Vector2 CalculateRandomPointInRectangle(float length, float width)
+    {
+        return new Vector2(
+            Random.Range(-length/2,
+                length/2),
+            Random.Range(-width/2,
+                width/2));
+    }
+
+    #endregion
     
     #endregion
 }

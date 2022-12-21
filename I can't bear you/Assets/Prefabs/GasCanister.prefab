@@ -112,8 +112,8 @@ Transform:
   m_GameObject: {fileID: 2599227615918860770}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -13.87, y: 0.98, z: 4.42}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 3417850044995573611}
   - {fileID: 5201015200010858661}
@@ -161,6 +161,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8343105189db12245933c4c6dcf49057, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dangerState: 1
   puddleType: 0
   puddleSize: 1
   zone: {fileID: 0}
@@ -176,7 +177,7 @@ MonoBehaviour:
   emitter: {fileID: 0}
   fallable: 0
   falls: []
-  gasSize: 0
+  gasSize: 1
   isExplosive: 1
 --- !u!114 &369789017271438047
 MonoBehaviour:
