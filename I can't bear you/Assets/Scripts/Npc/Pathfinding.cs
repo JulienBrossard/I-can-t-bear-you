@@ -147,9 +147,15 @@ public class Pathfinding
             center.z + randomPos.y), agent.areaMask, path);
         if (!CheckPathStatus(path))
         {
+<<<<<<< HEAD
             return CalculateRandomPosInCone(agent, npcTransform, radius, angle, center);
         }
         return  center + new Vector3(randomPos.x, noExitPoints[0].position.y, randomPos.y);
+=======
+            return CalculateRandomPosInCone(agent, npcTransform, height, radius, angle, center);
+        }
+        return  center + new Vector3(randomPos.x, height, randomPos.y);
+>>>>>>> Raphael
     }
     
     /// <summary>
