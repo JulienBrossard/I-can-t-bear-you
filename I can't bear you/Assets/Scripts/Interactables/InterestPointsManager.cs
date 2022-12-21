@@ -36,6 +36,7 @@ public class InterestPointsManager : MonoBehaviour
             }
             interestPoint.validity = false;
         }
+        
     }
 
     private GameObject outlineGoBuffer;
@@ -51,6 +52,9 @@ public class InterestPointsManager : MonoBehaviour
             outlineGoBuffer = default;
             return;
         }
+
+        if (interestPoints[0]?.go == default) return;
+        
         outlineGoBuffer = interestPoints[0]?.go;
         outlineGoBuffer.GetComponent<Outline>()?.EnableOutline();
     }
