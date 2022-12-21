@@ -2933,7 +2933,14 @@ MonoBehaviour:
     pool:
       prefab: {fileID: 4225555480404199414, guid: d9d78adb1c1738248a56b9aca3558a44,
         type: 3}
-      baseCount: 7
+      baseCount: 2
+      baseRefreshSpeed: 5
+      refreshSpeed: 5
+  - key: Npc name
+    pool:
+      prefab: {fileID: 9026867570702886210, guid: 7d8edf5931d48d3418861c6e267c19b9,
+        type: 3}
+      baseCount: 5
       baseRefreshSpeed: 5
       refreshSpeed: 5
 --- !u!114 &377199017
@@ -2983,7 +2990,7 @@ MonoBehaviour:
       width: 10.96
       length: 20.23
       npc:
-      - npc: {fileID: 4225555480404199414, guid: d9d78adb1c1738248a56b9aca3558a44,
+      - npc: {fileID: 9026867570702886210, guid: 7d8edf5931d48d3418861c6e267c19b9,
           type: 3}
         count: 5
     npcCount: 7
@@ -3053,7 +3060,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-1992
+  m_Name: pb_Mesh-1996
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -4692,7 +4699,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-2084
+  m_Name: pb_Mesh-2088
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -5790,7 +5797,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh31124
+  m_Name: pb_Mesh31146
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -14925,7 +14932,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-2348
+  m_Name: pb_Mesh-2352
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2

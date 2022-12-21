@@ -12,7 +12,7 @@ public class Awareness : MonoBehaviour
     public LayerMask targetMask;
     public LayerMask obstacleMask;
     public List<Transform> visibleTargets;
-    [SerializeField] float maxTargets = 5;
+    public float maxTargets = 5;
 
     void Start() {
         StartCoroutine ("FindTargetsWithDelay", .2f);

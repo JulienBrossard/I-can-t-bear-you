@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Panic Data", menuName = "Panic Data")]
+[CreateAssetMenu(fileName = "Panic Data", menuName = "ScriptableObjects/Panic Data")]
 public class PanicData : ScriptableObject
 {
     [Header("Panic rate")]

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Outline Data", menuName = "Outline Data")]
+[CreateAssetMenu(fileName = "Outline Data", menuName = "ScriptableObjects/Outline Data")]
 public class OutlineData : ScriptableObject
 {
     public Material outlineMaterial;
