@@ -16,11 +16,11 @@ public class PanicEditor : Editor
     {
         if (panic.panicData != null)
         {
-            if (panic.currentPanic < panic.panicData.suspiciousValue)
+            if (panic.currentPanic < panic.panicData.tenseValue)
             {
                 panic.panicState = Panic.PanicState.Calm;
             }
-            else if (panic.currentPanic >= panic.panicData.suspiciousValue && panic.currentPanic < 1)
+            else if (panic.currentPanic >= panic.panicData.tenseValue && panic.currentPanic < 1)
             {
                 panic.panicState = Panic.PanicState.Tense;
             }

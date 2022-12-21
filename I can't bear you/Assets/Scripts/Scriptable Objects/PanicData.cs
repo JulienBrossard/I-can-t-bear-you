@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 [CreateAssetMenu(fileName = "Panic Data", menuName = "ScriptableObjects/Panic Data")]
 public class PanicData : ScriptableObject
@@ -8,5 +9,5 @@ public class PanicData : ScriptableObject
     public float investigateRadius;
     
     [Header("Suspicious Value")]
-    public float suspiciousValue = 0.5f;
+    public float tenseValue = 0.5f;
 }

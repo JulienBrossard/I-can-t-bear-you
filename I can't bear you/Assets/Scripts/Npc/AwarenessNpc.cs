@@ -3,6 +3,7 @@ using UnityEngine;
 [RequireComponent(typeof(Panic), typeof(StatusEffects))]
 public class AwarenessNpc : Awareness
 {
+
     [Header("Scripts")] 
     public Panic panicData;
     public StatusEffects statusEffects;

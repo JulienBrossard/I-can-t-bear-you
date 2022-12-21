@@ -33,7 +33,7 @@ public class Panic : MonoBehaviour
     public void UpdatePanic(float panic)
     {
         currentPanic += panic;
-        if (currentPanic < panicData.suspiciousValue)
+        if (currentPanic < panicData.tenseValue)
         {
             npc.UpdateSpeed(npc.npcData.speed);
             SwitchPanicState(PanicState.Calm);
@@ -41,7 +41,7 @@ public class Panic : MonoBehaviour
             StartCoroutine(UpdateSuspicious());
             return;
         }
-        if(currentPanic >= panicData.suspiciousValue && currentPanic <1f)
+        if(currentPanic >= panicData.tenseValue && currentPanic <1f)
         {
             npc.UpdateSpeed(npc.npcData.speed);
             SwitchPanicState(PanicState.Tense);
@@ -69,7 +69,7 @@ public class Panic : MonoBehaviour
     IEnumerator UpdateSuspicious()
     {
         npc.npcScripts.npcUI.suspiciousImage.transform.parent.gameObject.SetActive(true);
-        npc.npcScripts.npcUI.suspiciousImage.fillAmount = currentPanic*1/panicData.suspiciousValue;
+        npc.npcScripts.npcUI.suspiciousImage.fillAmount = currentPanic*1/panicData.tenseValue;
         yield return new WaitForSeconds(3f);
         npc.npcScripts.npcUI.suspiciousImage.transform.parent.gameObject.SetActive(false);
     }
@@ -81,7 +81,7 @@ public class Panic : MonoBehaviour
     IEnumerator UpdatePanic()
     {
         npc.npcScripts.npcUI.panicImage.transform.parent.gameObject.SetActive(true);
-        npc.npcScripts.npcUI.panicImage.fillAmount = (currentPanic-panicData.suspiciousValue)*1/panicData.suspiciousValue;
+        npc.npcScripts.npcUI.panicImage.fillAmount = (currentPanic-panicData.tenseValue)*1/panicData.tenseValue;
         yield return new WaitForSeconds(3f);
         npc.npcScripts.npcUI.panicImage.transform.parent.gameObject.SetActive(false);
     }

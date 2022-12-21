@@ -1659,6 +1659,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5b0ccc5635cb5048a248f0951668df3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  field: 1
   viewRadius: 6
   viewAngle: 120
   targetMask:
