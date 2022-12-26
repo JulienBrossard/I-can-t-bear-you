@@ -2597,6 +2597,12 @@ Transform:
   m_Father: {fileID: 581326315}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &273402806 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2451688659374893298, guid: 4e52ee41f60bb1c4d96e9822b7ff2abc,
+    type: 3}
+  m_PrefabInstance: {fileID: 2030028821}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &278377269
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4530,12 +4536,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d9d78adb1c1738248a56b9aca3558a44, type: 3}
---- !u!1 &462820074 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4225555480404199414, guid: d9d78adb1c1738248a56b9aca3558a44,
-    type: 3}
-  m_PrefabInstance: {fileID: 462820073}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &462839034
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5647,7 +5647,6 @@ GameObject:
   m_Component:
   - component: {fileID: 644362268}
   - component: {fileID: 644362267}
-  - component: {fileID: 644362266}
   - component: {fileID: 644362265}
   - component: {fileID: 644362264}
   - component: {fileID: 644362263}
@@ -5721,14 +5720,6 @@ MonoBehaviour:
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
   m_Version: 2
---- !u!81 &644362266
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 644362262}
-  m_Enabled: 1
 --- !u!20 &644362267
 Camera:
   m_ObjectHideFlags: 0
@@ -14087,7 +14078,7 @@ PrefabInstance:
     - target: {fileID: 8485482486028965357, guid: b6b8f2fb74615d844a166ba855394e4d,
         type: 3}
       propertyPath: puddleType
-      value: 5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8485482486028986896, guid: b6b8f2fb74615d844a166ba855394e4d,
         type: 3}
@@ -14626,14 +14617,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2feb9b4aad3d64042a1fb45d66c2b1ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  poolKeys:
-  - key: Npc (After)
-    pool:
-      prefab: {fileID: 4225555480404199414, guid: d9d78adb1c1738248a56b9aca3558a44,
-        type: 3}
-      baseCount: 37
-      baseRefreshSpeed: 5
-      refreshSpeed: 5
+  poolKeys: []
 --- !u!114 &1732634643
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14646,7 +14630,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8afe1eef50cb15a42869e47e3976224a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  field: 0
+  field: 1
   npcCountRemaining: 0
   npcCountkilled: 0
   npcCountfleed: 0
@@ -14666,59 +14650,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pooler: {fileID: 1732634642}
   level:
-    partyData:
-    - shape: 0
-      partyPosition: {fileID: 445294405}
-      radius: 7.5
-      width: 0
-      length: 0
-      npc:
-      - npc: {fileID: 4225555480404199414, guid: d9d78adb1c1738248a56b9aca3558a44,
-          type: 3}
-        count: 5
-    - shape: 1
-      partyPosition: {fileID: 704041990}
-      radius: 7.5
-      width: 20
-      length: 10
-      npc:
-      - npc: {fileID: 462820074}
-        count: 8
-    - shape: 1
-      partyPosition: {fileID: 1741381462}
-      radius: 7.5
-      width: 10
-      length: 20
-      npc:
-      - npc: {fileID: 462820074}
-        count: 6
-    - shape: 1
-      partyPosition: {fileID: 843237662}
-      radius: 7.5
-      width: 20
-      length: 20
-      npc:
-      - npc: {fileID: 462820074}
-        count: 10
-    - shape: 0
-      partyPosition: {fileID: 1902101444}
-      radius: 10
-      width: 10
-      length: 10
-      npc:
-      - npc: {fileID: 462820074}
-        count: 8
-    npcCount: 37
-    requiredNpcKillCount: 20
-    npcSpawnPositions:
-    - {fileID: 1478637751}
-    - {fileID: 1748925735}
-    - {fileID: 383359478}
-    - {fileID: 2035528710}
-    - {fileID: 1111301031}
-    - {fileID: 1755498360}
-    - {fileID: 647577486}
-    - {fileID: 2002154549}
+    partyData: []
+    npcCount: 0
+    requiredNpcKillCount: 0
+    npcSpawnPositions: []
     notExitPoints:
     - {fileID: 817459850}
     - {fileID: 409326964}
@@ -17820,6 +17755,14 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 2030028821}
   m_PrefabAsset: {fileID: 0}
+--- !u!81 &2030028833
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 273402806}
+  m_Enabled: 1
 --- !u!1001 &2034512872
 PrefabInstance:
   m_ObjectHideFlags: 0
