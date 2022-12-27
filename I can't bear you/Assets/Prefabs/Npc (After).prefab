@@ -1592,7 +1592,9 @@ MonoBehaviour:
   entityData: {fileID: 11400000, guid: 8d82193aa88f17146b352ede3c54ba6e, type: 2}
   animator: {fileID: 7426378792727152438}
   isDie: 0
+  sphere: {fileID: 5682725471120700012, guid: 2e8881d65048adc4d9e38c3459ed5429, type: 3}
   initStats: 0
+  test: 0
   stats:
     field: 1
     currentHunger: 100
@@ -1611,6 +1613,8 @@ MonoBehaviour:
   npcScripts: {fileID: 2280188384493704573}
   currentDestination: {x: 0, y: 0, z: 0}
   attractedPoint: {x: 0, y: 0, z: 0}
+  moveAwayPoint: {x: 0, y: 0, z: 0}
+  moveAwayRadius: 0
   isAction: 0
   currentSpeed: 0
 --- !u!114 &-7787597326935306304

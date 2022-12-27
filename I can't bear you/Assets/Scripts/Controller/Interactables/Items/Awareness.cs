@@ -17,6 +17,12 @@ public class Awareness : MonoBehaviour
     public float maxTargets = 5;
 
     void Start() {
+        Init();
+    }
+
+    public void Init()
+    {
+        FindVisibleTargets ();
         StartCoroutine ("FindTargetsWithDelay", .2f);
     }
 

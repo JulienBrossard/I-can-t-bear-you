@@ -61,7 +61,6 @@ public class Npc : Entity,ISmashable
     [HideInInspector] public Pathfinding pathfinding;
     private Transform player;
     [HideInInspector] public float currentSpeed;
-    Vector3 disperseCenter;
     private float npcSpeed;
 
     //Init Npc
@@ -166,9 +165,18 @@ public class Npc : Entity,ISmashable
                     SetStateDestination(pathfinding.bladderPoints, npcScripts.npcUI.bladderImage);
                     return;
                 case STATE.MOVEAWAY :
-                   // disperseCenter = pathfinding.GetDispersePointKey(transform.position); 
-                    currentDestination = pathfinding.CalculateRandomPosOnCirclePeriphery(agent, transform, moveAwayRadius, moveAwayPoint);
-                    return;
+                   // disperseCenter = pathfinding.GetDispersePointKey(transform.position);
+                   Vector3 dest = moveAwayPoint + (transform.position - moveAwayPoint).normalized * (moveAwayRadius + 3);
+                   dest = new Vector3(dest.x, pathfinding.pathHeight, dest.z);
+                   if (pathfinding.CalculatePath(agent, transform, dest) != Vector3.zero)
+                   {
+                       currentDestination = dest;
+                   }
+                   else
+                   {
+                    currentDestination = pathfinding.CalculateRandomPosOnCirclePeriphery(agent, transform, moveAwayRadius + 3, moveAwayPoint);
+                   }
+                   return;
                 case STATE.ATTRACTED :
                     currentDestination = attractedPoint;
                     return;

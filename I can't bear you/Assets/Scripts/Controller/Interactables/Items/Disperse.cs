@@ -3,15 +3,18 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Disperse : Awareness
+[RequireComponent(typeof(NavMeshObstacle), typeof(Awareness))]
+public class Disperse : Item
 {
     public enum DisperseType
     {
         RANDOM
     }
     
+    [Header("Disperse Data")]
     [SerializeField] private DisperseType disperseType;
-    [SerializeField] private NavMeshObstacle obstacle;
+    [SerializeField] public NavMeshObstacle obstacle;
+    [SerializeField] public Awareness awareness;
     
     List<GameObject> currentTargets = new List<GameObject>(); 
 
@@ -25,20 +28,20 @@ public class Disperse : Awareness
     /// </summary>
     void DisperseNpc()
     {
-        if (visibleTargets.Count > 0)
+        if (awareness.visibleTargets.Count > 0)
         {
             List<Transform> targets = new List<Transform>();
-            foreach (var target in visibleTargets)
+            foreach (var target in awareness.visibleTargets)
             {
                 targets.Add(target);
             }
             targets = CheckNpcStillInView(targets);
             DisperseRemainingNpcInView(targets);
         }
-        /*else if (!obstacle.enabled)
+        else if (!obstacle.enabled)
         {
             obstacle.enabled = true;
-        }*/
+        }
     }
 
     /// <summary>
@@ -90,18 +93,24 @@ public class Disperse : Awareness
         {
             Vector3 direction = transform.position - target.position;
             direction.Normalize();
-            NpcManager.instance.npcScriptDict[target.gameObject].Disperse(transform.position, direction, viewRadius);
+            NpcManager.instance.npcScriptDict[target.gameObject].Disperse(transform.position, direction, awareness.viewRadius);
             currentTargets.Add(target.gameObject);
         }
     }
 
     private void OnEnable()
     {
-        NpcManager.instance.SetDispersePoint(transform.position, viewRadius, disperseType);
+        NpcManager.instance.SetDispersePoint(transform.position, awareness.viewRadius, disperseType);
+        awareness.Init();
     }
 
     private void OnDisable()
     {
         NpcManager.instance.RemoveDispersePoint(transform.position, disperseType);
+        foreach (var target in currentTargets)
+        {
+            NpcManager.instance.npcScriptDict[target].StopDisperse();
+        }
+        obstacle.enabled = false;
     }
 }
