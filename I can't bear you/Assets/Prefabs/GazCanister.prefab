@@ -109,7 +109,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   outlineData: {fileID: 11400000, guid: a8ca930fdc07a3c4dac31119b528899c, type: 2}
-  outlineObject: {fileID: 0}
+  outlineObject: {fileID: 8413372847832847285}
 --- !u!1001 &2970251819242681344
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -364,6 +364,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 870a042f82116d94ab8c68529100a5c3, type: 3}
+--- !u!1 &8413372847832847285 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 870a042f82116d94ab8c68529100a5c3,
+    type: 3}
+  m_PrefabInstance: {fileID: 8647799512006618852}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &9190050975917672719 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 870a042f82116d94ab8c68529100a5c3,
