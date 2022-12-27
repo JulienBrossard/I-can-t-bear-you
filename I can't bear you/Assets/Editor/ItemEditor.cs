@@ -1,13 +1,7 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Numerics;
-using System.Reflection;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.XR;
+using UnityEngine.AI;
 using Random = UnityEngine.Random;
-using Vector3 = System.Numerics.Vector3;
 
 [CustomEditor(typeof(Item), true)]
 public class ItemEditor : Editor
@@ -18,6 +12,7 @@ public class ItemEditor : Editor
     private bool conductorBuffer;
     private float zoneSizeBuffer;
     private float fallHandleSize = 2.5f;
+    private float lastRadius;
 
     private void OnEnable()
     {
@@ -43,6 +38,7 @@ public class ItemEditor : Editor
     public override void OnInspectorGUI()
     {
         item = (Item)target;
+        ChangeRadius();
         base.OnInspectorGUI();
         
         if(item.fallable && item.GetComponent<Rigidbody>() == default)
@@ -124,5 +120,32 @@ public class ItemEditor : Editor
             }
         }
     }
+    
+    /// <summary>
+    /// Change NavMeshObstacle Radius
+    /// </summary>
+    public void ChangeRadius()
+    {
+        if (target.GetType() == typeof(Disperse))
+        {
+            var disperse = (Disperse)target;
+            if (disperse.awareness == null)
+            {
+                disperse.awareness = disperse.gameObject.GetComponent<Awareness>();
+            }
+
+            if (disperse.obstacle == null)
+            {
+                disperse.obstacle = disperse.gameObject.GetComponent<NavMeshObstacle>();
+                disperse.obstacle.shape = NavMeshObstacleShape.Capsule;
+                disperse.obstacle.carving = true;
+            } 
+            if (lastRadius != ((Disperse)target).awareness.viewRadius)
+            {
+                disperse.obstacle.radius = disperse.awareness.viewRadius;
+            }
+        }
+    }
+    
 #endif
 }

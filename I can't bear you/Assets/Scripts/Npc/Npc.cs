@@ -31,7 +31,7 @@ public class Npc : Entity,ISmashable
     [SerializeField] STATS initStats = STATS.RANDOM;
     
     PartyData partyData;
-
+    [SerializeField] private bool test;
     [Header("Data")] 
     public Stats stats;
     [SerializeField] public NpcData npcData;
@@ -55,11 +55,12 @@ public class Npc : Entity,ISmashable
     
     [HideInInspector] public Vector3 currentDestination;
     [HideInInspector] public Vector3 attractedPoint;
+    [HideInInspector] public Vector3 moveAwayPoint;
+    [HideInInspector] public float moveAwayRadius;
     [HideInInspector] public bool isAction;
     [HideInInspector] public Pathfinding pathfinding;
     private Transform player;
     [HideInInspector] public float currentSpeed;
-    Vector3 disperseCenter;
     private float npcSpeed;
 
     //Init Npc
@@ -164,9 +165,18 @@ public class Npc : Entity,ISmashable
                     SetStateDestination(pathfinding.bladderPoints, npcScripts.npcUI.bladderImage);
                     return;
                 case STATE.MOVEAWAY :
-                    disperseCenter = pathfinding.GetDispersePointKey(transform.position); 
-                    currentDestination = pathfinding.CalculateRandomPosOnCirclePeriphery(agent, transform, pathfinding.noExitPoints[0].position.y, pathfinding.dispersePoints[disperseCenter], disperseCenter);
-                    return;
+                   // disperseCenter = pathfinding.GetDispersePointKey(transform.position);
+                   Vector3 dest = moveAwayPoint + (transform.position - moveAwayPoint).normalized * (moveAwayRadius + 3);
+                   dest = new Vector3(dest.x, pathfinding.pathHeight, dest.z);
+                   if (pathfinding.CalculatePath(agent, transform, dest) != Vector3.zero)
+                   {
+                       currentDestination = dest;
+                   }
+                   else
+                   {
+                    currentDestination = pathfinding.CalculateRandomPosOnCirclePeriphery(agent, transform, moveAwayRadius + 3, moveAwayPoint);
+                   }
+                   return;
                 case STATE.ATTRACTED :
                     currentDestination = attractedPoint;
                     return;
@@ -411,6 +421,7 @@ public class Npc : Entity,ISmashable
     public void RemoveExitPoint(Transform exitPoint)
     {
         pathfinding.exitPoints.Remove(exitPoint);
+        currentDestination = Vector3.zero;
     }
 
     /// <summary>
@@ -422,6 +433,16 @@ public class Npc : Entity,ISmashable
     public void Disperse(Vector3 center, Vector3 direction, float radius)
     {
         AddStateToStack(STATE.MOVEAWAY);
+        moveAwayPoint = center;
+        moveAwayRadius = radius;
+    }
+    
+    /// <summary>
+    /// Stop Disperse Npc
+    /// </summary>
+    public void StopDisperse()
+    {
+        stateStack.Remove(STATE.MOVEAWAY);
     }
 
     /// <summary>
@@ -542,7 +563,6 @@ public class Npc : Entity,ISmashable
         currentDestination = pathfinding.ChooseClosestTarget(waypoints, transform, agent).position;
         image.SetActive(true);
     }
-
 }
 
 [Serializable]
