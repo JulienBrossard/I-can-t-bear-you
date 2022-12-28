@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class AttractiveItem : Item, IInteractable, ISmashable
@@ -5,17 +6,24 @@ public class AttractiveItem : Item, IInteractable, ISmashable
     [Header("Television Attraction")] 
     [SerializeField] public Awareness awareness;
     public bool functioning = false;
+    bool isPartying = false;
     public float attractedDistance = 5f;
     public int npcCount;
     [Range(0,180)]
     [SerializeField] public float angle;
     [SerializeField] public bool invertZAxis;
+    [SerializeField] AudioClip turnedOnSound, turnedOffSound, activeSound, brokenSound;
+    [SerializeField] AudioSource audioSource;
     
     private void Update()
     {
         if (functioning)
         {
             Attracted();
+            if (!isPartying)
+            {
+                StartCoroutine(PartyLoop());
+            }
         }
     }
     
@@ -25,7 +33,16 @@ public class AttractiveItem : Item, IInteractable, ISmashable
         functioning = !functioning;
         if (!functioning)
         {
+            StopCoroutine(PartyLoop());
+            audioSource.Stop();
+            isPartying = false;
+            audioSource.PlayOneShot(turnedOffSound);
+
             StopAttracted();
+        }
+        else
+        {
+            audioSource.PlayOneShot(turnedOnSound);
         }
     }
     
@@ -72,6 +89,11 @@ public class AttractiveItem : Item, IInteractable, ISmashable
 
     public void Smash()
     {
+        functioning = false;
+        StopCoroutine(PartyLoop());
+        audioSource.Stop();
+        isPartying = false;
+        audioSource.PlayOneShot(brokenSound);
         if (charged) return;
         Electrocute();
     }
@@ -80,5 +102,15 @@ public class AttractiveItem : Item, IInteractable, ISmashable
     {
         Debug.Log("Interacting with " + gameObject.name);
         Switch();
+    }
+
+    IEnumerator PartyLoop()
+    {
+        isPartying = true;
+        audioSource.loop = true;
+        audioSource.clip = activeSound;
+        audioSource.Play();
+        yield return new WaitForSeconds(16f);
+        isPartying = false;
     }
 }
