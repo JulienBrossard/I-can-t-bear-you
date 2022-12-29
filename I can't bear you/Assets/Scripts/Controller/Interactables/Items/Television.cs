@@ -9,8 +9,8 @@ public class Television : AttractiveItem, ISmashable, IInteractable
     [SerializeField] private Material tvOff;
     [SerializeField] private Material tvOn;
     bool isPartying = false;
-    [SerializeField] AudioClip turnedOnSound, turnedOffSound, activeSound, brokenSound;
-    [SerializeField] AudioSource audioSource;
+    [SerializeField] AudioClip tvOnSound, tvOffSound, footballSound, tvBrokenSound;
+    [SerializeField] AudioSource tvAudioSource;
 
     private void Update()
     {
@@ -28,9 +28,9 @@ public class Television : AttractiveItem, ISmashable, IInteractable
     {
         functioning = false;
         StopCoroutine(PartyLoop());
-        audioSource.Stop();
+        tvAudioSource.Stop();
         isPartying = false;
-        audioSource.PlayOneShot(brokenSound);
+        tvAudioSource.PlayOneShot(tvBrokenSound);
 
         tempMatList = tvScreenMR.materials;
         tempMatList[1] = tvOff;
@@ -47,16 +47,16 @@ public class Television : AttractiveItem, ISmashable, IInteractable
         if (!functioning)
         {
             StopCoroutine(PartyLoop());
-            audioSource.Stop();
+            tvAudioSource.Stop();
             isPartying = false;
-            audioSource.PlayOneShot(turnedOffSound);
+            tvAudioSource.PlayOneShot(tvOffSound);
 
             tempMatList[1] = tvOff;
             StopAttracted();
         }
         else
         {
-            audioSource.PlayOneShot(turnedOnSound);
+            tvAudioSource.PlayOneShot(tvOnSound);
             tempMatList[1] = tvOn;
         }
         tvScreenMR.materials = tempMatList;
@@ -71,9 +71,9 @@ public class Television : AttractiveItem, ISmashable, IInteractable
     IEnumerator PartyLoop()
     {
         isPartying = true;
-        audioSource.loop = true;
-        audioSource.clip = activeSound;
-        audioSource.Play();
+        tvAudioSource.loop = true;
+        tvAudioSource.clip = footballSound;
+        tvAudioSource.Play();
         yield return new WaitForSeconds(16f);
         isPartying = false;
     }

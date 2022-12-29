@@ -4,15 +4,28 @@ using UnityEngine;
 
 public class Douche : Item,IInteractable,ISmashable
 {
+    [SerializeField] AudioSource audioSource;
+    [SerializeField] AudioClip brokenSound, showerOpenSound;
+    bool isBroken = false, hasBeenTurnedOn = false;
     public void Interact(Vector3 sourcePos)
     {
-        Debug.Log("Interacting douche");
-        CreatePuddle();
+        if (!hasBeenTurnedOn)
+        {
+            hasBeenTurnedOn = true;
+            Debug.Log("Interacting douche");
+            audioSource.PlayOneShot(showerOpenSound);
+            CreatePuddle();
+        }
     }
 
     public void Smash()
     {
-        Debug.Log("Breaking the douche");
-        CreatePuddle();
+        if (!isBroken)
+        {
+            isBroken = true;
+            Debug.Log("Breaking the douche");
+            audioSource.PlayOneShot(brokenSound);
+            CreatePuddle();
+        }
     }
 }

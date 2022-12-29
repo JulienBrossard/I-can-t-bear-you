@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ee3fd88ca3e44b44b42ba4e12787d11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeBeforeFading: 10
+  timeBeforeFading: 45
   explosionPrefab: {fileID: 6307271810872161894, guid: ec779f342bcc2a34784b7fc79cc61a74,
     type: 3}
   isExplosive: 1
