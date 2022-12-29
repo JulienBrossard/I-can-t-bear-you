@@ -31,7 +31,7 @@ public class ParticleRangeAttributer : MonoBehaviour
                 shape.radius = 1;
                 var velocityOverLifetime = system.velocityOverLifetime;
                 velocityOverLifetime.enabled = true;
-                velocityOverLifetime.speedModifier = -_range / system.main.startLifetime.constant;
+                velocityOverLifetime.speedModifier = (-_range / system.main.startLifetime.constant)*1.5f;
             }
         }
         return particleSystems.Length;
