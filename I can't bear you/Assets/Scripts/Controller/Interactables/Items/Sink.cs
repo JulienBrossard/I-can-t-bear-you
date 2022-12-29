@@ -4,9 +4,16 @@ using UnityEngine;
 
 public class Sink : Item, ISmashable
 {
+    bool isBroken = false;
+    [SerializeField] AudioSource audioSource;
     public void Smash()
     {
-        Debug.Log("Breaking the Sink");
-        CreatePuddle();
+        if (!isBroken)
+        {
+            isBroken = true;
+            Debug.Log("Breaking the Sink");
+            audioSource.Play();
+            CreatePuddle();
+        }
     }
 }

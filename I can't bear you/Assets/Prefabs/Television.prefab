@@ -127,19 +127,19 @@ MonoBehaviour:
   npcCount: 0
   angle: 180
   invertZAxis: 1
-  turnedOnSound: {fileID: 8300000, guid: 272cb1d6897361c4497a157ad95e4fdf, type: 3}
-  turnedOffSound: {fileID: 8300000, guid: a7f50609dadf62f41b08afcfa01da55d, type: 3}
-  activeSound: {fileID: 8300000, guid: 516aacaec570bbe41b9ba29f51451bf8, type: 3}
-  brokenSound: {fileID: 8300000, guid: 1e4a2880106258c46991c7cd1ddcaa29, type: 3}
-  audioSource: {fileID: 3801373672178325589}
+  turnedOnSound: {fileID: 0}
+  turnedOffSound: {fileID: 0}
+  activeSound: {fileID: 0}
+  brokenSound: {fileID: 0}
+  audioSource: {fileID: 0}
   tvScreenMR: {fileID: 3858243394791108172}
   tvOff: {fileID: -8896051167825165466, guid: b71a686cca81e7a459f671fed62d8d40, type: 3}
   tvOn: {fileID: 2100000, guid: 41170d8d08ed02f40909fd88daa7c482, type: 2}
-  turnedOnSound: {fileID: 8300000, guid: 272cb1d6897361c4497a157ad95e4fdf, type: 3}
-  turnedOffSound: {fileID: 8300000, guid: a7f50609dadf62f41b08afcfa01da55d, type: 3}
-  activeSound: {fileID: 8300000, guid: 516aacaec570bbe41b9ba29f51451bf8, type: 3}
-  brokenSound: {fileID: 8300000, guid: 1e4a2880106258c46991c7cd1ddcaa29, type: 3}
-  audioSource: {fileID: 3801373672178325589}
+  tvOnSound: {fileID: 8300000, guid: 272cb1d6897361c4497a157ad95e4fdf, type: 3}
+  tvOffSound: {fileID: 8300000, guid: a7f50609dadf62f41b08afcfa01da55d, type: 3}
+  footballSound: {fileID: 8300000, guid: 516aacaec570bbe41b9ba29f51451bf8, type: 3}
+  tvBrokenSound: {fileID: 8300000, guid: 1e4a2880106258c46991c7cd1ddcaa29, type: 3}
+  tvAudioSource: {fileID: 3801373672178325589}
 --- !u!114 &8550208509231053647
 MonoBehaviour:
   m_ObjectHideFlags: 0
