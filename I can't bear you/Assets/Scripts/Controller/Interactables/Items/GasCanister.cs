@@ -6,6 +6,7 @@ using UnityEngine;
 public class GasCanister : Item, ISmashable
 {
     [SerializeField] AudioSource audioSource;
+    [SerializeField] ParticleSystem smashParticle;
     public void Smash()
     {
         StartCoroutine(FeedbackSmash());
@@ -19,6 +20,9 @@ public class GasCanister : Item, ISmashable
 
     IEnumerator FeedbackSmash()
     {
+        if (smashParticle)
+            smashParticle.Play();
+        else Debug.Log("No Smash Particle on " + this.name);
         Debug.Log("Breaking the Gas Canister");
         audioSource.Play();
         CreateGas();

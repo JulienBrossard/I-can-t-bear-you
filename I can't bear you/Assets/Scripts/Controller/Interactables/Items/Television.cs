@@ -8,7 +8,6 @@ public class Television : AttractiveItem, ISmashable, IInteractable
     [SerializeField] private MeshRenderer tvScreenMR;
     [SerializeField] private Material tvOff;
     [SerializeField] private Material tvOn;
-    bool isPartying = false;
     [SerializeField] AudioClip tvOnSound, tvOffSound, footballSound, tvBrokenSound;
     [SerializeField] AudioSource tvAudioSource;
 
@@ -26,6 +25,9 @@ public class Television : AttractiveItem, ISmashable, IInteractable
 
     public void Smash()
     {
+        if (smashParticle)
+            smashParticle.Play();
+        else Debug.Log("No Smash Particle on "+this.name);
         functioning = false;
         StopCoroutine(PartyLoop());
         tvAudioSource.Stop();
@@ -64,6 +66,9 @@ public class Television : AttractiveItem, ISmashable, IInteractable
     
     public void Interact(Vector3 sourcePos)
     {
+        if (interactParticle)
+            interactParticle.Play();
+        else Debug.Log("No interact Particle on "+this.name);
         Debug.Log("Interacting with " + gameObject.name);
         Switch();
     }
