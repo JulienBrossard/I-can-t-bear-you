@@ -6,7 +6,7 @@ public class AttractiveItem : Item, IInteractable, ISmashable
     [Header("Television Attraction")] 
     [SerializeField] public Awareness awareness;
     public bool functioning = false;
-    bool isPartying = false;
+    [HideInInspector] public bool isPartying = false;
     public float attractedDistance = 5f;
     public int npcCount;
     [Range(0,180)]
@@ -14,7 +14,8 @@ public class AttractiveItem : Item, IInteractable, ISmashable
     [SerializeField] public bool invertZAxis;
     [SerializeField] AudioClip turnedOnSound, turnedOffSound, activeSound, brokenSound;
     [SerializeField] AudioSource audioSource;
-    
+    public ParticleSystem interactParticle, smashParticle;
+
     private void Update()
     {
         if (functioning)
@@ -89,6 +90,9 @@ public class AttractiveItem : Item, IInteractable, ISmashable
 
     public void Smash()
     {
+        if (smashParticle)
+            smashParticle.Play();
+        else Debug.Log("No Smash Particle on " + this.name);
         functioning = false;
         StopCoroutine(PartyLoop());
         audioSource.Stop();
@@ -100,6 +104,9 @@ public class AttractiveItem : Item, IInteractable, ISmashable
 
     public void Interact(Vector3 sourcePos)
     {
+        if (interactParticle)
+            interactParticle.Play();
+        else Debug.Log("No interact Particle on " + this.name);
         Debug.Log("Interacting with " + gameObject.name);
         Switch();
     }

@@ -5,6 +5,7 @@ public class BearserkerGaugeManager : MonoBehaviour
     public static BearserkerGaugeManager instance;
     [SerializeField] private BearserkerState bearserkerState;
     [SerializeField,Range(0f,1f)] private float amount,deductionRate;
+    [SerializeField] ParticleSystem rageGain;
     
     private void Awake()
     {
@@ -13,6 +14,7 @@ public class BearserkerGaugeManager : MonoBehaviour
 
     public void AddBearserker(float amountToAdd)
     {
+        rageGain.Play();
         amount += amountToAdd;
         amount = Mathf.Clamp(amount, 0, 1);
         UiManager.instance.UpdateBearserkerGauge(amount);
