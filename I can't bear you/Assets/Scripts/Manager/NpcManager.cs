@@ -1,16 +1,15 @@
 using System;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class NpcManager : MonoBehaviour
 {
-    public static NpcManager instance;
-    public int npcCountRemaining;
-    public int npcCountkilled;
-    public int npcCountfleed;
-    public List<GameObject> npc = new List<GameObject>();
-    public Dictionary<GameObject, Panic> panicDict = new Dictionary<GameObject, Panic>();
+    public Tools.FIELD field = Tools.FIELD.HIDDEN;
+    [ConditionalEnumHide("field", 0)] public static NpcManager instance;
+    [ConditionalEnumHide("field", 0)] public int npcCountRemaining;
+    [ConditionalEnumHide("field", 0)] public int npcCountkilled;
+    [ConditionalEnumHide("field", 0)] public int npcCountfleed;
+    [ConditionalEnumHide("field", 0)] public List<GameObject> npc = new List<GameObject>();
     public Dictionary<GameObject, Npc> npcScriptDict = new Dictionary<GameObject, Npc>();
 
     private void Awake()
@@ -22,6 +21,11 @@ public class NpcManager : MonoBehaviour
         instance = this;
     }
 
+    /// <summary>
+    /// Spawn Npc
+    /// </summary>
+    /// <param name="name"> Npc name </param>
+    /// <returns></returns>
     [ContextMenu("Spawn Npc")]
     public Npc SpawnNpc(String name)
     {
@@ -33,15 +37,18 @@ public class NpcManager : MonoBehaviour
         {
         }
         UiManager.instance.UpdateRemainingNpcText();
-        panicDict.Add(npc[^1], npc[^1].GetComponent<Panic>());
         npcScriptDict.Add(npc[^1], npc[^1].GetComponent<Npc>());
         return npcScriptDict[npc[^1]];
     }
 
+    /// <summary>
+    /// Unspawn Npc
+    /// </summary>
+    /// <param name="name"> Npc name (Don't forget to replace (Clone) by String.Empty </param>
+    /// <param name="npc"> Npc GameObject </param>
     [ContextMenu("Npc")]
     public void UnSpawnNpc(String name, GameObject npc)
     {
-        panicDict.Remove(npc);
         npcScriptDict.Remove(npc);
         this.npc.Remove(npc);
         Pooler.instance.DePop(name, npc);
@@ -51,6 +58,9 @@ public class NpcManager : MonoBehaviour
         UiManager.instance.UpdateRemainingNpcText();
     }
     
+    /// <summary>
+    /// Check if the level is finished
+    /// </summary>
     public void CheckForLvlEnd()
     {
         if (npcCountRemaining == 0)
@@ -59,6 +69,12 @@ public class NpcManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Added disperse point to all npc
+    /// </summary>
+    /// <param name="center"> Center of the disperse point </param>
+    /// <param name="radius"> Radius of the disperse point </param>
+    /// <param name="type">Type of the disperse point </param>
     public void SetDispersePoint(Vector3 center, float radius, Disperse.DisperseType type)
     {
         foreach (var npc in npcScriptDict.Values)
@@ -67,6 +83,11 @@ public class NpcManager : MonoBehaviour
         }
     }
     
+    /// <summary>
+    /// Remove disperse point to all npc
+    /// </summary>
+    /// <param name="center"> Center of the disperse point </param>
+    /// <param name="type"> Type of the disperse point </param>
     public void RemoveDispersePoint(Vector3 center, Disperse.DisperseType type)
     {
         foreach (var npc in npcScriptDict.Values)

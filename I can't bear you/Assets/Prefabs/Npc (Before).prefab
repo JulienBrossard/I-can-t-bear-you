@@ -15,6 +15,10 @@ GameObject:
   - component: {fileID: -9189316787099130175}
   - component: {fileID: -5018598684595615651}
   - component: {fileID: -904784301165387235}
+  - component: {fileID: 1282679550094890322}
+  - component: {fileID: 8249409815365307625}
+  - component: {fileID: 7344111816629511397}
+  - component: {fileID: 3338945405451357924}
   m_Layer: 0
   m_Name: Npc (Before)
   m_TagString: Untagged
@@ -86,30 +90,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83b69b0fbea79084bb43439c07b23be0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  field: 1
   currentSpeedRatio: 1
   entityData: {fileID: 0}
-  animator: {fileID: 6190214790490875295}
+  animator: {fileID: 3338945405451357924}
   isDie: 0
-  canvas: {fileID: 0}
+  initStats: 0
   stats:
+    field: 1
     currentHunger: 100
     currentThirst: 100
     currentBladder: 100
   npcData: {fileID: 11400000, guid: 076b23ef35ff6774cad62ab6788037dc, type: 2}
   state: 4
+  stateStack: 03000000
+  stateLayers: []
   agent: {fileID: 5817163454148858052}
   minimumDistanceWithDestination: 0.5
-  currentDestination: {fileID: 0}
-  exitPoints: []
+  npcScripts: {fileID: 8249409815365307625}
+  currentDestination: {x: 0, y: 0, z: 0}
   attractedPoint: {x: 0, y: 0, z: 0}
-  moveAwayPoint: {x: 0, y: 0, z: 0}
   isAction: 0
-  panicData: {fileID: -9189316787099130175}
-  statusEffects: {fileID: -5018598684595615651}
   currentSpeed: 0
-  thirstImage: {fileID: 0}
-  hungerImage: {fileID: 0}
-  bladderImage: {fileID: 0}
 --- !u!114 &-9189316787099130175
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -122,12 +124,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19991cee13099a242981d613ac467c7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  field: 1
   currentPanic: 0
   panicState: 0
   panicData: {fileID: 11400000, guid: a3c6d08dab0c19b4a87684c76dfff81f, type: 2}
   npc: {fileID: 5817163454148858053}
-  suspiciousImage: {fileID: 0}
-  panicImage: {fileID: 0}
 --- !u!114 &-5018598684595615651
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -140,9 +141,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09050fecb80059049b1372be8bbded69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  field: 1
   panicData: {fileID: -9189316787099130175}
   statusEffectsData: {fileID: 11400000, guid: 35641d8d07adf9e4ca68673db1f2341d, type: 2}
-  currentStatueEffectValue: 0
+  currentStatusEffectValue: 0
   status: 0
 --- !u!114 &-904784301165387235
 MonoBehaviour:
@@ -166,6 +168,75 @@ MonoBehaviour:
     m_Bits: 55
   visibleTargets: []
   maxTargets: 5
+--- !u!114 &1282679550094890322
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5817163454148858050}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ecbf520fd53650a4180c2979c0fa5db0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canvas: {fileID: 0}
+  thirstImage: {fileID: 0}
+  hungerImage: {fileID: 0}
+  bladderImage: {fileID: 0}
+  suspiciousImage: {fileID: 0}
+  panicImage: {fileID: 0}
+--- !u!114 &8249409815365307625
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5817163454148858050}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0cad1d545c061d4fa828895e6ecf72a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  panicData: {fileID: -9189316787099130175}
+  statusEffects: {fileID: -5018598684595615651}
+  npcUI: {fileID: 1282679550094890322}
+--- !u!54 &7344111816629511397
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5817163454148858050}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!95 &3338945405451357924
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5817163454148858050}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1001 &324991619668596750
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -248,12 +319,6 @@ PrefabInstance:
 --- !u!4 &218463453594927077 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: f7626fabebdb1e540a94559eaa9fd57f,
-    type: 3}
-  m_PrefabInstance: {fileID: 324991619668596750}
-  m_PrefabAsset: {fileID: 0}
---- !u!95 &6190214790490875295 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: f7626fabebdb1e540a94559eaa9fd57f,
     type: 3}
   m_PrefabInstance: {fileID: 324991619668596750}
   m_PrefabAsset: {fileID: 0}
