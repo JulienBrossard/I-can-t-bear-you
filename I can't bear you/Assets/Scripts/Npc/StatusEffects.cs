@@ -1,16 +1,11 @@
-using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 
+[RequireComponent(typeof(Panic))]
 public class StatusEffects : MonoBehaviour
 {
-    [Header("Data")]
-    [SerializeField] private Panic panicData;
-    [SerializeField] private StatusEffectsData statusEffectsData;
-    [Range(0,1)]
-    [SerializeField] private float currentStatueEffectValue;
-    public CurrentData currentData;
-    
-    
+    #region Enums
+
     public enum Status
     {
         NORMAL,
@@ -19,7 +14,19 @@ public class StatusEffects : MonoBehaviour
         VERY_DRUNK
     }
 
-    public Status status;
+    [SerializeField] Tools.FIELD field = Tools.FIELD.HIDDEN;
+
+    #endregion
+    
+    
+    [Header("Data")]
+    public Panic panicData;
+    public StatusEffectsData statusEffectsData;
+    [Range(0,1)]
+    public float currentStatusEffectValue;
+    public CurrentData currentData;
+
+    [ConditionalEnumHide("field", 0)] public Status status;
 
     private void Awake()
     {
@@ -27,9 +34,31 @@ public class StatusEffects : MonoBehaviour
         UpdateStatusEffects(0);
     }
 
+    /// <summary>
+    /// Update Status Effects
+    /// </summary>
+    /// <param name="effectValue"> Value to add </param>
     void UpdateStatusEffects(float effectValue)
     {
-        currentStatueEffectValue += effectValue;
+        currentStatusEffectValue += effectValue;
+
+        if (currentStatusEffectValue < statusEffectsData.littleDrunkData.minimumValue)
+        {
+            SwitchStatus(Status.NORMAL);
+        }
+        else if (currentStatusEffectValue >= statusEffectsData.littleDrunkData.minimumValue && currentStatusEffectValue < statusEffectsData.drunkData.minimumValue)
+        {
+            SwitchStatus(Status.LITTLE_DRUNK);
+        }
+        else if (currentStatusEffectValue >= statusEffectsData.drunkData.minimumValue && currentStatusEffectValue < statusEffectsData.veryDrunkData.minimumValue)
+        {
+            SwitchStatus(Status.DRUNK);
+        }
+        else
+        {
+            SwitchStatus(Status.VERY_DRUNK);
+        }
+        
         switch (status)
         {
             case Status.NORMAL :
@@ -55,6 +84,9 @@ public class StatusEffects : MonoBehaviour
         }
     }
     
+    /// <summary>
+    /// Update Panic when switch status
+    /// </summary>
     void UpdatePanics()
     {
         switch (status)
@@ -68,6 +100,21 @@ public class StatusEffects : MonoBehaviour
             case Status.VERY_DRUNK :
                 panicData.UpdatePanic(-statusEffectsData.veryDrunkData.panicRatio);
                 break;
+        }
+    }
+    
+    
+    /// <summary>
+    /// Switch status
+    /// </summary>
+    /// <param name="newStatus"> New Status </param>
+    void SwitchStatus(Status newStatus)
+    {
+        if (status != newStatus)
+        {
+            status = newStatus;
+            UpdatePanics();
+            Debug.Log("New Status : " + status);
         }
     }
 }

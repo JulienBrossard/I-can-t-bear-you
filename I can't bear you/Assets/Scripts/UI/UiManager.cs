@@ -101,6 +101,10 @@ public class UiManager : MonoBehaviour
     {
         if (iconWhoFlee >= 0)
         {
+            if (currentIcon == noIconToSwitch)
+            {
+                StopAllCoroutines();
+            }
             npcIconParent.transform.GetChild(currentIcon).GetComponent<Image>().DOColor(Color.gray, 0.1f);
             timeToWait = timeBetweenIconKill.Evaluate((float)currentIcon / noIconToSwitch) * speed;
             yield return new WaitForSeconds(timeToWait);

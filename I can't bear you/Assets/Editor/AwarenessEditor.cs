@@ -1,13 +1,21 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEditor;
+using UnityEngine.AI;
 
 [CustomEditor (typeof (Awareness),true)]
 public class AwarenessEditor : Editor
 {
     
 #if UNITY_EDITOR
+
     void OnSceneGUI() {
         Display();
+    }
+
+    public override void OnInspectorGUI()
+    {
+        base.OnInspectorGUI();
     }
 
     public virtual void Display()
@@ -30,6 +38,6 @@ public class AwarenessEditor : Editor
             }
         }
     }
-    
+
 #endif
 }

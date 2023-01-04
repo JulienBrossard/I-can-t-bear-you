@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Npc Data", menuName = "Npc Data")]
+[CreateAssetMenu(fileName = "Npc Data", menuName = "ScriptableObjects/Npc Data")]
 public class NpcData : ScriptableObject
 {
     public float maxHunger;

@@ -97,7 +97,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 112000000, guid: 8e1433f122d878943af8a010e4806818,
+  m_LightingDataAsset: {fileID: 112000000, guid: b9269ecf9f59e8c40ae993feb01205aa,
     type: 2}
   m_LightingSettings: {fileID: 4890085278179872738, guid: 0de9c4f2a5244a542b1dad104e982eaa,
     type: 2}
@@ -8658,7 +8658,7 @@ Light:
   m_Type: 2
   m_Shape: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 45
+  m_Intensity: 20
   m_Range: 91.18527
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -15936,7 +15936,7 @@ Light:
   m_Type: 2
   m_Shape: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 56.25
+  m_Intensity: 10
   m_Range: 91.18527
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -16706,7 +16706,7 @@ Light:
   m_Type: 2
   m_Shape: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 45
+  m_Intensity: 20
   m_Range: 91.18527
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208

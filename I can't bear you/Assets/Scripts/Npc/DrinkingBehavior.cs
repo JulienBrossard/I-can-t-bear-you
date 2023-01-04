@@ -21,10 +21,7 @@ public class DrinkingBehavior : StateMachineBehaviour
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        npc.state = Npc.STATE.DANCING;
-        npc.stats.currentThirst = npc.npcData.maxThirst;
-        npc.isAction = false;
-        Debug.Log("Drinking");
+        npc.Drink();
     }
 
     // OnStateMove is called right after Animator.OnAnimatorMove()
