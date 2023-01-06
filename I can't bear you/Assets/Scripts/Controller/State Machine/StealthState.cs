@@ -40,13 +40,34 @@ public class StealthState : PlayerState
             {
                 if (heldObject != default)
                 {
-                    heldObject.GetComponent<IGrabbable>().Throw(transform.forward);
-                    heldObject = null;
+                    heldObjectRb = heldObject.GetComponent<Rigidbody>();
+                    heldObjectGrabbable = heldObject.GetComponent<IGrabbable>();
                     return;
                 }
                 interestPointsManager.GetSmashable()?.Smash();
                 animator.SetTrigger("Attack");
             }
+            
+            if (InputManager.instance.input.Actions.Smash.IsPressed())
+            {
+                if (heldObject != default)
+                {
+                    //heldObjectRb.for
+                }
+            }
+
+            if (InputManager.instance.input.Actions.Smash.WasReleasedThisFrame())
+            {
+                if (heldObject != default)
+                {
+                    heldObjectGrabbable.Throw(transform.forward);
+                    heldObject = null;
+                    heldObjectRb = null;
+                    heldObjectGrabbable = null;
+                    return;
+                }
+            }
+            
             if (InputManager.instance.input.Actions.Grab.triggered)
             {
                 if (heldObject == default)

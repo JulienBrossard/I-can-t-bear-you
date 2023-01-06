@@ -9,6 +9,8 @@ public abstract class PlayerState : Entity
     [SerializeField] protected PlayerStats playerStats;
     [SerializeField] protected InterestPointsManager interestPointsManager;
     public GameObject heldObject;
+    protected Rigidbody heldObjectRb; 
+    protected IGrabbable heldObjectGrabbable;
     [SerializeField] protected Transform handTransform;
     private float accelerationIndex;
     [SerializeField] protected bool locked;
