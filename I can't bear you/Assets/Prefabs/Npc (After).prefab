@@ -1503,7 +1503,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4225555480404199414}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.107, y: 3.041, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.75, y: 1.75, z: 1.75}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -1516,6 +1516,7 @@ Transform:
   - {fileID: 2644679529811454431}
   - {fileID: 6456443822854295885}
   - {fileID: 1211337303414560}
+  - {fileID: 1829556567190216807}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1592,7 +1593,6 @@ MonoBehaviour:
   entityData: {fileID: 11400000, guid: 8d82193aa88f17146b352ede3c54ba6e, type: 2}
   animator: {fileID: 7426378792727152438}
   isDie: 0
-  sphere: {fileID: 5682725471120700012, guid: 2e8881d65048adc4d9e38c3459ed5429, type: 3}
   initStats: 0
   test: 0
   stats:
@@ -1617,6 +1617,9 @@ MonoBehaviour:
   moveAwayRadius: 0
   isAction: 0
   currentSpeed: 0
+  deathAnimPrefab: {fileID: 2966682104723576697, guid: 0c58253b127661c4aaa5408fbcd528d6,
+    type: 3}
+  deathAnimPivot: {fileID: 1211337303414560}
 --- !u!114 &-7787597326935306304
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2608,6 +2611,37 @@ SkinnedMeshRenderer:
     m_Center: {x: 0.40446678, y: 0.9734453, z: 0.10633911}
     m_Extent: {x: 0.636632, y: 0.3325416, z: 0.4056276}
   m_DirtyAABB: 0
+--- !u!1 &7273268728820236594
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1829556567190216807}
+  m_Layer: 0
+  m_Name: DeathAnimPivot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1829556567190216807
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7273268728820236594}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3598342012417531212}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7278371882785217616
 GameObject:
   m_ObjectHideFlags: 0
