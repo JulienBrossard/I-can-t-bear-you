@@ -13,10 +13,12 @@ public class Pathfinding
     public Transform[] thirstPoints;
     public Transform[] bladderPoints;
     public Dictionary<Vector3, float> dispersePoints = new Dictionary<Vector3, float>();
+    public float pathHeight;
 
     public Pathfinding()
     {
         LoadWayPoints();
+        pathHeight = noExitPoints[0].position.y;
     }
     
     /// <summary>
@@ -63,7 +65,11 @@ public class Pathfinding
 
         if (!CheckPathStatus(path))
         {
-            Transform[] newWayPoints = wayPoints;
+            Transform[] newWayPoints = new Transform[wayPoints.Length];
+            for (int i = 0; i < wayPoints.Length; i++)
+            {
+                newWayPoints[i] = wayPoints[i];
+            }
             newWayPoints.ToList().Remove(closestTarget);
             return ChooseClosestTarget(newWayPoints, npcTransform, agent);
         }
@@ -183,23 +189,40 @@ public class Pathfinding
     /// </summary>
     /// <param name="agent"> NavMeshAgent of the gameobject</param>
     /// <param name="npcTransform"> Transform of the npc</param>
-    /// <param name="height"> Height of the destination</param>
     /// <param name="radius"> Radius of the sphere</param>
     /// <param name="center"> Center of the sphere</param>
     /// <returns></returns>
-    public Vector3 CalculateRandomPosOnCirclePeriphery(NavMeshAgent agent, Transform npcTransform ,float height, float radius,Vector3 center )
+    public Vector3 CalculateRandomPosOnCirclePeriphery(NavMeshAgent agent, Transform npcTransform , float radius,Vector3 center )
     {
-        Vector2 direction = (Tools.instance.CalculateRandomPointInCircle(radius) - new Vector2(center.x, center.z)).normalized ;
+        Vector2 direction = Tools.instance.CalculateRandomPointInCircle(radius).normalized ;
         Vector2 randomPos = direction * radius;
         NavMeshPath path = new NavMeshPath();
         NavMesh.CalculatePath(npcTransform.position, new Vector3(center.x + randomPos.x, 
-            height, 
+            noExitPoints[0].position.y, 
             center.z + randomPos.y), agent.areaMask, path);
         if (!CheckPathStatus(path))
         {
-            return CalculateRandomPosInCircle(agent, npcTransform, radius, center);
+            return CalculateRandomPosOnCirclePeriphery(agent, npcTransform, radius, center);
         }
-        return  center + new Vector3(randomPos.x, height, randomPos.y);
+        return  center + new Vector3(randomPos.x, noExitPoints[0].position.y, randomPos.y);
+    }
+    
+    /// <summary>
+    /// Calculate path
+    /// </summary>
+    /// <param name="agent"> NavMeshAgent of the gameobject </param>
+    /// <param name="npcTransform"> Transform of the npc </param>
+    /// <param name="target"> Destination </param>
+    /// <returns></returns>
+    public Vector3 CalculatePath(NavMeshAgent agent, Transform npcTransform , Vector3 target)
+    {
+        NavMeshPath path = new NavMeshPath();
+        NavMesh.CalculatePath(npcTransform.position, target, agent.areaMask, path);
+        if (!CheckPathStatus(path))
+        {
+            return Vector3.zero;
+        }
+        return  target;
     }
     
     /// <summary>

@@ -2933,7 +2933,7 @@ MonoBehaviour:
     pool:
       prefab: {fileID: 4225555480404199414, guid: d9d78adb1c1738248a56b9aca3558a44,
         type: 3}
-      baseCount: 7
+      baseCount: 55
       baseRefreshSpeed: 5
       refreshSpeed: 5
 --- !u!114 &377199017
@@ -2970,13 +2970,13 @@ MonoBehaviour:
     partyData:
     - shape: 0
       partyPosition: {fileID: 20144190}
-      radius: 11.46
+      radius: 19.03
       width: 1.71
       length: 9.45
       npc:
       - npc: {fileID: 4225555480404199414, guid: d9d78adb1c1738248a56b9aca3558a44,
           type: 3}
-        count: 2
+        count: 50
     - shape: 1
       partyPosition: {fileID: 312293878}
       radius: 8.4
@@ -2986,7 +2986,7 @@ MonoBehaviour:
       - npc: {fileID: 4225555480404199414, guid: d9d78adb1c1738248a56b9aca3558a44,
           type: 3}
         count: 5
-    npcCount: 7
+    npcCount: 55
     requiredNpcKillCount: 50
     npcSpawnPositions:
     - {fileID: 1078110528}
@@ -5790,7 +5790,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh31146
+  m_Name: pb_Mesh31150
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -15874,6 +15874,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1742492280}
   - component: {fileID: 1742492279}
+  - component: {fileID: 1742492283}
+  - component: {fileID: 1742492282}
   - component: {fileID: 1742492281}
   m_Layer: 0
   m_Name: Sphere
@@ -15881,7 +15883,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!23 &1742492279
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -15932,8 +15934,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1742492277}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.39, y: 0.65, z: -17.02}
-  m_LocalScale: {x: 100, y: 100, z: 100}
+  m_LocalPosition: {x: -3.07, y: 0.65, z: -17.01}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -15951,18 +15953,66 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31b279ebfde7e2544851fc841a48441a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dangerState: 0
+  puddleType: 0
+  puddleSize: 1
+  zone: {fileID: 0}
+  grabbable: 0
+  rb: {fileID: 0}
+  collider: {fileID: 0}
+  throwForce: 0
+  thrown: 0
+  itemCharged: 0
+  itemConductor: 0
+  zoneSize: 0
+  emitterDependant: 0
+  emitter: {fileID: 0}
+  fallable: 0
+  falls: []
+  gasSize: 0
+  isExplosive: 0
+  disperseType: 0
+  obstacle: {fileID: 1742492283}
+  awareness: {fileID: 1742492282}
+--- !u!114 &1742492282
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1742492277}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4a013db56de600499e77b0237f0caba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   field: 1
-  viewRadius: 10
+  viewRadius: 5
   viewAngle: 360
   targetMask:
     serializedVersion: 2
     m_Bits: 64
   obstacleMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 51
   visibleTargets: []
   maxTargets: Infinity
-  disperseType: 0
+--- !u!208 &1742492283
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1742492277}
+  m_Enabled: 0
+  serializedVersion: 3
+  m_Shape: 0
+  m_Extents: {x: 5, y: 1, z: 5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1001 &1748628705
 PrefabInstance:
   m_ObjectHideFlags: 0

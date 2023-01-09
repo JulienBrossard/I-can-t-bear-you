@@ -69,11 +69,11 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  accelerationStep: 0.02
-  slowdownStep: 0.04
-  maxSpeed: 5
-  turnTime: 0.1
-  detectionAngle: 130
+  accelerationStep: 0.04
+  slowdownStep: 0.08
+  maxSpeed: 10
+  turnTime: 0.2
+  detectionAngle: 1
   detectionAngleCurve:
     serializedVersion: 2
     m_Curve:

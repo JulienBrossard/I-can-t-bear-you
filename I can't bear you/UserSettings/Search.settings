@@ -10,6 +10,9 @@ scopes = {
 	"last_search.2138236A" = ""
 	"OpenInspectorPreview.2138236A" = "0"
 	"currentGroup.2138236A" = "asset"
+	"last_search.3619CCAF" = ""
+	"OpenInspectorPreview.3619CCAF" = "0"
+	"currentGroup.3619CCAF" = "all"
 }
 providers = {
 	adb = {
