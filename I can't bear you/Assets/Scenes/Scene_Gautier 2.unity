@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.3069224, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2690,6 +2690,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8afe1eef50cb15a42869e47e3976224a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  field: 1
   npcCountRemaining: 0
   npcCountkilled: 0
   npcCountfleed: 0
@@ -2708,9 +2709,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pooler: {fileID: 377199016}
   level:
-    npc:
-    - npc: {fileID: 4225555480404199414, guid: d9d78adb1c1738248a56b9aca3558a44, type: 3}
-      count: 0
+    partyData:
+    - shape: 0
+      partyPosition: {fileID: 0}
+      radius: 0
+      width: 0
+      length: 0
+      npc: []
+    - shape: 0
+      partyPosition: {fileID: 0}
+      radius: 0
+      width: 0
+      length: 0
+      npc: []
     npcCount: 0
     requiredNpcKillCount: 0
     npcSpawnPositions:
@@ -2738,9 +2749,6 @@ MonoBehaviour:
     bladderPoints:
     - {fileID: 665679915}
     player: {fileID: 2102163164}
-    partyData:
-      partyPosition: {fileID: 20144190}
-      radius: 20
 --- !u!4 &377199019
 Transform:
   m_ObjectHideFlags: 0
@@ -13525,7 +13533,7 @@ PrefabInstance:
     - target: {fileID: 2451688659374893300, guid: 4e52ee41f60bb1c4d96e9822b7ff2abc,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.78
+      value: 1.25
       objectReference: {fileID: 0}
     - target: {fileID: 2451688659374893300, guid: 4e52ee41f60bb1c4d96e9822b7ff2abc,
         type: 3}
