@@ -9,6 +9,7 @@ public abstract class PlayerState : Entity
     [SerializeField] public PlayerStats playerStats;
     [SerializeField] protected InterestPointsManager interestPointsManager;
     public GameObject heldObject;
+    protected IGrabbable heldObjectGrabbable;
     [SerializeField] protected Transform handTransform;
     private float accelerationIndex;
     [SerializeField] protected bool locked;
@@ -106,6 +107,7 @@ public abstract class PlayerState : Entity
         else heldObject.GetComponent<IGrabbable>().Throw(transform.forward,time / playerStats.maxTimeThrowHeld);
         
         heldObject = null;
+        heldObjectGrabbable = null; 
     }
     public IEnumerator RoarCd()
     {

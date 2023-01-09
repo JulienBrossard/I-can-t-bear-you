@@ -27,7 +27,6 @@ public class StealthState : PlayerState
                 }
             }
             if(TryGrab()) return;
-            //Dégueulasse mais c'est le seul moyen que j'ai trouvé pour avoir la position de la cible sans tout revoir
             if(interestPointsManager.GetFirstItem()?.GetComponent<IInteractable>() != null)
             {
                 interestPointsManager.GetFirstItem().GetComponent<IInteractable>().Interact((transform.position - interestPointsManager.GetFirstItem().transform.position).normalized);
@@ -39,11 +38,21 @@ public class StealthState : PlayerState
             if (heldObject != default)
             {
                 StartCoroutine(EvaluateThrowForce());
+                heldObjectGrabbable = heldObject.GetComponent<IGrabbable>();
                 return;
             }
             interestPointsManager.GetSmashable()?.Smash();
             animator.SetTrigger("Attack");
         }
+
+        if (InputManager.instance.input.Actions.Smash.IsPressed()) 
+        { 
+            if (heldObject != default) 
+            { 
+                heldObjectGrabbable.DrawProjection(); 
+            } 
+        }
+        
         if (InputManager.instance.input.Actions.Roar.triggered)
         {
             Roar();
