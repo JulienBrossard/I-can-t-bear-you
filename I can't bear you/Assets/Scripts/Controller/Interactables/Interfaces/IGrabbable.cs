@@ -6,7 +6,7 @@ public interface IGrabbable
 {
     public Transform Grab(Transform hand);
     public void SetAsGrabbed(Transform hand);
-    public void Throw(Vector3 dir);
+    public void Throw(Vector3 dir, float forceRatio);
     public void Drop();
     public void SetAsReleased();
     public void DrawProjection();

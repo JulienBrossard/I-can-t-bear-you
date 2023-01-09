@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SocialPlatforms;
 
 [CreateAssetMenu(fileName = "Player Stats", menuName = "ScriptableObjects/PlayerStats")]
 public class PlayerStats : ScriptableObject
@@ -10,12 +11,13 @@ public class PlayerStats : ScriptableObject
     public float maxSpeed;
     public float turnTime;
     [Header("Sight")] 
-    [Range(0.1f,Mathf.PI)]public float detectionAngle;
+    [Range(0f,360f)]public float detectionAngle;
     [SerializeField] public AnimationCurve detectionAngleCurve;
-    [Range(0.1f,5f)]public float detectionRange;
-    [Range(0.1f,10f)]public float detectionHeight;
+    [Range(0.1f,10f)]public float detectionRange;
     [SerializeField] public AnimationCurve detectionRangeCurve;
-    [Range(0.01f,0.5f)]public float detectionStep;
+    [Header("Throw")] 
+    [Range(0.01f, 1f),Tooltip("Max time throw can be held down before throw starts")] public float maxTimeThrowHeld;
+    [Range(0f,1f),Tooltip("Minimal proportion of maxTimeThrowHeld for the throw to not be considered a drop")] public float mitigationRatioDropThrow;
     [Header("Roar")]
     public float roarRange;
     public float roarCD;

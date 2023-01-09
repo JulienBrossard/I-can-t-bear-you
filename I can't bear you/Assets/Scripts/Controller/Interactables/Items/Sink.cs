@@ -4,9 +4,20 @@ using UnityEngine;
 
 public class Sink : Item, ISmashable
 {
+    bool isBroken = false;
+    [SerializeField] AudioSource audioSource;
+    [SerializeField] ParticleSystem smashParticle;
     public void Smash()
     {
-        Debug.Log("Breaking the Sink");
-        CreatePuddle();
+        if (!isBroken)
+        {
+            if (smashParticle)
+                smashParticle.Play();
+            else Debug.Log("No Smash Particle on " + this.name);
+            isBroken = true;
+            Debug.Log("Breaking the Sink");
+            audioSource.Play();
+            CreatePuddle();
+        }
     }
 }

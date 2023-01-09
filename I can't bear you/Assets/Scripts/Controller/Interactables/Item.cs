@@ -115,7 +115,7 @@ public class Item : MonoBehaviour,IGrabbable, IAffectable
                 break;
         }
         
-        Debug.Log("Grabbing " + gameObject.name);
+        //Debug.Log("Grabbing " + gameObject.name);
         SetAsGrabbed(hand);
         return transform;
     }
@@ -135,10 +135,10 @@ public class Item : MonoBehaviour,IGrabbable, IAffectable
         
         SetAsReleased();
     }
-    public void Throw(Vector3 dir)
+    public void Throw(Vector3 dir, float forceRatio)
     {
         SetAsReleased();
-        rb.AddForce(dir * throwForce, ForceMode.Impulse);
+        rb.AddForce(dir * (throwForce*forceRatio), ForceMode.Impulse);
         thrown = true;
     }
 
@@ -196,7 +196,7 @@ public class Item : MonoBehaviour,IGrabbable, IAffectable
         if(!conductor) return;
         if (charged) return;
         
-        Debug.Log("Electrocuted " + gameObject.name + " with no depedancy");
+        //Debug.Log("Electrocuted " + gameObject.name + " with no depedancy");
         charged = true;
         EnableZone();
     }
@@ -205,7 +205,7 @@ public class Item : MonoBehaviour,IGrabbable, IAffectable
         if(!conductor) return;
         if (charged) return;
         
-        Debug.Log("Electrocuted " + gameObject.name + " with depedancy of " + emitter.name);
+        //Debug.Log("Electrocuted " + gameObject.name + " with depedancy of " + emitter.name);
         emitterDependant = true;
         this.emitter = emitter;
         charged = true;
@@ -217,7 +217,7 @@ public class Item : MonoBehaviour,IGrabbable, IAffectable
     }
     public virtual void DeElectrocute()
     {
-        Debug.Log("DeElectrocuted " + gameObject.name);
+        //Debug.Log("DeElectrocuted " + gameObject.name);
         charged = false;
         DisableZone();
     } 
@@ -247,7 +247,7 @@ public class Item : MonoBehaviour,IGrabbable, IAffectable
     public virtual void Fall(Vector3 source)
     {
         if(!fallable)return;
-        Debug.Log( "Falling " + gameObject.name);
+        //Debug.Log( "Falling " + gameObject.name);
         GetComponent<Rigidbody>().isKinematic = false;
         GetComponent<Rigidbody>().AddForce(GetFall(source).Dir * GetFall(source).force);
         falling = true;
@@ -292,7 +292,7 @@ public class Item : MonoBehaviour,IGrabbable, IAffectable
         if(!explosive) return;
         Instantiate((GameObject)Resources.Load("Explosion"), transform.position, Quaternion.identity);
         if (TryGetComponent<Collider>(out Collider col)) col.enabled = false;
-        Debug.Log("Exploded " + gameObject.name);
+        //Debug.Log("Exploded " + gameObject.name);
         DeleteItem();
     }
 }
