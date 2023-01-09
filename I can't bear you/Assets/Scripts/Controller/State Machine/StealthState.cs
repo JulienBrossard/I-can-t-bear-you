@@ -40,7 +40,6 @@ public class StealthState : PlayerState
             {
                 if (heldObject != default)
                 {
-                    heldObjectRb = heldObject.GetComponent<Rigidbody>();
                     heldObjectGrabbable = heldObject.GetComponent<IGrabbable>();
                     return;
                 }
@@ -52,7 +51,7 @@ public class StealthState : PlayerState
             {
                 if (heldObject != default)
                 {
-                    //heldObjectRb.for
+                    heldObjectGrabbable.DrawProjection();
                 }
             }
 
@@ -62,7 +61,6 @@ public class StealthState : PlayerState
                 {
                     heldObjectGrabbable.Throw(transform.forward);
                     heldObject = null;
-                    heldObjectRb = null;
                     heldObjectGrabbable = null;
                     return;
                 }
