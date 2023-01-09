@@ -8,6 +8,7 @@ public class Ponch : Item,IInteractable,ISmashable
     [SerializeField] AudioSource audioSource;
     [SerializeField] private GameObject psBubblePoisoned;
     [SerializeField] ParticleSystem interactParticle, smashParticle;
+    public bool sabotaged = false;
     public void Interact(Vector3 sourcePos)
     {
         // Spice up the Ponch
@@ -17,6 +18,7 @@ public class Ponch : Item,IInteractable,ISmashable
         Debug.Log("Interacting Ponch");
         audioSource.PlayOneShot(bubbleClip);
         psBubblePoisoned.SetActive(true);
+        sabotaged = true;
     }
 
     public void Smash()

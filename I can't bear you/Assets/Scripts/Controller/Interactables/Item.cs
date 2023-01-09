@@ -160,9 +160,11 @@ public class Item : MonoBehaviour,IGrabbable, IAffectable
         charged = true;
         EnableZone();
     }
-    public virtual void Stomp()
+
+    public virtual void Stomp(Vector3 srcPos)
     {
-        return;
+        if(fallable) return;
+        Fall(srcPos);
     }
     public virtual void DeElectrocute()
     {
