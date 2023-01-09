@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEditor;
@@ -15,6 +16,13 @@ public class ItemEditor : Editor
     private float zoneSizeBuffer;
     private float fallHandleSize = 2.5f;
     private float lastRadius;
+    private bool isGrabbable;
+
+    private void Awake()
+    {
+        item = (Item)target;
+        isGrabbable = item.grabbable;
+    }
 
     private void OnEnable()
     {
@@ -42,7 +50,8 @@ public class ItemEditor : Editor
         item = (Item)target;
         ChangeRadius();
         base.OnInspectorGUI();
-        
+        AddLineRenderer(item);
+        serializedObject.ApplyModifiedProperties();
         if(item.fallable && item.GetComponent<Rigidbody>() == default)
         {
             Debug.LogWarning(item.name + " is fallable but has no rigidbody, it has been added and set to kinematic.");
@@ -167,6 +176,29 @@ public class ItemEditor : Editor
             {
                 disperse.obstacle.radius = disperse.awareness.viewRadius;
             }
+        }
+    }
+
+    /// <summary>
+    /// Add Line Renderer When Grabbable
+    /// </summary>
+    public void AddLineRenderer(Item item)
+    {
+        if (isGrabbable != item.grabbable)
+        {
+            item = (Item)target;
+            if (item.grabbable)
+            {
+                item.lineRenderer = item.gameObject.AddComponent<LineRenderer>();
+                item.lineRenderer.startWidth = 0.5f;
+            }
+            else
+            {
+                DestroyImmediate(item.gameObject.GetComponent<LineRenderer>());
+                Debug.Log("Destroyed line renderer");
+            }
+
+            isGrabbable = item.grabbable;
         }
     }
     
