@@ -6,7 +6,9 @@ public class BookCase : Item, ISmashable, IInteractable
 {
     [SerializeField] AudioSource audioSource;
     [SerializeField] AudioClip objectFall, woodBreak;
-    [SerializeField] ParticleSystem interactParticle, smashParticle;
+    [SerializeField] ParticleSystem interactParticle;
+    [SerializeField] GameObject scrapPilePrefab;
+    [SerializeField] Transform scrapPilePivot;
 
     public void Interact(Vector3 sourcePos)
     {
@@ -27,9 +29,9 @@ public class BookCase : Item, ISmashable, IInteractable
     {
         Debug.Log("Breaking the BookCase");
         audioSource.PlayOneShot(woodBreak);
-        if (smashParticle)
-            smashParticle.Play();
-        else Debug.Log("No Smash Particle on " + this.name);
+        if (scrapPilePrefab != null && scrapPilePivot != null)
+            Instantiate(scrapPilePrefab, scrapPilePivot.position, Quaternion.identity);
+        else Debug.Log("No scrapPilePrefab or scrapPilePivot on " + this.name);
         yield return new WaitForSeconds(.5f);
         DeleteItem();
     }

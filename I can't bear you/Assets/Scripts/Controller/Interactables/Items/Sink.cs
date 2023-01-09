@@ -6,18 +6,20 @@ public class Sink : Item, ISmashable
 {
     bool isBroken = false;
     [SerializeField] AudioSource audioSource;
-    [SerializeField] ParticleSystem smashParticle;
+    [SerializeField] GameObject scrapPilePrefab;
+    [SerializeField] Transform scrapPilePivot;
     public void Smash()
     {
         if (!isBroken)
         {
-            if (smashParticle)
-                smashParticle.Play();
-            else Debug.Log("No Smash Particle on " + this.name);
+            if (scrapPilePrefab != null && scrapPilePivot != null)
+                Instantiate(scrapPilePrefab, scrapPilePivot.position, Quaternion.identity);
+            else Debug.Log("No scrapPilePrefab or scrapPilePivot on " + this.name);
             isBroken = true;
             Debug.Log("Breaking the Sink");
             audioSource.Play();
             CreatePuddle();
+            Destroy(this.gameObject, 0.2f);
         }
     }
 }
