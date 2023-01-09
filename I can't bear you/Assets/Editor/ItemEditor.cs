@@ -60,6 +60,27 @@ public class ItemEditor : Editor
             item.zone.GetComponent<ElectricityZone>().SetSize(ZoneMode.SPHERE,zoneSizeBuffer);
         }
 
+        if (item.GetComponent<Outline>() == default)
+        {
+            if (GUILayout.Button("Create Outline"))
+            {
+                GameObject outlineObject = Instantiate((GameObject)Resources.Load("Outline"), item.transform);
+                outlineObject.GetComponent<MeshFilter>().sharedMesh = item.GetComponent<MeshFilter>().sharedMesh;
+            
+                Outline outline = item.AddComponent<Outline>();
+                outline.outlineData = (OutlineData)Resources.Load("Outline Data");
+                outline.outlineObject = outlineObject;
+                
+                List<Material> materials = new List<Material>();
+                for (int i = 0; i < item.GetComponent<MeshRenderer>().sharedMaterials.Length; i++)
+                {
+                    materials.Add(outline.outlineData.outlineMaterial);
+                }
+                
+                outlineObject.GetComponent<MeshRenderer>().sharedMaterials = materials.ToArray();
+            }
+        }
+
         if(!Application.isPlaying) return;
         if (item.conductor)
         {

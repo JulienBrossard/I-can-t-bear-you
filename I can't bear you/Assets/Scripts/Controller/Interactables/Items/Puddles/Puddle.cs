@@ -23,13 +23,13 @@ public class Puddle : MonoBehaviour, IAffectable
         if(other.gameObject.GetComponent<IAffectable>() != default)
         {
             if(charged) other.gameObject.GetComponent<IAffectable>().Electrocute(gameObject);
-            Debug.Log("Applying effects to " + other.gameObject.name);
+            //Debug.Log("Applying effects to " + other.gameObject.name);
             return;
         }
         if(other.gameObject.GetComponent<Entity>() != default)
         {
             ApplyEffects(other.gameObject);
-            Debug.Log("Applying effects to " + other.gameObject.name);
+            //Debug.Log("Applying effects to " + other.gameObject.name);
             return;
         }
     }
@@ -37,7 +37,7 @@ public class Puddle : MonoBehaviour, IAffectable
     private void OnTriggerExit(Collider other)
     {
         DisapplyEffects(other.gameObject);
-        Debug.Log("Disapplying effects to " + other.gameObject.name);
+        //Debug.Log("Disapplying effects to " + other.gameObject.name);
     }
 
     [HideInInspector] public GameObject zone;
@@ -67,7 +67,7 @@ public class Puddle : MonoBehaviour, IAffectable
         if(!conductor) return;
         if (charged) return;
         
-        Debug.Log("Electrocuted " + gameObject.name + " with no depedancy");
+        //Debug.Log("Electrocuted " + gameObject.name + " with no depedancy");
         charged = true;
         EnableZone();
     }
@@ -76,7 +76,7 @@ public class Puddle : MonoBehaviour, IAffectable
         if(!conductor) return;
         if (charged) return;
         
-        Debug.Log("Electrocuted " + gameObject.name + " with depedancy of " + emitter.name);
+        //Debug.Log("Electrocuted " + gameObject.name + " with depedancy of " + emitter.name);
         emitterDependant = true;
         this.emitter = emitter;
         charged = true;

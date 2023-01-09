@@ -1,5 +1,66 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &165768406734930118
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3329827369898886921}
+  - component: {fileID: 832148631035849915}
+  - component: {fileID: 5354591167465360269}
+  m_Layer: 3
+  m_Name: Sight Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3329827369898886921
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 165768406734930118}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2451688659374893300}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &832148631035849915
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 165768406734930118}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &5354591167465360269
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 165768406734930118}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 44dd1cb897deb504faf393ce43721796, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interestPointsManager: {fileID: 2451688659374893304}
+  collider: {fileID: 832148631035849915}
+  playerStats: {fileID: 0}
 --- !u!1 &2451688659374893298
 GameObject:
   m_ObjectHideFlags: 0
@@ -38,6 +99,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 3329827369898886921}
   - {fileID: 2351455711249567603}
   - {fileID: 6981436402318415202}
   m_Father: {fileID: 0}
@@ -138,6 +200,7 @@ MonoBehaviour:
   bearserkerState: {fileID: 2451688659374893305}
   currentState: {fileID: 0}
   interestPointsManager: {fileID: 2451688659374893304}
+  sightManager: {fileID: 5354591167465360269}
 --- !u!114 &2451688659374893306
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -239,7 +302,7 @@ PrefabInstance:
     - target: {fileID: 7018271696082283389, guid: 47f0cf86b7de9984cab2bed508cea368,
         type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7018271696082283389, guid: 47f0cf86b7de9984cab2bed508cea368,
         type: 3}
@@ -600,7 +663,7 @@ PrefabInstance:
     - target: {fileID: 4425532498778494946, guid: a803df3caa6eae542ac12423d73a8d89,
         type: 3}
       propertyPath: m_RootOrder
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4425532498778494946, guid: a803df3caa6eae542ac12423d73a8d89,
         type: 3}
