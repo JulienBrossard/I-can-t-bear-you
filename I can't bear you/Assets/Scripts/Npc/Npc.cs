@@ -357,9 +357,9 @@ public class Npc : Entity, ISmashable
         animator.speed = 1;
         BearserkerGaugeManager.instance.AddBearserker(0.1f);
         base.Die(unspawn);
+        Instantiate(deathAnimPrefab, deathAnimPivot.position, Quaternion.identity);
         if (unspawn)
         {
-            Instantiate(deathAnimPrefab, deathAnimPivot.position, Quaternion.identity);
             NpcManager.instance.UnSpawnNpc(gameObject.name.Replace("(Clone)", String.Empty), gameObject);
         }
         npcScripts.npcUI.canvas.SetActive(false);
@@ -570,6 +570,12 @@ public class Npc : Entity, ISmashable
     {
         currentDestination = pathfinding.ChooseClosestTarget(waypoints, transform, agent).position;
         image.SetActive(true);
+    }
+
+    public override void Stomp()
+    {
+        base.Stomp();
+        Die(false);
     }
 }
 
