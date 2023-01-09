@@ -39,6 +39,7 @@ public class Television : AttractiveItem, ISmashable, IInteractable
         tvScreenMR.materials = tempMatList;
         if (charged) return;
         Electrocute();
+        DeleteItem();
     }
 
     [ContextMenu("Switch")]
