@@ -19,6 +19,16 @@ public class Item : MonoBehaviour,IGrabbable, IAffectable
         Destroy(gameObject);
     }
 
+    /// <summary>
+    /// Set whether the item can de detected by the player.
+    /// </summary>
+    /// <param name="detectable">Detectability</param>
+    public void SetDetectability(bool detectable)
+    {
+        if (detectable) gameObject.layer = LayerMask.NameToLayer("Default");
+        else gameObject.layer = LayerMask.NameToLayer("Not Interactable Item");
+    }
+
     [Header("Puddle")]
     [SerializeField] private PuddleType puddleType;
     [Range(0.5f,5f)]public float puddleSize = 1;
