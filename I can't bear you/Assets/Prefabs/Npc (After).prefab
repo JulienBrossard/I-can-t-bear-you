@@ -1488,6 +1488,8 @@ GameObject:
   - component: {fileID: 6251284461837987246}
   - component: {fileID: -8868701823519541962}
   - component: {fileID: 2280188384493704573}
+  - component: {fileID: 7823148121436952127}
+  - component: {fileID: -8809703211469527255}
   m_Layer: 6
   m_Name: Npc (After)
   m_TagString: Npc
@@ -1609,8 +1611,10 @@ MonoBehaviour:
   - states: 04000000
   - states: 03000000
   agent: {fileID: 872662432960104353}
+  obstacle: {fileID: -8809703211469527255}
   minimumDistanceWithDestination: 2
   npcScripts: {fileID: 2280188384493704573}
+  pathfinding: {fileID: 7823148121436952127}
   currentDestination: {x: 0, y: 0, z: 0}
   attractedPoint: {x: 0, y: 0, z: 0}
   moveAwayPoint: {x: 0, y: 0, z: 0}
@@ -1728,6 +1732,42 @@ MonoBehaviour:
   panicData: {fileID: -7787597326935306304}
   statusEffects: {fileID: -2508231515378271730}
   npcUI: {fileID: -8868701823519541962}
+--- !u!114 &7823148121436952127
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4225555480404199414}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e887a0c58964d2b4888d288ad921766c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  noExitPoints: []
+  exitPoints: []
+  hungerPoints: []
+  thirstPoints: []
+  bladderPoints: []
+  pathHeight: 0
+  carvingTime: 0.5
+  carvingMoveThreshold: 0.1
+--- !u!208 &-8809703211469527255
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4225555480404199414}
+  m_Enabled: 0
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &4518432834019712719
 GameObject:
   m_ObjectHideFlags: 0

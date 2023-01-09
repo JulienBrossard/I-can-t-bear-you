@@ -48,18 +48,18 @@ public class Npc : Entity, ISmashable
 
     [Header("NavMesh")]
     public NavMeshAgent agent;
+    public NavMeshObstacle obstacle;
     public float minimumDistanceWithDestination = 2;
 
     [Header("Scripts")]
     public NpcScripts npcScripts;
-
+    [SerializeField] public Pathfinding pathfinding;
 
     [HideInInspector] public Vector3 currentDestination;
     [HideInInspector] public Vector3 attractedPoint;
     [HideInInspector] public Vector3 moveAwayPoint;
     [HideInInspector] public float moveAwayRadius;
     [HideInInspector] public bool isAction;
-    [HideInInspector] public Pathfinding pathfinding;
     private Transform player;
     [HideInInspector] public float currentSpeed;
     private float npcSpeed;
@@ -72,7 +72,7 @@ public class Npc : Entity, ISmashable
     private void Start()
     {
         //Init Pathfinding
-        pathfinding = new Pathfinding();
+        pathfinding.Init(obstacle, agent);
         agent.speed = npcData.speed;
 
         //Init Speed
@@ -97,6 +97,7 @@ public class Npc : Entity, ISmashable
 
     private void Update()
     {
+        pathfinding.Update(transform);
         if (!isDie)
         {
 
@@ -127,7 +128,7 @@ public class Npc : Entity, ISmashable
 
             if (gameObject.activeSelf)
             {
-                agent.SetDestination(currentDestination);
+                pathfinding.SetDestination(currentDestination);
             }
         }
     }
