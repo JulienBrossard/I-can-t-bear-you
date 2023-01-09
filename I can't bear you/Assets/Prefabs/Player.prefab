@@ -44,7 +44,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 1
+  m_Radius: 5
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &5354591167465360269
 MonoBehaviour:
@@ -60,7 +60,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interestPointsManager: {fileID: 2451688659374893304}
   collider: {fileID: 832148631035849915}
-  playerStats: {fileID: 0}
 --- !u!1 &2451688659374893298
 GameObject:
   m_ObjectHideFlags: 0

@@ -198,7 +198,7 @@ public class Item : MonoBehaviour,IGrabbable, IAffectable
         if(!fallable)return;
         //Debug.Log( "Falling " + gameObject.name);
         GetComponent<Rigidbody>().isKinematic = false;
-        GetComponent<Rigidbody>().AddForce(GetFall(source).Dir * GetFall(source).force);
+        GetComponent<Rigidbody>().AddForceAtPosition(GetFall(source).Dir * GetFall(source).force, transform.position + Vector3.up);
         falling = true;
     }
 

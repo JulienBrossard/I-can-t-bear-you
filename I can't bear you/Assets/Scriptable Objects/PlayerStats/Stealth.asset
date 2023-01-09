@@ -73,7 +73,7 @@ MonoBehaviour:
   slowdownStep: 0.08
   maxSpeed: 10
   turnTime: 0.2
-  detectionAngle: 1
+  detectionAngle: 130
   detectionAngleCurve:
     serializedVersion: 2
     m_Curve:
