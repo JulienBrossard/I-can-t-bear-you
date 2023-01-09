@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2028444394412017477
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2112003191078466380}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2112003191078466380
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2028444394412017477}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.37, y: -2.65, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5647622240002929056}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4614996455892075647
 GameObject:
   m_ObjectHideFlags: 0
@@ -32,7 +63,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8009238393749615243}
-  - {fileID: 3436375700123195478}
+  - {fileID: 2112003191078466380}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -69,6 +100,9 @@ MonoBehaviour:
   rb: {fileID: 0}
   collider: {fileID: 0}
   throwForce: 0
+  lineRenderer: {fileID: 0}
+  linePoints: 25
+  timeBetweenPoints: 0.1
   thrown: 0
   itemCharged: 0
   itemConductor: 0
@@ -80,7 +114,9 @@ MonoBehaviour:
   gasSize: 0
   isExplosive: 0
   audioSource: {fileID: 7522808291077689734}
-  smashParticle: {fileID: 3436375700129323192}
+  scrapPilePrefab: {fileID: 7188531460787465228, guid: 277767a786565684a97c716263262335,
+    type: 3}
+  scrapPilePivot: {fileID: 2112003191078466380}
 --- !u!82 &7522808291077689734
 AudioSource:
   m_ObjectHideFlags: 0
@@ -177,57 +213,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!1001 &7062946039925998090
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 5647622240002929056}
-    m_Modifications:
-    - target: {fileID: 5599334976172202588, guid: 7f3cfae558c6df144b6a275804f82553,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5599334976172202588, guid: 7f3cfae558c6df144b6a275804f82553,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5599334976172202588, guid: 7f3cfae558c6df144b6a275804f82553,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5599334976172202588, guid: 7f3cfae558c6df144b6a275804f82553,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5599334976172202591, guid: 7f3cfae558c6df144b6a275804f82553,
-        type: 3}
-      propertyPath: m_Name
-      value: Destroy Animation
-      objectReference: {fileID: 0}
-    - target: {fileID: 5599334976172202591, guid: 7f3cfae558c6df144b6a275804f82553,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 7f3cfae558c6df144b6a275804f82553, type: 3}
---- !u!4 &3436375700123195478 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 5599334976172202588, guid: 7f3cfae558c6df144b6a275804f82553,
-    type: 3}
-  m_PrefabInstance: {fileID: 7062946039925998090}
-  m_PrefabAsset: {fileID: 0}
---- !u!198 &3436375700129323192 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 5599334976177085106, guid: 7f3cfae558c6df144b6a275804f82553,
-    type: 3}
-  m_PrefabInstance: {fileID: 7062946039925998090}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7542472329002014048
 PrefabInstance:
   m_ObjectHideFlags: 0
