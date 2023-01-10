@@ -2494,7 +2494,7 @@ MonoBehaviour:
     - {fileID: 1695121188}
     bladderPoints:
     - {fileID: 665679915}
-    player: {fileID: 0}
+    player: {fileID: 904902619}
 --- !u!4 &377199019
 Transform:
   m_ObjectHideFlags: 0
@@ -2522,7 +2522,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-124660
+  m_Name: pb_Mesh-56908
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -3718,7 +3718,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-124796
+  m_Name: pb_Mesh-57044
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -6041,6 +6041,12 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 10, y: 12.89532, z: 0.5}
   m_Center: {x: 5, y: 6.44766, z: 0.25}
+--- !u!4 &904902619 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2451688659374893300, guid: 4e52ee41f60bb1c4d96e9822b7ff2abc,
+    type: 3}
+  m_PrefabInstance: {fileID: 1041630936}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &928237741
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11720,7 +11726,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-125098
+  m_Name: pb_Mesh-57494
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -13284,7 +13290,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh51440
+  m_Name: pb_Mesh42598
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2

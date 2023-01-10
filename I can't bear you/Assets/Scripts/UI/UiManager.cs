@@ -60,6 +60,21 @@ public class UiManager : MonoBehaviour
 
     public void LaunchEndLevelScreen(bool win)
     {
+        StartCoroutine(WaitForEndStateAnim(win));
+        if (win)
+        {
+            PlayerAnimatorManager.instance.SetAnimatorTrigger("Win");
+        }
+        else
+        {
+            PlayerAnimatorManager.instance.SetAnimatorTrigger("Sleep");
+        }
+
+    }
+
+    IEnumerator WaitForEndStateAnim(bool win)
+    {
+        yield return new WaitForSeconds(2f);
         if (!endScreenLaunched)
         {
             iconWhoFlee = NpcManager.instance.npcCountfleed;
@@ -76,7 +91,7 @@ public class UiManager : MonoBehaviour
             StartCoroutine(ShowDeadNpc());
             endScreenLaunched = true;
         }
-  
+        
     }
 
     IEnumerator ShowDeadNpc()

@@ -69,12 +69,12 @@ public class Item : MonoBehaviour,IGrabbable, IAffectable
     }
 
     [Header("Grab")] 
-    [SerializeField] private bool grabbable;
+    public bool grabbable;
     [SerializeField] private Rigidbody rb;
     [SerializeField] private BoxCollider collider;
     [Header("Throw Data")]
     [SerializeField] private float throwForce;
-    [SerializeField] private LineRenderer lineRenderer;
+    public LineRenderer lineRenderer;
     [SerializeField] [Range(10, 100)] private int linePoints = 25;
     [SerializeField] [Range(0.01f, 0.25f)] private float timeBetweenPoints = 0.1f;
     private LayerMask itemCollisionMask;
