@@ -15139,11 +15139,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8afe1eef50cb15a42869e47e3976224a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  field: 0
+  field: 1
   npcCountRemaining: 0
   npcCountkilled: 0
   npcCountfleed: 0
-  npc: []
+  npc:
+  - {fileID: 4225555480404199414, guid: d9d78adb1c1738248a56b9aca3558a44, type: 3}
+  - {fileID: 4233608443779686945, guid: 2f83a9d91c70b7e459da55ab7119d02f, type: 3}
+  - {fileID: 6469360050269068880, guid: 8609c28427b7bee4487012665e458a56, type: 3}
 --- !u!114 &1732634644
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15190,7 +15193,7 @@ MonoBehaviour:
       length: 25
       npc: []
     npcCount: 0
-    requiredNpcKillCount: 0
+    requiredNpcKillCount: 30
     npcSpawnPositions:
     - {fileID: 1478637751}
     - {fileID: 1748925735}
