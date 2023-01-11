@@ -123,6 +123,7 @@ public abstract class PlayerState : Entity
         else
         {
             heldObject.GetComponent<IGrabbable>().Throw(transform.forward,time / playerStats.maxTimeThrowHeld);
+            heldObject.transform.localScale = Vector3.one;
             animator.SetBool("Throw", false);
             isAiming = false;
         }
