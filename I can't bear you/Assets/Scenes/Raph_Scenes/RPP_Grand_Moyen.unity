@@ -15086,6 +15086,7 @@ GameObject:
   - component: {fileID: 1732634644}
   - component: {fileID: 1732634643}
   - component: {fileID: 1732634642}
+  - component: {fileID: 1732634646}
   m_Layer: 0
   m_Name: Game Manager
   m_TagString: Untagged
@@ -15106,27 +15107,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   poolKeys:
-  - key: NPC Normal
+  - key: Npc (After)
     pool:
-      prefab: {fileID: 4225555480404199414, guid: d9d78adb1c1738248a56b9aca3558a44,
-        type: 3}
-      baseCount: 41
-      baseRefreshSpeed: 1
-      refreshSpeed: 2
-  - key: NPC Drunk
-    pool:
-      prefab: {fileID: 4233608443779686945, guid: 2f83a9d91c70b7e459da55ab7119d02f,
-        type: 3}
-      baseCount: 8
-      baseRefreshSpeed: 0.5
-      refreshSpeed: 1
-  - key: NPC Random
-    pool:
-      prefab: {fileID: 6469360050269068880, guid: 8609c28427b7bee4487012665e458a56,
-        type: 3}
-      baseCount: 7
-      baseRefreshSpeed: 1
-      refreshSpeed: 2
+      prefab: {fileID: 2080658521}
+      baseCount: 10
+      baseRefreshSpeed: 5
+      refreshSpeed: 5
 --- !u!114 &1732634643
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15167,7 +15153,9 @@ MonoBehaviour:
       radius: 0
       width: 20
       length: 15
-      npc: []
+      npc:
+      - npc: {fileID: 2080658521}
+        count: 10
     - shape: 0
       partyPosition: {fileID: 704041990}
       radius: 5
@@ -15192,7 +15180,7 @@ MonoBehaviour:
       width: 15
       length: 25
       npc: []
-    npcCount: 0
+    npcCount: 10
     requiredNpcKillCount: 30
     npcSpawnPositions:
     - {fileID: 1478637751}
@@ -15251,6 +15239,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1732634646
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1732634641}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e199c3b1479c8b4290947a8346730e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1737288116
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -18672,6 +18672,12 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8961708323863465154, guid: bff392bc02ee2a94e939330c038433a7,
     type: 3}
   m_PrefabInstance: {fileID: 2062967427}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &2080658521 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4225555480404199414, guid: d9d78adb1c1738248a56b9aca3558a44,
+    type: 3}
+  m_PrefabInstance: {fileID: 462820073}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2090936273
 PrefabInstance:
