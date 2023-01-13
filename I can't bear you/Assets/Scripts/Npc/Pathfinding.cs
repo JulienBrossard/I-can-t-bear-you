@@ -1,10 +1,11 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Pathfinding
+public class Pathfinding : MonoBehaviour
 {
     [Header("Waypoint Settings")]
     public Transform[] noExitPoints;
@@ -14,13 +15,42 @@ public class Pathfinding
     public Transform[] bladderPoints;
     public Dictionary<Vector3, float> dispersePoints = new Dictionary<Vector3, float>();
     public float pathHeight;
+    
+    [SerializeField]
+    private float carvingTime = 0.5f;
+    [SerializeField]
+    private float carvingMoveThreshold = 0.1f;
+    private float lastMoveTime;
+    private Vector3 lastPosition;
+    private NavMeshObstacle obstacle;
+    private NavMeshAgent agent;
 
-    public Pathfinding()
+    public void Init(NavMeshObstacle obstacle, NavMeshAgent agent)
     {
         LoadWayPoints();
         pathHeight = noExitPoints[0].position.y;
+        this.lastPosition = transform.position;
+        obstacle.enabled = false;
+        obstacle.carveOnlyStationary = false;
+        obstacle.carving = true;
+        this.obstacle = obstacle;
+        this.agent = agent;
     }
-    
+
+    public void Update(Transform transform)
+    {
+        if (Vector3.Distance(lastPosition, transform.position) > carvingMoveThreshold)
+        {
+            lastMoveTime = Time.time;
+            lastPosition = transform.position;
+        }
+        if (lastMoveTime + carvingTime < Time.time)
+        {
+            agent.enabled = false;
+            obstacle.enabled = true;
+        }
+    }
+
     /// <summary>
     /// Choose Closest Target
     /// </summary>
@@ -289,4 +319,23 @@ public class Pathfinding
     {
         return Vector3.Distance(npcTransform.position, agent.destination);
     }
+
+    public void SetDestination(Vector3 position)
+    {
+        obstacle.enabled = false;
+
+        lastMoveTime = Time.time;
+        lastPosition = transform.position;
+
+        StartCoroutine(MoveAgent(position));
+    }
+
+    private IEnumerator MoveAgent(Vector3 position)
+    {
+        yield return null;
+        agent.enabled = true;
+        agent.SetDestination(position);
+    }
+    
+    
 }

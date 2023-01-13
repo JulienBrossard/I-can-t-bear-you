@@ -4,13 +4,29 @@ using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 public class InterestPointsManager : MonoBehaviour
 {
     public List<InterestPoint> interestPoints;
 
+    #if UNITY_EDITOR
+    private void OnDrawGizmos()
+    {
+        foreach (InterestPoint interestPoint in interestPoints)
+        {
+            if(interestPoint.go == default) continue;
+            Handles.DrawLine(transform.position,interestPoint.go.transform.position);
+            Handles.Label(interestPoint.go.transform.position + Vector3.up,"Score : " + interestPoint.score + "\nCenter Dist : " + interestPoint.centerDistance.ToString());
+        }
+    }
+    #endif
+
     private void FixedUpdate()
     {
+        SortInterestPoints();
         foreach (InterestPoint interestPoint in interestPoints)
         {
             if (!interestPoint.validity)
@@ -20,7 +36,7 @@ public class InterestPointsManager : MonoBehaviour
             }
             interestPoint.validity = false;
         }
-        SortInterestPoints();
+        
     }
 
     private GameObject outlineGoBuffer;
@@ -36,8 +52,17 @@ public class InterestPointsManager : MonoBehaviour
             outlineGoBuffer = default;
             return;
         }
+
+        if (interestPoints[0]?.go == default) return;
+        
         outlineGoBuffer = interestPoints[0]?.go;
         outlineGoBuffer.GetComponent<Outline>()?.EnableOutline();
+    }
+
+    public GameObject GetFirstItem()
+    {
+        if (interestPoints.Count == 0) return default;
+        return interestPoints[0].go;
     }
     public IInteractable GetInteractable()
     {

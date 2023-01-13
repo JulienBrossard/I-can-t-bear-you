@@ -9,10 +9,16 @@ public class HoneyPot : Item,IInteractable,ISmashable
     [SerializeField, Range(0f, 1f)] private float bearserkerToAdd;
     [SerializeField] AudioSource audioSource;
     [SerializeField] AudioClip honeyEat, potBreak;
+    [SerializeField] ParticleSystem interactParticle;
+    [SerializeField] GameObject scrapPilePrefab;
+    [SerializeField] Transform scrapPilePivot;
     public void Interact(Vector3 sourcePos)
     {
         if (!hasBeenEaten)
         {
+            if (interactParticle)
+                interactParticle.Play();
+            else Debug.Log("No Interact Particle on " + this.name);
             hasBeenEaten = true;
             Debug.Log("Eating Honey Pot");
             audioSource.PlayOneShot(honeyEat);
@@ -35,6 +41,9 @@ public class HoneyPot : Item,IInteractable,ISmashable
     {
         Debug.Log("Breaking the ponch");
         audioSource.PlayOneShot(potBreak);
+        if (scrapPilePrefab != null && scrapPilePivot != null)
+            Instantiate(scrapPilePrefab, scrapPilePivot.position, Quaternion.identity);
+        else Debug.Log("No scrapPilePrefab or scrapPilePivot on " + this.name);
         yield return new WaitForSeconds(.5f);
         if (!hasBeenEaten)
         {
