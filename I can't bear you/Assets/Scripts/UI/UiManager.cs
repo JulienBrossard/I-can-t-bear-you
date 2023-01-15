@@ -60,24 +60,33 @@ public class UiManager : MonoBehaviour
 
     public void LaunchEndLevelScreen(bool win)
     {
-        StartCoroutine(WaitForEndStateAnim(win));
-        if (win)
+        if (endScreenLaunched)
         {
-            PlayerAnimatorManager.instance.SetAnimatorTrigger("Win");
+            return;
         }
         else
         {
-            PlayerAnimatorManager.instance.SetAnimatorTrigger("Sleep");
+            StartCoroutine(WaitForEndStateAnim(win));
+            if (win)
+            {
+                PlayerAnimatorManager.instance.SetAnimatorTrigger("Win");
+                Debug.Log("win");
+            }
+            else
+            {
+                PlayerAnimatorManager.instance.SetAnimatorTrigger("Sleep");
+                Debug.Log("Lose");
+            }
+            endScreenLaunched = true;
         }
-
+            
+      
     }
 
     IEnumerator WaitForEndStateAnim(bool win)
     {
         yield return new WaitForSeconds(2f);
-        if (!endScreenLaunched)
-        {
-            iconWhoFlee = NpcManager.instance.npcCountfleed;
+        iconWhoFlee = NpcManager.instance.npcCountfleed;
             iconTokill = NpcManager.instance.npcCountkilled;
             noIconToSwitch = iconTokill + iconWhoFlee;
             winLoseText.text = win ? "You Win" : "Looser";
@@ -87,11 +96,8 @@ public class UiManager : MonoBehaviour
             {
                 Instantiate(npcIcon, npcIconParent.transform);
             }
-
             StartCoroutine(ShowDeadNpc());
-            endScreenLaunched = true;
-        }
-        
+
     }
 
     IEnumerator ShowDeadNpc()

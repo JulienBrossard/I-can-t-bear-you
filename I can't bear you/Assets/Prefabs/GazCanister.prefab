@@ -30050,6 +30050,9 @@ MonoBehaviour:
   lineRenderer: {fileID: 8786067514843784999}
   linePoints: 25
   timeBetweenPoints: 0.1
+  raycastAimMask:
+    serializedVersion: 2
+    m_Bits: 247
   thrown: 0
   itemCharged: 0
   itemConductor: 0
@@ -30192,7 +30195,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 2100000, guid: b3114a9b9846dbe4a8ee5cfc2e84dc02, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

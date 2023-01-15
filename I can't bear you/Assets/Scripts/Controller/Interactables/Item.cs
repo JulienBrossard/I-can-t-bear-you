@@ -78,6 +78,7 @@ public class Item : MonoBehaviour,IGrabbable, IAffectable
     [SerializeField] [Range(10, 100)] private int linePoints = 25;
     [SerializeField] [Range(0.01f, 0.25f)] private float timeBetweenPoints = 0.1f;
     private LayerMask itemCollisionMask;
+    [SerializeField] private LayerMask raycastAimMask;
     private RaycastHit hit;
     [HideInInspector] public bool thrown;
 
@@ -144,6 +145,7 @@ public class Item : MonoBehaviour,IGrabbable, IAffectable
 
     public void DrawProjection()
     {
+        Debug.Log("Drawing projection");
         lineRenderer.enabled = true;
         lineRenderer.positionCount = Mathf.CeilToInt(linePoints / timeBetweenPoints) + 1;
         //Vector3 startPosition = transform.position;
@@ -159,7 +161,7 @@ public class Item : MonoBehaviour,IGrabbable, IAffectable
             lineRenderer.SetPosition(i, point);
 
             Vector3 lastPosition = lineRenderer.GetPosition(i - 1);
-            if (Physics.Raycast(lastPosition, (point - lastPosition).normalized, out hit, (point - lastPosition).magnitude))
+            if (Physics.Raycast(lastPosition, (point - lastPosition).normalized, out hit, (point - lastPosition).magnitude, raycastAimMask))
             {
                 lineRenderer.SetPosition(i , hit.point);
                 lineRenderer.positionCount = i + 1;

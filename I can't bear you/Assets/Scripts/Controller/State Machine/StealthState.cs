@@ -70,5 +70,9 @@ public class StealthState : PlayerState
             Move();
             PlayerAnimatorManager.instance.SetAnimatorFloat("Speed", rb.velocity.magnitude);
         }
+        else
+        {
+            rb.velocity = Vector3.zero;
+        }
     }
 }
