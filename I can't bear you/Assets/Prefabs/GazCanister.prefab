@@ -29994,7 +29994,7 @@ Transform:
   m_Children:
   - {fileID: 3364977510354228203}
   - {fileID: 9190050975917672719}
-  - {fileID: 3348105240158799634}
+  - {fileID: 434066008306611148}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -30061,7 +30061,9 @@ MonoBehaviour:
   gasSize: 1
   isExplosive: 1
   audioSource: {fileID: 52104774831451798}
-  smashParticle: {fileID: 3348105240155293692}
+  scrapPilePrefab: {fileID: 4863309175119694426, guid: 3e7e98cd7c0c3d44e9a6fb90b45a4580,
+    type: 3}
+  scrapPilePivot: {fileID: 434066008306611148}
 --- !u!114 &369789017271438047
 MonoBehaviour:
   m_ObjectHideFlags: 0

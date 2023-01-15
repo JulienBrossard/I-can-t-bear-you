@@ -83,10 +83,13 @@ public class Item : MonoBehaviour,IGrabbable, IAffectable
 
     private void Awake()
     {
-        InitLayerMaskToProjection();
+        InitLayerMaskForProjection();
     }
 
-    void InitLayerMaskToProjection()
+    /// <summary>
+    /// Init layer mask for the projection
+    /// </summary>
+    void InitLayerMaskForProjection()
     {
         int itemLayer = gameObject.layer;
         for (int i = 0; i < 32; i++)
@@ -142,11 +145,13 @@ public class Item : MonoBehaviour,IGrabbable, IAffectable
         thrown = true;
     }
 
+    /// <summary>
+    /// Draw Trajectory of the object
+    /// </summary>
     public void DrawProjection()
     {
         lineRenderer.enabled = true;
         lineRenderer.positionCount = Mathf.CeilToInt(linePoints / timeBetweenPoints) + 1;
-        //Vector3 startPosition = transform.position;
         Vector3 startVelocity = throwForce * LevelManager.instance.GetPlayer().transform.forward / rb.mass;
         int i = 0;
         lineRenderer.SetPosition(i, transform.position);
