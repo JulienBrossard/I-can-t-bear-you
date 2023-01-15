@@ -27,7 +27,7 @@ public class Gas : MonoBehaviour, IAffectable
         Explode();
     }
 
-    public void Stomp()
+    public void Stomp(Vector3 srcPos)
     {
         return;
     }
