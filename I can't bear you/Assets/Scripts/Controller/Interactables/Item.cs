@@ -31,7 +31,7 @@ public class Item : MonoBehaviour,IGrabbable, IAffectable
 
     [Header("Puddle")]
     [SerializeField] private PuddleType puddleType;
-    [Range(0.5f,5f)]public float puddleSize = 1;
+    [Range(0.5f,5f)] public float puddleSize;
     public virtual GameObject CreatePuddle()
     {
         GameObject puddleBuffer;
