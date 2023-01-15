@@ -9,4 +9,5 @@ public interface IGrabbable
     public void Throw(Vector3 dir, float forceRatio);
     public void Drop();
     public void SetAsReleased();
+    public void DrawProjection();
 }

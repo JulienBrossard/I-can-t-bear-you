@@ -1683,6 +1683,7 @@ GameObject:
   - component: {fileID: 377199018}
   - component: {fileID: 377199017}
   - component: {fileID: 377199016}
+  - component: {fileID: 377199020}
   m_Layer: 0
   m_Name: Game Manager
   m_TagString: Untagged
@@ -1707,14 +1708,7 @@ MonoBehaviour:
     pool:
       prefab: {fileID: 4225555480404199414, guid: d9d78adb1c1738248a56b9aca3558a44,
         type: 3}
-      baseCount: 15
-      baseRefreshSpeed: 5
-      refreshSpeed: 5
-  - key: Npc (Drunk)
-    pool:
-      prefab: {fileID: 4233608443779686945, guid: 2f83a9d91c70b7e459da55ab7119d02f,
-        type: 3}
-      baseCount: 3
+      baseCount: 5
       baseRefreshSpeed: 5
       refreshSpeed: 5
 --- !u!114 &377199017
@@ -1750,18 +1744,15 @@ MonoBehaviour:
   level:
     partyData:
     - shape: 0
-      partyPosition: {fileID: 0}
-      radius: 0
+      partyPosition: {fileID: 20144190}
+      radius: 11
       width: 0
       length: 0
-      npc: []
-    - shape: 0
-      partyPosition: {fileID: 0}
-      radius: 0
-      width: 0
-      length: 0
-      npc: []
-    npcCount: 18
+      npc:
+      - npc: {fileID: 4225555480404199414, guid: d9d78adb1c1738248a56b9aca3558a44,
+          type: 3}
+        count: 5
+    npcCount: 5
     requiredNpcKillCount: 2
     npcSpawnPositions:
     - {fileID: 1078110528}
@@ -1802,6 +1793,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &377199020
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 377199015}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e199c3b1479c8b4290947a8346730e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &402936229
 GameObject:
   m_ObjectHideFlags: 0
@@ -5722,7 +5725,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1484136978}
   m_Layer: 0
-  m_Name: RandomLevelobjspawner
+  m_Name: RandomLevelobjspawn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

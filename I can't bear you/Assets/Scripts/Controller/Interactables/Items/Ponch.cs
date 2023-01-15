@@ -7,7 +7,9 @@ public class Ponch : Item,IInteractable,ISmashable
     [SerializeField] AudioClip breakClip, bubbleClip;
     [SerializeField] AudioSource audioSource;
     [SerializeField] private GameObject psBubblePoisoned;
-    [SerializeField] ParticleSystem interactParticle, smashParticle;
+    [SerializeField] ParticleSystem interactParticle;
+    [SerializeField] GameObject scrapPilePrefab;
+    [SerializeField] Transform scrapPilePivot;
     public bool sabotaged = false;
     public void Interact(Vector3 sourcePos)
     {
@@ -30,9 +32,9 @@ public class Ponch : Item,IInteractable,ISmashable
     {
         Debug.Log("Breaking the ponch");
         audioSource.PlayOneShot(breakClip);
-        if (smashParticle)
-            smashParticle.Play();
-        else Debug.Log("No Smash Particle on " + this.name);
+        if (scrapPilePrefab != null && scrapPilePivot != null)
+            Instantiate(scrapPilePrefab, scrapPilePivot.position, Quaternion.identity);
+        else Debug.Log("No scrapPilePrefab or scrapPilePivot on " + this.name);
         yield return new WaitForSeconds(.5f);
         CreatePuddle();
         DeleteItem();

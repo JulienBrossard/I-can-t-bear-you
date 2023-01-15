@@ -79,12 +79,38 @@ public class Item : MonoBehaviour,IGrabbable, IAffectable
     }
 
     [Header("Grab")] 
-    [SerializeField] private bool grabbable;
+    public bool grabbable;
     [SerializeField] private Rigidbody rb;
     [SerializeField] private BoxCollider collider;
+    [Header("Throw Data")]
     [SerializeField] private float throwForce;
+    public LineRenderer lineRenderer;
+    [SerializeField] [Range(10, 100)] private int linePoints = 25;
+    [SerializeField] [Range(0.01f, 0.25f)] private float timeBetweenPoints = 0.1f;
+    private LayerMask itemCollisionMask;
+    private RaycastHit hit;
     [HideInInspector] public bool thrown;
-    
+
+    private void Awake()
+    {
+        InitLayerMaskForProjection();
+    }
+
+    /// <summary>
+    /// Init layer mask for the projection
+    /// </summary>
+    void InitLayerMaskForProjection()
+    {
+        int itemLayer = gameObject.layer;
+        for (int i = 0; i < 32; i++)
+        {
+            if (Physics.GetIgnoreLayerCollision(itemLayer, i))
+            {
+                itemCollisionMask |= 1 << i;
+            }
+        }
+    }
+
     public Transform Grab(Transform hand)
     {
         if (!grabbable) return default;
@@ -128,8 +154,38 @@ public class Item : MonoBehaviour,IGrabbable, IAffectable
         rb.AddForce(dir * (throwForce*forceRatio), ForceMode.Impulse);
         thrown = true;
     }
+
+    /// <summary>
+    /// Draw Trajectory of the object
+    /// </summary>
+    public void DrawProjection()
+    {
+        lineRenderer.enabled = true;
+        lineRenderer.positionCount = Mathf.CeilToInt(linePoints / timeBetweenPoints) + 1;
+        Vector3 startVelocity = throwForce * LevelManager.instance.GetPlayer().transform.forward / rb.mass;
+        int i = 0;
+        lineRenderer.SetPosition(i, transform.position);
+        Vector3 point;
+        for (float time = 0; time < linePoints; time += timeBetweenPoints)
+        {
+            i++;
+            point = transform.position + time * startVelocity;
+            point.y = transform.position.y + startVelocity.y * time + (Physics.gravity.y / 2f * time * time);
+            lineRenderer.SetPosition(i, point);
+
+            Vector3 lastPosition = lineRenderer.GetPosition(i - 1);
+            if (Physics.Raycast(lastPosition, (point - lastPosition).normalized, out hit, (point - lastPosition).magnitude))
+            {
+                lineRenderer.SetPosition(i , hit.point);
+                lineRenderer.positionCount = i + 1;
+                return;
+            }
+        }
+    }
+    
     public void SetAsReleased()
     {
+        lineRenderer.enabled = false;
         collider.enabled = true;
         transform.SetParent(null);
         rb.isKinematic = false;
