@@ -43,7 +43,7 @@ public class Entity : MonoBehaviour, IAffectable
         }
     }
 
-    public void Electrocute(GameObject emitter)
+    public virtual void Electrocute(GameObject emitter)
     {
         if (!isDie)
         {

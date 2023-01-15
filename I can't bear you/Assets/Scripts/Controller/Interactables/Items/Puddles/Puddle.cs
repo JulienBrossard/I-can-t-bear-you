@@ -20,12 +20,6 @@ public class Puddle : MonoBehaviour, IAffectable
 
     public void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.GetComponent<IAffectable>() != default)
-        {
-            if(charged) other.gameObject.GetComponent<IAffectable>().Electrocute(gameObject);
-            //Debug.Log("Applying effects to " + other.gameObject.name);
-            return;
-        }
         if(other.gameObject.GetComponent<Entity>() != default)
         {
             ApplyEffects(other.gameObject);

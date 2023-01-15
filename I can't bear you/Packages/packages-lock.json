@@ -1,5 +1,12 @@
 {
   "dependencies": {
+    "com.dracau.tools": {
+      "version": "https://github.com/Dracau/Dracau-s-Tools.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "3ade1bf6cc3033a883ec446e2c86b13a23e679ee"
+    },
     "com.unity.2d.sprite": {
       "version": "1.0.0",
       "depth": 0,
