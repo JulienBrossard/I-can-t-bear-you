@@ -5270,6 +5270,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2099232850204684489, guid: 6e545a7257b3bd9438778ab69c6cd140,
+        type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4326711515932819690, guid: 6e545a7257b3bd9438778ab69c6cd140,
         type: 3}
       propertyPath: m_RootOrder
@@ -9593,6 +9598,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2099232850204684489, guid: 6e545a7257b3bd9438778ab69c6cd140,
+        type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4326711515932819688, guid: 6e545a7257b3bd9438778ab69c6cd140,
         type: 3}
       propertyPath: m_Materials.Array.size
@@ -13533,7 +13543,7 @@ PrefabInstance:
     - target: {fileID: 2451688659374893300, guid: 4e52ee41f60bb1c4d96e9822b7ff2abc,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.25
+      value: 1.95
       objectReference: {fileID: 0}
     - target: {fileID: 2451688659374893300, guid: 4e52ee41f60bb1c4d96e9822b7ff2abc,
         type: 3}
@@ -15693,13 +15703,13 @@ MonoBehaviour:
   fallable: 1
   falls:
   - dir: {x: 1, y: 1, z: 0}
-    force: 250
+    force: 100
   - dir: {x: -1, y: 1, z: 0}
-    force: 250
+    force: 100
   - dir: {x: 0, y: 1, z: 1}
-    force: 250
+    force: 100
   - dir: {x: 0, y: 1, z: -1}
-    force: 250
+    force: 100
   gasSize: 0
   isExplosive: 0
 --- !u!54 &1812509393

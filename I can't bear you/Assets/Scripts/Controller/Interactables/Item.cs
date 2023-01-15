@@ -19,9 +19,19 @@ public class Item : MonoBehaviour,IGrabbable, IAffectable
         Destroy(gameObject);
     }
 
+    /// <summary>
+    /// Set whether the item can de detected by the player.
+    /// </summary>
+    /// <param name="detectable">Detectability</param>
+    public void SetDetectability(bool detectable)
+    {
+        if (detectable) gameObject.layer = LayerMask.NameToLayer("Default");
+        else gameObject.layer = LayerMask.NameToLayer("Not Interactable Item");
+    }
+
     [Header("Puddle")]
     [SerializeField] private PuddleType puddleType;
-    [Range(0.5f,5f)]public float puddleSize = 1;
+    [Range(0.5f,5f)] public float puddleSize;
     public virtual GameObject CreatePuddle()
     {
         GameObject puddleBuffer;
@@ -216,9 +226,11 @@ public class Item : MonoBehaviour,IGrabbable, IAffectable
         charged = true;
         EnableZone();
     }
-    public virtual void Stomp()
+
+    public virtual void Stomp(Vector3 srcPos)
     {
-        return;
+        if(fallable) return;
+        Fall(srcPos);
     }
     public virtual void DeElectrocute()
     {
@@ -254,7 +266,7 @@ public class Item : MonoBehaviour,IGrabbable, IAffectable
         if(!fallable)return;
         //Debug.Log( "Falling " + gameObject.name);
         GetComponent<Rigidbody>().isKinematic = false;
-        GetComponent<Rigidbody>().AddForce(GetFall(source).Dir * GetFall(source).force);
+        GetComponent<Rigidbody>().AddForceAtPosition(GetFall(source).Dir * GetFall(source).force, transform.position + Vector3.up);
         falling = true;
     }
 

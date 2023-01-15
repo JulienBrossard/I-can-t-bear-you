@@ -83,7 +83,7 @@ public class Puddle : MonoBehaviour, IAffectable
         EnableZone();
     }
 
-    public void Stomp()
+    public void Stomp(Vector3 srcPos)
     {
         return;
     }
