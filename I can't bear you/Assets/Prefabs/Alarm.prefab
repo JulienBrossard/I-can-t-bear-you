@@ -96,6 +96,9 @@ MonoBehaviour:
   rb: {fileID: 0}
   collider: {fileID: 0}
   throwForce: 0
+  lineRenderer: {fileID: 0}
+  linePoints: 25
+  timeBetweenPoints: 0.1
   thrown: 0
   itemCharged: 0
   itemConductor: 0
