@@ -2675,7 +2675,7 @@ MonoBehaviour:
     pool:
       prefab: {fileID: 4225555480404199414, guid: d9d78adb1c1738248a56b9aca3558a44,
         type: 3}
-      baseCount: 10
+      baseCount: 0
       baseRefreshSpeed: 5
       refreshSpeed: 5
 --- !u!114 &377199017
@@ -2690,6 +2690,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8afe1eef50cb15a42869e47e3976224a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  field: 1
   npcCountRemaining: 0
   npcCountkilled: 0
   npcCountfleed: 0
@@ -2708,10 +2709,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pooler: {fileID: 377199016}
   level:
-    npc:
-    - npc: {fileID: 4225555480404199414, guid: d9d78adb1c1738248a56b9aca3558a44, type: 3}
-      count: 10
-    npcCount: 10
+    partyData:
+    - shape: 0
+      partyPosition: {fileID: 0}
+      radius: 0
+      width: 0
+      length: 0
+      npc: []
+    - shape: 0
+      partyPosition: {fileID: 0}
+      radius: 0
+      width: 0
+      length: 0
+      npc: []
+    npcCount: 0
     requiredNpcKillCount: 0
     npcSpawnPositions:
     - {fileID: 1078110528}
@@ -2738,9 +2749,6 @@ MonoBehaviour:
     bladderPoints:
     - {fileID: 665679915}
     player: {fileID: 2102163164}
-    partyData:
-      partyPosition: {fileID: 20144190}
-      radius: 20
 --- !u!4 &377199019
 Transform:
   m_ObjectHideFlags: 0
@@ -2768,7 +2776,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-2394
+  m_Name: pb_Mesh-8668
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -4615,7 +4623,7 @@ PrefabInstance:
     - target: {fileID: 6811373642876133851, guid: 5d5712882db785244b30fbc9534a5877,
         type: 3}
       propertyPath: m_VersionIndex
-      value: 3265
+      value: 3268
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5d5712882db785244b30fbc9534a5877, type: 3}
@@ -5262,6 +5270,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2099232850204684489, guid: 6e545a7257b3bd9438778ab69c6cd140,
+        type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4326711515932819690, guid: 6e545a7257b3bd9438778ab69c6cd140,
         type: 3}
       propertyPath: m_RootOrder
@@ -5822,7 +5835,7 @@ PrefabInstance:
     - target: {fileID: 6811373642876133851, guid: 5d5712882db785244b30fbc9534a5877,
         type: 3}
       propertyPath: m_VersionIndex
-      value: 3268
+      value: 3271
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5d5712882db785244b30fbc9534a5877, type: 3}
@@ -9585,6 +9598,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2099232850204684489, guid: 6e545a7257b3bd9438778ab69c6cd140,
+        type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4326711515932819688, guid: 6e545a7257b3bd9438778ab69c6cd140,
         type: 3}
       propertyPath: m_Materials.Array.size
@@ -10833,7 +10851,7 @@ PrefabInstance:
     - target: {fileID: 6811373642876133851, guid: 5d5712882db785244b30fbc9534a5877,
         type: 3}
       propertyPath: m_VersionIndex
-      value: 3271
+      value: 3274
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5d5712882db785244b30fbc9534a5877, type: 3}
@@ -12858,7 +12876,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-2512
+  m_Name: pb_Mesh-3844
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -13525,7 +13543,7 @@ PrefabInstance:
     - target: {fileID: 2451688659374893300, guid: 4e52ee41f60bb1c4d96e9822b7ff2abc,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.78
+      value: 1.95
       objectReference: {fileID: 0}
     - target: {fileID: 2451688659374893300, guid: 4e52ee41f60bb1c4d96e9822b7ff2abc,
         type: 3}
@@ -14418,7 +14436,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-2834
+  m_Name: pb_Mesh-4168
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -15668,6 +15686,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8263bfd4a540e5047a74e050a2136107, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dangerState: 0
   puddleType: 0
   puddleSize: 0
   zone: {fileID: 0}
@@ -15684,13 +15703,13 @@ MonoBehaviour:
   fallable: 1
   falls:
   - dir: {x: 1, y: 1, z: 0}
-    force: 250
+    force: 100
   - dir: {x: -1, y: 1, z: 0}
-    force: 250
+    force: 100
   - dir: {x: 0, y: 1, z: 1}
-    force: 250
+    force: 100
   - dir: {x: 0, y: 1, z: -1}
-    force: 250
+    force: 100
   gasSize: 0
   isExplosive: 0
 --- !u!54 &1812509393

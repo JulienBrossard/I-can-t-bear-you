@@ -12,7 +12,7 @@ public class StompZone : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        other.GetComponent<IAffectable>()?.Stomp();
+        other.GetComponent<IAffectable>()?.Stomp(transform.position);
     }
 
     IEnumerator DeleteCoroutine()

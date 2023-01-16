@@ -38,7 +38,7 @@ public class StatusEffects : MonoBehaviour
     /// Update Status Effects
     /// </summary>
     /// <param name="effectValue"> Value to add </param>
-    void UpdateStatusEffects(float effectValue)
+    public void UpdateStatusEffects(float effectValue)
     {
         currentStatusEffectValue += effectValue;
 

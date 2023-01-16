@@ -6,9 +6,8 @@ public class PlayerStateManager : MonoBehaviour
     public PlayerState bearserkerState;
     public PlayerState currentState;
     [SerializeField] private InterestPointsManager interestPointsManager;
+    [SerializeField] private SightManager sightManager;
     public static PlayerStateManager instance;
-
-
 
     private void Awake()
     {
@@ -18,6 +17,7 @@ public class PlayerStateManager : MonoBehaviour
     private void Start()
     {
         currentState = baseState;
+        sightManager.UpdateState(currentState);
     }
     void Update()
     {
@@ -38,6 +38,7 @@ public class PlayerStateManager : MonoBehaviour
             }
             currentState = newState;
             currentState.OnStateEnter();
+            sightManager.UpdateState(currentState);
             interestPointsManager.Clear();
         }
     }

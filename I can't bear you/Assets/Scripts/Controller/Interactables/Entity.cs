@@ -53,7 +53,7 @@ public class Entity : MonoBehaviour, IAffectable
         }
     }
 
-    public virtual void Stomp()
+    public virtual void Stomp(Vector3 srcPos)
     {
         Debug.Log("Stomped " + gameObject.name);
     }

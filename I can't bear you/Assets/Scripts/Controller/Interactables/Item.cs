@@ -19,9 +19,19 @@ public class Item : MonoBehaviour,IGrabbable, IAffectable
         Destroy(gameObject);
     }
 
+    /// <summary>
+    /// Set whether the item can de detected by the player.
+    /// </summary>
+    /// <param name="detectable">Detectability</param>
+    public void SetDetectability(bool detectable)
+    {
+        if (detectable) gameObject.layer = LayerMask.NameToLayer("Default");
+        else gameObject.layer = LayerMask.NameToLayer("Not Interactable Item");
+    }
+
     [Header("Puddle")]
     [SerializeField] private PuddleType puddleType;
-    [Range(0.5f,5f)]public float puddleSize = 1;
+    [Range(0.5f,5f)] public float puddleSize;
     public virtual GameObject CreatePuddle()
     {
         GameObject puddleBuffer;
@@ -69,12 +79,38 @@ public class Item : MonoBehaviour,IGrabbable, IAffectable
     }
 
     [Header("Grab")] 
-    [SerializeField] private bool grabbable;
+    public bool grabbable;
     [SerializeField] private Rigidbody rb;
     [SerializeField] private BoxCollider collider;
+    [Header("Throw Data")]
     [SerializeField] private float throwForce;
+    public LineRenderer lineRenderer;
+    [SerializeField] [Range(10, 100)] private int linePoints = 25;
+    [SerializeField] [Range(0.01f, 0.25f)] private float timeBetweenPoints = 0.1f;
+    private LayerMask itemCollisionMask;
+    private RaycastHit hit;
     [HideInInspector] public bool thrown;
-    
+
+    private void Awake()
+    {
+        InitLayerMaskForProjection();
+    }
+
+    /// <summary>
+    /// Init layer mask for the projection
+    /// </summary>
+    void InitLayerMaskForProjection()
+    {
+        int itemLayer = gameObject.layer;
+        for (int i = 0; i < 32; i++)
+        {
+            if (Physics.GetIgnoreLayerCollision(itemLayer, i))
+            {
+                itemCollisionMask |= 1 << i;
+            }
+        }
+    }
+
     public Transform Grab(Transform hand)
     {
         if (!grabbable) return default;
@@ -92,7 +128,7 @@ public class Item : MonoBehaviour,IGrabbable, IAffectable
                 break;
         }
         
-        Debug.Log("Grabbing " + gameObject.name);
+        //Debug.Log("Grabbing " + gameObject.name);
         SetAsGrabbed(hand);
         return transform;
     }
@@ -112,14 +148,44 @@ public class Item : MonoBehaviour,IGrabbable, IAffectable
         
         SetAsReleased();
     }
-    public void Throw(Vector3 dir)
+    public void Throw(Vector3 dir, float forceRatio)
     {
         SetAsReleased();
-        rb.AddForce(dir * throwForce, ForceMode.Impulse);
+        rb.AddForce(dir * (throwForce*forceRatio), ForceMode.Impulse);
         thrown = true;
     }
+
+    /// <summary>
+    /// Draw Trajectory of the object
+    /// </summary>
+    public void DrawProjection()
+    {
+        lineRenderer.enabled = true;
+        lineRenderer.positionCount = Mathf.CeilToInt(linePoints / timeBetweenPoints) + 1;
+        Vector3 startVelocity = throwForce * LevelManager.instance.GetPlayer().transform.forward / rb.mass;
+        int i = 0;
+        lineRenderer.SetPosition(i, transform.position);
+        Vector3 point;
+        for (float time = 0; time < linePoints; time += timeBetweenPoints)
+        {
+            i++;
+            point = transform.position + time * startVelocity;
+            point.y = transform.position.y + startVelocity.y * time + (Physics.gravity.y / 2f * time * time);
+            lineRenderer.SetPosition(i, point);
+
+            Vector3 lastPosition = lineRenderer.GetPosition(i - 1);
+            if (Physics.Raycast(lastPosition, (point - lastPosition).normalized, out hit, (point - lastPosition).magnitude))
+            {
+                lineRenderer.SetPosition(i , hit.point);
+                lineRenderer.positionCount = i + 1;
+                return;
+            }
+        }
+    }
+    
     public void SetAsReleased()
     {
+        lineRenderer.enabled = false;
         collider.enabled = true;
         transform.SetParent(null);
         rb.isKinematic = false;
@@ -145,7 +211,7 @@ public class Item : MonoBehaviour,IGrabbable, IAffectable
         if(!conductor) return;
         if (charged) return;
         
-        Debug.Log("Electrocuted " + gameObject.name + " with no depedancy");
+        //Debug.Log("Electrocuted " + gameObject.name + " with no depedancy");
         charged = true;
         EnableZone();
     }
@@ -154,19 +220,21 @@ public class Item : MonoBehaviour,IGrabbable, IAffectable
         if(!conductor) return;
         if (charged) return;
         
-        Debug.Log("Electrocuted " + gameObject.name + " with depedancy of " + emitter.name);
+        //Debug.Log("Electrocuted " + gameObject.name + " with depedancy of " + emitter.name);
         emitterDependant = true;
         this.emitter = emitter;
         charged = true;
         EnableZone();
     }
-    public virtual void Stomp()
+
+    public virtual void Stomp(Vector3 srcPos)
     {
-        return;
+        if(fallable) return;
+        Fall(srcPos);
     }
     public virtual void DeElectrocute()
     {
-        Debug.Log("DeElectrocuted " + gameObject.name);
+        //Debug.Log("DeElectrocuted " + gameObject.name);
         charged = false;
         DisableZone();
     } 
@@ -196,9 +264,9 @@ public class Item : MonoBehaviour,IGrabbable, IAffectable
     public virtual void Fall(Vector3 source)
     {
         if(!fallable)return;
-        Debug.Log( "Falling " + gameObject.name);
+        //Debug.Log( "Falling " + gameObject.name);
         GetComponent<Rigidbody>().isKinematic = false;
-        GetComponent<Rigidbody>().AddForce(GetFall(source).Dir * GetFall(source).force);
+        GetComponent<Rigidbody>().AddForceAtPosition(GetFall(source).Dir * GetFall(source).force, transform.position + Vector3.up);
         falling = true;
     }
 
@@ -241,7 +309,7 @@ public class Item : MonoBehaviour,IGrabbable, IAffectable
         if(!explosive) return;
         Instantiate((GameObject)Resources.Load("Explosion"), transform.position, Quaternion.identity);
         if (TryGetComponent<Collider>(out Collider col)) col.enabled = false;
-        Debug.Log("Exploded " + gameObject.name);
+        //Debug.Log("Exploded " + gameObject.name);
         DeleteItem();
     }
 }
