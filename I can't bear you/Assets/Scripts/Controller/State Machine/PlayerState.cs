@@ -8,7 +8,7 @@ public abstract class PlayerState : Entity
     [SerializeField] protected Rigidbody rb;
     [SerializeField] public PlayerStats playerStats;
     [SerializeField] protected InterestPointsManager interestPointsManager;
-    public GameObject heldObject;
+    [Dracau.ReadOnly] public GameObject heldObject;
     protected IGrabbable heldObjectGrabbable;
     [SerializeField] protected Transform handTransform;
     private float accelerationIndex;
@@ -103,10 +103,13 @@ public abstract class PlayerState : Entity
         locked = true;
         animator.SetBool("Throw", true);
         time = 0;
+        
         while (!InputManager.instance.input.Actions.Smash.WasReleasedThisFrame() && time < playerStats.maxTimeThrowHeld)
         {
             yield return new WaitForEndOfFrame();
             time += Time.deltaTime; 
+            time = Mathf.Clamp(time, 0f, playerStats.maxTimeThrowHeld);
+            
         }
         
         if (time / playerStats.maxTimeThrowHeld < playerStats.mitigationRatioDropThrow)
@@ -133,5 +136,22 @@ public abstract class PlayerState : Entity
     {
         yield return new WaitForSeconds(playerStats.roarCD); 
         roarReady = true;
+    }
+
+    public override void Electrocute()
+    {
+        Debug.Log("Player was electrocuted");
+        BearserkerGaugeManager.instance.AddBearserker(-playerStats.bearserkerReductionWhenElectrocuted);
+    }
+    public override void Electrocute(GameObject emitter)
+    {
+        Debug.Log("Player was electrocuted by " + emitter.name);
+        BearserkerGaugeManager.instance.AddBearserker(-playerStats.bearserkerReductionWhenElectrocuted);
+    }
+
+    public override void Explode()
+    {
+        Debug.Log("Player was exploded");
+        BearserkerGaugeManager.instance.AddBearserker(-playerStats.bearserkerReductionWhenExploded);
     }
 }

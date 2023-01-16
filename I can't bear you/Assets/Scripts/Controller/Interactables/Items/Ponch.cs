@@ -9,6 +9,8 @@ public class Ponch : Item,IInteractable,ISmashable
     [SerializeField] private GameObject psBubblePoisoned;
     [SerializeField] ParticleSystem interactParticle, smashParticle;
     bool spicedUp;
+    [SerializeField] GameObject scrapPilePrefab;
+    [SerializeField] Transform scrapPilePivot;
     public void Interact(Vector3 sourcePos)
     {
         // Spice up the Ponch
@@ -22,8 +24,8 @@ public class Ponch : Item,IInteractable,ISmashable
             psBubblePoisoned.SetActive(true);
             spicedUp = true;
         }
-
     }
+        
 
     public void Smash()
     {

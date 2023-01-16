@@ -572,9 +572,9 @@ public class Npc : Entity, ISmashable
         image.SetActive(true);
     }
 
-    public override void Stomp()
+    public override void Stomp(Vector3 srcPos)
     {
-        base.Stomp();
+        base.Stomp(srcPos);
         Die(false);
     }
 }

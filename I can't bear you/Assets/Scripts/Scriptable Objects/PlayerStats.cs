@@ -18,6 +18,9 @@ public class PlayerStats : ScriptableObject
     [Header("Throw")] 
     [Range(0.01f, 1f),Tooltip("Max time throw can be held down before throw starts")] public float maxTimeThrowHeld;
     [Range(0f,1f),Tooltip("Minimal proportion of maxTimeThrowHeld for the throw to not be considered a drop")] public float mitigationRatioDropThrow;
+    [Header("Damage")] 
+    [Range(0f, 1f)] public float bearserkerReductionWhenElectrocuted;
+    [Range(0f, 1f)] public float bearserkerReductionWhenExploded;
     [Header("Roar")]
     public float roarRange;
     public float roarCD;
