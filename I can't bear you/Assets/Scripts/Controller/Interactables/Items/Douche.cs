@@ -6,7 +6,9 @@ public class Douche : Item,IInteractable,ISmashable
 {
     [SerializeField] AudioSource audioSource;
     [SerializeField] AudioClip brokenSound, showerOpenSound;
-    [SerializeField] ParticleSystem interactParticle, smashParticle;
+    [SerializeField] ParticleSystem interactParticle;
+    [SerializeField] GameObject scrapPilePrefab;
+    [SerializeField] Transform scrapPilePivot;
     bool isBroken = false, hasBeenTurnedOn = false;
     public void Interact(Vector3 sourcePos)
     {
@@ -26,9 +28,9 @@ public class Douche : Item,IInteractable,ISmashable
     {
         if (!isBroken)
         {
-            if (smashParticle)
-                smashParticle.Play();
-            else Debug.Log("No Smash Particle on " + this.name);
+            if (scrapPilePrefab != null && scrapPilePivot != null)
+                Instantiate(scrapPilePrefab, scrapPilePivot.position, Quaternion.identity);
+            else Debug.Log("No scrapPilePrefab or scrapPilePivot on " + this.name);
             isBroken = true;
             Debug.Log("Breaking the douche");
             audioSource.PlayOneShot(brokenSound);

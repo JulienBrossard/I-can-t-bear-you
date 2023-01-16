@@ -10120,7 +10120,7 @@ Transform:
   - {fileID: 8235047567804398476}
   - {fileID: 8235047568889604805}
   - {fileID: 8485482485744269832}
-  - {fileID: 7869393568790422642}
+  - {fileID: 610747820939619605}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -10191,7 +10191,9 @@ MonoBehaviour:
   isExplosive: 0
   breakSource: {fileID: 1329387303233993881}
   breakSound: {fileID: 8300000, guid: 4b82bc3245b47db45abc78f13163ec80, type: 3}
-  smashParticle: {fileID: 7869393568784295068}
+  scrapPilePrefab: {fileID: 2804457208709666350, guid: d4dd90a3ff44565458969b105290468b,
+    type: 3}
+  scrapPilePivot: {fileID: 610747820939619605}
 --- !u!114 &8485482486028986898
 MonoBehaviour:
   m_ObjectHideFlags: 0

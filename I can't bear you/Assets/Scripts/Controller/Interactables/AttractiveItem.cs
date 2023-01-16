@@ -14,7 +14,9 @@ public class AttractiveItem : Item, IInteractable, ISmashable
     [SerializeField] public bool invertZAxis;
     [SerializeField] AudioClip turnedOnSound, turnedOffSound, activeSound, brokenSound;
     [SerializeField] AudioSource audioSource;
-    public ParticleSystem interactParticle, smashParticle;
+    public ParticleSystem interactParticle;
+    public GameObject scrapPilePrefab;
+    public Transform scrapPilePivot;
 
     private void Update()
     {
@@ -90,9 +92,9 @@ public class AttractiveItem : Item, IInteractable, ISmashable
 
     public void Smash()
     {
-        if (smashParticle)
-            smashParticle.Play();
-        else Debug.Log("No Smash Particle on " + this.name);
+        if (scrapPilePrefab != null && scrapPilePivot != null)
+            Instantiate(scrapPilePrefab, scrapPilePivot.position, Quaternion.identity);
+        else Debug.Log("No scrapPilePrefab or scrapPilePivot on " + this.name);
         functioning = false;
         StopCoroutine(PartyLoop());
         audioSource.Stop();

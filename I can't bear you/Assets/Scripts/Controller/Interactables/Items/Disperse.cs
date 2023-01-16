@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -16,11 +17,22 @@ public class Disperse : Item
     [SerializeField] public NavMeshObstacle obstacle;
     [SerializeField] public Awareness awareness;
     
-    List<GameObject> currentTargets = new List<GameObject>(); 
+    List<GameObject> currentTargets = new List<GameObject>();
+
+    private bool setDispersePoint;
 
     private void Update()
     {
         DisperseNpc();
+    }
+
+    private void Start()
+    {
+        if (!setDispersePoint)
+        {
+            NpcManager.instance.SetDispersePoint(transform.position, awareness.viewRadius, disperseType);
+            awareness.Init();
+        }
     }
 
     /// <summary>
@@ -100,8 +112,12 @@ public class Disperse : Item
 
     private void OnEnable()
     {
-        NpcManager.instance.SetDispersePoint(transform.position, awareness.viewRadius, disperseType);
-        awareness.Init();
+        if (NpcManager.instance != default)
+        {
+            NpcManager.instance.SetDispersePoint(transform.position, awareness.viewRadius, disperseType);
+            awareness.Init();
+            setDispersePoint = true;
+        }
     }
 
     private void OnDisable()

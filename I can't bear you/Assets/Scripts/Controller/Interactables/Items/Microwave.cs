@@ -6,7 +6,8 @@ public class Microwave : Item,ISmashable
 {
     [SerializeField] AudioSource breakSource;
     [SerializeField] AudioClip breakSound;
-    [SerializeField] ParticleSystem smashParticle;
+    [SerializeField] GameObject scrapPilePrefab;
+    [SerializeField] Transform scrapPilePivot;
     bool isBroken = false;
     public void Smash()
     {
@@ -21,13 +22,14 @@ public class Microwave : Item,ISmashable
     {
         if (!isBroken)
         {
-            if (smashParticle)
-                smashParticle.Play();
-            else Debug.Log("No Smash Particle on " + this.name);
+            if (scrapPilePrefab != null && scrapPilePivot != null)
+                Instantiate(scrapPilePrefab, scrapPilePivot.position, Quaternion.identity);
+            else Debug.Log("No scrapPilePrefab or scrapPilePivot on " + this.name);
             Debug.Log("Breaking Microwave");
             breakSource.PlayOneShot(breakSound);
             Electrocute();
             isBroken = true;
+            DeleteItem();
         }
     }
 }
