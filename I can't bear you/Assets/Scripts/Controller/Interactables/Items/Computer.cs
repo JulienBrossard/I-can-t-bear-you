@@ -15,6 +15,6 @@ public class Computer : Item, ISmashable
         Debug.Log("Breaking the Computer");
         audioSource.Play();
         Electrocute();
-        DeleteItem();
+        transform.GetChild(0).gameObject.SetActive(false);
     }
 }
