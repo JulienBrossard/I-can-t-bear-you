@@ -19,7 +19,7 @@ public class Sink : Item, ISmashable
             Debug.Log("Breaking the Sink");
             audioSource.Play();
             CreatePuddle();
-            DeleteItem();
+            transform.GetChild(0).gameObject.SetActive(false);
         }
     }
 }
