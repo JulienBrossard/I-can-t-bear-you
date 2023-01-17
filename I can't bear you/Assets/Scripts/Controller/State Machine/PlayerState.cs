@@ -56,11 +56,21 @@ public abstract class PlayerState : Entity
     {
         if(interestPointsManager.GetGrabbable() == null) return false;
         if(interestPointsManager.GetGrabbable().Grab(handTransform) == default) return false;
-                
         heldObject = interestPointsManager.GetGrabbable().Grab(handTransform).gameObject;
+        
         return true;
     }
 
+    public bool IsThereAWall(Transform objectToCheck)
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, objectToCheck.position - transform.position, out hit, Vector3.Distance(transform.position, objectToCheck.position), playerStats.obstacleLayerMask))
+        {
+            return true;
+        }
+        return false;
+    }
+    
     public void Roar()
     {
         if (roarReady)

@@ -132,3 +132,6 @@ MonoBehaviour:
   roarFreezeChance: 0.5
   roarFreezeDuration: 4.7
   roarDuration: 1.7
+  obstacleLayerMask:
+    serializedVersion: 2
+    m_Bits: 512

@@ -27,4 +27,6 @@ public class PlayerStats : ScriptableObject
     public float roarFreezeChance;
     public float roarFreezeDuration;
     public float roarDuration;
+    public LayerMask obstacleLayerMask;
+
 }

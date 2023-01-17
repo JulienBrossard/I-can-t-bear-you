@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
 public class Item : MonoBehaviour,IGrabbable, IAffectable
@@ -298,9 +299,13 @@ public class Item : MonoBehaviour,IGrabbable, IAffectable
     [Header("Gas")]
     [Range(0.5f,5f)]
     [SerializeField] private float gasSize;
+    private GameObject tempGasRef;
     public void CreateGas()
     {
-        Instantiate((GameObject)Resources.Load("Gas"), transform.position, Quaternion.identity).transform.localScale = Vector3.one * gasSize;
+        tempGasRef = Instantiate((GameObject)Resources.Load("Gas"), transform.position, Quaternion.identity);
+        tempGasRef.transform.localScale = Vector3.zero;
+        tempGasRef.transform.DOScale(Vector3.one * gasSize,0.5f);
+        
     }
     
     [Header("Explosive")]
