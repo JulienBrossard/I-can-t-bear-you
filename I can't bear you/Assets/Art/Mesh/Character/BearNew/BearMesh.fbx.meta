@@ -48,6 +48,18 @@ ModelImporter:
   - first:
       74: 1995994926485000384
     second: metarig|VictoryPose
+  - first:
+      74: 5315842518111639222
+    second: metarig|CameraAction
+  - first:
+      74: 1051024766979189161
+    second: metarig|Push
+  - first:
+      74: -3378425623957826978
+    second: metarig|SittingWin
+  - first:
+      74: -8098702996822588325
+    second: metarig|SunAction
   externalObjects:
   - first:
       type: UnityEngine:Material

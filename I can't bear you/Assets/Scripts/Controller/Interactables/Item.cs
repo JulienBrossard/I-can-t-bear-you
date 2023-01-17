@@ -266,6 +266,7 @@ public class Item : MonoBehaviour,IGrabbable, IAffectable
     private bool falling;
     public virtual void Fall(Vector3 source)
     {
+        PlayerAnimatorManager.instance.SetAnimatorTrigger("Push");
         if(!fallable)return;
         //Debug.Log( "Falling " + gameObject.name);
         GetComponent<Rigidbody>().isKinematic = false;

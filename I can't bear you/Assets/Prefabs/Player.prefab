@@ -168,6 +168,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interestPoints: []
+  obstacleLayerMask:
+    serializedVersion: 2
+    m_Bits: 512
 --- !u!114 &4147988042225327202
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -225,10 +228,10 @@ MonoBehaviour:
   heldObject: {fileID: 0}
   handTransform: {fileID: 8088334723112691284}
   locked: 0
+  stopMoving: 0
   roarReady: 1
   roarFX: {fileID: 6981436402318415202}
   bearserkerElement: {fileID: 14192320720972242}
-  isAiming: 0
   currentSusState: 0
   bearserkerState: {fileID: 2451688659374893305}
 --- !u!114 &2451688659374893305
@@ -255,10 +258,10 @@ MonoBehaviour:
   heldObject: {fileID: 0}
   handTransform: {fileID: 8088334723112691284}
   locked: 0
+  stopMoving: 0
   roarReady: 0
   roarFX: {fileID: 6981436402318415202}
   bearserkerElement: {fileID: 14192320720972242}
-  isAiming: 0
   currentSusState: 0
   stealthState: {fileID: 2451688659374893306}
 --- !u!95 &4217822213613318521

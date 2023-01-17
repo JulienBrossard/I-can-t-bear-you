@@ -61,16 +61,6 @@ public abstract class PlayerState : Entity
         return true;
     }
 
-    public bool IsThereAWall(Transform objectToCheck)
-    {
-        RaycastHit hit;
-        if (Physics.Raycast(transform.position, objectToCheck.position - transform.position, out hit, Vector3.Distance(transform.position, objectToCheck.position), playerStats.obstacleLayerMask))
-        {
-            return true;
-        }
-        return false;
-    }
-    
     public void Roar()
     {
         if (roarReady)
