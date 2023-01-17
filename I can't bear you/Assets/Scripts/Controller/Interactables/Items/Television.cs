@@ -39,6 +39,7 @@ public class Television : AttractiveItem, ISmashable, IInteractable
         tvScreenMR.materials = tempMatList;
         if (charged) return;
         Electrocute();
+        GetComponent<MeshRenderer>().enabled = false;
     }
 
     [ContextMenu("Switch")]

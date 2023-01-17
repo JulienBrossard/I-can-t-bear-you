@@ -358,9 +358,10 @@ public class Npc : Entity, ISmashable
         BearserkerGaugeManager.instance.AddBearserker(0.1f);
         base.Die(unspawn);
         Instantiate(deathAnimPrefab, deathAnimPivot.position, Quaternion.identity);
-        if (unspawn)
+
+        for (int i = 0; i < transform.childCount; i++)
         {
-            NpcManager.instance.UnSpawnNpc(gameObject.name.Replace("(Clone)", String.Empty), gameObject);
+            if (transform.GetChild(i).GetComponent<MeshRenderer>()) transform.GetChild(i).GetComponent<MeshRenderer>().enabled = false;
         }
         npcScripts.npcUI.canvas.SetActive(false);
     }
