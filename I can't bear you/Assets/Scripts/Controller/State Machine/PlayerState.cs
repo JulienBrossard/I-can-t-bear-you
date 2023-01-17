@@ -13,6 +13,7 @@ public abstract class PlayerState : Entity
     [SerializeField] protected Transform handTransform;
     private float accelerationIndex;
     [SerializeField] protected bool locked;
+    [SerializeField] protected bool stopMoving;
     [SerializeField] protected bool roarReady;
     [SerializeField] protected Transform roarFX;
     [SerializeField] protected GameObject bearserkerElement;
@@ -100,7 +101,7 @@ public abstract class PlayerState : Entity
     private float time;
     public IEnumerator EvaluateThrowForce()
     {
-        locked = true;
+        stopMoving = true;
         animator.SetBool("Throw", true);
         time = 0;
         
@@ -109,7 +110,6 @@ public abstract class PlayerState : Entity
             yield return new WaitForEndOfFrame();
             time += Time.deltaTime; 
             time = Mathf.Clamp(time, 0f, playerStats.maxTimeThrowHeld);
-            
         }
         
         if (time / playerStats.maxTimeThrowHeld < playerStats.mitigationRatioDropThrow)
@@ -117,7 +117,7 @@ public abstract class PlayerState : Entity
             heldObject.GetComponent<IGrabbable>().Drop();
             animator.SetTrigger("Drop");
             animator.SetBool("Throw", false);
-            locked = false;
+            stopMoving = false;
 
         }
         else
@@ -125,7 +125,7 @@ public abstract class PlayerState : Entity
             heldObject.GetComponent<IGrabbable>().Throw(transform.forward,time / playerStats.maxTimeThrowHeld);
             heldObject.transform.localScale = Vector3.one;
             animator.SetBool("Throw", false);
-            locked = false;
+            stopMoving = false;
         }
         
 
