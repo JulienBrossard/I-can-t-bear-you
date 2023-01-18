@@ -1,9 +1,15 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
+using Random = UnityEngine.Random;
+
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 public class Pathfinding : MonoBehaviour
 {
@@ -24,6 +30,7 @@ public class Pathfinding : MonoBehaviour
     private Vector3 lastPosition;
     private NavMeshObstacle obstacle;
     private NavMeshAgent agent;
+    [HideInInspector] public Vector3 currentDestination;
 
     public void Init(NavMeshObstacle obstacle, NavMeshAgent agent)
     {
@@ -35,9 +42,10 @@ public class Pathfinding : MonoBehaviour
         obstacle.carving = true;
         this.obstacle = obstacle;
         this.agent = agent;
+        carvingMoveThreshold = Random.Range(0.1f, 0.2f);
     }
 
-    public void Update(Transform transform)
+    private void Update()
     {
         if (Vector3.Distance(lastPosition, transform.position) > carvingMoveThreshold)
         {
@@ -48,6 +56,11 @@ public class Pathfinding : MonoBehaviour
         {
             agent.enabled = false;
             obstacle.enabled = true;
+        }
+
+        if (lastMoveTime + carvingTime - Time.time < 1 && Vector3.Distance(transform.position, currentDestination) > 2 && !agent.enabled)
+        {
+            SetDestination(currentDestination);
         }
     }
 
@@ -78,6 +91,17 @@ public class Pathfinding : MonoBehaviour
 
             if (NavMesh.CalculatePath(npcTransform.position, wayPoints[i].position, agent.areaMask, path))
             {
+                if (!CheckPathStatus(path))
+                {
+                    Transform[] newWayPoints = new Transform[wayPoints.Length];
+                    for (int j = 0; j < wayPoints.Length; j++)
+                    {
+                        newWayPoints[j] = wayPoints[j];
+                    }
+                    newWayPoints.ToList().Remove(closestTarget);
+                    return ChooseClosestTarget(newWayPoints, npcTransform, agent);
+                }
+                
                 float distance = Vector3.Distance(npcTransform.position, path.corners[0]);
 
                 for (int j = 1; j < path.corners.Length; j++)
@@ -93,17 +117,6 @@ public class Pathfinding : MonoBehaviour
             }
         }
 
-        if (!CheckPathStatus(path))
-        {
-            Transform[] newWayPoints = new Transform[wayPoints.Length];
-            for (int i = 0; i < wayPoints.Length; i++)
-            {
-                newWayPoints[i] = wayPoints[i];
-            }
-            newWayPoints.ToList().Remove(closestTarget);
-            return ChooseClosestTarget(newWayPoints, npcTransform, agent);
-        }
-        
         return closestTarget;
     }
 
@@ -267,6 +280,11 @@ public class Pathfinding : MonoBehaviour
             return false;
         }
 
+        if (path.corners.Length == 0)
+        {
+            Debug.LogWarning("Bug in pathfinding");
+            return false;
+        }
         if (CheckPointInDispersePoints(path.corners[^1]))
         {
             return false;
@@ -335,7 +353,17 @@ public class Pathfinding : MonoBehaviour
         yield return null;
         agent.enabled = true;
         agent.SetDestination(position);
+        if (!CheckPathStatus(agent.path))
+        {
+            currentDestination = Vector3.zero;
+        }
     }
-    
-    
+
+    private void OnDrawGizmos()
+    {
+#if UNITY_EDITOR
+        Handles.Label(transform.position, "CarvingMoveThreshold : " + Vector3.Distance(lastPosition, transform.position));
+        Handles.Label(transform.position - 0.1f * Vector3.up, "CurrentDestinationDistance : " + Vector3.Distance(transform.position, currentDestination));
+#endif
+    }
 }

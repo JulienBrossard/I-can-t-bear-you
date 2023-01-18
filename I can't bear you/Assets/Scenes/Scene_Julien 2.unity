@@ -2963,7 +2963,7 @@ MonoBehaviour:
     pool:
       prefab: {fileID: 4225555480404199414, guid: d9d78adb1c1738248a56b9aca3558a44,
         type: 3}
-      baseCount: 55
+      baseCount: 20
       baseRefreshSpeed: 5
       refreshSpeed: 5
 --- !u!114 &377199017
@@ -3006,7 +3006,7 @@ MonoBehaviour:
       npc:
       - npc: {fileID: 4225555480404199414, guid: d9d78adb1c1738248a56b9aca3558a44,
           type: 3}
-        count: 50
+        count: 10
     - shape: 1
       partyPosition: {fileID: 312293878}
       radius: 8.4
@@ -3015,8 +3015,8 @@ MonoBehaviour:
       npc:
       - npc: {fileID: 4225555480404199414, guid: d9d78adb1c1738248a56b9aca3558a44,
           type: 3}
-        count: 5
-    npcCount: 55
+        count: 10
+    npcCount: 20
     requiredNpcKillCount: 50
     npcSpawnPositions:
     - {fileID: 1078110528}

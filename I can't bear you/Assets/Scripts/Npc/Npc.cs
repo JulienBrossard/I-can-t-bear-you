@@ -54,8 +54,7 @@ public class Npc : Entity, ISmashable
     [Header("Scripts")]
     public NpcScripts npcScripts;
     [SerializeField] public Pathfinding pathfinding;
-
-    [HideInInspector] public Vector3 currentDestination;
+    
     [HideInInspector] public Vector3 attractedPoint;
     [HideInInspector] public Vector3 moveAwayPoint;
     [HideInInspector] public float moveAwayRadius;
@@ -93,21 +92,34 @@ public class Npc : Entity, ISmashable
 
         //Init Player
         player = LevelManager.instance.GetPlayer();
+        
+        //Init Destination
+        
+        //Npc calm
+        if (npcScripts.panicData.panicState == global::Panic.PanicState.Calm)
+        {
+            Calm();
+        }
+
+        //Npc investigate
+        else if (npcScripts.panicData.panicState == global::Panic.PanicState.Tense)
+        {
+            Investigate();
+        }
+
+        //Npc panic
+        else
+        {
+            Panic();
+        }
+        
+        agent.SetDestination(pathfinding.currentDestination);
     }
 
     private void Update()
     {
-        pathfinding.Update(transform);
         if (!isDie)
         {
-
-            //Player Walk animation when npc is moving
-            if (!animator.GetBool("isWalking") && Vector3.Distance(transform.position, agent.destination) > 2f)
-            {
-                animator.SetBool("isWalking", true);
-                animator.SetBool("isDancing", false);
-            }
-
             //Npc calm
             if (npcScripts.panicData.panicState == global::Panic.PanicState.Calm)
             {
@@ -125,10 +137,11 @@ public class Npc : Entity, ISmashable
             {
                 Panic();
             }
-
-            if (gameObject.activeSelf)
+            
+            if (agent.enabled && !CheckNpcDistanceToDestination() && gameObject.activeSelf)
             {
-                pathfinding.SetDestination(currentDestination);
+                animator.SetBool("isWalking", true);
+                animator.SetBool("isDancing", false);
             }
         }
     }
@@ -157,8 +170,18 @@ public class Npc : Entity, ISmashable
         state = stateStack[0];
 
         // Set Npc Destination
-        if (currentDestination == Vector3.zero)
+        if (pathfinding.currentDestination == Vector3.zero)
         {
+            if (obstacle.enabled)
+            {
+                pathfinding.SetDestination(Vector3.zero);
+                return;
+            }
+            if (!agent.enabled)
+            {
+                agent.enabled = true;
+            }
+
             switch (state)
             {
                 case STATE.HUNGER:
@@ -176,27 +199,28 @@ public class Npc : Entity, ISmashable
                     dest = new Vector3(dest.x, pathfinding.pathHeight, dest.z);
                     if (pathfinding.CalculatePath(agent, transform, dest) != Vector3.zero)
                     {
-                        currentDestination = dest;
+                        pathfinding.currentDestination = dest;
                     }
                     else
                     {
-                        currentDestination = pathfinding.CalculateRandomPosOnCirclePeriphery(agent, transform, moveAwayRadius + 3, moveAwayPoint);
+                        pathfinding.currentDestination = pathfinding.CalculateRandomPosOnCirclePeriphery(agent, transform, moveAwayRadius + 3, moveAwayPoint);
                     }
                     return;
                 case STATE.ATTRACTED:
-                    currentDestination = attractedPoint;
+                    pathfinding.currentDestination = attractedPoint;
                     return;
                 default:
                     if (partyData.shape == PartyData.Shape.CIRCLE)
                     {
-                        currentDestination = pathfinding.CalculateRandomPosInCircle(agent, transform,
+                        pathfinding.currentDestination = pathfinding.CalculateRandomPosInCircle(agent, transform,
                             partyData.radius, partyData.partyPosition.position);
                     }
                     else
                     {
-                        currentDestination = pathfinding.CalculateRandomPosInRectangle(agent, transform,
+                        pathfinding.currentDestination = pathfinding.CalculateRandomPosInRectangle(agent, transform,
                             partyData.width, partyData.length, partyData.partyPosition);
                     }
+                    pathfinding.SetDestination(pathfinding.currentDestination);
                     return;
             }
         }
@@ -234,13 +258,22 @@ public class Npc : Entity, ISmashable
     /// </summary>
     void Investigate()
     {
-        if (currentDestination == Vector3.zero)
+        if (pathfinding.currentDestination == Vector3.zero)
         {
-            currentDestination = pathfinding.CalculateRandomPosInCircle(agent, transform, npcScripts.panicData.panicData.investigateRadius, player.position);
+            if (obstacle.enabled)
+            {
+                pathfinding.SetDestination(Vector3.zero);
+                return;
+            }
+            if (!agent.enabled)
+            {
+                agent.enabled = true;
+            }
+            pathfinding.currentDestination = pathfinding.CalculateRandomPosInCircle(agent, transform, npcScripts.panicData.panicData.investigateRadius, player.position);
         }
         else if (CheckNpcDistanceToDestination())
         {
-            currentDestination = Vector3.zero;
+            pathfinding.currentDestination = Vector3.zero;
         }
     }
 
@@ -251,15 +284,24 @@ public class Npc : Entity, ISmashable
     {
         // Set Destination
 
-        if (currentDestination == Vector3.zero)
+        if (pathfinding.currentDestination == Vector3.zero)
         {
+            if (obstacle.enabled)
+            {
+                pathfinding.SetDestination(Vector3.zero);
+                return;
+            }
+            if (!agent.enabled)
+            {
+                agent.enabled = true;
+            }
             if (pathfinding.exitPoints.Count > 0)
             {
-                currentDestination = pathfinding.ChooseClosestTarget(pathfinding.exitPoints.ToArray(), transform, agent).position;
+                pathfinding.currentDestination = pathfinding.ChooseClosestTarget(pathfinding.exitPoints.ToArray(), transform, agent).position;
             }
             else
             {
-                currentDestination = pathfinding.noExitPoints[Random.Range(0, pathfinding.noExitPoints.Length)].position;
+                pathfinding.currentDestination = pathfinding.noExitPoints[Random.Range(0, pathfinding.noExitPoints.Length)].position;
             }
         }
 
@@ -272,7 +314,7 @@ public class Npc : Entity, ISmashable
             }
             else
             {
-                currentDestination = pathfinding.noExitPoints[Random.Range(0, pathfinding.noExitPoints.Length)].position;
+                pathfinding.currentDestination = pathfinding.noExitPoints[Random.Range(0, pathfinding.noExitPoints.Length)].position;
             }
         }
     }
@@ -386,7 +428,7 @@ public class Npc : Entity, ISmashable
     public void StopAttracted()
     {
         stateStack.Remove(STATE.ATTRACTED);
-        currentDestination = Vector3.zero;
+        pathfinding.currentDestination = Vector3.zero;
     }
 
     /// <summary>
@@ -431,7 +473,7 @@ public class Npc : Entity, ISmashable
     public void RemoveExitPoint(Transform exitPoint)
     {
         pathfinding.exitPoints.Remove(exitPoint);
-        currentDestination = Vector3.zero;
+        pathfinding.currentDestination = Vector3.zero;
     }
 
     /// <summary>
@@ -508,7 +550,7 @@ public class Npc : Entity, ISmashable
 
         if (stateStack[0] != sortedList[0])
         {
-            currentDestination = Vector3.zero;
+            pathfinding.currentDestination = Vector3.zero;
         }
         stateStack = sortedList;
     }
@@ -535,7 +577,7 @@ public class Npc : Entity, ISmashable
         stateStack.Remove(STATE.THIRST);
         stats.currentThirst = npcData.maxThirst;
         isAction = false;
-        currentDestination = Vector3.zero;
+        pathfinding.currentDestination = Vector3.zero;
         Debug.Log("Drinking");
     }
 
@@ -547,7 +589,7 @@ public class Npc : Entity, ISmashable
         stateStack.Remove(STATE.BLADDER);
         stats.currentBladder = npcData.maxBladder;
         isAction = false;
-        currentDestination = Vector3.zero;
+        pathfinding.currentDestination = Vector3.zero;
         Debug.Log("Peeing");
     }
 
@@ -559,7 +601,7 @@ public class Npc : Entity, ISmashable
         stateStack.Remove(STATE.HUNGER);
         stats.currentHunger = npcData.maxHunger;
         isAction = false;
-        currentDestination = Vector3.zero;
+        pathfinding.currentDestination = Vector3.zero;
         Debug.Log("Eating");
     }
 
@@ -570,7 +612,7 @@ public class Npc : Entity, ISmashable
     /// <param name="image"> Image of the state </param>
     void SetStateDestination(Transform[] waypoints, GameObject image)
     {
-        currentDestination = pathfinding.ChooseClosestTarget(waypoints, transform, agent).position;
+        pathfinding.currentDestination = pathfinding.ChooseClosestTarget(waypoints, transform, agent).position;
         image.SetActive(true);
     }
 

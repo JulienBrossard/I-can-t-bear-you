@@ -95,7 +95,7 @@ public class Panic : MonoBehaviour
         if (this.panicState != panicState)
         {
             this.panicState = panicState;
-            NpcManager.instance.npcScriptDict[gameObject].currentDestination = Vector3.zero;
+            NpcManager.instance.npcScriptDict[gameObject].pathfinding.currentDestination = Vector3.zero;
             Debug.Log("New Panic State : " + panicState);
         }
     }

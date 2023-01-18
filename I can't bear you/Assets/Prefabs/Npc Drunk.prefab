@@ -177,6 +177,8 @@ GameObject:
   - component: {fileID: 2516137243161562841}
   - component: {fileID: 1646748394466927299}
   - component: {fileID: 7268674142176767643}
+  - component: {fileID: 4938893783634453575}
+  - component: {fileID: 7502907953340413923}
   m_Layer: 6
   m_Name: Npc Drunk
   m_TagString: Npc
@@ -405,9 +407,10 @@ MonoBehaviour:
   - states: 04000000
   - states: 03000000
   agent: {fileID: 2516137243161562841}
+  obstacle: {fileID: 7502907953340413923}
   minimumDistanceWithDestination: 2
   npcScripts: {fileID: 4435618585769636739}
-  currentDestination: {x: 0, y: 0, z: 0}
+  pathfinding: {fileID: 4938893783634453575}
   attractedPoint: {x: 0, y: 0, z: 0}
   moveAwayPoint: {x: 0, y: 0, z: 0}
   moveAwayRadius: 0
@@ -416,6 +419,43 @@ MonoBehaviour:
   deathAnimPrefab: {fileID: 2966682104723576697, guid: 0c58253b127661c4aaa5408fbcd528d6,
     type: 3}
   deathAnimPivot: {fileID: 3306360098090034663}
+--- !u!114 &4938893783634453575
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 560144879853271863}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e887a0c58964d2b4888d288ad921766c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  noExitPoints: []
+  exitPoints: []
+  hungerPoints: []
+  thirstPoints: []
+  bladderPoints: []
+  pathHeight: 0
+  carvingTime: 0.5
+  carvingMoveThreshold: 0.1
+  currentDestination: {x: 0, y: 0, z: 0}
+--- !u!208 &7502907953340413923
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 560144879853271863}
+  m_Enabled: 0
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &662746489765254126
 GameObject:
   m_ObjectHideFlags: 0
