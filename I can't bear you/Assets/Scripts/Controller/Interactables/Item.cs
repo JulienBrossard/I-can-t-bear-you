@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
 public class Item : MonoBehaviour,IGrabbable, IAffectable
@@ -19,9 +20,19 @@ public class Item : MonoBehaviour,IGrabbable, IAffectable
         Destroy(gameObject);
     }
 
+    /// <summary>
+    /// Set whether the item can de detected by the player.
+    /// </summary>
+    /// <param name="detectable">Detectability</param>
+    public void SetDetectability(bool detectable)
+    {
+        if (detectable) gameObject.layer = LayerMask.NameToLayer("Default");
+        else gameObject.layer = LayerMask.NameToLayer("Not Interactable Item");
+    }
+
     [Header("Puddle")]
     [SerializeField] private PuddleType puddleType;
-    [Range(0.5f,5f)]public float puddleSize = 1;
+    [Range(0.5f,5f)] public float puddleSize;
     public virtual GameObject CreatePuddle()
     {
         GameObject puddleBuffer;
@@ -69,15 +80,16 @@ public class Item : MonoBehaviour,IGrabbable, IAffectable
     }
 
     [Header("Grab")] 
-    [SerializeField] public bool grabbable;
+    public bool grabbable;
     [SerializeField] private Rigidbody rb;
     [SerializeField] private BoxCollider collider;
     [Header("Throw Data")]
     [SerializeField] private float throwForce;
-    [HideInInspector] public LineRenderer lineRenderer;
+    public LineRenderer lineRenderer;
     [SerializeField] [Range(10, 100)] private int linePoints = 25;
     [SerializeField] [Range(0.01f, 0.25f)] private float timeBetweenPoints = 0.1f;
     private LayerMask itemCollisionMask;
+    [SerializeField] private LayerMask raycastAimMask;
     private RaycastHit hit;
     [HideInInspector] public bool thrown;
 
@@ -150,6 +162,7 @@ public class Item : MonoBehaviour,IGrabbable, IAffectable
     /// </summary>
     public void DrawProjection()
     {
+        Debug.Log("Drawing projection");
         lineRenderer.enabled = true;
         lineRenderer.positionCount = Mathf.CeilToInt(linePoints / timeBetweenPoints) + 1;
         Vector3 startVelocity = throwForce * LevelManager.instance.GetPlayer().transform.forward / rb.mass;
@@ -164,7 +177,7 @@ public class Item : MonoBehaviour,IGrabbable, IAffectable
             lineRenderer.SetPosition(i, point);
 
             Vector3 lastPosition = lineRenderer.GetPosition(i - 1);
-            if (Physics.Raycast(lastPosition, (point - lastPosition).normalized, out hit, (point - lastPosition).magnitude))
+            if (Physics.Raycast(lastPosition, (point - lastPosition).normalized, out hit, (point - lastPosition).magnitude, raycastAimMask))
             {
                 lineRenderer.SetPosition(i , hit.point);
                 lineRenderer.positionCount = i + 1;
@@ -216,9 +229,11 @@ public class Item : MonoBehaviour,IGrabbable, IAffectable
         charged = true;
         EnableZone();
     }
-    public virtual void Stomp()
+
+    public virtual void Stomp(Vector3 srcPos)
     {
-        return;
+        if(fallable) return;
+        Fall(srcPos);
     }
     public virtual void DeElectrocute()
     {
@@ -251,10 +266,11 @@ public class Item : MonoBehaviour,IGrabbable, IAffectable
     private bool falling;
     public virtual void Fall(Vector3 source)
     {
+        PlayerAnimatorManager.instance.SetAnimatorTrigger("Push");
         if(!fallable)return;
         //Debug.Log( "Falling " + gameObject.name);
         GetComponent<Rigidbody>().isKinematic = false;
-        GetComponent<Rigidbody>().AddForce(GetFall(source).Dir * GetFall(source).force);
+        GetComponent<Rigidbody>().AddForceAtPosition(GetFall(source).Dir * GetFall(source).force, transform.position + Vector3.up);
         falling = true;
     }
 
@@ -284,9 +300,13 @@ public class Item : MonoBehaviour,IGrabbable, IAffectable
     [Header("Gas")]
     [Range(0.5f,5f)]
     [SerializeField] private float gasSize;
+    private GameObject tempGasRef;
     public void CreateGas()
     {
-        Instantiate((GameObject)Resources.Load("Gas"), transform.position, Quaternion.identity).transform.localScale = Vector3.one * gasSize;
+        tempGasRef = Instantiate((GameObject)Resources.Load("Gas"), transform.position, Quaternion.identity);
+        tempGasRef.transform.localScale = Vector3.zero;
+        tempGasRef.transform.DOScale(Vector3.one * gasSize,0.5f);
+        
     }
     
     [Header("Explosive")]

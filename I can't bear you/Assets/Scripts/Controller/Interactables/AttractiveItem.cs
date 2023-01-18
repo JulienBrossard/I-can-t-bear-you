@@ -102,6 +102,7 @@ public class AttractiveItem : Item, IInteractable, ISmashable
         audioSource.PlayOneShot(brokenSound);
         if (charged) return;
         Electrocute();
+        transform.GetChild(0).gameObject.SetActive(false);
     }
 
     public void Interact(Vector3 sourcePos)

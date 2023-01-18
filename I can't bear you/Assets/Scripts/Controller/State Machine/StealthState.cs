@@ -15,6 +15,7 @@ public class StealthState : PlayerState
     }
     public override void Behave()
     {
+        
         if (locked) return;
         if (InputManager.instance.input.Actions.Interact.triggered)
         {
@@ -46,15 +47,16 @@ public class StealthState : PlayerState
         }
 
         if (InputManager.instance.input.Actions.Smash.IsPressed()) 
-        { 
+        {
             if (heldObject != default) 
-            { 
+            {
                 heldObjectGrabbable.DrawProjection(); 
             } 
         }
         
         if (InputManager.instance.input.Actions.Roar.triggered)
         {
+            bearserkerElement.SetActive(true);
             Roar();
             playerStateManager.SwitchState(bearserkerState);
         }
@@ -64,10 +66,14 @@ public class StealthState : PlayerState
 
     public override void FixedBehave()
     {
-        if (!locked)
+        if ((!locked) && (!stopMoving))
         {
             Move();
             PlayerAnimatorManager.instance.SetAnimatorFloat("Speed", rb.velocity.magnitude);
+        }
+        else
+        {
+            rb.velocity = Vector3.zero;
         }
     }
 }

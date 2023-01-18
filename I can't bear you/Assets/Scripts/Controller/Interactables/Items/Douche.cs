@@ -35,6 +35,7 @@ public class Douche : Item,IInteractable,ISmashable
             Debug.Log("Breaking the douche");
             audioSource.PlayOneShot(brokenSound);
             CreatePuddle();
+            transform.GetChild(0).gameObject.SetActive(false);
         }
     }
 }

@@ -11,6 +11,7 @@ using UnityEditor;
 public class InterestPointsManager : MonoBehaviour
 {
     public List<InterestPoint> interestPoints;
+    [SerializeField] private LayerMask obstacleLayerMask;
 
     #if UNITY_EDITOR
     private void OnDrawGizmos()
@@ -100,6 +101,8 @@ public class InterestPointsManager : MonoBehaviour
 
     public void AddInterestPoint(InterestPoint newInterestPoint)
     {
+        if (IsThereAWall(newInterestPoint.go.transform)) return;
+        
         foreach (InterestPoint interestPoint in interestPoints)
         {
             if (interestPoint.go == newInterestPoint.go)
@@ -120,6 +123,16 @@ public class InterestPointsManager : MonoBehaviour
     public void Clear()
     {
         interestPoints.Clear();
+    }
+    
+    public bool IsThereAWall(Transform objectToCheck)
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, objectToCheck.position - transform.position, out hit, Vector3.Distance(transform.position, objectToCheck.position), obstacleLayerMask))
+        {
+            return true;
+        }
+        return false;
     }
 }
 
@@ -160,4 +173,6 @@ public class InterestPoint
     {
         return score;
     }
+    
+  
 }

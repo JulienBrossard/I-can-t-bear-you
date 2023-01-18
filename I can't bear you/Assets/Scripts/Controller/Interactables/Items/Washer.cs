@@ -15,5 +15,6 @@ public class Washer : Item, ISmashable
         Debug.Log("Breaking the Wasger");
         audioSource.Play();
         Electrocute();
+        transform.GetChild(0).gameObject.SetActive(false);
     }
 }

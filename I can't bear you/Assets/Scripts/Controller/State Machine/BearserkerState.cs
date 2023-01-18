@@ -3,6 +3,7 @@ using UnityEngine;
 public class BearserkerState : PlayerState
 {
     [SerializeField] private PlayerState stealthState;
+    bool endState = false;
     public override void OnStateEnter()
     {
         currentSusState = SUSSTATE.FREIGHTNED;
@@ -65,14 +66,20 @@ public class BearserkerState : PlayerState
             PlayerAnimatorManager.instance.SetAnimatorFloat("Speed", rb.velocity.magnitude);
             BearserkerGaugeManager.instance.Use();
         }
+        else
+            rb.velocity = Vector3.zero;
     }
     public void Sleep()
     {
+        if (endState) return;
+        
         Debug.Log("End lvl by sleeping");
         if (heldObject != default)
-        {
-            heldObject.GetComponent<IGrabbable>().Drop();
-        }
+                heldObject.GetComponent<IGrabbable>().Drop();
         LevelManager.instance.EndLevel(true);
+        endState = true;
+        
+
+
     }
 }

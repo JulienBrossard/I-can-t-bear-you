@@ -1,0 +1,183 @@
+fileFormatVersion: 2
+guid: 8631a01fd7a28214b8131e2043d4b6fa
+ModelImporter:
+  serializedVersion: 21300
+  internalIDToNameTable:
+  - first:
+      74: -4018053746005259283
+    second: metarig|AngryIdle
+  - first:
+      74: -4610262742169222174
+    second: metarig|AngryWalk
+  - first:
+      74: 4726629639953360389
+    second: metarig|BearAction
+  - first:
+      74: -1594838825944113288
+    second: metarig|Iddle
+  - first:
+      74: -4070986933529561272
+    second: metarig|IddleWaiting
+  - first:
+      74: -6807571334197759576
+    second: metarig|Punch1
+  - first:
+      74: -4670088767063802251
+    second: metarig|Punch2
+  - first:
+      74: -970302774256191478
+    second: metarig|Roar
+  - first:
+      74: -6187935759498539275
+    second: metarig|Roar.001
+  - first:
+      74: 2933577835342229695
+    second: metarig|Walk
+  - first:
+      74: -4946623131054519084
+    second: metarig|EmptyAction
+  - first:
+      74: 9095643063251116491
+    second: metarig|ThrowPart1
+  - first:
+      74: 6272231665519626735
+    second: metarig|ThrowPart2
+  - first:
+      74: 5738388477181813756
+    second: metarig|FallAsleep
+  - first:
+      74: 1995994926485000384
+    second: metarig|VictoryPose
+  - first:
+      74: 5315842518111639222
+    second: metarig|CameraAction
+  - first:
+      74: 1051024766979189161
+    second: metarig|Push
+  - first:
+      74: -3378425623957826978
+    second: metarig|SittingWin
+  - first:
+      74: -8098702996822588325
+    second: metarig|SunAction
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Black
+    second: {fileID: 2100000, guid: 6fa11ef44a313f04f904f6dec518b381, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Furr
+    second: {fileID: 2100000, guid: 0afec25865737fd42b4399ae6ab38f57, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Nose
+    second: {fileID: 2100000, guid: 076533b3f5bb03c449c67e133ece8421, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Skin
+    second: {fileID: 2100000, guid: 930cdd7a4fb00894eb7e26c2d9a31480, type: 2}
+  materials:
+    materialImportMode: 2
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    removeConstantScaleCurves: 1
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 0
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    nodeNameCollisionStrategy: 1
+    fileIdsGeneration: 2
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    keepQuads: 0
+    weldVertices: 1
+    bakeAxisConversion: 0
+    preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    optimizeBones: 1
+    meshOptimizationFlags: -1
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 1
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  referencedClips: []
+  importAnimation: 1
+  humanDescription:
+    serializedVersion: 3
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    globalScale: 1
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
+  animationType: 2
+  humanoidOversampling: 1
+  avatarSetup: 1
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 1
+  remapMaterialsIfMaterialImportModeIsNone: 0
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

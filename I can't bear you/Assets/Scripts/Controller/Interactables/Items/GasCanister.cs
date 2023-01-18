@@ -28,6 +28,6 @@ public class GasCanister : Item, ISmashable
         audioSource.Play();
         CreateGas();
         yield return new WaitForSeconds(1.6f);
-        DeleteItem();
+        transform.GetChild(0).gameObject.SetActive(false);
     }
 }

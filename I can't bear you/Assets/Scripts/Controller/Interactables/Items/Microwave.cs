@@ -29,6 +29,7 @@ public class Microwave : Item,ISmashable
             breakSource.PlayOneShot(breakSound);
             Electrocute();
             isBroken = true;
+            transform.GetChild(0).gameObject.SetActive(false);
         }
     }
 }

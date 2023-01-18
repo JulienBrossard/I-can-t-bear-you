@@ -3329,6 +3329,11 @@ PrefabInstance:
       propertyPath: npc
       value: 
       objectReference: {fileID: 4225555480404199414}
+    - target: {fileID: 8969441397140210234, guid: a2f46116bbe2ef7468c24dd54db4bd64,
+        type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a2f46116bbe2ef7468c24dd54db4bd64, type: 3}
 --- !u!224 &1211337303414560 stripped

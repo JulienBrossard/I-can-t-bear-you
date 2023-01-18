@@ -49,6 +49,6 @@ public class HoneyPot : Item,IInteractable,ISmashable
         {
             CreatePuddle();
         }
-        DeleteItem();
+        transform.GetChild(0).gameObject.SetActive(false);
     }
 }

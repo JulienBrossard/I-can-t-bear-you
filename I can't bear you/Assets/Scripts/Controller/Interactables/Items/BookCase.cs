@@ -33,6 +33,6 @@ public class BookCase : Item, ISmashable, IInteractable
             Instantiate(scrapPilePrefab, scrapPilePivot.position, Quaternion.identity);
         else Debug.Log("No scrapPilePrefab or scrapPilePivot on " + this.name);
         yield return new WaitForSeconds(.5f);
-        DeleteItem();
+        transform.GetChild(0).gameObject.SetActive(false);
     }
 }
