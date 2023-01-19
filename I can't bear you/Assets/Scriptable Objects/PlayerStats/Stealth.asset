@@ -107,7 +107,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  detectionRange: 5
+  detectionRange: 3
   detectionRangeCurve:
     serializedVersion: 2
     m_Curve:

@@ -69,7 +69,9 @@ public abstract class PlayerState : Entity
     {
         if (roarReady)
         {
-            
+            if (!bearserkerElement.activeSelf)
+                bearserkerElement.SetActive(true);
+
             CameraManager.instance.CameraShake(playerStats.roarDuration, new Vector3(10f,10f,0f),5f, 5, 0.5f);
             roarFX.gameObject.SetActive(true);
             roarFX.localScale = Vector3.zero;

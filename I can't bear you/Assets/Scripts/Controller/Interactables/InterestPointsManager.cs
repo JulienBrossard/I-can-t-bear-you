@@ -158,7 +158,6 @@ public class InterestPoint
         {
             distance = newDistance;
             centerDistance = newCenterDistance;
-            Debug.Log(newDistance);
             score = rangeCurve.Evaluate(newDistance) + centerCurve.Evaluate(newCenterDistance);
         }
         return score;
