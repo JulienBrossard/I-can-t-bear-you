@@ -18,3 +18,7 @@ MonoBehaviour:
   speed: 4
   runSpeed: 12
   acceleration: 10
+  screamRadius: 10
+  screamLayerMask:
+    serializedVersion: 2
+    m_Bits: 64
