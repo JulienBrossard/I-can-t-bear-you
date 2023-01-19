@@ -543,6 +543,11 @@ public class Npc : Entity, ISmashable
                     npcScripts.npcUI.tvImage.SetActive(true);
                     break;
             }
+
+            if (sortedList[0] != STATE.ATTRACTED)
+            {
+                animator.SetBool("isIdle", false);
+            }
         }
         stateStack = sortedList;
     }
