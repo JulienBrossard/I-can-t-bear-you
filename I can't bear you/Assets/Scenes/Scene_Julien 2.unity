@@ -2963,6 +2963,13 @@ MonoBehaviour:
     pool:
       prefab: {fileID: 4225555480404199414, guid: d9d78adb1c1738248a56b9aca3558a44,
         type: 3}
+      baseCount: 1
+      baseRefreshSpeed: 5
+      refreshSpeed: 5
+  - key: Louise
+    pool:
+      prefab: {fileID: 1774220429150140293, guid: eae4883f4e5285e40835868a49c7516d,
+        type: 3}
       baseCount: 5
       baseRefreshSpeed: 5
       refreshSpeed: 5
@@ -3006,17 +3013,17 @@ MonoBehaviour:
       npc:
       - npc: {fileID: 4225555480404199414, guid: d9d78adb1c1738248a56b9aca3558a44,
           type: 3}
-        count: 0
+        count: 1
     - shape: 1
       partyPosition: {fileID: 312293878}
       radius: 8.4
       width: 10.96
       length: 20.23
       npc:
-      - npc: {fileID: 4225555480404199414, guid: d9d78adb1c1738248a56b9aca3558a44,
+      - npc: {fileID: 1774220429150140293, guid: eae4883f4e5285e40835868a49c7516d,
           type: 3}
         count: 5
-    npcCount: 5
+    npcCount: 6
     requiredNpcKillCount: 50
     npcSpawnPositions:
     - {fileID: 1078110528}
@@ -3083,7 +3090,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-2038
+  m_Name: pb_Mesh-948112
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -4722,7 +4729,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-2156
+  m_Name: pb_Mesh-948212
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -5820,7 +5827,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh31150
+  m_Name: pb_Mesh409866
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -14074,7 +14081,7 @@ PrefabInstance:
         type: 3}
       propertyPath: animator
       value: 
-      objectReference: {fileID: 1859182843}
+      objectReference: {fileID: 0}
     - target: {fileID: 2451688659374893307, guid: 4e52ee41f60bb1c4d96e9822b7ff2abc,
         type: 3}
       propertyPath: bearserkerState
@@ -15060,7 +15067,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-2472
+  m_Name: pb_Mesh-948490
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -16084,6 +16091,9 @@ MonoBehaviour:
   lineRenderer: {fileID: 0}
   linePoints: 25
   timeBetweenPoints: 0.1
+  raycastAimMask:
+    serializedVersion: 2
+    m_Bits: 0
   thrown: 0
   itemCharged: 0
   itemConductor: 0
@@ -17251,12 +17261,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 7c28a66aa05e55943b6d9a2585c10ed3,
     type: 3}
   m_PrefabInstance: {fileID: 1858093167}
-  m_PrefabAsset: {fileID: 0}
---- !u!95 &1859182843 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 8521408999808423177, guid: 4e52ee41f60bb1c4d96e9822b7ff2abc,
-    type: 3}
-  m_PrefabInstance: {fileID: 1565453830}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1872282170 stripped
 GameObject:
