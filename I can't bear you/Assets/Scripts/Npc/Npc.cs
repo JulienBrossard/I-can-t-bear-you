@@ -528,7 +528,7 @@ public class Npc : Entity, ISmashable
             npcScripts.npcUI.hungerImage.SetActive(false);
             npcScripts.npcUI.thirstImage.SetActive(false);
             npcScripts.npcUI.tvImage.SetActive(false);
-            switch (stateStack[0])
+            switch (sortedList[0])
             {
                 case STATE.HUNGER:
                     npcScripts.npcUI.hungerImage.SetActive(true);
