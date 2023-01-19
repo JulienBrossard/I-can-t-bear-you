@@ -17,6 +17,8 @@ public abstract class PlayerState : Entity
     [SerializeField] protected bool roarReady;
     [SerializeField] protected Transform roarFX;
     [SerializeField] protected GameObject bearserkerElement;
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip roarSound, grabSound, throwSound;
     
     public enum SUSSTATE
     {
@@ -60,7 +62,9 @@ public abstract class PlayerState : Entity
     {
         if(interestPointsManager.GetGrabbable() == null) return false;
         if(interestPointsManager.GetGrabbable().Grab(handTransform) == default) return false;
+        
         heldObject = interestPointsManager.GetGrabbable().Grab(handTransform).gameObject;
+        audioSource.PlayOneShot(grabSound);
         
         return true;
     }
@@ -90,6 +94,7 @@ public abstract class PlayerState : Entity
                     npc.GetComponent<Npc>().GetFreezed(playerStats.roarFreezeDuration, false);
                 }
             }
+            audioSource.PlayOneShot(roarSound);
             roarReady = false;
             locked = true;
             StartCoroutine(RoarCd());
@@ -133,7 +138,9 @@ public abstract class PlayerState : Entity
             animator.SetBool("Throw", false);
             isAiming = false;
         }
-        
+        audioSource.PlayOneShot(throwSound);
+
+
         heldObject = null;
         heldObjectGrabbable = null; 
     }
