@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
+using UnityEngine.Serialization;
 
 public class BookCase : Item, ISmashable, IInteractable
 {
@@ -8,26 +10,40 @@ public class BookCase : Item, ISmashable, IInteractable
     [SerializeField] AudioClip objectFall, woodBreak;
     [SerializeField] ParticleSystem interactParticle;
     [SerializeField] GameObject scrapPilePrefab;
-    [SerializeField] Transform scrapPilePivot;
+    [SerializeField] private Transform scrapPilePivot;
+    [SerializeField] private Animation bookCaseAnim;
+    [SerializeField] private BoxCollider outlineCollider;
+    private bool hasBeenSmashed = false;
+    private bool hasBeenInteracted = false;
 
     public void Interact(Vector3 sourcePos)
     {
-        if (interactParticle)
-            interactParticle.Play();
-        else Debug.Log("No Interact Particle on " + this.name);
-        Debug.Log("Interacting BookCase");
-        audioSource.PlayOneShot(objectFall);
-        Fall(sourcePos);
+        if (!hasBeenInteracted)
+        {
+            hasBeenInteracted = true;
+            if (interactParticle)
+                interactParticle.Play();
+            else Debug.Log("No Interact Particle on " + this.name);
+            Debug.Log("Interacting BookCase");
+            audioSource.PlayOneShot(objectFall);
+            //Fall(sourcePos);
+            bookCaseAnim.Play();
+            //outlineCollider.enabled = false;
+        }
     }
 
     public void Smash()
     {
-        StartCoroutine(FeedbackSmash());
+        if (!hasBeenSmashed)
+        {
+            StartCoroutine(FeedbackSmash());
+        }
     }
 
     IEnumerator FeedbackSmash()
     {
         Debug.Log("Breaking the BookCase");
+        hasBeenSmashed = true;
         audioSource.PlayOneShot(woodBreak);
         if (scrapPilePrefab != null && scrapPilePivot != null)
             Instantiate(scrapPilePrefab, scrapPilePivot.position, Quaternion.identity);
