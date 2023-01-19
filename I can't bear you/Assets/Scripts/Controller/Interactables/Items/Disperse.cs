@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.AI;
 
 [RequireComponent(typeof(NavMeshObstacle), typeof(Awareness))]
-public class Disperse : Item
+public class Disperse : Item, IInteractable
 {
     public enum DisperseType
     {
@@ -20,10 +20,14 @@ public class Disperse : Item
     List<GameObject> currentTargets = new List<GameObject>();
 
     private bool setDispersePoint;
+    private bool isDispersing;
 
     private void Update()
     {
-        DisperseNpc();
+        if (isDispersing)
+        {
+            DisperseNpc();
+        }
     }
 
     private void Start()
@@ -69,6 +73,28 @@ public class Disperse : Item
         else
         {
             Debug.Log(target.name+ " is not in dictionary when u tried to stop dispersing");
+        }
+    }
+
+    /// <summary>
+    /// Active or disable item
+    /// </summary>
+    [ContextMenu("Switch")]
+    void Switch()
+    {
+        if (isDispersing)
+        {
+            isDispersing = false;
+            NpcManager.instance.RemoveDispersePoint(transform.position, disperseType);
+            foreach (var target in currentTargets)
+            {
+                NpcManager.instance.npcScriptDict[target].StopDisperse();
+            }
+            obstacle.enabled = false;
+        }
+        else
+        {
+            isDispersing = true;
         }
     }
     
@@ -128,5 +154,10 @@ public class Disperse : Item
             NpcManager.instance.npcScriptDict[target].StopDisperse();
         }
         obstacle.enabled = false;
+    }
+
+    public void Interact(Vector3 sourcePos)
+    {
+        Switch();
     }
 }
