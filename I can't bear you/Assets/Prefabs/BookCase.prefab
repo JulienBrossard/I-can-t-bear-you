@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4275127517943201793}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: ScrapPilePivot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -40,14 +40,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8064705639579106420}
-  - component: {fileID: 7521343919811447673}
-  - component: {fileID: 7250874154390644403}
-  - component: {fileID: 7521343919811447674}
   - component: {fileID: 7250874154390644428}
   - component: {fileID: 7250874154390644429}
   - component: {fileID: 4858807771556410556}
   - component: {fileID: 4267671969448076553}
   - component: {fileID: 2835213326131770955}
+  - component: {fileID: 6208347157861747045}
+  - component: {fileID: 7216865341089595093}
   m_Layer: 0
   m_Name: BookCase
   m_TagString: Untagged
@@ -62,61 +61,16 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7250874154390644430}
-  m_LocalRotation: {x: -0, y: 0.9110169, z: -0, w: 0.412369}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 18.17, y: 0, z: 0.89}
-  m_LocalScale: {x: 1.1527644, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7521343919784012727}
   - {fileID: 4275127517943201793}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 131.293, z: 0}
---- !u!65 &7521343919811447673
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7250874154390644430}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 8.000002, y: 7.9, z: 2.5000014}
-  m_Center: {x: 4.000003, y: 3.95, z: 1.250015}
---- !u!54 &7250874154390644403
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7250874154390644430}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 1
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
---- !u!208 &7521343919811447674
-NavMeshObstacle:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7250874154390644430}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 4, y: 3.9500003, z: 1.25}
-  m_MoveThreshold: 0.1
-  m_Carve: 1
-  m_CarveOnlyStationary: 1
-  m_Center: {x: 4, y: 3.9500003, z: 1.25}
-  m_TimeToStationary: 0.5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7250874154390644428
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -140,16 +94,17 @@ MonoBehaviour:
   lineRenderer: {fileID: 0}
   linePoints: 25
   timeBetweenPoints: 0.1
+  raycastAimMask:
+    serializedVersion: 2
+    m_Bits: 0
   thrown: 0
   itemCharged: 0
   itemConductor: 0
   zoneSize: 0
   emitterDependant: 0
   emitter: {fileID: 0}
-  fallable: 1
-  falls:
-  - dir: {x: 1, y: 0.5, z: 1}
-    force: 30
+  fallable: 0
+  falls: []
   gasSize: 0
   isExplosive: 0
   audioSource: {fileID: 4858807771556410556}
@@ -159,6 +114,8 @@ MonoBehaviour:
   scrapPilePrefab: {fileID: 5043390704390391522, guid: d45669655252c3043b8f71c564ab72d5,
     type: 3}
   scrapPilePivot: {fileID: 4275127517943201793}
+  bookCaseAnim: {fileID: 6208347157861747045}
+  outlineCollider: {fileID: 7216865341089595093}
 --- !u!114 &7250874154390644429
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5115,6 +5072,35 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
+--- !u!111 &6208347157861747045
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7250874154390644430}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: 1a73e51430e9dd448875a046e7a20bde, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: 1a73e51430e9dd448875a046e7a20bde, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 0
+  m_AnimatePhysics: 0
+  m_CullingType: 0
+--- !u!65 &7216865341089595093
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7250874154390644430}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 8.895457, y: 3.778545, z: 2.510769}
+  m_Center: {x: -0.33049536, y: 2.1482618, z: 1.2253566}
 --- !u!1 &7521343919742965429
 GameObject:
   m_ObjectHideFlags: 0
@@ -5209,6 +5195,8 @@ GameObject:
   - component: {fileID: 7521343919784012727}
   - component: {fileID: 7521343919784012725}
   - component: {fileID: 7521343919784012726}
+  - component: {fileID: 5843557609922554734}
+  - component: {fileID: 515235614920635961}
   m_Layer: 0
   m_Name: BookCaseMesh
   m_TagString: Untagged
@@ -5225,7 +5213,7 @@ Transform:
   m_GameObject: {fileID: 7521343919784012720}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7521343919742965428}
@@ -5260,7 +5248,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -8067726398312463513, guid: 545f1ae71d3fc7348b741e1561ba4735, type: 3}
+  - {fileID: 2100000, guid: 9b22ddf8a65b3ba40b5c655bdad5bc3f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -5282,3 +5270,32 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!208 &5843557609922554734
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7521343919784012720}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 4, y: 3.9500003, z: 1.25}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 4, y: 3.9500003, z: 1.25}
+  m_TimeToStationary: 0.5
+--- !u!65 &515235614920635961
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7521343919784012720}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 8, y: 7.9, z: 2.5}
+  m_Center: {x: 4, y: 3.95, z: 1.25}
