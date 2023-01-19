@@ -9,4 +9,6 @@ public class NpcData : ScriptableObject
     public float speed = 10;
     public float runSpeed;
     public float acceleration = 10;
+    public float screamRadius = 5;
+    public LayerMask screamLayerMask;
 }

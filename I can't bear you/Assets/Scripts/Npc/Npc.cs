@@ -265,6 +265,7 @@ public class Npc : Entity, ISmashable
             {
                 currentDestination = pathfinding.noExitPoints[Random.Range(0, pathfinding.noExitPoints.Length)].position;
             }
+            return;
         }
 
         // Check if npc is near destination
@@ -348,6 +349,17 @@ public class Npc : Entity, ISmashable
     {
         if (!isDie)
         {
+            if (PlayerStateManager.instance.currentState == PlayerStateManager.instance.bearserkerState)
+            {
+                Collider[] targetsInViewRadius = Physics.OverlapSphere(transform.position, npcData.screamRadius, npcData.screamLayerMask);
+                foreach (var target in targetsInViewRadius)
+                {
+                    if (NpcManager.instance.npcScriptDict.ContainsKey(target.gameObject))
+                    {
+                        NpcManager.instance.npcScriptDict[target.gameObject].npcScripts.panicData.UpdatePanic(1);
+                    }
+                }
+            }
             animator.SetBool("isSmashing", true);
             Die(false);
         }
@@ -362,11 +374,7 @@ public class Npc : Entity, ISmashable
         animator.speed = 1;
         BearserkerGaugeManager.instance.AddBearserker(0.1f);
         base.Die(unspawn);
-
-        for (int i = 0; i < transform.childCount; i++)
-        {
-            if (transform.GetChild(i).GetComponent<MeshRenderer>()) transform.GetChild(i).GetComponent<MeshRenderer>().enabled = false;
-        }
+        
         npcScripts.npcUI.canvas.SetActive(false);
     }
 
@@ -589,6 +597,7 @@ public class Npc : Entity, ISmashable
     {
 #if UNITY_EDITOR
        Handles.Label(transform.position, "CurrentDestination Distance: " + Vector3.Distance(transform.position, currentDestination)); 
+       Handles.DrawWireArc(transform.position, Vector3.up, Vector3.forward, 360, npcData.screamRadius);
 #endif
     }
 }
