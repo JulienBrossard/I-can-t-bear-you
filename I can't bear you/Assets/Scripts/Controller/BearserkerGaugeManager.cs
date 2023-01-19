@@ -12,17 +12,20 @@ public class BearserkerGaugeManager : MonoBehaviour
         instance = this;
     }
 
-    public void AddBearserker(float amountToAdd)
+    public void AddBearserker(float amountToAdd,bool isDamage)
     {
         rageGain.Play();
         amount += amountToAdd;
         amount = Mathf.Clamp(amount, 0, 1);
         UiManager.instance.UpdateBearserkerGauge(amount);
         if(amount == 0) bearserkerState.Sleep();
+
+        if (isDamage)
+            CameraManager.instance.CameraVignetteEffectOnHurt();
     }
 
     public void Use()
     {
-        AddBearserker(-deductionRate);
+        AddBearserker(-deductionRate,false);
     }
 }

@@ -355,7 +355,7 @@ public class Npc : Entity, ISmashable
     public override void Die(bool unspawn)
     {
         animator.speed = 1;
-        BearserkerGaugeManager.instance.AddBearserker(0.1f);
+        BearserkerGaugeManager.instance.AddBearserker(0.1f,false);
         base.Die(unspawn);
         Instantiate(deathAnimPrefab, deathAnimPivot.position, Quaternion.identity);
 

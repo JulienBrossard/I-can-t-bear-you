@@ -144,17 +144,17 @@ public abstract class PlayerState : Entity
     public override void Electrocute()
     {
         Debug.Log("Player was electrocuted");
-        BearserkerGaugeManager.instance.AddBearserker(-playerStats.bearserkerReductionWhenElectrocuted);
+        BearserkerGaugeManager.instance.AddBearserker(-playerStats.bearserkerReductionWhenElectrocuted, true);
     }
     public override void Electrocute(GameObject emitter)
     {
         Debug.Log("Player was electrocuted by " + emitter.name);
-        BearserkerGaugeManager.instance.AddBearserker(-playerStats.bearserkerReductionWhenElectrocuted);
+        BearserkerGaugeManager.instance.AddBearserker(-playerStats.bearserkerReductionWhenElectrocuted,true);
     }
 
     public override void Explode()
     {
         Debug.Log("Player was exploded");
-        BearserkerGaugeManager.instance.AddBearserker(-playerStats.bearserkerReductionWhenExploded);
+        BearserkerGaugeManager.instance.AddBearserker(-playerStats.bearserkerReductionWhenExploded,true);
     }
 }

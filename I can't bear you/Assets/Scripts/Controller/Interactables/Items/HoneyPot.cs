@@ -21,7 +21,7 @@ public class HoneyPot : Item,IInteractable,ISmashable
             else Debug.Log("No Interact Particle on " + this.name);
             Debug.Log("Eating Honey Pot");
             audioSource.PlayOneShot(honeyEat);
-            BearserkerGaugeManager.instance.AddBearserker(bearserkerToAdd);
+            BearserkerGaugeManager.instance.AddBearserker(bearserkerToAdd, false);
             DeleteItem();
             hasBeenEaten = true;
         }
