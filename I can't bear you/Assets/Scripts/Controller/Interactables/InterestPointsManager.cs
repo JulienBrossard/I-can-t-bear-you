@@ -20,7 +20,7 @@ public class InterestPointsManager : MonoBehaviour
         {
             if(interestPoint.go == default) continue;
             Handles.DrawLine(transform.position,interestPoint.go.transform.position);
-            Handles.Label(interestPoint.go.transform.position + Vector3.up,"Score : " + interestPoint.score + "\nCenter Dist : " + interestPoint.centerDistance.ToString());
+            Handles.Label(interestPoint.go.transform.position + Vector3.up,"Score : " + interestPoint.score + "\nCenter Dist : " + interestPoint.centerDistance + "\nDist : " + interestPoint.distance);
         }
     }
     #endif
@@ -140,7 +140,8 @@ public class InterestPointsManager : MonoBehaviour
 public class InterestPoint
 {
     public GameObject go;
-    public float score, distance, centerDistance;
+    public double score;
+    public float distance, centerDistance;
     public AnimationCurve rangeCurve, centerCurve;
     public bool validity;
     public InterestPoint(GameObject newGo, float newDistance, float newCenterDistance, AnimationCurve newRangeCurve, AnimationCurve newCenterCurve)
@@ -150,16 +151,16 @@ public class InterestPoint
         centerDistance = newCenterDistance;
         rangeCurve = newRangeCurve;
         centerCurve = newCenterCurve;
-        score = rangeCurve.Evaluate(distance) * centerCurve.Evaluate(centerDistance);
+        score = rangeCurve.Evaluate(distance) + centerCurve.Evaluate(centerDistance);
     }
 
-    public float ReCalculateScore(float newDistance, float newCenterDistance)
+    public double ReCalculateScore(float newDistance, float newCenterDistance)
     {
         if (rangeCurve.Evaluate(newDistance) * centerCurve.Evaluate(newCenterDistance) > score)
         {
             distance = newDistance;
             centerDistance = newCenterDistance;
-            score = rangeCurve.Evaluate(newDistance) * centerCurve.Evaluate(newCenterDistance);
+            score = rangeCurve.Evaluate(newDistance) + centerCurve.Evaluate(newCenterDistance);
         }
         return score;
     }
@@ -169,10 +170,8 @@ public class InterestPoint
         validity = true;
     }
 
-    public float GetScore()
+    public double GetScore()
     {
         return score;
     }
-    
-  
 }
