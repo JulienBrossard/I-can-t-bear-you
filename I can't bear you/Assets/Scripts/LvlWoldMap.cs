@@ -8,6 +8,6 @@ public class LvlWoldMap : Item, IInteractable
 
     public void Interact(Vector3 sourcePos)
     {
-        SceneManager.LoadScene(lvlToLoad);
+        UiWorldMapManager.instance.FadeInAndLoadLvl(lvlToLoad);
     }
 }
