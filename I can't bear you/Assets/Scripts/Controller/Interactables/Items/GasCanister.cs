@@ -10,7 +10,7 @@ public class GasCanister : Item, ISmashable
     [SerializeField] Transform scrapPilePivot;
     public void Smash()
     {
-        StartCoroutine(FeedbackSmash());
+        FeedbackSmash();
     }
 
     public override void OnHitGround(Collision collision)
@@ -19,7 +19,7 @@ public class GasCanister : Item, ISmashable
         base.OnHitGround(collision);
     }
 
-    IEnumerator FeedbackSmash()
+    private void FeedbackSmash()
     {
         if (scrapPilePrefab != null && scrapPilePivot != null)
         Instantiate(scrapPilePrefab, scrapPilePivot.position, Quaternion.identity);
@@ -27,7 +27,6 @@ public class GasCanister : Item, ISmashable
         Debug.Log("Breaking the Gas Canister");
         audioSource.Play();
         CreateGas();
-        yield return new WaitForSeconds(1.6f);
         transform.GetChild(0).gameObject.SetActive(false);
     }
 }
