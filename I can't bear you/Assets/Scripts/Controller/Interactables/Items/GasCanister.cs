@@ -8,9 +8,14 @@ public class GasCanister : Item, ISmashable
     [SerializeField] AudioSource audioSource;
     [SerializeField] GameObject scrapPilePrefab;
     [SerializeField] Transform scrapPilePivot;
+    private bool hasBeenSmashed = false;
     public void Smash()
     {
-        FeedbackSmash();
+        if (!hasBeenSmashed)
+        {
+            hasBeenSmashed = true;
+            FeedbackSmash();    
+        }
     }
 
     public override void OnHitGround(Collision collision)

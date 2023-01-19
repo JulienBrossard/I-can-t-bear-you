@@ -79,6 +79,7 @@ GameObject:
   - component: {fileID: 2451688659374893306}
   - component: {fileID: 2451688659374893305}
   - component: {fileID: 4217822213613318521}
+  - component: {fileID: 2030028833}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -95,7 +96,7 @@ Transform:
   m_GameObject: {fileID: 2451688659374893298}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 1.5, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3329827369898886921}
@@ -137,7 +138,7 @@ Rigidbody:
   m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0.05
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 116
@@ -227,7 +228,7 @@ MonoBehaviour:
   heldObject: {fileID: 0}
   handTransform: {fileID: 8088334723112691284}
   locked: 0
-  stopMoving: 0
+  isAiming: 0
   roarReady: 1
   roarFX: {fileID: 6981436402318415202}
   bearserkerElement: {fileID: 14192320720972242}
@@ -257,11 +258,11 @@ MonoBehaviour:
   heldObject: {fileID: 0}
   handTransform: {fileID: 8088334723112691284}
   locked: 0
-  stopMoving: 0
-  roarReady: 0
+  isAiming: 0
+  roarReady: 1
   roarFX: {fileID: 6981436402318415202}
   bearserkerElement: {fileID: 14192320720972242}
-  currentSusState: 0
+  currentSusState: 2
   stealthState: {fileID: 2451688659374893306}
 --- !u!95 &4217822213613318521
 Animator:
@@ -283,6 +284,14 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!81 &2030028833
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2451688659374893298}
+  m_Enabled: 1
 --- !u!1001 &110025411890658847
 PrefabInstance:
   m_ObjectHideFlags: 0
