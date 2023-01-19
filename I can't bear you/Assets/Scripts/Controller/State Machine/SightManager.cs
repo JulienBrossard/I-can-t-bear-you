@@ -21,13 +21,16 @@ public class SightManager : MonoBehaviour
     private float dot;
     private void OnTriggerStay(Collider other)
     {
+        Vector3 hitPoint = other.ClosestPoint(transform.position);
         if(currentState.heldObject != default) return;
         if (other.GetComponent<IInteractable>() == default && other.GetComponent<ISmashable>() == default) return;
-        dot = Mathf.InverseLerp(1,-1,Vector3.Dot((other.transform.position - transform.position).normalized, transform.forward));
+        dot = Mathf.InverseLerp(1,-1,Vector3.Dot((hitPoint - transform.position).normalized, transform.forward));
         
         if(dot > currentState.playerStats.detectionAngle/360f) return;
         interestPointsManager.AddInterestPoint(new InterestPoint(other.gameObject,
-            Mathf.InverseLerp(0,currentState.playerStats.detectionRange*2,Vector3.Distance(new Vector3(transform.position.x,0,transform.position.z), new Vector3(other.transform.position.x,0,other.transform.position.z))),
+            Mathf.InverseLerp(0,
+                currentState.playerStats.detectionRange*2,
+                Vector3.Distance(new Vector3(transform.position.x,0,transform.position.z), new Vector3(hitPoint.x,0,hitPoint.z))),
             -dot,
             currentState.playerStats.detectionRangeCurve,
             currentState.playerStats.detectionAngleCurve));
