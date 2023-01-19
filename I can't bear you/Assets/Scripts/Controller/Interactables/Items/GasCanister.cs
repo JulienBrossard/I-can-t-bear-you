@@ -14,7 +14,7 @@ public class GasCanister : Item, ISmashable
         if (!hasBeenSmashed)
         {
             hasBeenSmashed = true;
-            StartCoroutine(FeedbackSmash());    
+            FeedbackSmash();    
         }
     }
 

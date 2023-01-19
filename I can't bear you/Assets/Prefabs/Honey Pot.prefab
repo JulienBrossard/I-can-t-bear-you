@@ -92,7 +92,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dangerState: 0
   puddleType: 2
-  puddleSize: 1.5
+  puddleSize: 2
   zone: {fileID: 0}
   grabbable: 1
   rb: {fileID: 3778223884131960099}
