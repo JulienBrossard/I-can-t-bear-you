@@ -66,7 +66,7 @@ public class StealthState : PlayerState
 
     public override void FixedBehave()
     {
-        if ((!locked) && (!stopMoving))
+        if (!locked)
         {
             Move();
             PlayerAnimatorManager.instance.SetAnimatorFloat("Speed", rb.velocity.magnitude);
