@@ -60,7 +60,8 @@ public class Item : MonoBehaviour,IGrabbable, IAffectable
                 Debug.LogError("Unknown puddle type of " + gameObject.name);
                 return null;
         }
-        puddleBuffer.transform.localScale = Vector3.one * puddleSize;
+        puddleBuffer.transform.localScale = new Vector3(0,0,0);
+        puddleBuffer.transform.DOScale(Vector3.one * puddleSize,0.2f);
         return puddleBuffer;
     }
     
