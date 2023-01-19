@@ -1576,7 +1576,7 @@ GameObject:
   - component: {fileID: 8299495536177759215}
   - component: {fileID: 5529252136486128881}
   m_Layer: 6
-  m_Name: Npc Healthy
+  m_Name: "Npc Jo\xE3o (H)"
   m_TagString: Npc
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -178,7 +178,7 @@ GameObject:
   - component: {fileID: 1646748394466927299}
   - component: {fileID: 7268674142176767643}
   m_Layer: 6
-  m_Name: Npc Drunk
+  m_Name: Npc Dorgas (D)
   m_TagString: Npc
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &48761586340927283
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2896963216723257086}
+  m_Layer: 0
+  m_Name: ScrapPile Pivot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2896963216723257086
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 48761586340927283}
+  m_LocalRotation: {x: -0, y: 0.48057616, z: -0, w: 0.87695307}
+  m_LocalPosition: {x: 0.89, y: -2.15, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8961708323863465154}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 57.446, z: 0}
 --- !u!1 &8961708323863465156
 GameObject:
   m_ObjectHideFlags: 0
@@ -32,6 +63,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8922997831428634135}
+  - {fileID: 2896963216723257086}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -87,7 +119,7 @@ MonoBehaviour:
   audioSource: {fileID: 999280585791785196}
   scrapPilePrefab: {fileID: 761968209469822577, guid: bfc38fa0baa042f45b8424dd48849edd,
     type: 3}
-  scrapPilePivot: {fileID: 0}
+  scrapPilePivot: {fileID: 2896963216723257086}
 --- !u!82 &999280585791785196
 AudioSource:
   m_ObjectHideFlags: 0
