@@ -74,12 +74,12 @@ public abstract class PlayerState : Entity
             foreach (var npc in npcAtRange)
             {
                 Debug.Log("A NPC was in range of roar");
-                if (Random.Range(0f, 1f) < playerStats.roarFreezeChance)
+                if (Random.Range(0f, 1f) < playerStats.roarFreezeChance && !npc.CompareTag("Skull"))
                 {
                     Debug.Log(npc.gameObject.name + " got freezed by roar");
                     npc.GetComponent<Npc>().GetFreezed(playerStats.roarFreezeDuration, true);
                 }
-                else
+                else if(!npc.CompareTag("Skull"))
                 {
                     npc.GetComponent<Npc>().GetFreezed(playerStats.roarFreezeDuration, false);
                 }

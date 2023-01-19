@@ -69,8 +69,8 @@ public class Npc : Entity, ISmashable
     private float npcSpeed;
 
     [Header("Ambr :3")]
-    [SerializeField] private GameObject deathAnimPrefab;
-    [SerializeField] private Transform deathAnimPivot;
+    [SerializeField] public GameObject deathAnimPrefab;
+    [SerializeField] public Transform deathAnimPivot;
 
     //Init Npc
     private void Start()
@@ -362,7 +362,6 @@ public class Npc : Entity, ISmashable
         animator.speed = 1;
         BearserkerGaugeManager.instance.AddBearserker(0.1f);
         base.Die(unspawn);
-        Instantiate(deathAnimPrefab, deathAnimPivot.position, Quaternion.identity);
 
         for (int i = 0; i < transform.childCount; i++)
         {

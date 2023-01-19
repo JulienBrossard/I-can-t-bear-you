@@ -63,6 +63,11 @@ public class AwarenessNpc : Awareness
                         panicData.UpdatePanic(1);
                     }
                 }
+                // It's npc blood
+                else if(npc.CompareTag("Skull"))
+                {
+                    panicData.UpdatePanic(1);
+                }
                 if (NpcManager.instance.npcScriptDict.ContainsKey(npc.gameObject))
                 {
                     if(NpcManager.instance.npcScriptDict[npc.gameObject].npcScripts.panicData.panicState == Panic.PanicState.Panic)

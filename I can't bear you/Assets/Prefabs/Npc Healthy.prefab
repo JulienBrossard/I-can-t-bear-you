@@ -1811,8 +1811,9 @@ MonoBehaviour:
   moveAwayRadius: 0
   isAction: 0
   currentSpeed: 0
-  deathAnimPrefab: {fileID: 0}
-  deathAnimPivot: {fileID: 0}
+  deathAnimPrefab: {fileID: 2966682104723576697, guid: 0c58253b127661c4aaa5408fbcd528d6,
+    type: 3}
+  deathAnimPivot: {fileID: 3414346822825947152}
 --- !u!1 &3700289877299580080
 GameObject:
   m_ObjectHideFlags: 0
