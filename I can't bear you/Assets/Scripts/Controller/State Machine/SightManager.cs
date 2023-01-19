@@ -26,7 +26,6 @@ public class SightManager : MonoBehaviour
         dot = Mathf.InverseLerp(1,-1,Vector3.Dot((other.transform.position - transform.position).normalized, transform.forward));
         
         if(dot > currentState.playerStats.detectionAngle/360f) return;
-        Debug.Log(Vector3.Distance(new Vector3(transform.position.x,0,transform.position.z),new Vector3(other.transform.position.x,0,other.transform.position.z)).ToString());
         interestPointsManager.AddInterestPoint(new InterestPoint(other.gameObject,
             Mathf.InverseLerp(0,currentState.playerStats.detectionRange*2,Vector3.Distance(new Vector3(transform.position.x,0,transform.position.z), new Vector3(other.transform.position.x,0,other.transform.position.z))),
             -dot,

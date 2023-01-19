@@ -179,6 +179,9 @@ MonoBehaviour:
   lineRenderer: {fileID: 0}
   linePoints: 25
   timeBetweenPoints: 0.1
+  raycastAimMask:
+    serializedVersion: 2
+    m_Bits: 0
   thrown: 0
   itemCharged: 0
   itemConductor: 1
