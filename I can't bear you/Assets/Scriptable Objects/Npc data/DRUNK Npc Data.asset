@@ -12,9 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a68ae5c3547d9440ba2de542079858c, type: 3}
   m_Name: DRUNK Npc Data
   m_EditorClassIdentifier: 
-  maxHunger: 1000
-  maxThirst: 1000
-  maxBladder: 1000
+  maxHunger: 250
+  maxThirst: 200
+  maxBladder: 200
   speed: 3.2
   runSpeed: 9.6
   acceleration: 10
+  screamRadius: 10
+  screamLayerMask:
+    serializedVersion: 2
+    m_Bits: 64

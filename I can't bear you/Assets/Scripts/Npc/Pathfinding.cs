@@ -48,6 +48,21 @@ public class Pathfinding
 
             if (NavMesh.CalculatePath(npcTransform.position, wayPoints[i].position, agent.areaMask, path))
             {
+                if (!CheckPathStatus(path))
+                {
+                    Transform[] newWayPoints = new Transform[wayPoints.Length];
+                    for (int j = 0; j < wayPoints.Length; j++)
+                    {
+                        newWayPoints[j] = wayPoints[j];
+                    }
+                    newWayPoints.ToList().Remove(closestTarget);
+                    return ChooseClosestTarget(newWayPoints, npcTransform, agent);
+                }
+                if (path.corners.Length == 0)
+                {
+                    
+                    Debug.Log(wayPoints[0].name + " " + path.corners.Length);
+                }
                 float distance = Vector3.Distance(npcTransform.position, path.corners[0]);
 
                 for (int j = 1; j < path.corners.Length; j++)
@@ -63,17 +78,6 @@ public class Pathfinding
             }
         }
 
-        if (!CheckPathStatus(path))
-        {
-            Transform[] newWayPoints = new Transform[wayPoints.Length];
-            for (int i = 0; i < wayPoints.Length; i++)
-            {
-                newWayPoints[i] = wayPoints[i];
-            }
-            newWayPoints.ToList().Remove(closestTarget);
-            return ChooseClosestTarget(newWayPoints, npcTransform, agent);
-        }
-        
         return closestTarget;
     }
 

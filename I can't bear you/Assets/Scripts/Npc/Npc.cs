@@ -6,6 +6,10 @@ using UnityEngine.AI;
 using Random = UnityEngine.Random;
 using Vector3 = UnityEngine.Vector3;
 
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
+
 [RequireComponent(typeof(NpcScripts), typeof(NavMeshAgent), typeof(Rigidbody))]
 public class Npc : Entity, ISmashable
 {
@@ -65,8 +69,8 @@ public class Npc : Entity, ISmashable
     private float npcSpeed;
 
     [Header("Ambr :3")]
-    [SerializeField] private GameObject deathAnimPrefab;
-    [SerializeField] private Transform deathAnimPivot;
+    [SerializeField] public GameObject deathAnimPrefab;
+    [SerializeField] public Transform deathAnimPivot;
 
     //Init Npc
     private void Start()
@@ -136,9 +140,10 @@ public class Npc : Entity, ISmashable
     /// Load Party Data
     /// </summary>
     /// <param name="partyData"> Current Party Data </param>
-    public void InitPartyData(PartyData partyData)
+    public void InitPartyData(PartyData partyData, int agentPriority)
     {
         this.partyData = partyData;
+        agent.avoidancePriority = agentPriority;
     }
 
     /// <summary>
@@ -171,7 +176,7 @@ public class Npc : Entity, ISmashable
                     return;
                 case STATE.MOVEAWAY:
                     // disperseCenter = pathfinding.GetDispersePointKey(transform.position);
-                    Vector3 dest = moveAwayPoint + (transform.position - moveAwayPoint).normalized * (moveAwayRadius + 3);
+                    Vector3 dest = moveAwayPoint + (transform.position - new Vector3(moveAwayPoint.x, transform.position.y, moveAwayPoint.z)).normalized * (moveAwayRadius + 3);
                     dest = new Vector3(dest.x, pathfinding.pathHeight, dest.z);
                     if (pathfinding.CalculatePath(agent, transform, dest) != Vector3.zero)
                     {
@@ -179,7 +184,7 @@ public class Npc : Entity, ISmashable
                     }
                     else
                     {
-                        currentDestination = pathfinding.CalculateRandomPosOnCirclePeriphery(agent, transform, moveAwayRadius + 3, moveAwayPoint);
+                        currentDestination = pathfinding.CalculateRandomPosOnCirclePeriphery(agent, transform, moveAwayRadius + 3, new Vector3(moveAwayPoint.x, transform.position.y, moveAwayPoint.z));
                     }
                     return;
                 case STATE.ATTRACTED:
@@ -260,6 +265,7 @@ public class Npc : Entity, ISmashable
             {
                 currentDestination = pathfinding.noExitPoints[Random.Range(0, pathfinding.noExitPoints.Length)].position;
             }
+            return;
         }
 
         // Check if npc is near destination
@@ -343,6 +349,17 @@ public class Npc : Entity, ISmashable
     {
         if (!isDie)
         {
+            if (PlayerStateManager.instance.currentState == PlayerStateManager.instance.bearserkerState)
+            {
+                Collider[] targetsInViewRadius = Physics.OverlapSphere(transform.position, npcData.screamRadius, npcData.screamLayerMask);
+                foreach (var target in targetsInViewRadius)
+                {
+                    if (NpcManager.instance.npcScriptDict.ContainsKey(target.gameObject))
+                    {
+                        NpcManager.instance.npcScriptDict[target.gameObject].npcScripts.panicData.UpdatePanic(1);
+                    }
+                }
+            }
             animator.SetBool("isSmashing", true);
             Die(false);
         }
@@ -357,12 +374,7 @@ public class Npc : Entity, ISmashable
         animator.speed = 1;
         BearserkerGaugeManager.instance.AddBearserker(0.1f,false);
         base.Die(unspawn);
-        Instantiate(deathAnimPrefab, deathAnimPivot.position, Quaternion.identity);
-
-        for (int i = 0; i < transform.childCount; i++)
-        {
-            if (transform.GetChild(i).GetComponent<MeshRenderer>()) transform.GetChild(i).GetComponent<MeshRenderer>().enabled = false;
-        }
+        
         npcScripts.npcUI.canvas.SetActive(false);
     }
 
@@ -443,7 +455,8 @@ public class Npc : Entity, ISmashable
     {
         AddStateToStack(STATE.MOVEAWAY);
         moveAwayPoint = center;
-        moveAwayRadius = radius;
+        moveAwayRadius = radius + 2;
+        currentDestination = Vector3.zero;
     }
 
     /// <summary>
@@ -452,6 +465,7 @@ public class Npc : Entity, ISmashable
     public void StopDisperse()
     {
         stateStack.Remove(STATE.MOVEAWAY);
+        currentDestination = Vector3.zero;
     }
 
     /// <summary>
@@ -577,6 +591,14 @@ public class Npc : Entity, ISmashable
     {
         base.Stomp(srcPos);
         Die(false);
+    }
+
+    private void OnDrawGizmos()
+    {
+#if UNITY_EDITOR
+       Handles.Label(transform.position, "CurrentDestination Distance: " + Vector3.Distance(transform.position, currentDestination)); 
+       Handles.DrawWireArc(transform.position, Vector3.up, Vector3.forward, 360, npcData.screamRadius);
+#endif
     }
 }
 

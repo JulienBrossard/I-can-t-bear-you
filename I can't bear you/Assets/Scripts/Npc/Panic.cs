@@ -32,6 +32,10 @@ public class Panic : MonoBehaviour
     /// <param name="panic"> Value to added </param>
     public void UpdatePanic(float panic)
     {
+        if (currentPanic >= 1)
+        {
+            return;
+        }
         currentPanic += panic;
         if (currentPanic < panicData.tenseValue)
         {
@@ -50,6 +54,7 @@ public class Panic : MonoBehaviour
         }
         else if(currentPanic >= 1f)
         {
+            npc.currentDestination = Vector3.zero;
             npc.UpdateSpeed(npc.npcData.runSpeed);
             SwitchPanicState(PanicState.Panic);
             currentPanic = 1f;
