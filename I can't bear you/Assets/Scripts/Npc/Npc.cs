@@ -189,6 +189,7 @@ public class Npc : Entity, ISmashable
                     return;
                 case STATE.ATTRACTED:
                     currentDestination = attractedPoint;
+                    npcScripts.npcUI.tvImage.gameObject.SetActive(true);
                     return;
                 default:
                     if (partyData.shape == PartyData.Shape.CIRCLE)
@@ -372,7 +373,7 @@ public class Npc : Entity, ISmashable
     public override void Die(bool unspawn)
     {
         animator.speed = 1;
-        BearserkerGaugeManager.instance.AddBearserker(0.1f);
+        BearserkerGaugeManager.instance.AddBearserker(0.1f,false);
         base.Die(unspawn);
         
         npcScripts.npcUI.canvas.SetActive(false);
@@ -397,6 +398,7 @@ public class Npc : Entity, ISmashable
     public void StopAttracted()
     {
         stateStack.Remove(STATE.ATTRACTED);
+        npcScripts.npcUI.tvImage.gameObject.SetActive(false);
         currentDestination = Vector3.zero;
     }
 
@@ -522,6 +524,30 @@ public class Npc : Entity, ISmashable
         if (stateStack[0] != sortedList[0])
         {
             currentDestination = Vector3.zero;
+            npcScripts.npcUI.bladderImage.SetActive(false);
+            npcScripts.npcUI.hungerImage.SetActive(false);
+            npcScripts.npcUI.thirstImage.SetActive(false);
+            npcScripts.npcUI.tvImage.SetActive(false);
+            switch (sortedList[0])
+            {
+                case STATE.HUNGER:
+                    npcScripts.npcUI.hungerImage.SetActive(true);
+                    break;
+                case STATE.THIRST:
+                    npcScripts.npcUI.thirstImage.SetActive(true);
+                    break;
+                case STATE.BLADDER:
+                    npcScripts.npcUI.bladderImage.SetActive(true);
+                    break;
+                case STATE.ATTRACTED:
+                    npcScripts.npcUI.tvImage.SetActive(true);
+                    break;
+            }
+
+            if (sortedList[0] != STATE.ATTRACTED)
+            {
+                animator.SetBool("isIdle", false);
+            }
         }
         stateStack = sortedList;
     }

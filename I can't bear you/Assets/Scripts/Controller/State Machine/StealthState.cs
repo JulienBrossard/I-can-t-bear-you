@@ -56,7 +56,6 @@ public class StealthState : PlayerState
         
         if (InputManager.instance.input.Actions.Roar.triggered)
         {
-            bearserkerElement.SetActive(true);
             Roar();
             playerStateManager.SwitchState(bearserkerState);
         }
@@ -66,7 +65,7 @@ public class StealthState : PlayerState
 
     public override void FixedBehave()
     {
-        if ((!locked) && (!stopMoving))
+        if (!locked)
         {
             Move();
             PlayerAnimatorManager.instance.SetAnimatorFloat("Speed", rb.velocity.magnitude);

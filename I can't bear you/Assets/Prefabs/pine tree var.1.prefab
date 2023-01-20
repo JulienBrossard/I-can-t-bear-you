@@ -173,18 +173,17 @@ MonoBehaviour:
   lineRenderer: {fileID: 0}
   linePoints: 25
   timeBetweenPoints: 0.1
+  raycastAimMask:
+    serializedVersion: 2
+    m_Bits: 0
   thrown: 0
   itemCharged: 0
   itemConductor: 0
   zoneSize: 0
   emitterDependant: 0
   emitter: {fileID: 0}
-  fallable: 1
-  falls:
-  - dir: {x: 1, y: 0.5, z: 0}
-    force: 500
-  - dir: {x: -1, y: 0.5, z: 0}
-    force: 500
+  fallable: 0
+  falls: []
   gasSize: 0
   isExplosive: 0
   audioSource: {fileID: 6009227176019858524}
@@ -193,6 +192,8 @@ MonoBehaviour:
   interactParticle: {fileID: 0}
   scrapPilePrefab: {fileID: 0}
   scrapPilePivot: {fileID: 0}
+  bookCaseAnim: {fileID: 0}
+  outlineCollider: {fileID: 0}
 --- !u!114 &6708046672171583172
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -200,7 +201,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3720951819837905365}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9b63f80fc7a913e459f9308af9c5792a, type: 3}
   m_Name: 
@@ -310,7 +311,7 @@ NavMeshObstacle:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3720951819837905365}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Shape: 1
   m_Extents: {x: 0.5, y: 0.5, z: 0.5}

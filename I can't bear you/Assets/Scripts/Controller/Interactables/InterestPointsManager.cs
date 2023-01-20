@@ -20,7 +20,7 @@ public class InterestPointsManager : MonoBehaviour
         {
             if(interestPoint.go == default) continue;
             Handles.DrawLine(transform.position,interestPoint.go.transform.position);
-            Handles.Label(interestPoint.go.transform.position + Vector3.up,"Score : " + interestPoint.score + "\nCenter Dist : " + interestPoint.centerDistance.ToString());
+            Handles.Label(interestPoint.go.transform.position + Vector3.up,"Score : " + interestPoint.score + "\nCenter Dist : " + interestPoint.centerDistance + "\nDist : " + interestPoint.distance);
         }
     }
     #endif
@@ -37,7 +37,6 @@ public class InterestPointsManager : MonoBehaviour
             }
             interestPoint.validity = false;
         }
-        
     }
 
     private GameObject outlineGoBuffer;
@@ -56,47 +55,46 @@ public class InterestPointsManager : MonoBehaviour
 
         if (interestPoints[0]?.go == default) return;
         
-        outlineGoBuffer = interestPoints[0]?.go;
+        outlineGoBuffer = GetHighestPriorityItem().go;
         outlineGoBuffer.GetComponent<Outline>()?.EnableOutline();
+    }
+
+    InterestPoint GetHighestPriorityItem()
+    {
+        InterestPoint highestPriority = default;
+        foreach (InterestPoint interestPoint in interestPoints)
+        {
+            if(highestPriority == default)
+            {
+                highestPriority = interestPoint;
+                continue;
+            }
+            if(interestPoint.score > highestPriority.score)
+            {
+                highestPriority = interestPoint;
+            }
+        }
+        return highestPriority;
     }
 
     public GameObject GetFirstItem()
     {
-        if (interestPoints.Count == 0) return default;
-        return interestPoints[0].go;
+        return GetHighestPriorityItem().go;
     }
     public IInteractable GetInteractable()
     {
-        foreach (InterestPoint interestPoint in interestPoints)
-        {
-            if(interestPoint.go.GetComponent<IInteractable>() != null)
-            {
-                return interestPoint.go.GetComponent<IInteractable>();
-            }
-        }
-        return null;
+        if (GetHighestPriorityItem().go.GetComponent<IInteractable>() == default) return null;
+        return GetHighestPriorityItem().go.GetComponent<IInteractable>();
     }
     public ISmashable GetSmashable()
     {
-        foreach (InterestPoint interestPoint in interestPoints)
-        {
-            if(interestPoint.go.GetComponent<ISmashable>() != null)
-            {
-                return interestPoint.go.GetComponent<ISmashable>();
-            }
-        }
-        return null;
+        if (GetHighestPriorityItem().go.GetComponent<ISmashable>() == default) return null;
+        return GetHighestPriorityItem().go.GetComponent<ISmashable>();
     }
     public IGrabbable GetGrabbable()
     {
-        foreach (InterestPoint interestPoint in interestPoints)
-        {
-            if(interestPoint.go.GetComponent<IGrabbable>() != null)
-            {
-                return interestPoint.go.GetComponent<IGrabbable>();
-            }
-        }
-        return null;
+        if (GetHighestPriorityItem().go.GetComponent<IGrabbable>() == default) return null;
+        return GetHighestPriorityItem().go.GetComponent<IGrabbable>();
     }
 
     public void AddInterestPoint(InterestPoint newInterestPoint)
@@ -140,7 +138,8 @@ public class InterestPointsManager : MonoBehaviour
 public class InterestPoint
 {
     public GameObject go;
-    public float score, distance, centerDistance;
+    public double score;
+    public float distance, centerDistance;
     public AnimationCurve rangeCurve, centerCurve;
     public bool validity;
     public InterestPoint(GameObject newGo, float newDistance, float newCenterDistance, AnimationCurve newRangeCurve, AnimationCurve newCenterCurve)
@@ -150,16 +149,16 @@ public class InterestPoint
         centerDistance = newCenterDistance;
         rangeCurve = newRangeCurve;
         centerCurve = newCenterCurve;
-        score = rangeCurve.Evaluate(distance) * centerCurve.Evaluate(centerDistance);
+        score = rangeCurve.Evaluate(distance) + centerCurve.Evaluate(centerDistance);
     }
 
-    public float ReCalculateScore(float newDistance, float newCenterDistance)
+    public double ReCalculateScore(float newDistance, float newCenterDistance)
     {
-        if (rangeCurve.Evaluate(newDistance) * centerCurve.Evaluate(newCenterDistance) > score)
+        if (rangeCurve.Evaluate(newDistance) + centerCurve.Evaluate(newCenterDistance) != score)
         {
             distance = newDistance;
             centerDistance = newCenterDistance;
-            score = rangeCurve.Evaluate(newDistance) * centerCurve.Evaluate(newCenterDistance);
+            score = rangeCurve.Evaluate(newDistance) + centerCurve.Evaluate(newCenterDistance);
         }
         return score;
     }
@@ -169,10 +168,8 @@ public class InterestPoint
         validity = true;
     }
 
-    public float GetScore()
+    public double GetScore()
     {
         return score;
     }
-    
-  
 }

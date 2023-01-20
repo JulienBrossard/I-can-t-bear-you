@@ -19,36 +19,36 @@ public class HoneyPot : Item,IInteractable,ISmashable
             if (interactParticle)
                 interactParticle.Play();
             else Debug.Log("No Interact Particle on " + this.name);
-            hasBeenEaten = true;
             Debug.Log("Eating Honey Pot");
             audioSource.PlayOneShot(honeyEat);
-            BearserkerGaugeManager.instance.AddBearserker(bearserkerToAdd);
+            BearserkerGaugeManager.instance.AddBearserker(bearserkerToAdd, false);
+            DeleteItem();
+            hasBeenEaten = true;
         }
     }
 
     public void Smash()
     {
-        StartCoroutine(FeedbackSmash());
+        FeedbackSmash();
     }
 
     public override void OnHitGround(Collision collision)
     {
-        if (thrown) StartCoroutine(FeedbackSmash());
+        if (thrown) FeedbackSmash();
         base.OnHitGround(collision);
     }
 
-    IEnumerator FeedbackSmash()
+    private void FeedbackSmash()
     {
         Debug.Log("Breaking the ponch");
         audioSource.PlayOneShot(potBreak);
+        if (!hasBeenEaten)
+            CreatePuddle();
+        transform.GetChild(0).gameObject.SetActive(false);
         if (scrapPilePrefab != null && scrapPilePivot != null)
             Instantiate(scrapPilePrefab, scrapPilePivot.position, Quaternion.identity);
         else Debug.Log("No scrapPilePrefab or scrapPilePivot on " + this.name);
-        yield return new WaitForSeconds(.5f);
-        if (!hasBeenEaten)
-        {
-            CreatePuddle();
-        }
-        transform.GetChild(0).gameObject.SetActive(false);
+        DeleteItem();
+
     }
 }

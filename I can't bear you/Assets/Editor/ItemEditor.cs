@@ -75,15 +75,20 @@ public class ItemEditor : Editor
         {
             if (GUILayout.Button("Create Outline"))
             {
+                if (GetMesh() == default)
+                {
+                    Debug.LogError("Could not find mesh for " + item.name);
+                    return;
+                }
                 GameObject outlineObject = Instantiate((GameObject)Resources.Load("Outline"), item.transform);
-                outlineObject.GetComponent<MeshFilter>().sharedMesh = item.GetComponent<MeshFilter>().sharedMesh;
+                outlineObject.GetComponent<MeshFilter>().sharedMesh = GetMesh().sharedMesh;
             
                 Outline outline = item.AddComponent<Outline>();
                 outline.outlineData = (OutlineData)Resources.Load("Outline Data");
                 outline.outlineObject = outlineObject;
                 
                 List<Material> materials = new List<Material>();
-                for (int i = 0; i < item.GetComponent<MeshRenderer>().sharedMaterials.Length; i++)
+                for (int i = 0; i < GetMeshRenderer().sharedMaterials.Length; i++)
                 {
                     materials.Add(outline.outlineData.outlineMaterial);
                 }
@@ -126,6 +131,27 @@ public class ItemEditor : Editor
                 item.Explode();
             }
         }
+    }
+
+    MeshFilter GetMesh()
+    {
+        if (item.GetComponent<MeshFilter>()) return item.GetComponent<MeshFilter>();
+        foreach (Transform child in item.transform)
+        {
+            if(child.GetComponent<MeshFilter>()) return child.GetComponent<MeshFilter>();
+        }
+        return default;
+    }
+
+    MeshRenderer GetMeshRenderer()
+    {
+        if (GetMesh().GetComponent<MeshRenderer>() == default)
+        {
+            Debug.LogError("No mesh renderer found on " + item.name + " for " + GetMesh().transform.name);
+            return default;
+        }
+
+        return GetMesh().GetComponent<MeshRenderer>();
     }
 
     void CreateZone()

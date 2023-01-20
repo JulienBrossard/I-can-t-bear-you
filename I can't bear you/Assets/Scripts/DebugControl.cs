@@ -27,7 +27,7 @@ public class DebugControl : MonoBehaviour
         
         if (Input.GetKeyDown(KeyCode.F2))
         {
-            BearserkerGaugeManager.instance.AddBearserker(1);
+            BearserkerGaugeManager.instance.AddBearserker(1,false);
         }
 
         if (Input.GetKeyDown(KeyCode.F3))

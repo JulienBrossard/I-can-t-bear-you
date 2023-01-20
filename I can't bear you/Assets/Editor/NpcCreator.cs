@@ -58,6 +58,7 @@ public class NpcCreator : EditorWindow
         npc.GetComponent<NpcUI>().thirstImage = FindChildObjectWithName(canvasObject, "Water");
         npc.GetComponent<NpcUI>().hungerImage =  FindChildObjectWithName(canvasObject, "Food");
         npc.GetComponent<NpcUI>().bladderImage =  FindChildObjectWithName(canvasObject, "Toilet");
+        npc.GetComponent<NpcUI>().tvImage =  FindChildObjectWithName(canvasObject, "Tv");
         npc.GetComponent<NpcUI>().suspiciousImage =  FindChildObjectWithName(canvasObject, "Suspicious").GetComponent<Image>();
         npc.GetComponent<NpcUI>().suspiciousImage.transform.parent.GetComponent<PanicImage>().npc = npc;
         npc.GetComponent<NpcUI>().panicImage =  FindChildObjectWithName(canvasObject, "Panic").GetComponent<Image>();

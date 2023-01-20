@@ -13,10 +13,12 @@ public abstract class PlayerState : Entity
     [SerializeField] protected Transform handTransform;
     private float accelerationIndex;
     [SerializeField] protected bool locked;
-    [SerializeField] protected bool stopMoving;
+    [SerializeField] protected bool isAiming;
     [SerializeField] protected bool roarReady;
     [SerializeField] protected Transform roarFX;
     [SerializeField] protected GameObject bearserkerElement;
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip roarSound, grabSound, throwSound;
     
     public enum SUSSTATE
     {
@@ -37,13 +39,17 @@ public abstract class PlayerState : Entity
             Deccelerate();
             return;
         }
-        accelerationIndex = Mathf.Clamp(accelerationIndex + playerStats.accelerationStep, 0, 1);
-        transform.forward = Vector3.Slerp(new Vector3(transform.forward.x,0,transform.forward.z), new Vector3(rb.velocity.x,0,rb.velocity.z), playerStats.turnTime); 
+        if (isAiming)
+            transform.forward = Vector3.Slerp(transform.forward.normalized,new Vector3(InputManager.instance.input.Movement.Move.ReadValue<Vector2>().x,0,InputManager.instance.input.Movement.Move.ReadValue<Vector2>().y), playerStats.turnTime);
         //transform.LookAt(transform.position + new Vector3(InputManager.instance.input.Movement.Move.ReadValue<Vector2>().x, 0, InputManager.instance.input.Movement.Move.ReadValue<Vector2>().y).normalized);
-        rb.velocity = new Vector3(InputManager.instance.input.Movement.Move.ReadValue<Vector2>().x * playerStats.accelerationCurve.Evaluate(accelerationIndex) * playerStats.maxSpeed * currentSpeedRatio,
+        else
+        {
+            accelerationIndex = Mathf.Clamp(accelerationIndex + playerStats.accelerationStep, 0, 1);
+            transform.forward = Vector3.Slerp(new Vector3(transform.forward.x,0,transform.forward.z), new Vector3(rb.velocity.x,0,rb.velocity.z), playerStats.turnTime); 
+            rb.velocity = new Vector3(InputManager.instance.input.Movement.Move.ReadValue<Vector2>().x * playerStats.accelerationCurve.Evaluate(accelerationIndex) * playerStats.maxSpeed * currentSpeedRatio,
                 rb.velocity.y,
                 InputManager.instance.input.Movement.Move.ReadValue<Vector2>().y * (playerStats.accelerationCurve.Evaluate(accelerationIndex) * playerStats.maxSpeed * currentSpeedRatio));
-
+        }
     }
     public void Deccelerate()
     {
@@ -56,7 +62,9 @@ public abstract class PlayerState : Entity
     {
         if(interestPointsManager.GetGrabbable() == null) return false;
         if(interestPointsManager.GetGrabbable().Grab(handTransform) == default) return false;
+        
         heldObject = interestPointsManager.GetGrabbable().Grab(handTransform).gameObject;
+        audioSource.PlayOneShot(grabSound);
         
         return true;
     }
@@ -65,7 +73,9 @@ public abstract class PlayerState : Entity
     {
         if (roarReady)
         {
-            
+            if (!bearserkerElement.activeSelf)
+                bearserkerElement.SetActive(true);
+
             CameraManager.instance.CameraShake(playerStats.roarDuration, new Vector3(10f,10f,0f),5f, 5, 0.5f);
             roarFX.gameObject.SetActive(true);
             roarFX.localScale = Vector3.zero;
@@ -84,6 +94,7 @@ public abstract class PlayerState : Entity
                     npc.GetComponent<Npc>().GetFreezed(playerStats.roarFreezeDuration, false);
                 }
             }
+            audioSource.PlayOneShot(roarSound);
             roarReady = false;
             locked = true;
             StartCoroutine(RoarCd());
@@ -101,11 +112,11 @@ public abstract class PlayerState : Entity
     private float time;
     public IEnumerator EvaluateThrowForce()
     {
-        stopMoving = true;
+        isAiming = true;
         animator.SetBool("Throw", true);
         time = 0;
         
-        while (!InputManager.instance.input.Actions.Smash.WasReleasedThisFrame() && time < playerStats.maxTimeThrowHeld)
+        while (!InputManager.instance.input.Actions.Smash.WasReleasedThisFrame())
         {
             yield return new WaitForEndOfFrame();
             time += Time.deltaTime; 
@@ -117,7 +128,7 @@ public abstract class PlayerState : Entity
             heldObject.GetComponent<IGrabbable>().Drop();
             animator.SetTrigger("Drop");
             animator.SetBool("Throw", false);
-            stopMoving = false;
+            isAiming = false;
 
         }
         else
@@ -125,9 +136,10 @@ public abstract class PlayerState : Entity
             heldObject.GetComponent<IGrabbable>().Throw(transform.forward,time / playerStats.maxTimeThrowHeld);
             heldObject.transform.localScale = Vector3.one;
             animator.SetBool("Throw", false);
-            stopMoving = false;
+            isAiming = false;
         }
-        
+        audioSource.PlayOneShot(throwSound);
+
 
         heldObject = null;
         heldObjectGrabbable = null; 
@@ -141,17 +153,17 @@ public abstract class PlayerState : Entity
     public override void Electrocute()
     {
         Debug.Log("Player was electrocuted");
-        BearserkerGaugeManager.instance.AddBearserker(-playerStats.bearserkerReductionWhenElectrocuted);
+        BearserkerGaugeManager.instance.AddBearserker(-playerStats.bearserkerReductionWhenElectrocuted, true);
     }
     public override void Electrocute(GameObject emitter)
     {
         Debug.Log("Player was electrocuted by " + emitter.name);
-        BearserkerGaugeManager.instance.AddBearserker(-playerStats.bearserkerReductionWhenElectrocuted);
+        BearserkerGaugeManager.instance.AddBearserker(-playerStats.bearserkerReductionWhenElectrocuted,true);
     }
 
     public override void Explode()
     {
         Debug.Log("Player was exploded");
-        BearserkerGaugeManager.instance.AddBearserker(-playerStats.bearserkerReductionWhenExploded);
+        BearserkerGaugeManager.instance.AddBearserker(-playerStats.bearserkerReductionWhenExploded,true);
     }
 }
