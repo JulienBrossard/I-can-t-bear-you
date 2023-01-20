@@ -113,6 +113,7 @@ public abstract class PlayerState : Entity
     public IEnumerator EvaluateThrowForce()
     {
         isAiming = true;
+        rb.velocity = Vector3.zero;
         animator.SetBool("Throw", true);
         time = 0;
         //heldObjectGrabbable = heldObject.GetComponent<IGrabbable>();
