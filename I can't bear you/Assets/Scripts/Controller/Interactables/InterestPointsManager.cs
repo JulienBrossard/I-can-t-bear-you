@@ -82,7 +82,7 @@ public class InterestPointsManager : MonoBehaviour
 
     public GameObject GetFirstItem()
     {
-        return GetHighestPriorityItem().go;
+        return GetHighestPriorityItem()?.go;
     }
     public IInteractable GetInteractable()
     {
