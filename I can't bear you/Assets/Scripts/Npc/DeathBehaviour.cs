@@ -7,7 +7,7 @@ public class DeathBehaviour : StateMachineBehaviour
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        Instantiate(animator.gameObject.GetComponent<Npc>().deathAnimPrefab, animator.gameObject.GetComponent<Npc>().deathAnimPivot.position, Quaternion.identity);
+        Instantiate(animator.gameObject.GetComponent<Npc>().deathAnimPrefab, animator.transform.position, Quaternion.identity);
         Pooler.instance.DePop(animator.gameObject.name.Replace("(Clone)", ""), animator.gameObject);
     }
 

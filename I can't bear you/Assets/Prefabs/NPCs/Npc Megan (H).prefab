@@ -1932,8 +1932,8 @@ MonoBehaviour:
   moveAwayRadius: 0
   isAction: 0
   currentSpeed: 0
-  deathAnimPrefab: {fileID: 0}
-  deathAnimPivot: {fileID: 0}
+  deathAnimPrefab: {fileID: 2966682104723576697, guid: 0c58253b127661c4aaa5408fbcd528d6,
+    type: 3}
 --- !u!1 &6537727974901574354
 GameObject:
   m_ObjectHideFlags: 0
@@ -3099,6 +3099,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: CanvasNpc
       objectReference: {fileID: 0}
+    - target: {fileID: 6216845443954444965, guid: a2f46116bbe2ef7468c24dd54db4bd64,
+        type: 3}
+      propertyPath: npc
+      value: 
+      objectReference: {fileID: 6288587988797860303}
     - target: {fileID: 6475956667522695682, guid: a2f46116bbe2ef7468c24dd54db4bd64,
         type: 3}
       propertyPath: m_LocalScale.x
@@ -3119,6 +3124,11 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8288517073265914699, guid: a2f46116bbe2ef7468c24dd54db4bd64,
+        type: 3}
+      propertyPath: npc
+      value: 
+      objectReference: {fileID: 6288587988797860303}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a2f46116bbe2ef7468c24dd54db4bd64, type: 3}
 --- !u!1 &734335887621194754 stripped
