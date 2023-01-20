@@ -449,6 +449,9 @@ MonoBehaviour:
   moveAwayRadius: 0
   isAction: 0
   currentSpeed: 0
+  deathAnimPrefab: {fileID: 2966682104723576697, guid: 0c58253b127661c4aaa5408fbcd528d6,
+    type: 3}
+  deathAnimPivot: {fileID: 0}
   audioSource: {fileID: 3186122820890839870}
   audioClips:
   - {fileID: 8300000, guid: 77f22a82590f9a546ae02aa3f3b76b3a, type: 3}
@@ -553,8 +556,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  deathAnimPrefab: {fileID: 2966682104723576697, guid: 0c58253b127661c4aaa5408fbcd528d6,
-    type: 3}
 --- !u!1 &1807148236621803616
 GameObject:
   m_ObjectHideFlags: 0
