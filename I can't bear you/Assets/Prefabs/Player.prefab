@@ -60,6 +60,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interestPointsManager: {fileID: 2451688659374893304}
   collider: {fileID: 832148631035849915}
+  state: 0
 --- !u!1 &2451688659374893298
 GameObject:
   m_ObjectHideFlags: 0
@@ -168,6 +169,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37af99de85d600f429dc041c71987226, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sightManager: {fileID: 5354591167465360269}
   interestPoints: []
   obstacleLayerMask:
     serializedVersion: 2
@@ -186,7 +188,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bearserkerState: {fileID: 2451688659374893305}
   amount: 0.1
-  deductionRate: 0.0003
   rageGain: {fileID: 7685635351349094018}
 --- !u!114 &2451688659374893307
 MonoBehaviour:
