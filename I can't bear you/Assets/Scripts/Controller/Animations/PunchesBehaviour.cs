@@ -19,7 +19,10 @@ public class PunchesBehaviour : StateMachineBehaviour
     // OnStateExit is called before OnStateExit is called on any state inside this state machine
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        PlayerStateManager.instance.currentState.currentSusState = PlayerState.SUSSTATE.NORMAL;
+        if (PlayerStateManager.instance.currentState != PlayerStateManager.instance.bearserkerState)
+        {
+            PlayerStateManager.instance.currentState.currentSusState = PlayerState.SUSSTATE.NORMAL;
+        }
         InputManager.instance.input.Movement.Enable();
     }
 
