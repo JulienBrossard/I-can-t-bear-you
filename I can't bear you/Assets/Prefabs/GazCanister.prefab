@@ -30059,7 +30059,7 @@ MonoBehaviour:
   emitter: {fileID: 0}
   fallable: 0
   falls: []
-  gasSize: 1
+  gasSize: 3
   isExplosive: 1
   audioSource: {fileID: 52104774831451798}
   scrapPilePrefab: {fileID: 4863309175119694426, guid: 3e7e98cd7c0c3d44e9a6fb90b45a4580,
