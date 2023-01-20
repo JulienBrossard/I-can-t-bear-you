@@ -390,11 +390,11 @@ public class Npc : Entity, ISmashable
     /// <param name="radius"> Radius of the attracted object </param>
     /// <param name="position"> Position of the attracted object </param>
     /// <param name="angle"> Angle of the attracted object </param>
-    public void Attracted(float radius, Vector3 position, float angle)
+    public void Attracted(float radius, Vector3 position, float angle, Vector2 dirForward, Vector2 dirRight)
     {
         AddStateToStack(STATE.ATTRACTED);
         attractedPoint = pathfinding.CalculateRandomPosInCone(agent, transform,
-            radius, angle, position);
+            radius, angle, position, dirForward, dirRight);
     }
 
     /// <summary>
