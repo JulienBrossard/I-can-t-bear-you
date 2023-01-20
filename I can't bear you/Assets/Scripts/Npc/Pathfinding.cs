@@ -146,18 +146,20 @@ public class Pathfinding
     /// <param name="angle"> Angle of the cone </param>
     /// <param name="center"> Center of the cone </param>
     /// <returns></returns>
-    public Vector3 CalculateRandomPosInCone(NavMeshAgent agent, Transform npcTransform ,float radius, float angle,Vector3 center )
+    public Vector3 CalculateRandomPosInCone(NavMeshAgent agent, Transform npcTransform ,float radius, float angle,Vector3 center, Vector2 dirForward, Vector2 dirRight )
     {
-        float y = -Random.Range(0,radius);
-        float x = Random.Range(-radius * Mathf.Sin(angle/2 * Mathf.Deg2Rad), radius * Mathf.Sin(angle/2 * Mathf.Deg2Rad));
-        Vector2 randomPos = new Vector2(x, y);
+        Vector2 randomPos = dirForward * -Random.Range(0, radius) + dirRight *
+            Random.Range(-radius * Mathf.Sin(angle / 2 * Mathf.Deg2Rad), radius * Mathf.Sin(angle / 2 * Mathf.Deg2Rad));
         NavMeshPath path = new NavMeshPath();
         NavMesh.CalculatePath(npcTransform.position, new Vector3(center.x + randomPos.x, 
             noExitPoints[0].position.y, 
             center.z + randomPos.y), agent.areaMask, path);
+        Debug.Log(dirForward + " " + randomPos + " " + new Vector3(center.x + randomPos.x, 
+            noExitPoints[0].position.y, 
+            center.z + randomPos.y));
         if (!CheckPathStatus(path))
         {
-            return CalculateRandomPosInCone(agent, npcTransform, radius, angle, center);
+            return CalculateRandomPosInCone(agent, npcTransform, radius, angle, center, dirForward, dirRight);
         }
         return  center + new Vector3(randomPos.x, noExitPoints[0].position.y, randomPos.y);
     }

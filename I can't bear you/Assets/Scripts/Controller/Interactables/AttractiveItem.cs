@@ -60,11 +60,13 @@ public class AttractiveItem : Item, IInteractable, ISmashable
                 {
                     if (!invertZAxis)
                     {
-                        npc.Attracted(attractedDistance * - Mathf.Sign(Vector3.Dot(transform.forward, Vector3.forward)), transform.position, angle);
+                        npc.Attracted(attractedDistance, transform.position, angle,
+                            new Vector2(transform.forward.x, transform.forward.z), new Vector2(transform.right.x, transform.right.z));
                     }
                     else
                     {
-                        npc.Attracted(-attractedDistance * - Mathf.Sign(Vector3.Dot(transform.forward, Vector3.forward)), transform.position, angle);
+                        npc.Attracted(-attractedDistance, transform.position, angle,
+                            -new Vector2(transform.forward.x, transform.forward.z), new Vector2(transform.right.x, transform.right.z));
                     }
                 }
             }
