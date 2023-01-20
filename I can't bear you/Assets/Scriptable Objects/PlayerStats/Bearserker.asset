@@ -134,6 +134,7 @@ MonoBehaviour:
     m_RotationOrder: 4
   maxTimeThrowHeld: 0.5
   mitigationRatioDropThrow: 0.3
+  bearserkerDeductionRate: 0.001
   bearserkerReductionWhenElectrocuted: 0.15
   bearserkerReductionWhenExploded: 0.15
   roarRange: 20
