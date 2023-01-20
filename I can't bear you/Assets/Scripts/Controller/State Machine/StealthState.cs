@@ -46,14 +46,6 @@ public class StealthState : PlayerState
             animator.SetTrigger("Attack");
         }
 
-        if (InputManager.instance.input.Actions.Smash.IsPressed()) 
-        {
-            if (heldObject != default) 
-            {
-                heldObjectGrabbable.DrawProjection(); 
-            } 
-        }
-        
         if (InputManager.instance.input.Actions.Roar.triggered)
         {
             Roar();

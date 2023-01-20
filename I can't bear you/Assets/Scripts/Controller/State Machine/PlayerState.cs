@@ -115,12 +115,14 @@ public abstract class PlayerState : Entity
         isAiming = true;
         animator.SetBool("Throw", true);
         time = 0;
+        //heldObjectGrabbable = heldObject.GetComponent<IGrabbable>();
         
         while (!InputManager.instance.input.Actions.Smash.WasReleasedThisFrame())
         {
             yield return new WaitForEndOfFrame();
             time += Time.deltaTime; 
             time = Mathf.Clamp(time, 0f, playerStats.maxTimeThrowHeld);
+            heldObjectGrabbable.DrawProjection(time / playerStats.maxTimeThrowHeld);
         }
         
         if (time / playerStats.maxTimeThrowHeld < playerStats.mitigationRatioDropThrow)
