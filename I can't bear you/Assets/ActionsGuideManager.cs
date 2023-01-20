@@ -75,6 +75,7 @@ public class ActionsGuideManager : MonoBehaviour
     private void Update()
     {
         if(interestPoint == default) return;
+        if(interestPoint.go == default) return;
         actionsGuide.transform.position = cam.WorldToScreenPoint(interestPoint.go.transform.position) - Vector3.down * offset;
     }
 }

@@ -12,18 +12,14 @@ public class UiManager : MonoBehaviour
     [SerializeField] private Image bearserkerGauge;
     [SerializeField] private Image currentItem;
     [SerializeField] private TextMeshProUGUI remainingNpcText;
-    [SerializeField] private TextMeshProUGUI winLoseText;
     [SerializeField] private GameObject endLvlMenu;
     [SerializeField] private GameObject uiInGame;
     [SerializeField] private GameObject npcIcon;
     [SerializeField] private GameObject npcIconParent;
-    [SerializeField] private float speed;
-    private int iconTokill;
-    private int iconWhoFlee;
-    private int noIconToSwitch;
-    private int currentIcon;
-    private float timeToWait;
-    [SerializeField] private AnimationCurve timeBetweenIconKill;
+    [SerializeField] private Image fadeImage;
+    [SerializeField] private GameObject winScreen;
+    [SerializeField] private GameObject looseScreen;
+    [SerializeField] private TextMeshProUGUI textEndScreen;
     private int maxNpc;
     private bool endScreenLaunched;
 
@@ -85,57 +81,21 @@ public class UiManager : MonoBehaviour
 
     IEnumerator WaitForEndStateAnim(bool win)
     {
-        yield return new WaitForSeconds(2f);
-        iconWhoFlee = NpcManager.instance.npcCountfleed;
-            iconTokill = NpcManager.instance.npcCountkilled;
-            noIconToSwitch = iconTokill + iconWhoFlee;
-            winLoseText.text = win ? "You Win" : "Looser";
-            uiInGame.SetActive(false);
-            endLvlMenu.SetActive(true);
-            for (int x = 0; x < LevelManager.instance.level.npcCount; x++)
-            {
-                Instantiate(npcIcon, npcIconParent.transform);
-            }
-            StartCoroutine(ShowDeadNpc());
+        fadeImage.gameObject.SetActive(true);
+        yield return new WaitForSeconds(1f);
+        fadeImage.DOFade(1f, 1f);
+        yield return new WaitForSeconds(1f);
+        textEndScreen.text = win ? "The party is stopped" : "The party goes on...";
+        fadeImage.DOFade(0f, 1f).OnComplete(()=> { fadeImage.gameObject.SetActive(false); });
+        uiInGame.SetActive(false);
+        endLvlMenu.SetActive(true);
+        Camera.main.gameObject.SetActive(false);
+            if (win)
+                winScreen.SetActive(true);
+            else
+                looseScreen.SetActive(true);
+            
 
+            
     }
-
-    IEnumerator ShowDeadNpc()
-    {
-        if (iconTokill >= 0)
-        {
-            npcIconParent.transform.GetChild(currentIcon).GetComponent<Image>().DOColor(Color.red, 0.1f);
-            timeToWait = timeBetweenIconKill.Evaluate((float)currentIcon / noIconToSwitch) * speed;
-            yield return new WaitForSeconds(timeToWait);
-            iconTokill--;
-            currentIcon++;
-            StartCoroutine(ShowDeadNpc());
-        }
-        else
-        {
-            StartCoroutine(ShowFleeNpc());
-
-        }
-    }
-
-    IEnumerator ShowFleeNpc()
-    {
-        if (iconWhoFlee >= 0)
-        {
-            if (currentIcon == noIconToSwitch)
-            {
-                StopAllCoroutines();
-            }
-            npcIconParent.transform.GetChild(currentIcon).GetComponent<Image>().DOColor(Color.gray, 0.1f);
-            timeToWait = timeBetweenIconKill.Evaluate((float)currentIcon / noIconToSwitch) * speed;
-            yield return new WaitForSeconds(timeToWait);
-            iconWhoFlee--;
-            currentIcon++;
-            StartCoroutine(ShowFleeNpc());
-
-        }
-   
-    
-    }
-    
 }
