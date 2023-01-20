@@ -3223,10 +3223,35 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1614322098032228634, guid: a2f46116bbe2ef7468c24dd54db4bd64,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2624687016211284309, guid: a2f46116bbe2ef7468c24dd54db4bd64,
         type: 3}
       propertyPath: m_Name
       value: CanvasNpc
+      objectReference: {fileID: 0}
+    - target: {fileID: 6475956667522695682, guid: a2f46116bbe2ef7468c24dd54db4bd64,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6475956667522695682, guid: a2f46116bbe2ef7468c24dd54db4bd64,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6475956667522695682, guid: a2f46116bbe2ef7468c24dd54db4bd64,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6475956667522695682, guid: a2f46116bbe2ef7468c24dd54db4bd64,
+        type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8969441397140210234, guid: a2f46116bbe2ef7468c24dd54db4bd64,
         type: 3}
