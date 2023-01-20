@@ -34,6 +34,14 @@ public class SightManager : MonoBehaviour
             -dot,
             currentState.playerStats.detectionRangeCurve,
             currentState.playerStats.detectionAngleCurve));
+        
+        //Touch a npc
+        if (other.gameObject.CompareTag("Npc") && Mathf.InverseLerp(0,
+                currentState.playerStats.detectionRange*2,
+                Vector3.Distance(new Vector3(transform.position.x,0,transform.position.z), new Vector3(hitPoint.x,0,hitPoint.z))) < 0.3f && NpcManager.instance.npcScriptDict.ContainsKey(other.gameObject))
+        {
+            NpcManager.instance.npcScriptDict[other.gameObject].npcScripts.panicData.UpdatePanic(0.005f);
+        }
     }
     /*#if UNITY_EDITOR
     private void OnDrawGizmosSelected()

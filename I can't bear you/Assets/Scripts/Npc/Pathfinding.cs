@@ -154,9 +154,6 @@ public class Pathfinding
         NavMesh.CalculatePath(npcTransform.position, new Vector3(center.x + randomPos.x, 
             noExitPoints[0].position.y, 
             center.z + randomPos.y), agent.areaMask, path);
-        Debug.Log(dirForward + " " + randomPos + " " + new Vector3(center.x + randomPos.x, 
-            noExitPoints[0].position.y, 
-            center.z + randomPos.y));
         if (!CheckPathStatus(path))
         {
             return CalculateRandomPosInCone(agent, npcTransform, radius, angle, center, dirForward, dirRight);

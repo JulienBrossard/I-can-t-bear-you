@@ -41,7 +41,7 @@ public class Panic : MonoBehaviour
         {
             npc.UpdateSpeed(npc.npcData.speed);
             SwitchPanicState(PanicState.Calm);
-            StopCoroutine(UpdateSuspicious());
+            StopAllCoroutines();
             StartCoroutine(UpdateSuspicious());
             return;
         }
@@ -49,7 +49,7 @@ public class Panic : MonoBehaviour
         {
             npc.UpdateSpeed(npc.npcData.speed);
             SwitchPanicState(PanicState.Tense);
-            StopCoroutine(UpdatePanic());
+            StopAllCoroutines();
             StartCoroutine(UpdatePanic());
         }
         else if(currentPanic >= 1f)
