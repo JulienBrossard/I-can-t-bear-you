@@ -40,6 +40,7 @@ public class Television : AttractiveItem, ISmashable, IInteractable
         if (charged) return;
         Electrocute();
         GetComponent<MeshRenderer>().enabled = false;
+        GetComponent<Collider>().enabled = false;
     }
 
     [ContextMenu("Switch")]

@@ -60,6 +60,7 @@ public class Npc : Entity, ISmashable
 
     [HideInInspector] public Vector3 currentDestination;
     [HideInInspector] public Vector3 attractedPoint;
+    private Vector3 attractedCenterPoint;
     [HideInInspector] public Vector3 moveAwayPoint;
     [HideInInspector] public float moveAwayRadius;
     [HideInInspector] public bool isAction;
@@ -229,6 +230,10 @@ public class Npc : Entity, ISmashable
                     return;
                 case STATE.ATTRACTED:
                     animator.SetBool("isIdle", true);
+                    transform.rotation = Quaternion.Lerp(transform.rotation, 
+                        Quaternion.LookRotation(new Vector3(attractedCenterPoint.x, transform.position.y, attractedCenterPoint.z)
+                                                - transform.position),
+                        0.1f);
                     return;
                 default:
                     animator.SetBool("isDancing", true);
@@ -390,11 +395,12 @@ public class Npc : Entity, ISmashable
     /// <param name="radius"> Radius of the attracted object </param>
     /// <param name="position"> Position of the attracted object </param>
     /// <param name="angle"> Angle of the attracted object </param>
-    public void Attracted(float radius, Vector3 position, float angle)
+    public void Attracted(float radius, Vector3 position, float angle, Vector2 dirForward, Vector2 dirRight)
     {
         AddStateToStack(STATE.ATTRACTED);
+        attractedCenterPoint = position;
         attractedPoint = pathfinding.CalculateRandomPosInCone(agent, transform,
-            radius, angle, position);
+            radius, angle, position, dirForward, dirRight);
     }
 
     /// <summary>
@@ -624,7 +630,7 @@ public class Npc : Entity, ISmashable
         Die(false);
     }
 
-    private void OnDrawGizmos()
+    private void OnDrawGizmosSelected()
     {
 #if UNITY_EDITOR
        Handles.Label(transform.position, "CurrentDestination Distance: " + Vector3.Distance(transform.position, currentDestination)); 

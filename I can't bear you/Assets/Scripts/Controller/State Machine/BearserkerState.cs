@@ -47,7 +47,7 @@ public class BearserkerState : PlayerState
                 heldObject.GetComponent<IGrabbable>().Drop();
         LevelManager.instance.EndLevel(true);
         endState = true;
-        
+        locked = true;
 
 
     }

@@ -10,6 +10,7 @@ using UnityEditor;
 
 public class InterestPointsManager : MonoBehaviour
 {
+    [SerializeField] private SightManager sightManager;
     public List<InterestPoint> interestPoints;
     [SerializeField] private LayerMask obstacleLayerMask;
 
@@ -50,6 +51,7 @@ public class InterestPointsManager : MonoBehaviour
         if (interestPoints.Count == 0)
         {
             outlineGoBuffer = default;
+            ActionsGuideManager.instance.RemoveInterestPoint();
             return;
         }
 
@@ -57,6 +59,7 @@ public class InterestPointsManager : MonoBehaviour
         
         outlineGoBuffer = GetHighestPriorityItem().go;
         outlineGoBuffer.GetComponent<Outline>()?.EnableOutline();
+        ActionsGuideManager.instance.SetInterestPoint(GetHighestPriorityItem(), sightManager.state);
     }
 
     InterestPoint GetHighestPriorityItem()
@@ -79,7 +82,7 @@ public class InterestPointsManager : MonoBehaviour
 
     public GameObject GetFirstItem()
     {
-        return GetHighestPriorityItem().go;
+        return GetHighestPriorityItem()?.go;
     }
     public IInteractable GetInteractable()
     {
