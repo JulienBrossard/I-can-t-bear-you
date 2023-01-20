@@ -4,7 +4,7 @@ public class BearserkerGaugeManager : MonoBehaviour
 {
     public static BearserkerGaugeManager instance;
     [SerializeField] private BearserkerState bearserkerState;
-    [SerializeField,Range(0f,1f)] private float amount,deductionRate;
+    [SerializeField,Range(0f,1f)] private float amount;
     [SerializeField] ParticleSystem rageGain;
     
     private void Awake()
@@ -26,6 +26,6 @@ public class BearserkerGaugeManager : MonoBehaviour
 
     public void Use()
     {
-        AddBearserker(-deductionRate,false);
+        AddBearserker(-bearserkerState.playerStats.bearserkerDeductionRate,false);
     }
 }

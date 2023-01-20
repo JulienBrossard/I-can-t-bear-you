@@ -70,6 +70,11 @@ public class Npc : Entity, ISmashable
 
     [Header("Ambr :3")]
     [SerializeField] public GameObject deathAnimPrefab;
+    [SerializeField] public Transform deathAnimPivot;
+    
+    [Header("Audio")]
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private List<AudioClip> audioClips = new List<AudioClip>();
 
     //Init Npc
     private void Start()
@@ -373,6 +378,7 @@ public class Npc : Entity, ISmashable
     {
         animator.speed = 1;
         BearserkerGaugeManager.instance.AddBearserker(0.1f,false);
+        audioSource.PlayOneShot(audioClips[Random.Range(0, audioClips.Count)]);
         base.Die(unspawn);
         
         npcScripts.npcUI.canvas.SetActive(false);

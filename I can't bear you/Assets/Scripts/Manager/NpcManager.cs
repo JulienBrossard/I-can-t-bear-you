@@ -11,6 +11,8 @@ public class NpcManager : MonoBehaviour
     [ConditionalEnumHide("field", 0)] public int npcCountfleed;
     [ConditionalEnumHide("field", 0)] public List<GameObject> npc = new List<GameObject>();
     public Dictionary<GameObject, Npc> npcScriptDict = new Dictionary<GameObject, Npc>();
+    [SerializeField] private GameObject npcDisapearEffect;
+
 
     private void Awake()
     {
@@ -49,6 +51,7 @@ public class NpcManager : MonoBehaviour
     [ContextMenu("Npc")]
     public void UnSpawnNpc(String name, GameObject npc)
     {
+        Instantiate(npcDisapearEffect, npc.transform.position, Quaternion.identity);
         npcScriptDict.Remove(npc);
         this.npc.Remove(npc);
         Pooler.instance.DePop(name, npc);

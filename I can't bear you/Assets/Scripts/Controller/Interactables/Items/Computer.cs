@@ -16,5 +16,6 @@ public class Computer : Item, ISmashable
         audioSource.Play();
         Electrocute();
         transform.GetChild(0).gameObject.SetActive(false);
+        GetComponent<Collider>().enabled = false;
     }
 }
