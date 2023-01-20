@@ -83,16 +83,19 @@ public class InterestPointsManager : MonoBehaviour
     }
     public IInteractable GetInteractable()
     {
+        if(interestPoints.Count == 0) return null;
         if (GetHighestPriorityItem().go.GetComponent<IInteractable>() == default) return null;
         return GetHighestPriorityItem().go.GetComponent<IInteractable>();
     }
     public ISmashable GetSmashable()
     {
+        if(interestPoints.Count == 0) return null;
         if (GetHighestPriorityItem().go.GetComponent<ISmashable>() == default) return null;
         return GetHighestPriorityItem().go.GetComponent<ISmashable>();
     }
     public IGrabbable GetGrabbable()
     {
+        if(interestPoints.Count == 0) return null;
         if (GetHighestPriorityItem().go.GetComponent<IGrabbable>() == default) return null;
         return GetHighestPriorityItem().go.GetComponent<IGrabbable>();
     }
