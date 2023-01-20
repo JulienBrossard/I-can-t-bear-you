@@ -2775,6 +2775,7 @@ GameObject:
   - component: {fileID: 3368622653541967345}
   - component: {fileID: 4770746724162810905}
   - component: {fileID: 3457049203041899404}
+  - component: {fileID: -733096634841992911}
   m_Layer: 6
   m_Name: Npc Elizabeth (D)
   m_TagString: Npc
@@ -2914,6 +2915,7 @@ MonoBehaviour:
   thirstImage: {fileID: 6465246384743906167}
   hungerImage: {fileID: 3600894519056544299}
   bladderImage: {fileID: 8181043507356591250}
+  tvImage: {fileID: 0}
   suspiciousImage: {fileID: 3011615401990266505}
   panicImage: {fileID: 389058354026941856}
 --- !u!114 &3222637187934779832
@@ -3012,6 +3014,110 @@ MonoBehaviour:
   currentSpeed: 0
   deathAnimPrefab: {fileID: 0}
   deathAnimPivot: {fileID: 0}
+  audioSource: {fileID: -733096634841992911}
+  audioClips:
+  - {fileID: 8300000, guid: 09d4fca0ad815f84b922db1801d80537, type: 3}
+  - {fileID: 8300000, guid: eaf90331158c42c46a2ac036db4650c2, type: 3}
+  - {fileID: 8300000, guid: e474674c978b1ef489c9463b84186fc3, type: 3}
+  - {fileID: 8300000, guid: c34693870de3f1f40bfe999f657574bd, type: 3}
+  - {fileID: 8300000, guid: c1d6c1006b9af4e4387bc592f0ef1f8b, type: 3}
+  - {fileID: 8300000, guid: 7cae85b3a6d2a0e4c89adf562f0b860c, type: 3}
+--- !u!82 &-733096634841992911
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6756954359827881648}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &6957177868765212766
 GameObject:
   m_ObjectHideFlags: 0
