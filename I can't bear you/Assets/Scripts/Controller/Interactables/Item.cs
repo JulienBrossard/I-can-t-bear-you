@@ -161,12 +161,12 @@ public class Item : MonoBehaviour,IGrabbable, IAffectable
     /// <summary>
     /// Draw Trajectory of the object
     /// </summary>
-    public void DrawProjection()
+    public void DrawProjection(float forceRatio)
     {
         Debug.Log("Drawing projection");
         lineRenderer.enabled = true;
         lineRenderer.positionCount = Mathf.CeilToInt(linePoints / timeBetweenPoints) + 1;
-        Vector3 startVelocity = throwForce * LevelManager.instance.GetPlayer().transform.forward / rb.mass;
+        Vector3 startVelocity = throwForce * forceRatio * LevelManager.instance.GetPlayer().transform.forward / rb.mass;
         int i = 0;
         lineRenderer.SetPosition(i, transform.position);
         Vector3 point;

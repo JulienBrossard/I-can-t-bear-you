@@ -70,7 +70,6 @@ public class Npc : Entity, ISmashable
 
     [Header("Ambr :3")]
     [SerializeField] public GameObject deathAnimPrefab;
-    [SerializeField] public Transform deathAnimPivot;
 
     //Init Npc
     private void Start()
