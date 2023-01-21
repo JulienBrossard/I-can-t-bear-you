@@ -38,6 +38,18 @@ public class CameraManager : MonoBehaviour
             DOTween.To(() => vignette.intensity.value, x => vignette.intensity.value = x, 0.5f, 0.5f).OnComplete(ResetVignette).SetLoops(2);
         }
     }
+    
+    public void StartLowBearserker()
+    {
+        vignette.active = true;
+        DOTween.To(() => vignette.intensity.value, x => vignette.intensity.value = x, 0.3f, 0.5f).SetLoops(2);
+    }
+    
+    public void StopLowBearserker()
+    {
+        DOTween.Kill("Vignette");
+        ResetVignette();
+    }
 
     private void ResetVignette()
     {

@@ -26,6 +26,11 @@ public class BearserkerGaugeManager : MonoBehaviour
             cantWinPointAnymore = true;
         }
 
+        if (amount < 0.15f)
+            CameraManager.instance.StartLowBearserker();
+        if (amount > 0.15f)
+            CameraManager.instance.StopLowBearserker();
+        
         if (isDamage)
             CameraManager.instance.CameraVignetteEffectOnHurt();
         
