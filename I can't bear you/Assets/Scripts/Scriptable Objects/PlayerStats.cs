@@ -20,6 +20,7 @@ public class PlayerStats : ScriptableObject
     [Range(0f,1f),Tooltip("Minimal proportion of maxTimeThrowHeld for the throw to not be considered a drop")] public float mitigationRatioDropThrow;
     [Header("Bearserker")]
     [Range(0.000001f,0.01f),Tooltip("Amount of bearserker to reduce at each FixedUpdate, useless on Stealth State")]public float bearserkerDeductionRate;
+    [Range(0f, 1f)] public float bearserkerToAddPerKill;
     [Range(0f, 1f)] public float bearserkerReductionWhenElectrocuted;
     [Range(0f, 1f)] public float bearserkerReductionWhenExploded;
     [Header("Roar")]
