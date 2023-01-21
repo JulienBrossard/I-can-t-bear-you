@@ -22,7 +22,8 @@ public class BearserkerGaugeManager : MonoBehaviour
     public void AddBearserker(float amountToAdd,bool isDamage)
     {
         if (cantWinPointAnymore) return;
-        rageGain.Play();
+        if (amountToAdd > 0)
+            rageGain.Play();
         amount += amountToAdd;
         amount = Mathf.Clamp(amount, 0, 1);
         UiManager.instance.UpdateBearserkerGauge(amount);

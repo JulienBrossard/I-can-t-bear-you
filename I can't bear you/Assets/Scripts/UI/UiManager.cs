@@ -72,12 +72,10 @@ public class UiManager : MonoBehaviour
             if (win)
             {
                 PlayerAnimatorManager.instance.SetAnimatorTrigger("Win");
-                Debug.Log("win");
             }
             else
             {
                 PlayerAnimatorManager.instance.SetAnimatorTrigger("Sleep");
-                Debug.Log("Lose");
             }
             endScreenLaunched = true;
         }
@@ -91,7 +89,7 @@ public class UiManager : MonoBehaviour
         yield return new WaitForSeconds(1f);
         fadeImage.DOFade(1f, 1f);
         yield return new WaitForSeconds(1f);
-        textEndScreen.text = win ? "The party is stopped" : "The party goes on...";
+        textEndScreen.text = win ? "The party is over" : "The party goes on...";
         fadeImage.DOFade(0f, 1f).OnComplete(()=> { fadeImage.gameObject.SetActive(false); });
         uiInGame.SetActive(false);
         endLvlMenu.SetActive(true);
