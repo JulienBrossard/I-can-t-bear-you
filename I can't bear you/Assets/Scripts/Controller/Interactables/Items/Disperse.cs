@@ -16,7 +16,7 @@ public class Disperse : Item, IInteractable
     [SerializeField] private DisperseType disperseType;
     [SerializeField] public NavMeshObstacle obstacle;
     [SerializeField] public Awareness awareness;
-    
+    [SerializeField] private AudioSource audioSource;
     List<GameObject> currentTargets = new List<GameObject>();
 
     private bool setDispersePoint;
@@ -159,5 +159,6 @@ public class Disperse : Item, IInteractable
     public void Interact(Vector3 sourcePos)
     {
         Switch();
+        audioSource.enabled = !audioSource.enabled;
     }
 }
