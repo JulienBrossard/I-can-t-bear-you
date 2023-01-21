@@ -12,6 +12,7 @@ public abstract class PlayerState : Entity
     protected IGrabbable heldObjectGrabbable;
     [SerializeField] protected Transform handTransform;
     private float accelerationIndex;
+    private bool electrocuteInvicibility;
     [SerializeField] protected bool locked;
     [SerializeField] protected bool isAiming;
     [SerializeField] protected bool roarReady;
@@ -109,6 +110,22 @@ public abstract class PlayerState : Entity
         locked = false;
     }
 
+    private IEnumerator invicibilityCoBuffer;
+
+    public void SetInvincibility()
+    {
+        if (invicibilityCoBuffer != default) StopCoroutine(invicibilityCoBuffer);
+        invicibilityCoBuffer = InvicibiltyCoroutine();
+        StartCoroutine(invicibilityCoBuffer);
+    }
+    private IEnumerator InvicibiltyCoroutine()
+    {
+        electrocuteInvicibility = true;
+        yield return Dracau.Utils.GetWaitForSeconds(playerStats.electrocuteInvicibilityTime);
+        electrocuteInvicibility = false;
+        invicibilityCoBuffer = default;
+    }
+
     private float time;
     public IEnumerator EvaluateThrowForce()
     {
@@ -151,14 +168,15 @@ public abstract class PlayerState : Entity
         yield return new WaitForSeconds(playerStats.roarCD); 
         roarReady = true;
     }
-
     public override void Electrocute()
     {
+        if(electrocuteInvicibility) return;
         Debug.Log("Player was electrocuted");
         BearserkerGaugeManager.instance.AddBearserker(-playerStats.bearserkerReductionWhenElectrocuted, true);
     }
     public override void Electrocute(GameObject emitter)
     {
+        if(electrocuteInvicibility) return;
         Debug.Log("Player was electrocuted by " + emitter.name);
         BearserkerGaugeManager.instance.AddBearserker(-playerStats.bearserkerReductionWhenElectrocuted,true);
     }
