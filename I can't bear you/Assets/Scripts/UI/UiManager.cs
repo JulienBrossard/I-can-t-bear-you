@@ -44,9 +44,15 @@ public class UiManager : MonoBehaviour
         bearserkerGauge.fillAmount = value;
     }
     
-    public void UpdateCurrentItem(Sprite sprite)
+    public void SetGrabbedItemPreview(Sprite sprite)
     {
+        currentItem.enabled = true;
         currentItem.sprite = sprite;
+    }
+
+    public void DisableGrabbedItemPreview()
+    {
+        currentItem.enabled = false;
     }
     
     public void UpdateRemainingNpcText()

@@ -95,6 +95,7 @@ MonoBehaviour:
   puddleSize: 2
   zone: {fileID: 0}
   grabbable: 1
+  grabIcon: {fileID: 21300000, guid: 544f7d7384c1db44cb4673a8c0cfba6d, type: 3}
   rb: {fileID: 3778223884131960099}
   collider: {fileID: 3778223884131960110}
   throwForce: 33.333332

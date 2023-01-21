@@ -62,10 +62,10 @@ public abstract class PlayerState : Entity
     {
         if(interestPointsManager.GetGrabbable() == null) return false;
         if(interestPointsManager.GetGrabbable().Grab(handTransform) == default) return false;
-        
+
         heldObject = interestPointsManager.GetGrabbable().Grab(handTransform).gameObject;
         audioSource.PlayOneShot(grabSound);
-        
+        UiManager.instance.SetGrabbedItemPreview(interestPointsManager.GetFirstItem().gameObject.GetComponent<Item>().grabIcon);
         return true;
     }
 
@@ -132,18 +132,17 @@ public abstract class PlayerState : Entity
             animator.SetTrigger("Drop");
             animator.SetBool("Throw", false);
             isAiming = false;
-
+            UiManager.instance.DisableGrabbedItemPreview();
         }
         else
         {
             heldObject.GetComponent<IGrabbable>().Throw(transform.forward,time / playerStats.maxTimeThrowHeld);
             heldObject.transform.localScale = Vector3.one;
             animator.SetBool("Throw", false);
+            audioSource.PlayOneShot(throwSound);
             isAiming = false;
+            UiManager.instance.DisableGrabbedItemPreview();
         }
-        audioSource.PlayOneShot(throwSound);
-
-
         heldObject = null;
         heldObjectGrabbable = null; 
     }

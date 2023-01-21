@@ -32,6 +32,7 @@ public class GasCanister : Item, ISmashable
         Debug.Log("Breaking the Gas Canister");
         audioSource.Play();
         CreateGas();
+        GetComponent<Collider>().enabled = false;
         transform.GetChild(0).gameObject.SetActive(false);
     }
 }
