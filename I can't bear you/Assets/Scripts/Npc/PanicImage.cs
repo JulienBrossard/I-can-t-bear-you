@@ -3,21 +3,28 @@ using UnityEngine.Events;
 
 public class PanicImage : MonoBehaviour
 {
-    public UnityEvent onEnable;
-    public UnityEvent onDisable;
     [SerializeField] private GameObject canvas;
     public GameObject npc;
-    
+    public GameObject states;
+    public GameObject suspicious;
+
     private void OnEnable()
     {
-        onEnable?.Invoke();
+        if (states.activeSelf)
+        {
+            states.SetActive(false);
+        }
+        if (suspicious.activeSelf)
+        {
+            suspicious.SetActive(false);
+        }
     }
 
     private void OnDisable()
     {
-        if (canvas.activeSelf && npc.activeSelf)
+        if (!states.activeSelf)
         {
-            onDisable?.Invoke();
+            states.SetActive(true);
         }
     }
 }
