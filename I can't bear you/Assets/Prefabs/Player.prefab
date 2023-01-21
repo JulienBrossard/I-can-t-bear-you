@@ -83,7 +83,6 @@ GameObject:
   - component: {fileID: 3610956107637295758}
   - component: {fileID: 2030028833}
   - component: {fileID: 2030028845}
-  - component: {fileID: 1123694151238721009}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -191,6 +190,7 @@ MonoBehaviour:
   bearserkerState: {fileID: 2451688659374893305}
   amount: 0.1
   rageGain: {fileID: 7685635351349094018}
+  playerStats: {fileID: 11400000, guid: 2fd0072d78ce2d94c8fe3f700ee0099d, type: 2}
 --- !u!114 &2451688659374893307
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -422,18 +422,6 @@ NavMeshAgent:
   m_BaseOffset: 0.92
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &1123694151238721009
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2451688659374893298}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e248772923be4b444a36745ae40be27e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &110025411890658847
 PrefabInstance:
   m_ObjectHideFlags: 0

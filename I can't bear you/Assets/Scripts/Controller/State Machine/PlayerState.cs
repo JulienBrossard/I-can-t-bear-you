@@ -12,6 +12,7 @@ public abstract class PlayerState : Entity
     protected IGrabbable heldObjectGrabbable;
     [SerializeField] protected Transform handTransform;
     private float accelerationIndex;
+    private bool electrocuteInvicibility;
     [SerializeField] protected bool locked;
     [SerializeField] protected bool isAiming;
     [SerializeField] protected bool roarReady;
@@ -62,10 +63,10 @@ public abstract class PlayerState : Entity
     {
         if(interestPointsManager.GetGrabbable() == null) return false;
         if(interestPointsManager.GetGrabbable().Grab(handTransform) == default) return false;
-        
+
         heldObject = interestPointsManager.GetGrabbable().Grab(handTransform).gameObject;
         audioSource.PlayOneShot(grabSound);
-        
+        UiManager.instance.SetGrabbedItemPreview(interestPointsManager.GetFirstItem().gameObject.GetComponent<Item>().grabIcon);
         return true;
     }
 
@@ -109,9 +110,26 @@ public abstract class PlayerState : Entity
         locked = false;
     }
 
+
     public void LockForever()
     {
         locked = true;
+    }
+    
+    private IEnumerator invicibilityCoBuffer;
+
+    public void SetInvincibility()
+    {
+        if (invicibilityCoBuffer != default) StopCoroutine(invicibilityCoBuffer);
+        invicibilityCoBuffer = InvicibiltyCoroutine();
+        StartCoroutine(invicibilityCoBuffer);
+    }
+    private IEnumerator InvicibiltyCoroutine()
+    {
+        electrocuteInvicibility = true;
+        yield return Dracau.Utils.GetWaitForSeconds(playerStats.electrocuteInvicibilityTime);
+        electrocuteInvicibility = false;
+        invicibilityCoBuffer = default;
     }
 
     private float time;
@@ -137,18 +155,17 @@ public abstract class PlayerState : Entity
             animator.SetTrigger("Drop");
             animator.SetBool("Throw", false);
             isAiming = false;
-
+            UiManager.instance.DisableGrabbedItemPreview();
         }
         else
         {
             heldObject.GetComponent<IGrabbable>().Throw(transform.forward,time / playerStats.maxTimeThrowHeld);
             heldObject.transform.localScale = Vector3.one;
             animator.SetBool("Throw", false);
+            audioSource.PlayOneShot(throwSound);
             isAiming = false;
+            UiManager.instance.DisableGrabbedItemPreview();
         }
-        audioSource.PlayOneShot(throwSound);
-
-
         heldObject = null;
         heldObjectGrabbable = null; 
     }
@@ -157,14 +174,15 @@ public abstract class PlayerState : Entity
         yield return new WaitForSeconds(playerStats.roarCD); 
         roarReady = true;
     }
-
     public override void Electrocute()
     {
+        if(electrocuteInvicibility) return;
         Debug.Log("Player was electrocuted");
         BearserkerGaugeManager.instance.AddBearserker(-playerStats.bearserkerReductionWhenElectrocuted, true);
     }
     public override void Electrocute(GameObject emitter)
     {
+        if(electrocuteInvicibility) return;
         Debug.Log("Player was electrocuted by " + emitter.name);
         BearserkerGaugeManager.instance.AddBearserker(-playerStats.bearserkerReductionWhenElectrocuted,true);
     }

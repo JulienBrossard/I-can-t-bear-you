@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Item : MonoBehaviour,IGrabbable, IAffectable
@@ -17,6 +18,7 @@ public class Item : MonoBehaviour,IGrabbable, IAffectable
     
     public virtual void DeleteItem()
     {
+        if(gameObject.IsDestroyed()) return;
         Destroy(gameObject);
     }
 
@@ -82,6 +84,7 @@ public class Item : MonoBehaviour,IGrabbable, IAffectable
 
     [Header("Grab")] 
     public bool grabbable;
+    public Sprite grabIcon;
     [SerializeField] private Rigidbody rb;
     [SerializeField] private BoxCollider collider;
     [Header("Throw Data")]
@@ -163,7 +166,6 @@ public class Item : MonoBehaviour,IGrabbable, IAffectable
     /// </summary>
     public void DrawProjection(float forceRatio)
     {
-        Debug.Log("Drawing projection");
         lineRenderer.enabled = true;
         lineRenderer.positionCount = Mathf.CeilToInt(linePoints / timeBetweenPoints) + 1;
         Vector3 startVelocity = throwForce * forceRatio * LevelManager.instance.GetPlayer().transform.forward / rb.mass;

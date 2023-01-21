@@ -22,6 +22,7 @@ public class Microwave : Item,ISmashable
     {
         if (!isBroken)
         {
+            transform.position = new Vector3(transform.position.x,0.5f,transform.position.z);
             if (scrapPilePrefab != null && scrapPilePivot != null)
             {
                 Instantiate(scrapPilePrefab, scrapPilePivot.position, Quaternion.identity);
@@ -32,6 +33,7 @@ public class Microwave : Item,ISmashable
             breakSource.PlayOneShot(breakSound);
             Electrocute();
             isBroken = true;
+            GetComponent<Collider>().enabled = false;
             transform.GetChild(0).gameObject.SetActive(false);
         }
     }

@@ -7,10 +7,16 @@ public class BearserkerGaugeManager : MonoBehaviour
     [SerializeField,Range(0f,1f)] private float amount;
     [SerializeField] ParticleSystem rageGain;
     private bool cantWinPointAnymore;
+    [SerializeField] private PlayerStats playerStats;
     
     private void Awake()
     {
         instance = this;
+    }
+
+    public void KillNpc()
+    {
+        AddBearserker(playerStats.bearserkerToAddPerKill, false);
     }
 
     public void AddBearserker(float amountToAdd,bool isDamage)

@@ -74,7 +74,7 @@
                 {
                     "name": "2D Vector Gamepad",
                     "id": "2a37d794-d86b-44bc-8a24-b26aa740f99b",
-                    "path": "2DVector",
+                    "path": "2DVector(mode=2)",
                     "interactions": "",
                     "processors": "",
                     "groups": "",

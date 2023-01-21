@@ -322,8 +322,13 @@ public class Npc : Entity, ISmashable
     /// <param name="newSpeed"></param>
     public void UpdateSpeed(float newSpeed)
     {
-        currentSpeed = newSpeed * npcScripts.statusEffects.currentData.currentSpeedRatio * currentSpeedRatio;
-        npcSpeed = newSpeed;
+        float randomSpeed = 0;
+        if (newSpeed != 0)
+        {
+            randomSpeed = Random.Range(newSpeed - 0.1f, newSpeed + 0.1f);
+        }
+        currentSpeed = randomSpeed * npcScripts.statusEffects.currentData.currentSpeedRatio * currentSpeedRatio;
+        npcSpeed = randomSpeed;
     }
 
     /// <summary>
@@ -383,7 +388,7 @@ public class Npc : Entity, ISmashable
     public override void Die(bool unspawn)
     {
         animator.speed = 1;
-        BearserkerGaugeManager.instance.AddBearserker(0.1f,false);
+        BearserkerGaugeManager.instance.KillNpc();
         audioSource.PlayOneShot(audioClips[Random.Range(0, audioClips.Count)]);
         base.Die(unspawn);
         
