@@ -282,8 +282,9 @@ public class Item : MonoBehaviour,IGrabbable, IAffectable
 
     public virtual void OnHitGround(Collision collision)
     {
+        if (collision.gameObject.TryGetComponent(out ISmashable thing) && thrown)
+            thing.Smash();
         thrown = false;
-        
         if(!falling) return;
         Instantiate((GameObject)Resources.Load("Stomp Zone"), transform.position, Quaternion.identity);
     }

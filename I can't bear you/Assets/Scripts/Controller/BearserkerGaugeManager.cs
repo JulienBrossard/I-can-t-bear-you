@@ -6,6 +6,7 @@ public class BearserkerGaugeManager : MonoBehaviour
     [SerializeField] private BearserkerState bearserkerState;
     [SerializeField,Range(0f,1f)] private float amount;
     [SerializeField] ParticleSystem rageGain;
+    private bool cantWinPointAnymore;
     
     private void Awake()
     {
@@ -14,14 +15,20 @@ public class BearserkerGaugeManager : MonoBehaviour
 
     public void AddBearserker(float amountToAdd,bool isDamage)
     {
+        if (cantWinPointAnymore) return;
         rageGain.Play();
         amount += amountToAdd;
         amount = Mathf.Clamp(amount, 0, 1);
         UiManager.instance.UpdateBearserkerGauge(amount);
-        if(amount == 0) bearserkerState.Sleep();
+        if (amount == 0)
+        {
+            bearserkerState.Sleep();
+            cantWinPointAnymore = true;
+        }
 
         if (isDamage)
             CameraManager.instance.CameraVignetteEffectOnHurt();
+        
     }
 
     public void Use()
