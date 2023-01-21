@@ -240,6 +240,11 @@ public class Pathfinding
             return false;
         }
 
+        if (path.corners.Length == 0)
+        {
+            return false;
+        }
+
         if (CheckPointInDispersePoints(path.corners[^1]))
         {
             return false;
