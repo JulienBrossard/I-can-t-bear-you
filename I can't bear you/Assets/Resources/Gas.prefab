@@ -50,6 +50,7 @@ MonoBehaviour:
   timeBeforeFading: 90
   explosionPrefab: {fileID: 6307271810872161894, guid: ec779f342bcc2a34784b7fc79cc61a74,
     type: 3}
+  sphereCollider: {fileID: 4432694532978113032}
   isExplosive: 1
 --- !u!135 &4432694532978113032
 SphereCollider:

@@ -6,6 +6,8 @@ public class Gas : MonoBehaviour, IAffectable
 {
     [SerializeField] private float timeBeforeFading = 10f;
     [SerializeField] private GameObject explosionPrefab;
+    [SerializeField] private SphereCollider sphereCollider;
+    private Explosion tempExplosion;
     [SerializeField] private bool isExplosive = true;
 
     public bool charged { get; set; }
@@ -34,7 +36,10 @@ public class Gas : MonoBehaviour, IAffectable
 
     public void Explode()
     {
-        Instantiate(explosionPrefab, transform.position, Quaternion.identity, transform);
+        
+        tempExplosion = Instantiate(explosionPrefab, transform.position, Quaternion.identity, transform).GetComponent<Explosion>();
+        tempExplosion.Explode(sphereCollider.radius);
+        tempExplosion.transform.SetParent(null);
         StopAllCoroutines();
         gameObject.SetActive(false);
     }
