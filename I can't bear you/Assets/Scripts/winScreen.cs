@@ -1,10 +1,6 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using Random = UnityEngine.Random;
-
 
 public class winScreen : MonoBehaviour
 {
@@ -22,6 +18,8 @@ public class winScreen : MonoBehaviour
 
     private void OnEnable()
     { 
+        UpdateFleeText();
+        UpdateTextSkull();
         skullToSpawn = NpcManager.instance.npcCountkilled;
         npcWhoFleeToSpawn = NpcManager.instance.npcCountfleed;
         StartCoroutine(SpawnSkulls());

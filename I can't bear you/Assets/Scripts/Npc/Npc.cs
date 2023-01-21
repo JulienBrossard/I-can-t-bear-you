@@ -375,6 +375,7 @@ public class Npc : Entity, ISmashable
         }
     }
 
+
     /// <summary>
     /// Call when npc die
     /// </summary>
