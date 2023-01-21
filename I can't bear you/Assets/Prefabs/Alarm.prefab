@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 5339461855751639802}
   - component: {fileID: 1689829295}
   - component: {fileID: 2096301598881330729}
+  - component: {fileID: 581262460}
   m_Layer: 0
   m_Name: Alarm
   m_TagString: Untagged
@@ -49,7 +50,7 @@ NavMeshObstacle:
   m_Enabled: 0
   serializedVersion: 3
   m_Shape: 0
-  m_Extents: {x: 12, y: 1, z: 12}
+  m_Extents: {x: 20, y: 1, z: 20}
   m_MoveThreshold: 0.1
   m_Carve: 1
   m_CarveOnlyStationary: 1
@@ -68,16 +69,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   field: 1
-  viewRadius: 12
+  viewRadius: 20
   viewAngle: 360
   targetMask:
     serializedVersion: 2
     m_Bits: 64
   obstacleMask:
     serializedVersion: 2
-    m_Bits: 563
+    m_Bits: 512
   visibleTargets: []
-  maxTargets: 5
+  maxTargets: 51
 --- !u!114 &4634936723227694404
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -95,6 +96,7 @@ MonoBehaviour:
   puddleSize: 1
   zone: {fileID: 0}
   grabbable: 0
+  grabIcon: {fileID: 0}
   rb: {fileID: 0}
   collider: {fileID: 0}
   throwForce: 0
@@ -241,6 +243,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!135 &581262460
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4173658913626228665}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 22
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &4557752714927175917
 GameObject:
   m_ObjectHideFlags: 0
