@@ -6,14 +6,17 @@ public class SuspiciousImage : PanicImage
     
     private void OnEnable()
     {
-        onEnable.Invoke();
+        if (states.activeSelf)
+        {
+            states.SetActive(false);
+        }
     }
     
     private void OnDisable()
     {
-        if (!panicImage.transform.parent.gameObject.activeSelf)
+        if (!states.activeSelf && !panicImage.activeSelf)
         {
-            onDisable.Invoke();
+            states.SetActive(true);
         }
     }
 }
