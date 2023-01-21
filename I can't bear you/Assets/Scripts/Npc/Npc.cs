@@ -191,6 +191,8 @@ public class Npc : Entity, ISmashable
                     {
                         currentDestination = pathfinding.CalculateRandomPosOnCirclePeriphery(agent, transform, moveAwayRadius + 3, new Vector3(moveAwayPoint.x, transform.position.y, moveAwayPoint.z));
                     }
+
+                    npcScripts.npcUI.disperseImage.gameObject.SetActive(true);
                     return;
                 case STATE.ATTRACTED:
                     currentDestination = attractedPoint;
@@ -484,6 +486,7 @@ public class Npc : Entity, ISmashable
     {
         stateStack.Remove(STATE.MOVEAWAY);
         currentDestination = Vector3.zero;
+        npcScripts.npcUI.disperseImage.gameObject.SetActive(false);
     }
 
     /// <summary>
@@ -544,6 +547,7 @@ public class Npc : Entity, ISmashable
             npcScripts.npcUI.hungerImage.SetActive(false);
             npcScripts.npcUI.thirstImage.SetActive(false);
             npcScripts.npcUI.tvImage.SetActive(false);
+            npcScripts.npcUI.disperseImage.SetActive(false);
             switch (sortedList[0])
             {
                 case STATE.HUNGER:
@@ -557,6 +561,9 @@ public class Npc : Entity, ISmashable
                     break;
                 case STATE.ATTRACTED:
                     npcScripts.npcUI.tvImage.SetActive(true);
+                    break;
+                case STATE.MOVEAWAY :
+                    npcScripts.npcUI.disperseImage.SetActive(true);
                     break;
             }
 

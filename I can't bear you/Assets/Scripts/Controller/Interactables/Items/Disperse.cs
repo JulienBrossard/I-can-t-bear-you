@@ -47,7 +47,16 @@ public class Disperse : Item, IInteractable
     /// </summary>
     void DisperseNpc()
     {
-        if (awareness.visibleTargets.Count < 1)
+        List<Transform> targets = new List<Transform>();
+        foreach (var target in awareness.visibleTargets)
+        {
+            if (target.CompareTag("Skull"))
+            {
+                return;
+            }
+            targets.Add(target);
+        }
+        if (targets.Count < 1)
         {
             if (player != default && !playerAgentEnabled)
             {
@@ -55,11 +64,6 @@ public class Disperse : Item, IInteractable
                 playerAgentEnabled = true;
             }
             obstacle.enabled = true;
-        }
-        List<Transform> targets = new List<Transform>();
-        foreach (var target in awareness.visibleTargets)
-        {
-            targets.Add(target);
         }
         targets = CheckNpcStillInView(targets);
         DisperseRemainingNpcInView(targets);

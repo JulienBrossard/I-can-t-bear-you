@@ -1714,6 +1714,7 @@ MonoBehaviour:
   hungerImage: {fileID: 6172065514164076523}
   bladderImage: {fileID: 1371270809263687258}
   tvImage: {fileID: 4314561317129117942}
+  disperseImage: {fileID: 5204060668676115735}
   suspiciousImage: {fileID: 568010118910124097}
   panicImage: {fileID: 1221042086877761332}
 --- !u!114 &2280188384493704573
@@ -3382,6 +3383,12 @@ GameObject:
 --- !u!1 &5183489502068987512 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5338565793832931864, guid: a2f46116bbe2ef7468c24dd54db4bd64,
+    type: 3}
+  m_PrefabInstance: {fileID: 1006855167997330528}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &5204060668676115735 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5026466797675268471, guid: a2f46116bbe2ef7468c24dd54db4bd64,
     type: 3}
   m_PrefabInstance: {fileID: 1006855167997330528}
   m_PrefabAsset: {fileID: 0}
