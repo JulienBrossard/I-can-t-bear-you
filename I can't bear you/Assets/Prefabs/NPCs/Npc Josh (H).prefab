@@ -436,8 +436,8 @@ MonoBehaviour:
   state: 3
   stateStack: 03000000
   stateLayers:
-  - states: 000000000100000002000000
   - states: 06000000
+  - states: 000000000200000001000000
   - states: 04000000
   - states: 03000000
   agent: {fileID: 4291388722044611851}
