@@ -35,12 +35,13 @@ public class Ponch : Item,IInteractable,ISmashable
     IEnumerator FeedbackSmash()
     {
         Debug.Log("Breaking the ponch");
+        GetComponent<Collider>().enabled = false;
         audioSource.PlayOneShot(breakClip);
         if (smashParticle)
             smashParticle.Play();
         else Debug.Log("No Smash Particle on " + this.name);
         yield return new WaitForSeconds(.5f);
         CreatePuddle();
-        transform.GetChild(0).gameObject.SetActive(false);
+        DeleteItem();
     }
 }

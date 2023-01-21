@@ -387,7 +387,7 @@ public class Npc : Entity, ISmashable
     public override void Die(bool unspawn)
     {
         animator.speed = 1;
-        BearserkerGaugeManager.instance.AddBearserker(0.1f,false);
+        BearserkerGaugeManager.instance.KillNpc();
         audioSource.PlayOneShot(audioClips[Random.Range(0, audioClips.Count)]);
         base.Die(unspawn);
         

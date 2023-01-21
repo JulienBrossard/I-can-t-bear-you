@@ -135,6 +135,7 @@ MonoBehaviour:
   maxTimeThrowHeld: 0.5
   mitigationRatioDropThrow: 0.3
   bearserkerDeductionRate: 0.001
+  bearserkerToAddPerKill: 0.1
   bearserkerReductionWhenElectrocuted: 0.15
   bearserkerReductionWhenExploded: 0.15
   roarRange: 20
