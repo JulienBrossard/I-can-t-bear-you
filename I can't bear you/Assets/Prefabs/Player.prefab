@@ -190,6 +190,7 @@ MonoBehaviour:
   bearserkerState: {fileID: 2451688659374893305}
   amount: 0.1
   rageGain: {fileID: 7685635351349094018}
+  playerStats: {fileID: 11400000, guid: 2fd0072d78ce2d94c8fe3f700ee0099d, type: 2}
 --- !u!114 &2451688659374893307
 MonoBehaviour:
   m_ObjectHideFlags: 0
