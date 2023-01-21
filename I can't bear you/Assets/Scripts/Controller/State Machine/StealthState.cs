@@ -42,7 +42,12 @@ public class StealthState : PlayerState
                 heldObjectGrabbable = heldObject.GetComponent<IGrabbable>();
                 return;
             }
-            interestPointsManager.GetSmashable()?.Smash();
+
+            if (interestPointsManager.GetSmashable() != default)
+            {
+                interestPointsManager.GetSmashable().Smash();
+                SetInvincibility();
+            }
             animator.SetTrigger("Attack");
         }
 

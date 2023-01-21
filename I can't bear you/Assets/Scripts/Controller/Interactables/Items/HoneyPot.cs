@@ -49,6 +49,6 @@ public class HoneyPot : Item,IInteractable,ISmashable
             Instantiate(scrapPilePrefab, scrapPilePivot.position, Quaternion.identity);
         else Debug.Log("No scrapPilePrefab or scrapPilePivot on " + this.name);
         DeleteItem();
-
+        UiManager.instance.DisableGrabbedItemPreview();
     }
 }
