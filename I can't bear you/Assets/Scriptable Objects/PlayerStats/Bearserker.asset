@@ -136,8 +136,8 @@ MonoBehaviour:
   mitigationRatioDropThrow: 0.3
   bearserkerDeductionRate: 0.001
   bearserkerToAddPerKill: 0.1
-  bearserkerReductionWhenElectrocuted: 0.15
-  bearserkerReductionWhenExploded: 0.15
+  bearserkerReductionWhenElectrocuted: 0.1
+  bearserkerReductionWhenExploded: 0.2
   roarRange: 20
   roarCD: 10
   roarFreezeChance: 0.5
