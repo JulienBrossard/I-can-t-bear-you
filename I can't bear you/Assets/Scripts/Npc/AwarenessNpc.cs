@@ -17,8 +17,11 @@ public class AwarenessNpc : Awareness
 
     private void FixedUpdate()
     {
-        CheckForBear();
-        CheckForNpcPanic();
+        if (!panicData.npc.isDie)
+        {
+            CheckForBear();
+            CheckForNpcPanic();
+        }
     }
 
     /// <summary>
@@ -30,6 +33,13 @@ public class AwarenessNpc : Awareness
         {
             if (visibleTargets.Contains(LevelManager.instance.GetPlayer()))
             {
+                //If npc is already panic, bear switch to bearserk
+                if (panicData.currentPanic >= 1)
+                {
+                    PlayerStateManager.instance.SwitchState(PlayerStateManager.instance.bearserkerState);
+                    return;
+                }
+                
                 // If Player Suspicious
                 if (PlayerStateManager.instance.currentState.currentSusState == PlayerState.SUSSTATE.SUSPICIOUS)
                 {
@@ -66,8 +76,8 @@ public class AwarenessNpc : Awareness
                 // It's npc blood
                 else if(npc.CompareTag("Skull"))
                 {
-                    panicData.UpdatePanic(1);
                     UiManager.instance.ABodyHasBeenFound();
+                    panicData.UpdatePanic(1);
                 }
                 if (NpcManager.instance.npcScriptDict.ContainsKey(npc.gameObject))
                 {

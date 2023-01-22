@@ -22,6 +22,7 @@ public class UiManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI textFlee;
     [SerializeField] private Image[] warningSignBody;
     [SerializeField] private TextMeshProUGUI warningSignText;
+    private bool isWarningSignActive;
     private int maxNpc;
     private bool endScreenLaunched;
 
@@ -85,6 +86,8 @@ public class UiManager : MonoBehaviour
 
     public void ABodyHasBeenFound()
     {
+        if (isWarningSignActive) return;
+        Debug.Log("A body has been found");
         foreach (Image warningImg in warningSignBody)
         {
             warningImg.gameObject.SetActive(true);
@@ -92,7 +95,14 @@ public class UiManager : MonoBehaviour
         }
         warningSignText.gameObject.SetActive(true);
         warningSignText.DOFade(1, 0.5f).SetLoops(2, LoopType.Yoyo).OnComplete(()=> warningSignText.gameObject.SetActive(false));
-        
+        StartCoroutine(WarningSignActiveCD());
+    }
+
+    IEnumerator WarningSignActiveCD()
+    {
+        isWarningSignActive = true;
+        yield return new WaitForSeconds(0.5f);
+        isWarningSignActive = false;
     }
 
     IEnumerator WaitForEndStateAnim(bool win)

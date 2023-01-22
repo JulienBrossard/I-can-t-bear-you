@@ -117,12 +117,16 @@ MonoBehaviour:
   puddleSize: 1
   zone: {fileID: 0}
   grabbable: 1
+  grabIcon: {fileID: 0}
   rb: {fileID: 4877492386470609555}
   collider: {fileID: 2600155183559485103}
   throwForce: 37.5
   lineRenderer: {fileID: 108258842}
   linePoints: 25
   timeBetweenPoints: 0.1
+  raycastAimMask:
+    serializedVersion: 2
+    m_Bits: 1011
   thrown: 0
   itemCharged: 0
   itemConductor: 0

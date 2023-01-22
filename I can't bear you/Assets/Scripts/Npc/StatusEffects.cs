@@ -40,6 +40,7 @@ public class StatusEffects : MonoBehaviour
     /// <param name="effectValue"> Value to add </param>
     public void UpdateStatusEffects(float effectValue)
     {
+        float lastValue = currentStatusEffectValue;
         currentStatusEffectValue += effectValue;
 
         if (currentStatusEffectValue < statusEffectsData.littleDrunkData.minimumValue)
@@ -81,6 +82,15 @@ public class StatusEffects : MonoBehaviour
                 currentData.currentSpeedRatio = statusEffectsData.veryDrunkData.speedRatio;
                 currentData.currentDamageRatio = statusEffectsData.veryDrunkData.damageRatio;
                 break;
+        }
+
+        if (panicData.panicState == Panic.PanicState.Panic)
+        {
+            panicData.npc.UpdateSpeed(panicData.npc.npcData.runSpeed);
+        }
+        else
+        {
+            panicData.npc.UpdateSpeed(panicData.npc.npcData.speed);
         }
     }
     

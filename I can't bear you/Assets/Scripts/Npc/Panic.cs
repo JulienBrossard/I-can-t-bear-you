@@ -60,7 +60,7 @@ public class Panic : MonoBehaviour
             currentPanic = 1f;
             if (!NpcManager.instance.npcScriptDict[gameObject].isDie)
             {
-                PlayerStateManager.instance.SwitchState(PlayerStateManager.instance.bearserkerState);
+                //PlayerStateManager.instance.SwitchState(PlayerStateManager.instance.bearserkerState);
                 npc.npcScripts.npcUI.panicImage.transform.parent.gameObject.SetActive(true);
                 npc.npcScripts.npcUI.panicImage.fillAmount = 1;
             }

@@ -418,7 +418,7 @@ MonoBehaviour:
   timeBetweenPoints: 0.1
   raycastAimMask:
     serializedVersion: 2
-    m_Bits: 247
+    m_Bits: 1011
   thrown: 0
   itemCharged: 0
   itemConductor: 1
