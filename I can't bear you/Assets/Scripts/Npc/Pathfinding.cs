@@ -48,26 +48,24 @@ public class Pathfinding
 
             if (NavMesh.CalculatePath(npcTransform.position, wayPoints[i].position, agent.areaMask, path))
             {
-                if (!CheckPathStatus(path))
-                {
-                    Transform[] newWayPoints = new Transform[wayPoints.Length];
-                    for (int j = 0; j < wayPoints.Length; j++)
-                    {
-                        newWayPoints[j] = wayPoints[j];
-                    }
-                    newWayPoints.ToList().Remove(closestTarget);
-                    return ChooseClosestTarget(newWayPoints, npcTransform, agent);
-                }
                 if (path.corners.Length == 0)
                 {
-                    
                     Debug.Log(wayPoints[0].name + " " + path.corners.Length);
+                    continue;
                 }
                 float distance = Vector3.Distance(npcTransform.position, path.corners[0]);
 
-                for (int j = 1; j < path.corners.Length; j++)
+                if (path.corners.Length == 1)
                 {
-                    distance += Vector3.Distance(path.corners[j - 1], path.corners[j]);
+                    distance += Vector3.Distance(npcTransform.position, path.corners[0]);
+                }
+
+                else
+                {
+                    for (int j = 1; j < path.corners.Length; j++)
+                    {
+                        distance += Vector3.Distance(path.corners[j - 1], path.corners[j]);
+                    }
                 }
 
                 if (distance < closestTargetDistance)
@@ -76,6 +74,18 @@ public class Pathfinding
                     closestTarget = wayPoints[i];
                 }
             }
+        }
+
+        NavMesh.CalculatePath(npcTransform.position, closestTarget.position, agent.areaMask, path);
+        if (!CheckPathStatus(path))
+        {
+            List<Transform> newWayPoints = new List<Transform>();
+            for (int j = 0; j < wayPoints.Length; j++)
+            {
+                newWayPoints.Add(wayPoints[j]);
+            }
+            newWayPoints.Remove(closestTarget);
+            return ChooseClosestTarget(newWayPoints.ToArray(), npcTransform, agent);
         }
 
         return closestTarget;
