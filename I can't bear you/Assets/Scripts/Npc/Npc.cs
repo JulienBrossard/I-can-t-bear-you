@@ -429,7 +429,7 @@ public class Npc : Entity, ISmashable
     /// <param name="isFreeze"> If is freeze </param>
     public void GetFreezed(float freezeTime, bool isFreeze)
     {
-        if (isFreeze)
+        if (isFreeze && !isDie)
         {
             state = STATE.FREEZE;
             StopWalking();
