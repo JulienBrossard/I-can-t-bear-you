@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Panic Data
   m_EditorClassIdentifier: 
   suspicious: 0.005
-  investigateRadius: 18
-  suspiciousValue: 0.5
+  investigateRadius: 25
+  tenseValue: 0.5
