@@ -52,7 +52,7 @@ public class Disperse : Item, IInteractable
         {
             if (target.CompareTag("Skull"))
             {
-                return;
+                continue;
             }
             targets.Add(target);
         }
@@ -128,7 +128,6 @@ public class Disperse : Item, IInteractable
                 targets.Remove(target.transform);
             }
         }
-        Debug.Log(currentTargets.Count);
         currentTargets = currentTargets.Except(currentTargetsToRemove).ToList();
         return targets;
     }
