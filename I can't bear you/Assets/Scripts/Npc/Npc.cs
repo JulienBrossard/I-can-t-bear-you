@@ -654,6 +654,19 @@ public class Npc : Entity, ISmashable
         Die(false);
     }
 
+    public override void StopSlow()
+    {
+        base.StopSlow();
+        if (npcScripts.panicData.panicState == global::Panic.PanicState.Panic)
+        {
+            UpdateSpeed(npcData.runSpeed);
+        }
+        else
+        {
+            UpdateSpeed(npcData.speed);
+        }
+    }
+
     private void OnDrawGizmosSelected()
     {
 #if UNITY_EDITOR
