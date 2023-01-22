@@ -69,15 +69,19 @@ MonoBehaviour:
   puddleSize: 2
   zone: {fileID: 0}
   grabbable: 0
+  grabIcon: {fileID: 0}
   rb: {fileID: 0}
   collider: {fileID: 0}
   throwForce: 0
   lineRenderer: {fileID: 0}
   linePoints: 25
   timeBetweenPoints: 0.1
+  raycastAimMask:
+    serializedVersion: 2
+    m_Bits: 0
   thrown: 0
   itemCharged: 0
-  itemConductor: 1
+  itemConductor: 0
   zoneSize: 0
   emitterDependant: 0
   emitter: {fileID: 0}
@@ -90,10 +94,10 @@ MonoBehaviour:
   audioSource: {fileID: 3773575995742208470}
   psBubblePoisoned: {fileID: 5643027034211683321}
   interactParticle: {fileID: 454296143716310491}
+  smashParticle: {fileID: 0}
   scrapPilePrefab: {fileID: 7103289522427974322, guid: d741d42bdb2cce942a53eedd3226ed2e,
     type: 3}
   scrapPilePivot: {fileID: 6769139441354017099}
-  sabotaged: 0
 --- !u!114 &1340949396713235726
 MonoBehaviour:
   m_ObjectHideFlags: 0
