@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class StealthState : PlayerState
 {
@@ -53,6 +54,7 @@ public class StealthState : PlayerState
 
         if (InputManager.instance.input.Actions.Roar.triggered)
         {
+            if (SceneManager.GetActiveScene().name == "WorldMap") return;
             Roar();
             playerStateManager.SwitchState(bearserkerState);
         }
