@@ -189,6 +189,15 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Drop"",
+                    ""type"": ""Button"",
+                    ""id"": ""b8193698-76f7-4006-8086-76f06329baa7"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -238,17 +247,6 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""c1c25125-b996-4026-8c88-fd453b8d725f"",
-                    ""path"": ""<Keyboard>/e"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Interact"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""8b9f2458-e6cd-4b56-98b5-a7cd8c6cab83"",
                     ""path"": ""<Keyboard>/j"",
                     ""interactions"": """",
@@ -265,17 +263,6 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Player"",
-                    ""action"": ""Smash"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""7b8cca52-511c-4664-b7f8-3b820b077b05"",
-                    ""path"": ""<Mouse>/leftButton"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
                     ""action"": ""Smash"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -299,6 +286,28 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""66425d2b-d2d5-4b95-b07a-37a97f34e8d1"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Drop"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""859db89e-2b4e-4ce4-87fb-6bd0c2ec1b9a"",
+                    ""path"": ""<Keyboard>/l"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Drop"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -338,6 +347,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         m_Actions_Interact = m_Actions.FindAction("Interact", throwIfNotFound: true);
         m_Actions_Smash = m_Actions.FindAction("Smash", throwIfNotFound: true);
         m_Actions_Pause = m_Actions.FindAction("Pause", throwIfNotFound: true);
+        m_Actions_Drop = m_Actions.FindAction("Drop", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -434,6 +444,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     private readonly InputAction m_Actions_Interact;
     private readonly InputAction m_Actions_Smash;
     private readonly InputAction m_Actions_Pause;
+    private readonly InputAction m_Actions_Drop;
     public struct ActionsActions
     {
         private @PlayerInput m_Wrapper;
@@ -442,6 +453,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         public InputAction @Interact => m_Wrapper.m_Actions_Interact;
         public InputAction @Smash => m_Wrapper.m_Actions_Smash;
         public InputAction @Pause => m_Wrapper.m_Actions_Pause;
+        public InputAction @Drop => m_Wrapper.m_Actions_Drop;
         public InputActionMap Get() { return m_Wrapper.m_Actions; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -463,6 +475,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @Pause.started -= m_Wrapper.m_ActionsActionsCallbackInterface.OnPause;
                 @Pause.performed -= m_Wrapper.m_ActionsActionsCallbackInterface.OnPause;
                 @Pause.canceled -= m_Wrapper.m_ActionsActionsCallbackInterface.OnPause;
+                @Drop.started -= m_Wrapper.m_ActionsActionsCallbackInterface.OnDrop;
+                @Drop.performed -= m_Wrapper.m_ActionsActionsCallbackInterface.OnDrop;
+                @Drop.canceled -= m_Wrapper.m_ActionsActionsCallbackInterface.OnDrop;
             }
             m_Wrapper.m_ActionsActionsCallbackInterface = instance;
             if (instance != null)
@@ -479,6 +494,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @Pause.started += instance.OnPause;
                 @Pause.performed += instance.OnPause;
                 @Pause.canceled += instance.OnPause;
+                @Drop.started += instance.OnDrop;
+                @Drop.performed += instance.OnDrop;
+                @Drop.canceled += instance.OnDrop;
             }
         }
     }
@@ -502,5 +520,6 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         void OnInteract(InputAction.CallbackContext context);
         void OnSmash(InputAction.CallbackContext context);
         void OnPause(InputAction.CallbackContext context);
+        void OnDrop(InputAction.CallbackContext context);
     }
 }

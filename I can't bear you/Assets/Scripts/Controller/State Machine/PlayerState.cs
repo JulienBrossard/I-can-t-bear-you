@@ -151,23 +151,13 @@ public abstract class PlayerState : Entity
             heldObjectGrabbable.DrawProjection(time / playerStats.maxTimeThrowHeld);
         }
         
-        if (time / playerStats.maxTimeThrowHeld < playerStats.mitigationRatioDropThrow)
-        {
-            heldObject.GetComponent<IGrabbable>().Drop();
-            animator.SetTrigger("Drop");
-            animator.SetBool("Throw", false);
-            isAiming = false;
-            UiManager.instance.DisableGrabbedItemPreview();
-        }
-        else
-        {
-            heldObject.GetComponent<IGrabbable>().Throw(transform.forward,time / playerStats.maxTimeThrowHeld);
-            heldObject.transform.localScale = Vector3.one;
-            animator.SetBool("Throw", false);
-            audioSource.PlayOneShot(throwSound);
-            isAiming = false;
-            UiManager.instance.DisableGrabbedItemPreview();
-        }
+        heldObject.GetComponent<IGrabbable>().Throw(transform.forward,time / playerStats.maxTimeThrowHeld);
+        heldObject.transform.localScale = Vector3.one;
+        animator.SetBool("Throw", false);
+        audioSource.PlayOneShot(throwSound);
+        isAiming = false;
+        UiManager.instance.DisableGrabbedItemPreview();
+        
         heldObject = null;
         heldObjectGrabbable = null; 
     }
