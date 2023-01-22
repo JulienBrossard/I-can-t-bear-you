@@ -20067,7 +20067,7 @@ MonoBehaviour:
           type: 3}
         count: 2
     npcCount: 51
-    requiredNpcKillCount: 35
+    requiredNpcKillCount: 25
     npcSpawnPositions:
     - {fileID: 445294405}
     - {fileID: 1741381462}
