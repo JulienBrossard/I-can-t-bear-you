@@ -35,6 +35,7 @@ public class winScreen : MonoBehaviour
             Instantiate(winSkull, positionToSpawnSkull.position, Random.rotation);
             skullToSpawn--;
             yield return new WaitForSeconds(0.1f);
+            textKillCount++;
             UpdateTextSkull();
             StartCoroutine(SpawnSkulls());
         }
@@ -49,6 +50,7 @@ public class winScreen : MonoBehaviour
             tempNpc.LoadWaypoints(wayPoints);
             npcWhoFleeToSpawn--;
             yield return new WaitForSeconds(0.3f);
+            textFleeCount++;
             UpdateFleeText();
             StartCoroutine(SpawnNpc());
         }
@@ -56,13 +58,11 @@ public class winScreen : MonoBehaviour
 
     private void UpdateTextSkull()
     {
-        textKillCount++;
         killText.text = "Killed Npc: " + textKillCount;
     }
 
     private void UpdateFleeText()
     {
-        textFleeCount++;
         fleeText.text = "Flee Npc: " + textFleeCount;
     }
 }
