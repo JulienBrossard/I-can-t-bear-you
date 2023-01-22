@@ -22,6 +22,7 @@ public class HoneyPot : Item,IInteractable,ISmashable
             Debug.Log("Eating Honey Pot");
             audioSource.PlayOneShot(honeyEat);
             BearserkerGaugeManager.instance.AddBearserker(bearserkerToAdd, false);
+            UiManager.instance.DisableGrabbedItemPreview();
             DeleteItem();
             hasBeenEaten = true;
         }

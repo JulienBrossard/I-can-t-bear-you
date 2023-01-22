@@ -1867,7 +1867,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-14734
+  m_Name: pb_Mesh-1230348
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -2031,7 +2031,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-14720
+  m_Name: pb_Mesh-1230334
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -3730,7 +3730,7 @@ PrefabInstance:
     - target: {fileID: 2451688659374893300, guid: 4e52ee41f60bb1c4d96e9822b7ff2abc,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.0000009536743
+      value: 1.05
       objectReference: {fileID: 0}
     - target: {fileID: 2451688659374893300, guid: 4e52ee41f60bb1c4d96e9822b7ff2abc,
         type: 3}
@@ -3786,6 +3786,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4413329259203376700, guid: 7db894de48fdfab4b8ffcb413a85cee5,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4413329259751960484, guid: 7db894de48fdfab4b8ffcb413a85cee5,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4413329260068941916, guid: 7db894de48fdfab4b8ffcb413a85cee5,
         type: 3}
       propertyPath: m_Name
@@ -3886,6 +3896,43 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 854427401}
+    - target: {fileID: 4413329260721856900, guid: 7db894de48fdfab4b8ffcb413a85cee5,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 4.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4413329260721856901, guid: 7db894de48fdfab4b8ffcb413a85cee5,
+        type: 3}
+      propertyPath: m_text
+      value: 'Level 1
+
+        Kill 25 Npc to win'
+      objectReference: {fileID: 0}
+    - target: {fileID: 4413329260721856901, guid: 7db894de48fdfab4b8ffcb413a85cee5,
+        type: 3}
+      propertyPath: m_margin.w
+      value: -3.116942
+      objectReference: {fileID: 0}
+    - target: {fileID: 4413329260721856901, guid: 7db894de48fdfab4b8ffcb413a85cee5,
+        type: 3}
+      propertyPath: m_margin.x
+      value: -1.1143475
+      objectReference: {fileID: 0}
+    - target: {fileID: 4413329260721856901, guid: 7db894de48fdfab4b8ffcb413a85cee5,
+        type: 3}
+      propertyPath: m_margin.z
+      value: -3.352623
+      objectReference: {fileID: 0}
+    - target: {fileID: 4413329260721856907, guid: 7db894de48fdfab4b8ffcb413a85cee5,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4413329260891566386, guid: 7db894de48fdfab4b8ffcb413a85cee5,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4545098886887183372, guid: 7db894de48fdfab4b8ffcb413a85cee5,
         type: 3}
       propertyPath: lvlToLoad

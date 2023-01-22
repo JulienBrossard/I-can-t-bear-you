@@ -37,6 +37,7 @@ public class Television : AttractiveItem, ISmashable, IInteractable
         tempMatList = tvScreenMR.materials;
         tempMatList[1] = tvOff;
         tvScreenMR.materials = tempMatList;
+        StopAttracted();
         if (charged) return;
         Electrocute();
         GetComponent<MeshRenderer>().enabled = false;
