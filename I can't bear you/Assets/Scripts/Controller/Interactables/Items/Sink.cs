@@ -19,6 +19,7 @@ public class Sink : Item, ISmashable
             Debug.Log("Breaking the Sink");
             audioSource.Play();
             CreatePuddle();
+            GetComponent<Collider>().enabled = false;
             transform.GetChild(0).gameObject.SetActive(false);
         }
     }

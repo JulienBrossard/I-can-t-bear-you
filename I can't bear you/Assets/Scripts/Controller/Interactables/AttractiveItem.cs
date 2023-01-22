@@ -79,7 +79,7 @@ public class AttractiveItem : Item, IInteractable, ISmashable
     {
         for (int i = 0; i < awareness.visibleTargets.Count; i++)
         {
-            awareness.visibleTargets[i].GetComponent<Npc>().StopAttracted();
+            awareness.visibleTargets[i]?.GetComponent<Npc>()?.StopAttracted();
         }
 
         npcCount = 0;
@@ -104,6 +104,8 @@ public class AttractiveItem : Item, IInteractable, ISmashable
         audioSource.PlayOneShot(brokenSound);
         if (charged) return;
         Electrocute();
+        StopAttracted();
+        GetComponent<Collider>().enabled = false;
         transform.GetChild(0).gameObject.SetActive(false);
     }
 
