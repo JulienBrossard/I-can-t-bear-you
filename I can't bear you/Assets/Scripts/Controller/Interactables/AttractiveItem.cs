@@ -104,6 +104,8 @@ public class AttractiveItem : Item, IInteractable, ISmashable
         audioSource.PlayOneShot(brokenSound);
         if (charged) return;
         Electrocute();
+        StopAttracted();
+        GetComponent<Collider>().enabled = false;
         transform.GetChild(0).gameObject.SetActive(false);
     }
 
