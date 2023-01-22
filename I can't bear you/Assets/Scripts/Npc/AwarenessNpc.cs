@@ -30,6 +30,13 @@ public class AwarenessNpc : Awareness
         {
             if (visibleTargets.Contains(LevelManager.instance.GetPlayer()))
             {
+                //If npc is already panic, bear switch to bearserk
+                if (panicData.currentPanic >= 1)
+                {
+                    PlayerStateManager.instance.SwitchState(PlayerStateManager.instance.bearserkerState);
+                    return;
+                }
+                
                 // If Player Suspicious
                 if (PlayerStateManager.instance.currentState.currentSusState == PlayerState.SUSSTATE.SUSPICIOUS)
                 {
