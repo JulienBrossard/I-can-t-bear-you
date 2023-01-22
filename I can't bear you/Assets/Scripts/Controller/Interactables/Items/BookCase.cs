@@ -42,6 +42,7 @@ public class BookCase : Item, ISmashable, IInteractable
 
     IEnumerator FeedbackSmash()
     {
+        GetComponent<Collider>().enabled = false;
         Debug.Log("Breaking the BookCase");
         hasBeenSmashed = true;
         audioSource.PlayOneShot(woodBreak);
