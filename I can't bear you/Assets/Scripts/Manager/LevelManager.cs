@@ -125,7 +125,7 @@ public class LevelManager : MonoBehaviour
     public void EndLevel(bool bySleeping)
     {
         PlayerStateManager.instance.currentState.LockForever();
-        if (NpcManager.instance.npcCountkilled > level.requiredNpcKillCount)
+        if (NpcManager.instance.npcCountkilled >= level.requiredNpcKillCount)
         {
             UiManager.instance.LaunchEndLevelScreen(true);
         }
