@@ -69,6 +69,7 @@ public class Npc : Entity, ISmashable
     [HideInInspector] public float currentSpeed;
     private float npcSpeed;
     private Ponch currentPonch;
+    private bool isFreeze;
 
     [Header("Ambr :3")]
     [SerializeField] public GameObject deathAnimPrefab;
@@ -325,13 +326,16 @@ public class Npc : Entity, ISmashable
     /// <param name="newSpeed"></param>
     public void UpdateSpeed(float newSpeed)
     {
-        float randomSpeed = 0;
-        if (newSpeed != 0)
+        if (!isFreeze)
         {
-            randomSpeed = Random.Range(newSpeed - 0.1f, newSpeed + 0.1f);
+            float randomSpeed = 0;
+            if (newSpeed != 0)
+            {
+                randomSpeed = Random.Range(newSpeed - 0.1f, newSpeed + 0.1f);
+            }
+            currentSpeed = randomSpeed * npcScripts.statusEffects.currentData.currentSpeedRatio * currentSpeedRatio;
+            npcSpeed = randomSpeed;
         }
-        currentSpeed = randomSpeed * npcScripts.statusEffects.currentData.currentSpeedRatio * currentSpeedRatio;
-        npcSpeed = randomSpeed;
     }
 
     /// <summary>
@@ -429,17 +433,22 @@ public class Npc : Entity, ISmashable
     /// <param name="isFreeze"> If is freeze </param>
     public void GetFreezed(float freezeTime, bool isFreeze)
     {
-        if (isFreeze && !isDie)
+        if (!isDie)
         {
-            state = STATE.FREEZE;
-            StopWalking();
-            animator.speed = 0;
-            UpdateSpeed(0);
-            StartCoroutine(FreezeCD(freezeTime));
-        }
-        else
-        {
-            npcScripts.panicData.UpdatePanic(1);
+            if (isFreeze)
+            {
+                this.isFreeze = true;
+                state = STATE.FREEZE;
+                StopWalking();
+                animator.speed = 0;
+                agent.speed = 0;
+                currentSpeed = 0;
+                StartCoroutine(FreezeCD(freezeTime));
+            }
+            else
+            {
+                npcScripts.panicData.UpdatePanic(1);
+            }
         }
 
     }
@@ -452,8 +461,9 @@ public class Npc : Entity, ISmashable
     IEnumerator FreezeCD(float freezeTime)
     {
         yield return new WaitForSeconds(freezeTime);
-        UpdateSpeed(npcSpeed);
+        isFreeze = false;
         animator.speed = 1;
+        npcScripts.panicData.currentPanic = 0;
         npcScripts.panicData.UpdatePanic(1);
     }
 
