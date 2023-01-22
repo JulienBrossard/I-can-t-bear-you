@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class AttractiveItem : Item, IInteractable, ISmashable
@@ -17,6 +18,7 @@ public class AttractiveItem : Item, IInteractable, ISmashable
     public ParticleSystem interactParticle;
     public GameObject scrapPilePrefab;
     public Transform scrapPilePivot;
+    private List<Npc> npcsAttracted = new List<Npc>();
 
     private void Update()
     {
@@ -63,13 +65,19 @@ public class AttractiveItem : Item, IInteractable, ISmashable
                     {
                         if (!invertZAxis)
                         {
-                            npc.Attracted(attractedDistance, transform.position, angle,
-                                new Vector2(transform.forward.x, transform.forward.z), new Vector2(transform.right.x, transform.right.z));
+                            if (npc.Attracted(attractedDistance, transform.position, angle,
+                                    new Vector2(transform.forward.x, transform.forward.z), new Vector2(transform.right.x, transform.right.z)))
+                            {
+                                npcsAttracted.Add(npc);
+                            }
                         }
                         else
                         {
-                            npc.Attracted(-attractedDistance, transform.position, angle,
-                                -new Vector2(transform.forward.x, transform.forward.z), new Vector2(transform.right.x, transform.right.z));
+                            if (npc.Attracted(-attractedDistance, transform.position, angle,
+                                    -new Vector2(transform.forward.x, transform.forward.z), new Vector2(transform.right.x, transform.right.z)))
+                            {
+                                npcsAttracted.Add(npc);
+                            }
                         }
                     }
                 }
@@ -81,12 +89,12 @@ public class AttractiveItem : Item, IInteractable, ISmashable
     
     public virtual void StopAttracted()
     {
-        for (int i = 0; i < awareness.visibleTargets.Count; i++)
+        for (int i = 0; i < npcsAttracted.Count; i++)
         {
-            awareness.visibleTargets[i]?.GetComponent<Npc>()?.StopAttracted();
+            npcsAttracted[i]?.StopAttracted();
         }
-
         npcCount = 0;
+        npcsAttracted.Clear();
     }
     
     public Vector3 DirFromAngle(float angleInDegrees, bool angleIsGlobal) {

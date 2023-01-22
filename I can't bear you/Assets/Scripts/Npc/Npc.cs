@@ -408,12 +408,17 @@ public class Npc : Entity, ISmashable
     /// <param name="radius"> Radius of the attracted object </param>
     /// <param name="position"> Position of the attracted object </param>
     /// <param name="angle"> Angle of the attracted object </param>
-    public void Attracted(float radius, Vector3 position, float angle, Vector2 dirForward, Vector2 dirRight)
+    public bool Attracted(float radius, Vector3 position, float angle, Vector2 dirForward, Vector2 dirRight)
     {
+        if (stateStack.Contains(STATE.ATTRACTED))
+        {
+            return false;   
+        }
         AddStateToStack(STATE.ATTRACTED);
         attractedCenterPoint = position;
         attractedPoint = pathfinding.CalculateRandomPosInCone(agent, transform,
             radius, angle, position, dirForward, dirRight);
+        return true;
     }
 
     /// <summary>
@@ -424,6 +429,7 @@ public class Npc : Entity, ISmashable
         stateStack.Remove(STATE.ATTRACTED);
         npcScripts.npcUI.tvImage.gameObject.SetActive(false);
         currentDestination = Vector3.zero;
+        animator.SetBool("isIdle",false);
     }
 
     /// <summary>
