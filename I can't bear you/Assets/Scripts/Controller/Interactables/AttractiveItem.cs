@@ -79,7 +79,7 @@ public class AttractiveItem : Item, IInteractable, ISmashable
     {
         for (int i = 0; i < awareness.visibleTargets.Count; i++)
         {
-            awareness.visibleTargets[i].GetComponent<Npc>().StopAttracted();
+            awareness.visibleTargets[i]?.GetComponent<Npc>()?.StopAttracted();
         }
 
         npcCount = 0;
