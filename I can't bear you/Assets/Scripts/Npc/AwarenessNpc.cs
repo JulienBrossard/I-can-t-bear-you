@@ -17,8 +17,11 @@ public class AwarenessNpc : Awareness
 
     private void FixedUpdate()
     {
-        CheckForBear();
-        CheckForNpcPanic();
+        if (!panicData.npc.isDie)
+        {
+            CheckForBear();
+            CheckForNpcPanic();
+        }
     }
 
     /// <summary>

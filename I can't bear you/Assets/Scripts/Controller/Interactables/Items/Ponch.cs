@@ -8,7 +8,7 @@ public class Ponch : Item,IInteractable,ISmashable
     [SerializeField] AudioSource audioSource;
     [SerializeField] private GameObject psBubblePoisoned;
     [SerializeField] ParticleSystem interactParticle, smashParticle;
-    bool spicedUp;
+    [HideInInspector] public bool spicedUp;
     [SerializeField] GameObject scrapPilePrefab;
     [SerializeField] Transform scrapPilePivot;
     public void Interact(Vector3 sourcePos)
