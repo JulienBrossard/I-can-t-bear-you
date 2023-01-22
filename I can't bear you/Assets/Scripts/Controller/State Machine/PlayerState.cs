@@ -110,6 +110,12 @@ public abstract class PlayerState : Entity
         locked = false;
     }
 
+
+    public void LockForever()
+    {
+        locked = true;
+    }
+    
     private IEnumerator invicibilityCoBuffer;
 
     public void SetInvincibility()

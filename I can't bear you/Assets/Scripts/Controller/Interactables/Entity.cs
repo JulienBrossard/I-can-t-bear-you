@@ -62,7 +62,8 @@ public class Entity : MonoBehaviour, IAffectable
     public virtual void Explode()
     {
         Debug.Log("Exploded " + gameObject.name);
-        Die(true);
+        Die(false);
+        animator.SetTrigger("isExploding");
     }
 
     public virtual void Die(bool unspawn)

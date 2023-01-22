@@ -201,6 +201,7 @@ public class ItemEditor : Editor
             if (lastRadius != ((Disperse)target).awareness.viewRadius)
             {
                 disperse.obstacle.radius = disperse.awareness.viewRadius;
+                disperse.obstacle.radius = disperse.awareness.viewRadius;
             }
         }
     }

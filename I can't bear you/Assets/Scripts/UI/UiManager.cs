@@ -14,12 +14,12 @@ public class UiManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI remainingNpcText;
     [SerializeField] private GameObject endLvlMenu;
     [SerializeField] private GameObject uiInGame;
-    [SerializeField] private GameObject npcIcon;
-    [SerializeField] private GameObject npcIconParent;
     [SerializeField] private Image fadeImage;
     [SerializeField] private GameObject winScreen;
     [SerializeField] private GameObject looseScreen;
     [SerializeField] private TextMeshProUGUI textEndScreen;
+    [SerializeField] private TextMeshProUGUI textKill;
+    [SerializeField] private TextMeshProUGUI textFlee;
     private int maxNpc;
     private bool endScreenLaunched;
 
@@ -72,12 +72,10 @@ public class UiManager : MonoBehaviour
             if (win)
             {
                 PlayerAnimatorManager.instance.SetAnimatorTrigger("Win");
-                Debug.Log("win");
             }
             else
             {
                 PlayerAnimatorManager.instance.SetAnimatorTrigger("Sleep");
-                Debug.Log("Lose");
             }
             endScreenLaunched = true;
         }
@@ -91,7 +89,7 @@ public class UiManager : MonoBehaviour
         yield return new WaitForSeconds(1f);
         fadeImage.DOFade(1f, 1f);
         yield return new WaitForSeconds(1f);
-        textEndScreen.text = win ? "The party is stopped" : "The party goes on...";
+        textEndScreen.text = win ? "The party is over" : "The party goes on...";
         fadeImage.DOFade(0f, 1f).OnComplete(()=> { fadeImage.gameObject.SetActive(false); });
         uiInGame.SetActive(false);
         endLvlMenu.SetActive(true);
@@ -99,9 +97,15 @@ public class UiManager : MonoBehaviour
             if (win)
                 winScreen.SetActive(true);
             else
+            {
                 looseScreen.SetActive(true);
-            
-
+                textKill.gameObject.SetActive(true);
+                textFlee.gameObject.SetActive(true);
+                int killedNpc = NpcManager.instance.npcCountkilled;
+                int fleedNpc = NpcManager.instance.npcCountfleed;
+                textKill.text = "Killed Npc: " + killedNpc;
+                textFlee.text = "Flee Npc: " + fleedNpc;
+            }
             
     }
 }

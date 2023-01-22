@@ -51,7 +51,7 @@ public class InterestPointsManager : MonoBehaviour
         if (interestPoints.Count == 0)
         {
             outlineGoBuffer = default;
-            ActionsGuideManager.instance.RemoveInterestPoint();
+            ActionsGuideManager.instance?.RemoveInterestPoint();
             return;
         }
 
@@ -59,7 +59,7 @@ public class InterestPointsManager : MonoBehaviour
         
         outlineGoBuffer = GetHighestPriorityItem().go;
         outlineGoBuffer.GetComponent<Outline>()?.EnableOutline();
-        ActionsGuideManager.instance.SetInterestPoint(GetHighestPriorityItem(), sightManager.state);
+        ActionsGuideManager.instance?.SetInterestPoint(GetHighestPriorityItem(), sightManager.state);
     }
 
     InterestPoint GetHighestPriorityItem()

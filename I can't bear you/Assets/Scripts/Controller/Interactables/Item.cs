@@ -284,8 +284,9 @@ public class Item : MonoBehaviour,IGrabbable, IAffectable
 
     public virtual void OnHitGround(Collision collision)
     {
+        if (collision.gameObject.TryGetComponent(out ISmashable thing) && thrown)
+            thing.Smash();
         thrown = false;
-        
         if(!falling) return;
         Instantiate((GameObject)Resources.Load("Stomp Zone"), transform.position, Quaternion.identity);
     }
@@ -315,11 +316,14 @@ public class Item : MonoBehaviour,IGrabbable, IAffectable
     [Header("Explosive")]
     [SerializeField] private bool isExplosive;
     public bool explosive { get => isExplosive; set => isExplosive = value; }
+    private GameObject tempExplosionRef;
     public virtual void Explode()
     {
         if(!explosive) return;
-        Instantiate((GameObject)Resources.Load("Explosion"), transform.position, Quaternion.identity);
-        if (TryGetComponent<Collider>(out Collider col)) col.enabled = false;
+        tempExplosionRef = Instantiate((GameObject)Resources.Load("Explosion"), transform.position, Quaternion.identity);
+        tempExplosionRef.transform.SetParent(null); 
+        tempExplosionRef.TryGetComponent(out Explosion explosion);
+        explosion.Explode(TryGetComponent(out SphereCollider sphereCollider) ? sphereCollider.radius : 0);
         //Debug.Log("Exploded " + gameObject.name);
         DeleteItem();
     }

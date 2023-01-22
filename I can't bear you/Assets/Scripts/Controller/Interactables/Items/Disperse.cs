@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -18,6 +19,8 @@ public class Disperse : Item, IInteractable
     [SerializeField] public Awareness awareness;
     [SerializeField] private AudioSource audioSource;
     List<GameObject> currentTargets = new List<GameObject>();
+    private GameObject player;
+    bool playerAgentEnabled;
 
     private bool setDispersePoint;
     private bool isDispersing;
@@ -44,20 +47,26 @@ public class Disperse : Item, IInteractable
     /// </summary>
     void DisperseNpc()
     {
-        if (awareness.visibleTargets.Count > 0)
+        List<Transform> targets = new List<Transform>();
+        foreach (var target in awareness.visibleTargets)
         {
-            List<Transform> targets = new List<Transform>();
-            foreach (var target in awareness.visibleTargets)
+            if (target.CompareTag("Skull"))
             {
-                targets.Add(target);
+                return;
             }
-            targets = CheckNpcStillInView(targets);
-            DisperseRemainingNpcInView(targets);
+            targets.Add(target);
         }
-        else if (!obstacle.enabled)
+        if (targets.Count < 1)
         {
+            if (player != default && !playerAgentEnabled)
+            {
+                player.GetComponent<NavMeshAgent>().enabled = false;
+                playerAgentEnabled = true;
+            }
             obstacle.enabled = true;
         }
+        targets = CheckNpcStillInView(targets);
+        DisperseRemainingNpcInView(targets);
     }
 
     /// <summary>
@@ -91,10 +100,12 @@ public class Disperse : Item, IInteractable
                 NpcManager.instance.npcScriptDict[target].StopDisperse();
             }
             obstacle.enabled = false;
+            StartCoroutine(ActivePlayerAgent());
         }
         else
         {
             isDispersing = true;
+            NpcManager.instance.SetDispersePoint(transform.position, awareness.viewRadius, disperseType);
         }
     }
     
@@ -117,6 +128,7 @@ public class Disperse : Item, IInteractable
                 targets.Remove(target.transform);
             }
         }
+        Debug.Log(currentTargets.Count);
         currentTargets = currentTargets.Except(currentTargetsToRemove).ToList();
         return targets;
     }
@@ -129,10 +141,10 @@ public class Disperse : Item, IInteractable
     {
         foreach (var target in targets)
         {
+            currentTargets.Add(target.gameObject);
             Vector3 direction = transform.position - target.position;
             direction.Normalize();
             NpcManager.instance.npcScriptDict[target.gameObject].Disperse(transform.position, direction, awareness.viewRadius);
-            currentTargets.Add(target.gameObject);
         }
     }
 
@@ -140,7 +152,10 @@ public class Disperse : Item, IInteractable
     {
         if (NpcManager.instance != default)
         {
-            NpcManager.instance.SetDispersePoint(transform.position, awareness.viewRadius, disperseType);
+            if (isDispersing)
+            {
+                NpcManager.instance.SetDispersePoint(transform.position, awareness.viewRadius, disperseType);
+            }
             awareness.Init();
             setDispersePoint = true;
         }
@@ -160,5 +175,33 @@ public class Disperse : Item, IInteractable
     {
         Switch();
         audioSource.enabled = !audioSource.enabled;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            player = other.gameObject;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            player.GetComponent<NavMeshAgent>().enabled = true;
+            playerAgentEnabled = false;
+            player = default;
+        }
+    }
+
+    IEnumerator ActivePlayerAgent()
+    {
+        yield return new WaitForSeconds(0.1f);
+        if (player != default)
+        {
+            player.GetComponent<NavMeshAgent>().enabled = true;
+            playerAgentEnabled = false;
+        }
     }
 }

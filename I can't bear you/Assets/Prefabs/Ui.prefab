@@ -153,7 +153,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &969262692
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2436,12 +2436,12 @@ MonoBehaviour:
   remainingNpcText: {fileID: 3773924572516838598}
   endLvlMenu: {fileID: 7472867614493338997}
   uiInGame: {fileID: 1650096597191598261}
-  npcIcon: {fileID: 1760731376419925947, guid: b602b49864f071a458fa524b2d92c877, type: 3}
-  npcIconParent: {fileID: 0}
   fadeImage: {fileID: 2629527394192288117}
   winScreen: {fileID: 473946105983784011}
   looseScreen: {fileID: 2378062481513430938}
   textEndScreen: {fileID: 7333321947077991218}
+  textKill: {fileID: 5869750053047214841}
+  textFlee: {fileID: 503282784603977871}
 --- !u!114 &2874325475292203524
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3395,7 +3395,7 @@ PrefabInstance:
     - target: {fileID: 1940585131639077875, guid: 9bfb8846189476c488d3db19f24fdbd4,
         type: 3}
       propertyPath: m_VersionIndex
-      value: 1877
+      value: 1880
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9bfb8846189476c488d3db19f24fdbd4, type: 3}
