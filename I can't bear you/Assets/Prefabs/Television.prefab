@@ -142,6 +142,7 @@ MonoBehaviour:
   puddleSize: 1
   zone: {fileID: 3365355756540188612}
   grabbable: 0
+  grabIcon: {fileID: 0}
   rb: {fileID: 0}
   collider: {fileID: 0}
   throwForce: 0
@@ -205,7 +206,7 @@ MonoBehaviour:
     m_Bits: 64
   obstacleMask:
     serializedVersion: 2
-    m_Bits: 51
+    m_Bits: 512
   visibleTargets: []
   maxTargets: 5
 --- !u!65 &6616642245741510310

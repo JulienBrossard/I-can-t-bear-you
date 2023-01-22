@@ -2838,7 +2838,7 @@ MonoBehaviour:
     m_Bits: 64
   obstacleMask:
     serializedVersion: 2
-    m_Bits: 51
+    m_Bits: 512
   visibleTargets: []
   maxTargets: 6
 --- !u!114 &5200560531691555815
@@ -2872,12 +2872,16 @@ MonoBehaviour:
   puddleSize: 0.5
   zone: {fileID: 7157912233808891693}
   grabbable: 0
+  grabIcon: {fileID: 0}
   rb: {fileID: 0}
   collider: {fileID: 0}
   throwForce: 0
   lineRenderer: {fileID: 0}
   linePoints: 25
   timeBetweenPoints: 0.1
+  raycastAimMask:
+    serializedVersion: 2
+    m_Bits: 0
   thrown: 0
   itemCharged: 0
   itemConductor: 1
