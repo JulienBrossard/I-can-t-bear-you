@@ -67,6 +67,7 @@ public class AwarenessNpc : Awareness
                 else if(npc.CompareTag("Skull"))
                 {
                     panicData.UpdatePanic(1);
+                    UiManager.instance.ABodyHasBeenFound();
                 }
                 if (NpcManager.instance.npcScriptDict.ContainsKey(npc.gameObject))
                 {

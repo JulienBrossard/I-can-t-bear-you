@@ -20,6 +20,8 @@ public class UiManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI textEndScreen;
     [SerializeField] private TextMeshProUGUI textKill;
     [SerializeField] private TextMeshProUGUI textFlee;
+    [SerializeField] private Image[] warningSignBody;
+    [SerializeField] private TextMeshProUGUI warningSignText;
     private int maxNpc;
     private bool endScreenLaunched;
 
@@ -79,8 +81,18 @@ public class UiManager : MonoBehaviour
             }
             endScreenLaunched = true;
         }
-            
-      
+    }
+
+    public void ABodyHasBeenFound()
+    {
+        foreach (Image warningImg in warningSignBody)
+        {
+            warningImg.gameObject.SetActive(true);
+            warningImg.DOFade(1, 0.5f).SetLoops(2, LoopType.Yoyo).OnComplete(()=> warningImg.gameObject.SetActive(false));
+        }
+        warningSignText.gameObject.SetActive(true);
+        warningSignText.DOFade(1, 0.5f).SetLoops(2, LoopType.Yoyo).OnComplete(()=> warningSignText.gameObject.SetActive(false));
+        
     }
 
     IEnumerator WaitForEndStateAnim(bool win)
