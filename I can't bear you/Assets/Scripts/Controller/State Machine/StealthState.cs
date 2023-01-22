@@ -58,6 +58,16 @@ public class StealthState : PlayerState
             Roar();
             playerStateManager.SwitchState(bearserkerState);
         }
+
+        if (InputManager.instance.input.Actions.Drop.triggered)
+        {
+            if (heldObject != default)
+            {
+                heldObject.GetComponent<IGrabbable>().Drop();
+                UiManager.instance.DisableGrabbedItemPreview();
+                heldObject = default;
+            }
+        }
     }
 
   

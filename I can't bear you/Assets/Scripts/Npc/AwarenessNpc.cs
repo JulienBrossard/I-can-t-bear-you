@@ -17,8 +17,11 @@ public class AwarenessNpc : Awareness
 
     private void FixedUpdate()
     {
-        CheckForBear();
-        CheckForNpcPanic();
+        if (!panicData.npc.isDie)
+        {
+            CheckForBear();
+            CheckForNpcPanic();
+        }
     }
 
     /// <summary>
@@ -73,6 +76,7 @@ public class AwarenessNpc : Awareness
                 // It's npc blood
                 else if(npc.CompareTag("Skull"))
                 {
+                    UiManager.instance.ABodyHasBeenFound();
                     panicData.UpdatePanic(1);
                 }
                 if (NpcManager.instance.npcScriptDict.ContainsKey(npc.gameObject))

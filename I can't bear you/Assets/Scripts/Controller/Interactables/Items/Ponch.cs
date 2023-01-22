@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
 public class Ponch : Item,IInteractable,ISmashable
@@ -8,9 +9,11 @@ public class Ponch : Item,IInteractable,ISmashable
     [SerializeField] AudioSource audioSource;
     [SerializeField] private GameObject psBubblePoisoned;
     [SerializeField] ParticleSystem interactParticle, smashParticle;
-    bool spicedUp;
+    [HideInInspector] public bool spicedUp;
     [SerializeField] GameObject scrapPilePrefab;
     [SerializeField] Transform scrapPilePivot;
+    [SerializeField] private MeshRenderer liquid;
+    [SerializeField] private Color liquidColorWhenPoisoned;
     public void Interact(Vector3 sourcePos)
     {
         // Spice up the Ponch
@@ -22,6 +25,7 @@ public class Ponch : Item,IInteractable,ISmashable
             Debug.Log("Interacting Ponch");
             audioSource.PlayOneShot(bubbleClip);
             psBubblePoisoned.SetActive(true);
+            liquid.material.DOColor(liquidColorWhenPoisoned, 0.5f);
             spicedUp = true;
         }
     }

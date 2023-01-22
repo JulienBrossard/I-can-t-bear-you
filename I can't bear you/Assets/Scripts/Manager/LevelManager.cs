@@ -28,7 +28,7 @@ public class LevelManager : MonoBehaviour
             {
                 for (int k = 0; k < level.partyData[i].npc[j].count; k++)
                 {
-                    NpcManager.instance.SpawnNpc(level.partyData[i].npc[j].npc.name).InitPartyData(level.partyData[i], NpcManager.instance.npcCountRemaining); //Spawn NPC + loaded party data
+                    NpcManager.instance.SpawnNpc(level.partyData[i].npc[j].npc.name).InitPartyData(level.partyData[i], NpcManager.instance.npcCountRemaining + 1); //Spawn NPC + loaded party data
                 }
             }
         }

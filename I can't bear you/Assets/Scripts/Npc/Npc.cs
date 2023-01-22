@@ -68,6 +68,7 @@ public class Npc : Entity, ISmashable
     private Transform player;
     [HideInInspector] public float currentSpeed;
     private float npcSpeed;
+    private Ponch currentPonch;
 
     [Header("Ambr :3")]
     [SerializeField] public GameObject deathAnimPrefab;
@@ -428,7 +429,7 @@ public class Npc : Entity, ISmashable
     /// <param name="isFreeze"> If is freeze </param>
     public void GetFreezed(float freezeTime, bool isFreeze)
     {
-        if (isFreeze)
+        if (isFreeze && !isDie)
         {
             state = STATE.FREEZE;
             StopWalking();
@@ -599,6 +600,11 @@ public class Npc : Entity, ISmashable
         stats.currentThirst = npcData.maxThirst;
         isAction = false;
         currentDestination = Vector3.zero;
+        if (currentPonch != default && currentPonch.spicedUp)
+        {
+            npcScripts.statusEffects.UpdateStatusEffects(1);
+            currentPonch = default;
+        }
         Debug.Log("Drinking");
     }
 
@@ -633,7 +639,12 @@ public class Npc : Entity, ISmashable
     /// <param name="image"> Image of the state </param>
     void SetStateDestination(Transform[] waypoints, GameObject image)
     {
-        currentDestination = pathfinding.ChooseClosestTarget(waypoints, transform, agent).position;
+        Transform dest = pathfinding.ChooseClosestTarget(waypoints, transform, agent);
+        currentDestination = dest.position;
+        if (dest.transform.parent.GetComponent<Ponch>() != default)
+        {
+            currentPonch = dest.transform.parent.GetComponent<Ponch>();
+        }
         image.SetActive(true);
     }
 
