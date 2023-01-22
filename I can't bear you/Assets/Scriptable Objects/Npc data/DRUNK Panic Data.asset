@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02a6add0b71dd7749b00fc5038e5d44b, type: 3}
   m_Name: DRUNK Panic Data
   m_EditorClassIdentifier: 
-  suspicious: 0
-  investigateRadius: 0
-  tenseValue: 1
+  suspicious: 0.001
+  investigateRadius: 20
+  tenseValue: 0.25
