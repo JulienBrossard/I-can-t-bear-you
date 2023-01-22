@@ -55,18 +55,22 @@ public class AttractiveItem : Item, IInteractable, ISmashable
         {
             for (int i = 0; i < awareness.visibleTargets.Count; i++)
             {
-                Npc npc = awareness.visibleTargets[i].GetComponent<Npc>();
-                if (npc.state == Npc.STATE.PARTY)
+                if (NpcManager.instance.npcScriptDict.ContainsKey(awareness.visibleTargets[i].gameObject))
                 {
-                    if (!invertZAxis)
+                    Npc npc = awareness.visibleTargets[i].GetComponent<Npc>();
+                    
+                    if (npc.state == Npc.STATE.PARTY)
                     {
-                        npc.Attracted(attractedDistance, transform.position, angle,
-                            new Vector2(transform.forward.x, transform.forward.z), new Vector2(transform.right.x, transform.right.z));
-                    }
-                    else
-                    {
-                        npc.Attracted(-attractedDistance, transform.position, angle,
-                            -new Vector2(transform.forward.x, transform.forward.z), new Vector2(transform.right.x, transform.right.z));
+                        if (!invertZAxis)
+                        {
+                            npc.Attracted(attractedDistance, transform.position, angle,
+                                new Vector2(transform.forward.x, transform.forward.z), new Vector2(transform.right.x, transform.right.z));
+                        }
+                        else
+                        {
+                            npc.Attracted(-attractedDistance, transform.position, angle,
+                                -new Vector2(transform.forward.x, transform.forward.z), new Vector2(transform.right.x, transform.right.z));
+                        }
                     }
                 }
             }
