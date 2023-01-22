@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 522442078317941132}
   - component: {fileID: 4432694532978113032}
   - component: {fileID: 132844421428615802}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Gas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -88,10 +88,20 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 228388506895828044}
     m_Modifications:
+    - target: {fileID: 7018271695961102919, guid: 47f0cf86b7de9984cab2bed508cea368,
+        type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 7018271696082283385, guid: 47f0cf86b7de9984cab2bed508cea368,
         type: 3}
       propertyPath: m_Name
       value: DistorsionFX
+      objectReference: {fileID: 0}
+    - target: {fileID: 7018271696082283385, guid: 47f0cf86b7de9984cab2bed508cea368,
+        type: 3}
+      propertyPath: m_Layer
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7018271696082283389, guid: 47f0cf86b7de9984cab2bed508cea368,
         type: 3}
